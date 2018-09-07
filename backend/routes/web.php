@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::name('admin.')->group(function () {
-    Route::prefix('admin')->group(function() {
+    Route::prefix('admin')->group(function () {
         Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('login');
         Route::post('/login', 'Admin\Auth\LoginController@login');
         Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('logout');
