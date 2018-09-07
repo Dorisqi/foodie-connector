@@ -1,0 +1,7 @@
+pipelines:
+  default:
+  - step:
+      name: "PHP CodeSniffer"
+      image: php:7.2-cli
+      script:
+      - php phpcs.phar .
