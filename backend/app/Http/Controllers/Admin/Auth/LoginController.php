@@ -23,13 +23,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -66,7 +59,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        return route('home');
+        return route('dashboard');
     }
 
     /**
@@ -76,6 +69,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('admin.login');
+        return view('admin.auth.login');
     }
 }
