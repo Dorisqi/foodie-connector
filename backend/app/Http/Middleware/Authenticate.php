@@ -31,7 +31,9 @@ class Authenticate extends Middleware
                     break;
             }
             throw new AuthenticationException(
-                $exception->getMessage(), $exception->guards(), $redirectPath
+                $exception->getMessage(),
+                $exception->guards(),
+                $redirectPath
             );
         }
 
