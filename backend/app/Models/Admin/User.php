@@ -17,6 +17,13 @@ class User extends Authenticatable
     protected $table = 'admin_users';
 
     /**
+     * The column name of the remember tokens
+     *
+     * @var string
+     */
+    protected $remember_column = '';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
