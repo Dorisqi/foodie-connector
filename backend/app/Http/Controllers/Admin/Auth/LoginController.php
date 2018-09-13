@@ -59,7 +59,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        return route('dashboard');
+        return route('admin.dashboard');
     }
 
     /**
