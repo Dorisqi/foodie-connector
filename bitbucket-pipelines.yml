@@ -9,6 +9,8 @@ pipelines:
   - step:
       name: "ESLint"
       image: node:8-alpine
+      caches:
+      - frontend-node-modules
       script:
       - cd frontend
       - yarn
@@ -16,4 +18,4 @@ pipelines:
 
 definitions:
   caches:
-    frintend_node_modules: frontend/node_modules
+    frontend-node-modules: frontend/node_modules
