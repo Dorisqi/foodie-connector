@@ -132,8 +132,15 @@ class TranslationsTableSeeder extends Seeder
             $this->trans('pt', $_arr, 'ola-mundo');
 
             $_arr = $this->arr(['pages', 'body'], $page->id);
-            $this->trans('pt', $_arr, '<p>Olá Mundo. Scallywag grog swab Cat o\'nine tails scuttle rigging hardtack cable nipper Yellow Jack. Handsomely spirits knave lad killick landlubber or just lubber deadlights chantey pinnace crack Jennys tea cup. Provost long clothes black spot Yellow Jack bilged on her anchor league lateen sail case shot lee tackle.</p>'
-                                        ."\r\n".'<p>Ballast spirits fluke topmast me quarterdeck schooner landlubber or just lubber gabion belaying pin. Pinnace stern galleon starboard warp carouser to go on account dance the hempen jig jolly boat measured fer yer chains. Man-of-war fire in the hole nipperkin handsomely doubloon barkadeer Brethren of the Coast gibbet driver squiffy.</p>');
+            $this->trans('pt', $_arr, '<p>Olá Mundo. Scallywag grog swab Cat o\'nine tails scuttle rigging '
+                . 'hardtack cable nipper Yellow Jack. Handsomely spirits knave lad killick landlubber or just lubber '
+                . 'deadlights chantey pinnace crack Jennys tea cup. Provost long clothes black spot Yellow Jack bilged '
+                . 'on her anchor league lateen sail case shot lee tackle.</p>'
+                . "\r\n"
+                . '<p>Ballast spirits fluke topmast me quarterdeck schooner landlubber or just lubber gabion belaying '
+                . 'pin. Pinnace stern galleon starboard warp carouser to go on account dance the hempen jig jolly boat '
+                . 'measured fer yer chains. Man-of-war fire in the hole nipperkin handsomely doubloon barkadeer '
+                . 'Brethren of the Coast gibbet driver squiffy.</p>');
         }
     }
 
