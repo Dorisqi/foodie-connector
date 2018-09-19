@@ -6,3 +6,16 @@ pipelines:
       script:
       - cd backend
       - php phpcs.phar .
+  - step:
+      name: "ESLint"
+      image: node:8-alpine
+      caches:
+      - frontend-node-modules
+      script:
+      - cd frontend
+      - yarn
+      - yarn run lint
+
+definitions:
+  caches:
+    frontend-node-modules: frontend/node_modules
