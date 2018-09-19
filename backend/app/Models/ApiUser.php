@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class ApiUser extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable;
+
+    /**
+     * The column name of the remember tokens
+     *
+     * @var string
+     */
+    protected $remember_column = '';
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +31,6 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 }
