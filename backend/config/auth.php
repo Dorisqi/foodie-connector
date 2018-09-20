@@ -37,8 +37,9 @@ return [
 
     'guards' => [
         'api' => [
-            'driver' => 'token',
+            'driver' => 'api',
             'provider' => 'users',
+            'expire' => 2592000, // 30 days
         ],
 
         'admin' => [
@@ -67,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\ApiUser::class,
         ],
 
         'admin_users' => [

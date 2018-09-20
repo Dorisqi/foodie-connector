@@ -25,6 +25,28 @@ class ApiException extends Exception
     {
         return new ApiException('The email has already been taken.', 201);
     }
+    public static function tooManyLoginAttempts(int $seconds)
+    {
+        return new ApiException('Too many login attempts.', 202, [
+            'available_seconds' => $seconds,
+        ]);
+    }
+    public static function loginFailed()
+    {
+        return new ApiException('These credentials do not match our records.', 203);
+    }
+    public static function requireAuthentication()
+    {
+        return new ApiException('This page requires authentication.', 204);
+    }
+
+    /* Throttle */
+    public static function tooManyAttempts(int $seconds)
+    {
+        return new ApiException('Too many attempts', 301, [
+            'available_seconds' => $seconds,
+        ]);
+    }
 
 
     /**
