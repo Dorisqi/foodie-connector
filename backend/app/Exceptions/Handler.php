@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        ApiException::class,
     ];
 
     /**
@@ -28,6 +28,8 @@ class Handler extends ExceptionHandler
 
     /**
      * Report or log an exception.
+     *
+     * @throws \Exception
      *
      * @param  \Exception  $exception
      * @return void
@@ -46,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ApiException) {
+            return $exception->response();
+        }
+
         return parent::render($request, $exception);
     }
 }
