@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a88c4247cd8fb951710aa529f591888",
+    "content-hash": "6fa9301fac20f16b18b19263c6eeca81",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -3923,6 +3923,64 @@
                 "laravel-dump-server"
             ],
             "time": "2018-08-05T19:09:56+00:00"
+        },
+        {
+            "name": "brainmaestro/composer-git-hooks",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BrainMaestro/composer-git-hooks.git",
+                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BrainMaestro/composer-git-hooks/zipball/5b2feb35fa8d460b14fc71792aca57f97d349430",
+                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || >=7.0 <7.3",
+                "symfony/console": "^3.2 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.9",
+                "phpunit/phpunit": "^5.7|^7.0"
+            },
+            "bin": [
+                "cghooks"
+            ],
+            "type": "library",
+            "extra": {
+                "hooks": {
+                    "pre-commit": "composer check-style",
+                    "pre-push": "composer test"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BrainMaestro\\GitHooks\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ezinwa Okpoechi",
+                    "email": "brainmaestro@outlook.com"
+                }
+            ],
+            "description": "Easily manage git hooks in your composer config",
+            "keywords": [
+                "HOOK",
+                "composer",
+                "git"
+            ],
+            "time": "2018-09-02T01:27:40+00:00"
         },
         {
             "name": "doctrine/instantiator",

@@ -16,6 +16,7 @@
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
+        "brainmaestro/composer-git-hooks": "^2.5",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
@@ -39,6 +40,9 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "hooks": {
+            "pre-commit": "cd backend && php phpcs.phar ."
         }
     },
     "scripts": {
@@ -51,6 +55,12 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
+        ],
+        "post-install-cmd": [
+            "vendor/bin/cghooks update --git-dir='../.git'"
+        ],
+        "post-update-cmd": [
+            "vendor/bin/cghooks update --git-dir='../.git'"
         ]
     },
     "config": {
