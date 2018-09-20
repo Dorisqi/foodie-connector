@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ApiException;
 use App\Models\ApiUser;
 use App\Http\Controllers\ApiController;
@@ -61,11 +62,11 @@ class RegisterController extends ApiController
             'password' => Hash::make($data['password']),
         ]);
 
-        // TODO: login after registered
-        // Auth::guard('api')->login($user);
+        Auth::guard('api')->loginUsingId($user->getAuthIdentifier());
 
         return $this->response([
-            'id' => $user->id,
+            'api_token' => Auth::guard('api')->token(),
+            'user' => Auth::guard('api')->user(),
         ]);
     }
 }
