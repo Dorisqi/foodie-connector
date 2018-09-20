@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 class ApiController extends Controller
 {
     /**
@@ -11,7 +10,7 @@ class ApiController extends Controller
      * @param mixed $data [optional] Data to be returned to the client
      * @return \Illuminate\Http\Response
      */
-    protected function response($data = NULL)
+    protected function response($data = null)
     {
         $response_data = [
             'succeed' => true,
@@ -22,5 +21,4 @@ class ApiController extends Controller
         }
         return response()->json($response_data);
     }
-
 }

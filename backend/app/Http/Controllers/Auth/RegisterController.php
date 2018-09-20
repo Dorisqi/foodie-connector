@@ -49,9 +49,9 @@ class RegisterController extends ApiController
         ]);
         if ($validator->fails()) {
             if (isset($validator->failed()['email']['Unique'])) {
-                throw ApiException::EmailExists();
+                throw ApiException::emailExists();
             }
-            throw ApiException::ValidationFailed($validator);
+            throw ApiException::validationFailed($validator);
         }
 
         $data = $request->all();
@@ -68,5 +68,4 @@ class RegisterController extends ApiController
             'id' => $user->id,
         ]);
     }
-
 }

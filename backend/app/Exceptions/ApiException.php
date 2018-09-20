@@ -15,13 +15,13 @@ class ApiException extends Exception
      */
 
     /* Validation */
-    public static function ValidationFailed(Validator $validator)
+    public static function validationFailed(Validator $validator)
     {
         return new ApiException('Validation failed.', 101, $validator->errors());
     }
 
     /* User and Authentication */
-    public static function EmailExists()
+    public static function emailExists()
     {
         return new ApiException('The email has already been taken.', 201);
     }
@@ -32,7 +32,7 @@ class ApiException extends Exception
      *
      * @var mixed
      */
-    private $errorInformation = NULL;
+    private $errorInformation = null;
 
     /**
      * Construct the exception
@@ -42,9 +42,12 @@ class ApiException extends Exception
      * @param mixed $errorInformation [optional] Extra Exception information.
      * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
-    public function __construct(string $message = "", int $code = 0,
-                                $errorInformation = NULL, Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = "",
+        int $code = 0,
+        $errorInformation = null,
+        Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
         $this->errorInformation = $errorInformation;
     }
@@ -61,8 +64,7 @@ class ApiException extends Exception
             'error_code' => $this->getCode(),
             'error_message' => $this->getMessage(),
         ];
-        if (!is_null($this->errorInformation))
-        {
+        if (!is_null($this->errorInformation)) {
             $data['error_information'] = $this->errorInformation;
         }
         return response()->json($data);
