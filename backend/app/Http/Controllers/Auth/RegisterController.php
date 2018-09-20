@@ -35,10 +35,10 @@ class RegisterController extends ApiController
     /**
      * Handle a registration request for the application.
      *
-     * @throws ApiException
-     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws \App\Exceptions\ApiException
      */
     public function register(Request $request)
     {
