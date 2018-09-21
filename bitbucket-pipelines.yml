@@ -7,6 +7,12 @@ pipelines:
       - cd backend
       - php phpcs.phar .
   - step:
+      name: "PHPUnit"
+      image: epcallan/php7-testing-phpunit:7.2-phpunit7
+      script:
+      - cd backend
+      - phpunit
+  - step:
       name: "ESLint"
       image: node:8-alpine
       caches:
