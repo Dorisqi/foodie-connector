@@ -3,13 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthTest extends TestCase
 {
-    use RefreshDatabase;
-
     const EMAIL = 'test@foodie-connector.com';
     const PASSWORD = 'test123456';
     const NAME = 'Test User';
