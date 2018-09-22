@@ -16,6 +16,7 @@ pipelines:
       caches:
       - backend-vendor
       script:
+      - /usr/bin/redis-server --daemonize yes
       - cd backend
       - php composer.phar install
       - cp .env.example .env
