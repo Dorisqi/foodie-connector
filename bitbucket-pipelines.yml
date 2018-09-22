@@ -8,10 +8,17 @@ pipelines:
       - php phpcs.phar .
   - step:
       name: "PHPUnit"
-      image: epcallan/php7-testing-phpunit:7.2-phpunit7
+      image:
+        name: foodieconnectorphp/foodie-connector-php:php-testing-latest
+        username: $DOCKER_HUB_USERNAME
+        password: $DOCKER_HUB_PASSWORD
+        email: $DOCKER_HUB_EMAIL
+      caches:
+      - backend-vendor
       script:
       - cd backend
-      - phpunit
+      - php composer.phar install
+      - vendor/bin/phpunit
   - step:
       name: "ESLint"
       image: node:8-alpine
@@ -25,3 +32,4 @@ pipelines:
 definitions:
   caches:
     frontend-node-modules: frontend/node_modules
+    backend-vendor: backend/vendor
