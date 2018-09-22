@@ -18,6 +18,8 @@ pipelines:
       script:
       - cd backend
       - php composer.phar install
+      - cp .env.example .env
+      - php artisan key:generate
       - vendor/bin/phpunit
   - step:
       name: "ESLint"
