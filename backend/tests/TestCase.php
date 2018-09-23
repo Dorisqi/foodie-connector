@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
+use Illuminate\Foundation\Testing\TestResponse;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -38,5 +39,56 @@ abstract class TestCase extends BaseTestCase
 
             RefreshDatabaseState::$migrated = false;
         });
+    }
+
+    /**
+     * Assert JSON API succeed
+     *
+     * @param array $data
+     * @return void
+     */
+    protected function assertSucceed(array $data)
+    {
+        $response = $this->json($this->method(), $this->uri(), $data);
+        $response->assertJson([
+            'succeed' => true,
+            'error_code' => 0,
+        ]);
+    }
+
+    /**
+     * Assert JSON API Failed
+     *
+     * @param array $data
+     * @param int $code
+     * @return void
+     */
+    protected function assertFailed(array $data, int $code)
+    {
+        $response = $this->json($this->method(), $this->uri(), $data);
+        $response->assertJson([
+            'succeed' => false,
+            'error_code' => $code,
+        ]);
+    }
+
+    /**
+     * Return the API method
+     *
+     * @return string
+     */
+    protected function method()
+    {
+        return 'GET';
+    }
+
+    /**
+     * Return the API uri
+     *
+     * @return string
+     */
+    protected function uri()
+    {
+        throw new \BadMethodCallException('uri not implemented');
     }
 }

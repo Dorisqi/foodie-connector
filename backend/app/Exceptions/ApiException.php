@@ -77,6 +77,7 @@ class ApiException extends Exception
     /**
      * Create response for API errors
      *
+     * @params
      * @return \Illuminate\Http\Response
      */
     public function response()
