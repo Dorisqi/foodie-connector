@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
-    protected const EMAIL = 'user@foodie-connector.deliver';
+    protected const EMAIL = 'user@foodie-connector.delivery';
     protected const PASSWORD = 'test123456';
     protected const NAME = 'Test User';
 

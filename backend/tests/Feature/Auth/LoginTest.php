@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    const EMAIL = 'user@foodie-connector.deliver';
+    const EMAIL = 'user@foodie-connector.delivery';
     const PASSWORD = 'test123456';
     const NAME = 'Test User';
 
