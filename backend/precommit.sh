@@ -1,4 +1,4 @@
 #!/bin/sh
 
-php phpcs.phar .
-php phpunit.phar
+phpcs .
+php vendor/phpunit/phpunit/phpunit
