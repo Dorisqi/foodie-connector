@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('user')->group(function () {
     Route::post('register', 'User\RegisterController@register');
     Route::post('login', 'User\LoginController@login');
+    Route::post('reset-email', 'User\ForgotPasswordController@sendResetLinkEmail');
 });

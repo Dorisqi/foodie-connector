@@ -39,6 +39,10 @@ class ApiException extends Exception
     {
         return new ApiException('This page requires authentication.', 204);
     }
+    public static function userNotFound()
+    {
+        return new ApiException('We can\'t find a user with that e-mail address.', 205);
+    }
 
     /* Throttle */
     public static function tooManyAttempts(int $seconds)

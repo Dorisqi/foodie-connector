@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'admin',
-        'passwords' => 'users',
+        'passwords' => 'api_users',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'api' => [
             'driver' => 'api',
-            'provider' => 'users',
+            'provider' => 'api_users',
             'expire' => 2592000, // 30 days
         ],
 
@@ -66,7 +66,7 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'api_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\ApiUser::class,
         ],
@@ -98,8 +98,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'api_users' => [
+            'provider' => 'api_users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
