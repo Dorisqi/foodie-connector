@@ -44,7 +44,7 @@
             "dont-discover": []
         },
         "hooks": {
-            "pre-commit": "cd backend && php phpcs.phar ."
+            "pre-commit": "cd backend && chmod +x precommit.sh && ./precommit.sh"
         }
     },
     "scripts": {
