@@ -1,26 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import RestaurantCard from './RestaurantCard';
-import Grid from "@material-ui/core/Grid";
 
-class RestaurantList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const list = this.props.restaurantList.map((item) =>
-      <Grid item>
-        <RestaurantCard key={item.id}
-                        item={item}/>
+const RestaurantList = (props) => {
+  const { restaurantList } = props;
+  const list = restaurantList.map(item => (
+    <Grid item>
+      <RestaurantCard
+        key={item.id}
+        item={item}
+      />
+    </Grid>
+  ));
+  return (
+    <div>
+      <Grid container justify="space-evenly" alignItems="center">
+        {list}
       </Grid>
-    )
-    return (
-      <div>
-        <Grid container justify='space-evenly' alignItems='center'>
-          {list}
-        </Grid>
-      </div>
-    )
-  }
-}
+    </div>
+  );
+};
+
+RestaurantList.propTypes = {
+  restaurantList: PropTypes.shape({}).isRequired,
+};
 
 export default RestaurantList;
