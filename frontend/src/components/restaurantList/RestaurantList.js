@@ -6,7 +6,7 @@ import RestaurantCard from './RestaurantCard';
 const RestaurantList = (props) => {
   const { restaurantList } = props;
   const list = restaurantList.map(item => (
-    <Grid item>
+    <Grid item key={item.id}>
       <RestaurantCard
         key={item.id}
         item={item}
@@ -23,7 +23,7 @@ const RestaurantList = (props) => {
 };
 
 RestaurantList.propTypes = {
-  restaurantList: PropTypes.shape({}).isRequired,
+  restaurantList: PropTypes.arrayOf({}).isRequired,
 };
 
 export default RestaurantList;
