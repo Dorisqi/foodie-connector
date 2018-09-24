@@ -4,9 +4,9 @@ namespace Tests\Feature\Auth;
 
 use App\Models\ApiUser;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\ApiTestCase;
 
-class LoginTest extends TestCase
+class LoginTest extends ApiTestCase
 {
     const EMAIL = 'user@foodie-connector.delivery';
     const PASSWORD = 'test123456';
@@ -30,21 +30,21 @@ class LoginTest extends TestCase
         ]);
         $this->assertFailed([
             'email' => $this::EMAIL,
-        ], 101);
+        ], 422);
         $this->assertFailed([
-            'email' => 'wrong@foodie-connector.deliver',
+            'email' => 'wrong@foodie-connector.delivery',
             'password' => $this::PASSWORD,
-        ], 203);
+        ], 401);
         foreach (range(1, 5) as $i) {
             $this->assertFailed([
                 'email' => $this::EMAIL,
                 'password' => 'wrong',
-            ], 203);
+            ], 401, false);
         }
         $this->assertFailed([
             'email' => $this::EMAIL,
             'password' => $this::PASSWORD,
-        ], 202);
+        ], 429);
     }
 
     protected function method()
@@ -55,5 +55,15 @@ class LoginTest extends TestCase
     protected function uri()
     {
         return '/api/user/login';
+    }
+
+    protected function summary()
+    {
+        return 'Login';
+    }
+
+    protected function tag()
+    {
+        return 'authentication';
     }
 }

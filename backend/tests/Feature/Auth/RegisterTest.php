@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\ApiTestCase;
 
-class RegisterTest extends TestCase
+class RegisterTest extends ApiTestCase
 {
     protected const EMAIL = 'user@foodie-connector.delivery';
     protected const PASSWORD = 'test123456';
@@ -23,7 +21,7 @@ class RegisterTest extends TestCase
             'email' => $this::EMAIL,
             'password' => 'short',
             'name' => $this::NAME,
-        ], 101);
+        ], 422);
         $this->assertSucceed([
             'email' => $this::EMAIL,
             'password' => $this::PASSWORD,
@@ -33,7 +31,7 @@ class RegisterTest extends TestCase
             'email' => $this::EMAIL,
             'password' => $this::PASSWORD,
             'name' => $this::NAME,
-        ], 201);
+        ], 409);
     }
 
     protected function method()
@@ -44,5 +42,15 @@ class RegisterTest extends TestCase
     protected function uri()
     {
         return '/api/user/register';
+    }
+
+    protected function summary()
+    {
+        return 'Register for a new user';
+    }
+
+    protected function tag()
+    {
+        return 'authentication';
     }
 }

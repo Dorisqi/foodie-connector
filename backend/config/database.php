@@ -84,6 +84,11 @@ return [
             'prefix' => '',
         ],
 
+        'sqlite_api_doc' => [
+            'driver' => 'sqlite',
+            'database' => env('SQLITE_DATABASE', ''),
+            'prefix' => '',
+        ],
     ],
 
     /*
