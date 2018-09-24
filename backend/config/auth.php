@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'admin',
         'passwords' => 'users',
     ],
 
@@ -72,7 +72,7 @@ return [
 
         'admin_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin\User::class,
+            'model' => App\Models\User::class,
         ]
 
         // 'users' => [
