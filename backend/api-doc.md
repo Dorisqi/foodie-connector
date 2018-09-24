@@ -1,12 +1,12 @@
 # Foodie Connector API Doc
 
-Generated at 2018-09-24 13:41:34
+Generated at 2018-09-24 18:44:24
 
 ## **authentication**
 
 Everything about authentication
 
-### **POST - /api/user/login**
+### **POST - /api/v1/auth/login**
 
 Login
 
@@ -25,14 +25,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "OTMzNDI2OGE4MzhiYWM5NDFjZDliMzAwZjI0YWQxNWQxMDZjODFhOWI1YmFhMTM0YzhlZGY5ZDllOTgxOWJjNjE=",
+    "api_token": "ZmY4ZDUyZDMyZGZhYjk0MmRjM2M1NmZjZGVmMGYwMDk0ZGUzOWJmOTU5NmRiZTdlMWFiMWZkNTdhOTUzZWYyNTE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 13:41:34",
-        "updated_at": "2018-09-24 13:41:34"
+        "created_at": "2018-09-24 18:44:23",
+        "updated_at": "2018-09-24 18:44:23"
     }
 }
 ```
@@ -98,7 +98,7 @@ Response:
 }
 ```
 
-### **POST - /api/user/register**
+### **POST - /api/v1/auth/register**
 
 Register for a new user
 
@@ -118,14 +118,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "NjM5ZDFmZmFmZGY5ZDg0NTc3NzcwZDYxNzRkNDEzMTk0Njc1MjEwYzVmMDc4ZWZmYzYxZWI5OGRiMGYzNDY4YzE=",
+    "api_token": "ZDgzNTllZTQzMWNlMzJjY2YwMmU3OTc4ZmVmYTE0MGFjMjkyZDZjNDgxZjE5Y2E5ZGE3MWMwMzljYWE3Y2Q2ODE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 13:41:34",
-        "updated_at": "2018-09-24 13:41:34"
+        "created_at": "2018-09-24 18:44:23",
+        "updated_at": "2018-09-24 18:44:23"
     }
 }
 ```
@@ -168,6 +168,65 @@ Response:
     "information": {
         "password": [
             "The password must be at least 6 characters."
+        ]
+    }
+}
+```
+
+### **POST - /api/v1/auth/reset-password-email**
+
+Send email containing password reset link
+
+#### Status Code: 200
+
+Successful operation
+
+Request:
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+Response:
+```
+[]
+```
+#### Status Code: 404
+
+We can&#039;t find a user with that e-mail address.
+
+Request:
+```
+{
+    "email": "wrong@foodie-connector.delivery"
+}
+```
+
+Response:
+```
+{
+    "message": "We can't find a user with that e-mail address."
+}
+```
+#### Status Code: 422
+
+Validation failed.
+
+Request:
+```
+{
+    "email": "not_email"
+}
+```
+
+Response:
+```
+{
+    "message": "Validation failed.",
+    "information": {
+        "email": [
+            "The email must be a valid email address."
         ]
     }
 }

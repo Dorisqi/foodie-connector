@@ -45,4 +45,14 @@ class ApiUser extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    /**
+     * Return password for testing
+     *
+     * @return string
+     */
+    public static function testingPassword()
+    {
+        return 'test123456';
+    }
 }

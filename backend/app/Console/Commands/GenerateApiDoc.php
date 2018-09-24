@@ -81,9 +81,9 @@ class GenerateApiDoc extends Command
                 'requests' => $requests,
             ]);
         }
-        foreach ($tags as $tag) {
-            usort($tag['apis'], function ($a, $b) {
-                if ($a['uri'] == $b['uri']) {
+        foreach ($tags as $name => $tag) {
+            usort($tags[$name]['apis'], function ($a, $b) {
+                if ($a['uri'] === $b['uri']) {
                     return $this::METHOD_ORDER[$a['method']]
                         <=> $this::METHOD_ORDER[$b['method']];
                 }

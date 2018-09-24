@@ -15,6 +15,11 @@ abstract class ApiTestCase extends TestCase
     protected $requests = [];
 
     /**
+     * API prefix
+     */
+    protected const PREFIX = '/api/v1';
+
+    /**
      * Insert record into request list
      *
      * @param array $data
@@ -53,7 +58,7 @@ abstract class ApiTestCase extends TestCase
                     ->insert([
                         'value' => json_encode([
                             'method' => $this->method(),
-                            'uri' => $this->uri(),
+                            'uri' => $this::PREFIX . $this->uri(),
                             'summary' => $this->summary(),
                             'tag' => $this->tag(),
                             'requests' => $this->requests
@@ -72,7 +77,7 @@ abstract class ApiTestCase extends TestCase
      */
     protected function assertSucceed(array $data, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this->uri(), $data);
+        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
         $response->assertStatus(200);
         if ($documented) {
             $this->insertRequest($data, $response);
@@ -89,7 +94,7 @@ abstract class ApiTestCase extends TestCase
      */
     protected function assertFailed(array $data, int $code, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this->uri(), $data);
+        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
         $response->assertStatus($code);
         if ($documented) {
             $this->insertRequest($data, $response);
