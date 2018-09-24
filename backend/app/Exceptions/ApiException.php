@@ -17,37 +17,31 @@ class ApiException extends Exception
     /* Validation */
     public static function validationFailed(Validator $validator)
     {
-        return new ApiException('Validation failed.', 101, $validator->errors());
+        return new ApiException('Validation failed.', 422, $validator->errors());
     }
 
     /* User and Authentication */
     public static function emailExists()
     {
-        return new ApiException('The email has already been taken.', 201);
-    }
-    public static function tooManyLoginAttempts(int $seconds)
-    {
-        return new ApiException('Too many login attempts.', 202, [
-            'available_seconds' => $seconds,
-        ]);
+        return new ApiException('The email has already been taken.', 409);
     }
     public static function loginFailed()
     {
-        return new ApiException('These credentials do not match our records.', 203);
+        return new ApiException('These credentials do not match our records.', 401);
     }
     public static function requireAuthentication()
     {
-        return new ApiException('This page requires authentication.', 204);
+        return new ApiException('This page requires authentication.', 401);
     }
     public static function userNotFound()
     {
-        return new ApiException('We can\'t find a user with that e-mail address.', 205);
+        return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
 
     /* Throttle */
     public static function tooManyAttempts(int $seconds)
     {
-        return new ApiException('Too many attempts', 301, [
+        return new ApiException('Too many attempts', 429, [
             'available_seconds' => $seconds,
         ]);
     }
@@ -69,8 +63,8 @@ class ApiException extends Exception
      * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
     public function __construct(
-        string $message = "",
-        int $code = 0,
+        string $message = "Internal Server Error",
+        int $code = 500,
         $errorInformation = null,
         Throwable $previous = null
     ) {
@@ -87,13 +81,12 @@ class ApiException extends Exception
     public function response()
     {
         $data = [
-            'succeed' => false,
-            'error_code' => $this->getCode(),
-            'error_message' => $this->getMessage(),
+            'message' => $this->getMessage(),
         ];
         if (!is_null($this->errorInformation)) {
-            $data['error_information'] = $this->errorInformation;
+            $data['information'] = $this->errorInformation;
         }
-        return response()->json($data);
+        return response()
+            ->json($data, $this->getCode());
     }
 }

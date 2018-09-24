@@ -48,6 +48,7 @@ class LoginController extends ApiController
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        // $validator->validate();
         if ($validator->fails()) {
             throw ApiException::validationFailed($validator);
         }
@@ -58,7 +59,7 @@ class LoginController extends ApiController
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
-            throw ApiException::tooManyLoginAttempts($this->limiter()->availableIn(
+            throw ApiException::tooManyAttempts($this->limiter()->availableIn(
                 $this->throttleKey($request)
             ));
         }

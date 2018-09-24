@@ -12,13 +12,6 @@ class ApiController extends Controller
      */
     protected function response($data = null)
     {
-        $response_data = [
-            'succeed' => true,
-            'error_code' => 0,
-        ];
-        if (!is_null($data)) {
-            $response_data['data'] = $data;
-        }
-        return response()->json($response_data);
+        return response()->json($data ?? []);
     }
 }
