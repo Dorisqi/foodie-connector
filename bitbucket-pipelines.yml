@@ -2,10 +2,30 @@ pipelines:
   default:
   - step:
       name: "PHP CodeSniffer"
-      image: php:7.2-cli
+      image:
+        name: foodieconnectorphp/foodie-connector-php:php-testing-latest
+        username: $DOCKER_HUB_USERNAME
+        password: $DOCKER_HUB_PASSWORD
+        email: $DOCKER_HUB_EMAIL
       script:
       - cd backend
-      - php phpcs.phar .
+      - phpcs .
+  - step:
+      name: "PHPUnit"
+      image:
+        name: foodieconnectorphp/foodie-connector-php:php-testing-latest
+        username: $DOCKER_HUB_USERNAME
+        password: $DOCKER_HUB_PASSWORD
+        email: $DOCKER_HUB_EMAIL
+      caches:
+      - backend-vendor
+      script:
+      - /usr/bin/redis-server --daemonize yes
+      - cd backend
+      - composer install
+      - cp .env.example .env
+      - php artisan key:generate
+      - phpunit
   - step:
       name: "ESLint"
       image: node:8-alpine
@@ -19,3 +39,4 @@ pipelines:
 definitions:
   caches:
     frontend-node-modules: frontend/node_modules
+    backend-vendor: backend/vendor

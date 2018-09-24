@@ -78,6 +78,17 @@ return [
             'prefix' => '',
         ],
 
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
+
+        'sqlite_api_doc' => [
+            'driver' => 'sqlite',
+            'database' => env('SQLITE_DATABASE', ''),
+            'prefix' => '',
+        ],
     ],
 
     /*
