@@ -69,8 +69,7 @@ abstract class ApiTestCase extends TestCase
     {
         $response = $this->json($this->method(), $this->uri(), $data);
         $response->assertStatus(200);
-        if ($documented)
-        {
+        if ($documented) {
             $this->insertRequest($data, $response);
         }
     }

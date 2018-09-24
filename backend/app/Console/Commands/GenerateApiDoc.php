@@ -29,7 +29,7 @@ class GenerateApiDoc extends Command
     /**
      * The order of HTTP method
      */
-    protected const methodOrder = [
+    protected const METHOD_ORDER = [
         'GET' => 0,
         'POST' => 1,
         'PUT' => 2,
@@ -76,7 +76,7 @@ class GenerateApiDoc extends Command
                     'response' => json_encode($request->{'response'}, JSON_PRETTY_PRINT),
                 ]);
             }
-            usort($requests, function($a, $b) {
+            usort($requests, function ($a, $b) {
                 return $a['status_code'] - $b['status_code'];
             });
             array_push($tags[$api_decoded->{'tag'}]['apis'], [
@@ -89,14 +89,14 @@ class GenerateApiDoc extends Command
         foreach ($tags as $tag) {
             usort($tag['apis'], function ($a, $b) {
                 if ($a['uri'] == $b['uri']) {
-                    return $this::methodOrder[$a['method']]
-                        <=> $this::methodOrder[$b['method']];
+                    return $this::METHOD_ORDER[$a['method']]
+                        <=> $this::METHOD_ORDER[$b['method']];
                 }
                 return $a['uri'] <=> $b['uri'];
             });
         }
         $file = fopen(base_path('/api-doc.md'), 'w') or die('Failed to open file');
-        fwrite($file,view('api-doc', [
+        fwrite($file, view('api-doc', [
             'tags' => $tags
         ])->render());
         fclose($file);
