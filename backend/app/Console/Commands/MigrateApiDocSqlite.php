@@ -39,12 +39,6 @@ class MigrateApiDocSqlite extends Command
      */
     public function handle()
     {
-        $sqlite_path = base_path('/api-doc.sqlite');
-        if (file_exists($sqlite_path)) {
-            unlink($sqlite_path);
-        }
-        $sqlite_file = fopen($sqlite_path, 'w') or die('Failed to create sqlite');
-        fclose($sqlite_file);
         Schema::connection('sqlite_api_doc')
             ->create('apis', function (Blueprint $table) {
                 $table->increments('id');

@@ -23,6 +23,9 @@ abstract class ApiTestCase extends TestCase
      */
     protected function insertRequest(array $data, TestResponse $response)
     {
+        if (is_null(env('GENERATE_API_DOC'))) {
+            return;
+        }
         $api = [
             'request' => $data,
             'status_code' => $response->status(),
@@ -43,19 +46,21 @@ abstract class ApiTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->beforeApplicationDestroyed(function () {
-            DB::connection('sqlite_api_doc')
-                ->table('apis')
-                ->insert([
-                    'value' => json_encode([
-                        'method' => $this->method(),
-                        'uri' => $this->uri(),
-                        'summary' => $this->summary(),
-                        'tag' => $this->tag(),
-                        'requests' => $this->requests
-                    ]),
-                ]);
-        });
+        if (!is_null(env('GENERATE_API_DOC'))) {
+            $this->beforeApplicationDestroyed(function () {
+                DB::connection('sqlite_api_doc')
+                    ->table('apis')
+                    ->insert([
+                        'value' => json_encode([
+                            'method' => $this->method(),
+                            'uri' => $this->uri(),
+                            'summary' => $this->summary(),
+                            'tag' => $this->tag(),
+                            'requests' => $this->requests
+                        ]),
+                    ]);
+            });
+        }
     }
 
     /**
