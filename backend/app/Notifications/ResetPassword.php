@@ -33,8 +33,13 @@ class ResetPassword extends BaseResetPassword
 
         return (new MailMessage)
             ->subject('Foodie Connector - Reset Password Notification')
+            ->greeting($notifiable->name)
             ->line('You are receiving this email because we received a password reset request for your account.')
+            ->line('Your verification code is')
+            ->line($this->token)
+            ->line('You can also click the link below.')
             ->action('Reset Password', url(config('app.url')))
+            ->line('The code will be expired in 10 minutes.')
             ->line('If you did not request a password reset, no further action is required.');
     }
 }
