@@ -1,6 +1,6 @@
 # Foodie Connector API Doc
 
-Generated at 2018-09-24 23:56:58
+Generated at 2018-09-25 13:39:28
 
 ## **authentication**
 
@@ -32,14 +32,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "MDYxMDk2NjUyYjE3NjY2MDRlYjNmZGE2MTJmMWM0NTAyZWY4MzQyNTI5MDBlZmNjNjNmNDliZTc1Y2ZmZmMzMTE=",
+    "api_token": "OTczZGE2OTFiNGQzMjYyM2U2NzU1NWU5MTZmMDk1YTdiZTFiZDcxNTEwYmU2OTgzOWU4ZjhkZjA5MzFjOTY2ZTE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 23:56:58",
-        "updated_at": "2018-09-24 23:56:58"
+        "created_at": "2018-09-25 13:39:28",
+        "updated_at": "2018-09-25 13:39:28"
     }
 }
 ```
@@ -133,14 +133,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "MjhkOGNhOTZlNmQ2NWI3NTQ3NTVmMWEzYTU4NDhiZTEzZTE1Mzg4MDUzMmU4MzJlMTRhYTIxYzI5ZTlkNGYwMDE=",
+    "api_token": "NTFmZDAwMmYxY2Y3Zjk2OWIxYTY4YzZlNzE5ODQzZTdmOTIwMTA4OWJmNmJmOTFjY2MzNDQyZTBiNTk2ZDY1MDE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 23:56:58",
-        "updated_at": "2018-09-24 23:56:58"
+        "created_at": "2018-09-25 13:39:28",
+        "updated_at": "2018-09-25 13:39:28"
     }
 }
 ```
@@ -238,7 +238,7 @@ Response:
 ```
 #### Status Code: 404
 
-We can&#039;t find a user with that e-mail address.
+We can't find a user with that e-mail address.
 
 Request:
 ```
@@ -308,7 +308,7 @@ Response:
 ```
 #### Status Code: 404
 
-We can&#039;t find a user with that e-mail address.
+We can't find a user with that e-mail address.
 
 Request:
 ```
