@@ -54,7 +54,6 @@ class ApiUser extends Authenticatable
      */
     public function setRememberToken($value)
     {
-
     }
 
     /**
