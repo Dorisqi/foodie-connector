@@ -35,6 +35,11 @@ class ApiUser extends Authenticatable
         'password',
     ];
 
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\Address');
+    }
+
     /**
      * Send the password reset notification.
      *
