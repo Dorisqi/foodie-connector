@@ -20,9 +20,9 @@ class ApiGuard implements StatefulGuard
     private const TOKEN_BYTES = 32;
 
     /**
-     * The input key from request
+     * The header key from authorization
      */
-    protected const INPUT_KEY = 'api_token';
+    protected const HEADER_KEY = 'Authorization';
 
     /**
      * The storage key used in Redis
@@ -93,7 +93,7 @@ class ApiGuard implements StatefulGuard
             return $this->user;
         }
 
-        $token = $this::decodeToken($this->request->header($this::INPUT_KEY));
+        $token = $this::decodeToken($this->request->header($this::HEADER_KEY));
         if (is_null($token)) {
             return null;
         }
