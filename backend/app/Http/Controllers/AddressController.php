@@ -16,6 +16,11 @@ class AddressController extends ApiController
      */
     public function index()
     {
+        $addresses = Auth::user()->addresses;
+        foreach ($addresses as $key => $address) {
+            $addresses[$key]['is_default'] = $address['id'] == Auth::user()['default_address'];
+        }
+        return $this->response($addresses);
     }
 
     /**
