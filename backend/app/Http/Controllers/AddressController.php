@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiException;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,10 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $addresses = Auth::user()->addresses;
+        $user = Auth::user();
+        $addresses = $user->addresses;
         foreach ($addresses as $key => $address) {
-            $addresses[$key]['is_default'] = $address['id'] == Auth::user()['default_address'];
+            $addresses[$key]['is_default'] = $address['id'] == $user['default_address'];
         }
         return $this->response($addresses);
     }
@@ -34,13 +36,11 @@ class AddressController extends ApiController
      */
     public function store(Request $request)
     {
-        $this->validateInput($request);
+        $this->validateInput($request, $this::storeRules());
 
         try {
             DB::beginTransaction();
-            $address = new Address($request->only([
-                'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id'
-            ]));
+            $address = new Address($request->only($this->modelParams()));
             $user = Auth::user();
             $user->addresses()->save($address);
             if ($request->input('is_default') === true || is_null(Auth::user()->defaultAddress)) {
@@ -65,10 +65,39 @@ class AddressController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validateInput($request);
+
+        try {
+            DB::beginTransaction();
+
+            $user = Auth::user();
+            $address = Address::where('api_user_id', $user->getAuthIdentifier())->find($id);
+            if (is_null($address)) {
+                throw ApiException::resourceNotFound();
+            }
+
+            $address->fill($request->only($this->modelParams()));
+            $address->save();
+
+            if ($request->input('is_default') == true) {
+                $user['default_address'] = $address->id;
+                $user->save();
+            }
+            $address['is_default'] = $user['default_address'] == $address->id;
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return $address;
     }
 
     /**
@@ -82,18 +111,42 @@ class AddressController extends ApiController
         //
     }
 
+    /**
+     * Get params for model
+     *
+     * @return array
+     */
+    protected function modelParams()
+    {
+        return [
+            'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id'
+        ];
+    }
+
     public static function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|phone:US',
-            'line_1' => 'required|string|max:255',
+            'name' => 'string|max:255',
+            'phone' => 'phone:US',
+            'line_1' => 'string|max:255',
             'line_2' => 'string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'zip_code' => 'required|zip_code',
-            'place_id' => 'required|string|max:255',
-            'is_default' => 'required|boolean'
+            'city' => 'string|max:255',
+            'state' => 'string|max:255',
+            'zip_code' => 'zip_code',
+            'place_id' => 'string|max:255',
+            'is_default' => 'boolean'
         ];
+    }
+
+    public static function storeRules()
+    {
+        $rules = self::rules();
+        foreach ($rules as $key => $rule) {
+            if ($key === 'line_2') {
+                continue;
+            }
+            $rules[$key] .= '|required';
+        }
+        return $rules;
     }
 }

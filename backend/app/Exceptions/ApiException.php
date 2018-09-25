@@ -50,6 +50,12 @@ class ApiException extends Exception
         ]);
     }
 
+    /* Resource */
+    public static function resourceNotFound()
+    {
+        return new ApiException('Resource not found.', 404);
+    }
+
 
     /**
      * Extra Exception information

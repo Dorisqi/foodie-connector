@@ -23,13 +23,14 @@ class ApiController extends Controller
      * Validate the input
      *
      * @param \Illuminate\Http\Request $request
+     * @param array $rules [optional]
      * @return void
      *
      * @throws \App\Exceptions\ApiException
      */
-    protected function validateInput(Request $request)
+    protected function validateInput(Request $request, array $rules = null)
     {
-        $validator = Validator::make($request->all(), $this->rules());
+        $validator = Validator::make($request->all(), $rules ?? $this->rules());
         if ($validator->fails()) {
             throw ApiException::validationFailed($validator);
         }
