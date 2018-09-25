@@ -105,10 +105,35 @@ class AddressController extends ApiController
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $user = Auth::user();
+            if ($user['default_address'] == $id) {
+                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->first();
+                if (is_null($newDefaultAddress)) {
+                    $user['default_address'] = null;
+                } else {
+                    $user['default_address'] = $newDefaultAddress->id;
+                }
+                $user->save();
+            }
+            $deletedRows = Address::where('api_user_id', Auth::user()->getAuthIdentifier())
+                ->where('id', $id)
+                ->delete();
+            if ($deletedRows == 0) {
+                throw ApiException::resourceNotFound();
+            }
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+        return $this->response([]);
     }
 
     /**
