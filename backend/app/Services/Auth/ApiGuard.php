@@ -20,6 +20,23 @@ class ApiGuard implements StatefulGuard
     private const TOKEN_BYTES = 32;
 
     /**
+     * The input key from request
+     */
+    protected const INPUT_KEY = 'api_token';
+
+    /**
+     * The storage key used in Redis
+     */
+    protected const STORAGE_KEY = 'api_token';
+
+    /**
+     * The expire time in seconds
+     *
+     * @var int
+     */
+    protected const EXPIRE = 2592000; // 30 days
+
+    /**
      * The request instance
      *
      * @var \Illuminate\Http\Request
@@ -32,27 +49,6 @@ class ApiGuard implements StatefulGuard
      * @var string
      */
     protected $token;
-
-    /**
-     * The input key from request
-     *
-     * @var string
-     */
-    protected $inputKey;
-
-    /**
-     * The storage key used in Redis
-     *
-     * @var string
-     */
-    protected $storageKey;
-
-    /**
-     * The expire time in seconds
-     *
-     * @var int
-     */
-    protected $expire;
 
     /**
      * Indicate if the logout method has been called.
@@ -73,22 +69,13 @@ class ApiGuard implements StatefulGuard
      *
      * @param \Illuminate\Contracts\Auth\UserProvider $provider
      * @param \Illuminate\Http\Request $request
-     * @param int $expire
-     * @param string $inputKey [optional]
-     * @param string $storageKey [optional]
      */
     public function __construct(
         UserProvider $provider,
-        Request $request,
-        int $expire,
-        string $inputKey = 'api_token',
-        string $storageKey = 'api_token'
+        Request $request
     ) {
         $this->provider = $provider;
         $this->request = $request;
-        $this->expire = $expire;
-        $this->inputKey = $inputKey;
-        $this->storageKey = $storageKey;
     }
 
     /**
@@ -106,28 +93,12 @@ class ApiGuard implements StatefulGuard
             return $this->user;
         }
 
-        $encodedToken = $this->request->header($this->inputKey);
-        if (is_null($encodedToken)) {
+        $token = $this::decodeToken($this->request->header($this::INPUT_KEY));
+        if (is_null($token)) {
             return null;
         }
-        $decodedToken = base64_decode($encodedToken);
-        if (!$decodedToken) {
-            return null;
-        }
-        $token = substr($decodedToken, 0, 2 * $this::TOKEN_BYTES);
-        if (!$token) {
-            return null;
-        }
-        $id = substr($decodedToken, 2 * $this::TOKEN_BYTES);
-        if (!$id) {
-            return null;
-        }
-        $result = Redis::expire($this->redisKey($id, $token), $this->expire);
-        if ($result !== 1) {
-            return null;
-        }
-        $this->token = $token;
-        $this->user = $this->provider->retrieveById($id);
+        $this->token = $token['token'];
+        $this->user = $this->provider->retrieveById($token['id']);
 
         return $this->user;
     }
@@ -145,7 +116,7 @@ class ApiGuard implements StatefulGuard
 
         return $this->user()
             ? $this->user()->getAuthIdentifier()
-            : null; // TODO
+            : null;
     }
 
     /**
@@ -303,7 +274,13 @@ class ApiGuard implements StatefulGuard
     {
         $token = openssl_random_pseudo_bytes($this::TOKEN_BYTES);
         $this->token = bin2hex($token);
-        if (is_null(Redis::set($this->redisKey(), true, 'NX', 'EX', $this->expire))) {
+        if (is_null(Redis::set(
+            $this->redisKey($this->user()->getAuthIdentifier(), $this->token),
+            true,
+            'NX',
+            'EX',
+            self::EXPIRE
+        ))) {
             $this->generateToken();
         }
     }
@@ -313,20 +290,51 @@ class ApiGuard implements StatefulGuard
      */
     protected function removeToken()
     {
-        Redis::del($this->redisKey());
+        Redis::del($this::redisKey($this->user()->getAuthIdentifier(), $this->token));
     }
 
     /**
      * Get the redis key
      *
-     * @param mixed $identifier [optional]
-     * @param string $token [optional]
+     * @param mixed $identifier
+     * @param string $token
      * @return string
      */
-    protected function redisKey($identifier = null, string $token = null)
+    public static function redisKey($identifier, string $token)
     {
-        return $this->storageKey . ':' .
-            ($identifier ?? $this->user()->getAuthIdentifier()) . ':' .
-            ($token ?? $this->token);
+        return self::STORAGE_KEY . ':' . $identifier . ':' . $token;
+    }
+
+    /**
+     * Decode the token
+     *
+     * @param string $encodedToken
+     * @return array
+     */
+    public static function decodeToken(string $encodedToken)
+    {
+        if (is_null($encodedToken)) {
+            return null;
+        }
+        $decodedToken = base64_decode($encodedToken);
+        if (!$decodedToken) {
+            return null;
+        }
+        $token = substr($decodedToken, 0, 2 * self::TOKEN_BYTES);
+        if (!$token) {
+            return null;
+        }
+        $id = substr($decodedToken, 2 * self::TOKEN_BYTES);
+        if (!$id) {
+            return null;
+        }
+        $result = Redis::expire(self::redisKey($id, $token), self::EXPIRE);
+        if ($result !== 1) {
+            return null;
+        }
+        return [
+            'id' => $id,
+            'token' => $token,
+        ];
     }
 }

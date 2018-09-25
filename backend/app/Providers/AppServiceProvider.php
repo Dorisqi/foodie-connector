@@ -20,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
         Auth::extend('api', function ($app, $name, array $config) {
             return new ApiGuard(
                 Auth::createUserProvider($config['provider']),
-                $app['request'],
-                $config['expire']
+                $app['request']
             );
         });
     }
