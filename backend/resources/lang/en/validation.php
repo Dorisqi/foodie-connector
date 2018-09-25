@@ -91,6 +91,7 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => 'The :attribute must be a number.',
+    'phone'                => 'The :attribute must be a phone number.',
     'present'              => 'The :attribute field must be present.',
     'regex'                => 'The :attribute format is invalid.',
     'required'             => 'The :attribute field is required.',
@@ -112,6 +113,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'zip_code'             => 'The :attribute must be a zip code.',
 
     /*
     |--------------------------------------------------------------------------
@@ -142,5 +144,6 @@ return [
     */
 
     'attributes' => [],
+
 
 ];

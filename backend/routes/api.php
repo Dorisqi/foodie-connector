@@ -23,4 +23,10 @@ Route::prefix('v1')->group(function () {
         Route::post('reset-password-email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
         Route::post('reset-password', 'Auth\ResetPasswordController@reset');
     });
+
+    Route::middleware('auth:api')->group(function () {
+        Route::resource('addresses', 'AddressController')->only([
+            'index', 'store', 'update', 'destroy'
+        ]);
+    });
 });
