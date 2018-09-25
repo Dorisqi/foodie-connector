@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Models\ApiUser;
 use Tests\ApiTestCase;
 
@@ -57,5 +58,10 @@ class LoginTest extends ApiTestCase
     protected function tag()
     {
         return 'authentication';
+    }
+
+    protected function controller()
+    {
+        return LoginController::class;
     }
 }

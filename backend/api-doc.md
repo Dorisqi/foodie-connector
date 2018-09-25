@@ -1,6 +1,6 @@
 # Foodie Connector API Doc
 
-Generated at 2018-09-24 18:44:24
+Generated at 2018-09-24 23:56:58
 
 ## **authentication**
 
@@ -9,6 +9,13 @@ Everything about authentication
 ### **POST - /api/v1/auth/login**
 
 Login
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email |  |
+| password | required | string |  |
 
 #### Status Code: 200
 
@@ -25,14 +32,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "ZmY4ZDUyZDMyZGZhYjk0MmRjM2M1NmZjZGVmMGYwMDk0ZGUzOWJmOTU5NmRiZTdlMWFiMWZkNTdhOTUzZWYyNTE=",
+    "api_token": "MDYxMDk2NjUyYjE3NjY2MDRlYjNmZGE2MTJmMWM0NTAyZWY4MzQyNTI5MDBlZmNjNjNmNDliZTc1Y2ZmZmMzMTE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 18:44:23",
-        "updated_at": "2018-09-24 18:44:23"
+        "created_at": "2018-09-24 23:56:58",
+        "updated_at": "2018-09-24 23:56:58"
     }
 }
 ```
@@ -102,6 +109,14 @@ Response:
 
 Register for a new user
 
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | required | string | max:255 |
+| email | required | email | max:255, unique:api_users |
+| password | required | string | min:6 |
+
 #### Status Code: 200
 
 Successful operation
@@ -118,14 +133,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "ZDgzNTllZTQzMWNlMzJjY2YwMmU3OTc4ZmVmYTE0MGFjMjkyZDZjNDgxZjE5Y2E5ZGE3MWMwMzljYWE3Y2Q2ODE=",
+    "api_token": "MjhkOGNhOTZlNmQ2NWI3NTQ3NTVmMWEzYTU4NDhiZTEzZTE1Mzg4MDUzMmU4MzJlMTRhYTIxYzI5ZTlkNGYwMDE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-24 18:44:23",
-        "updated_at": "2018-09-24 18:44:23"
+        "created_at": "2018-09-24 23:56:58",
+        "updated_at": "2018-09-24 23:56:58"
     }
 }
 ```
@@ -173,9 +188,108 @@ Response:
 }
 ```
 
+### **POST - /api/v1/auth/reset-password**
+
+Reset password
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| token | required | numeric | min:0, max:99999999 |
+| email | required | email |  |
+| password | required | string | min:6 |
+
+#### Status Code: 200
+
+Successful operation
+
+Request:
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+Response:
+```
+[]
+```
+#### Status Code: 401
+
+The password reset token is invalid or expired
+
+Request:
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+Response:
+```
+{
+    "message": "The password reset token is invalid or expired"
+}
+```
+#### Status Code: 404
+
+We can&#039;t find a user with that e-mail address.
+
+Request:
+```
+{
+    "email": "wrong@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+Response:
+```
+{
+    "message": "We can't find a user with that e-mail address."
+}
+```
+#### Status Code: 422
+
+Validation failed.
+
+Request:
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+Response:
+```
+{
+    "message": "Validation failed.",
+    "information": {
+        "token": [
+            "The token field is required."
+        ],
+        "password": [
+            "The password field is required."
+        ]
+    }
+}
+```
+
 ### **POST - /api/v1/auth/reset-password-email**
 
 Send email containing password reset link
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email |  |
 
 #### Status Code: 200
 

@@ -40,7 +40,7 @@ class ApiController extends Controller
      *
      * @return array
      */
-    protected function rules()
+    public static function rules()
     {
         return [];
     }

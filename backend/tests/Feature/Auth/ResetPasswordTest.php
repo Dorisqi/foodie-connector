@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Brokers\ResetPasswordBroker;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\ApiUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -67,5 +68,10 @@ class ResetPasswordTest extends ApiTestCase
     protected function tag()
     {
         return 'authentication';
+    }
+
+    protected function controller()
+    {
+        return ResetPasswordController::class;
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends ApiController
 {
@@ -44,14 +43,7 @@ class LoginController extends ApiController
      */
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-        // $validator->validate();
-        if ($validator->fails()) {
-            throw ApiException::validationFailed($validator);
-        }
+        $this->validateInput($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -87,5 +79,18 @@ class LoginController extends ApiController
     protected function guard()
     {
         return Auth::guard('api');
+    }
+
+    /**
+     * Get the validation rules
+     *
+     * @return array
+     */
+    public static function rules()
+    {
+        return [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ];
     }
 }

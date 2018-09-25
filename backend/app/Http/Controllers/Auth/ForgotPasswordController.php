@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Brokers\ResetPasswordBroker;
-use App\Exceptions\ApiException;
 use App\Http\Controllers\ApiController;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends ApiController
 {
@@ -44,17 +42,24 @@ class ForgotPasswordController extends ApiController
      */
     public function sendResetLinkEmail(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-        ]);
-        if ($validator->fails()) {
-            throw ApiException::validationFailed($validator);
-        }
+        $this->validateInput($request);
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
         ResetPasswordBroker::sendResetEmail($request->input('email'));
         return $this->response();
+    }
+
+    /**
+     * Get the validation rules
+     *
+     * @return array
+     */
+    public static function rules()
+    {
+        return [
+            'email' => 'required|string|email',
+        ];
     }
 }

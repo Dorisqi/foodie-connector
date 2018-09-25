@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 abstract class ApiTestCase extends TestCase
 {
@@ -61,6 +62,7 @@ abstract class ApiTestCase extends TestCase
                             'uri' => $this::PREFIX . $this->uri(),
                             'summary' => $this->summary(),
                             'tag' => $this->tag(),
+                            'params' => $this->params(),
                             'requests' => $this->requests
                         ]),
                     ]);
@@ -139,5 +141,51 @@ abstract class ApiTestCase extends TestCase
     protected function tag()
     {
         throw new \BadMethodCallException('tag() not implemented');
+    }
+
+    /**
+     * Get the controller
+     *
+     * @return mixed
+     */
+    protected function controller()
+    {
+        throw new \BadMethodCallException('controller() not implemented');
+    }
+
+    /**
+     * Get params
+     *
+     * @return array
+     */
+    protected function params()
+    {
+        $params = [];
+        foreach ($this->controller()::rules() as $key => $rule) {
+            $restrictions = explode('|', $rule);
+            $param = [
+                'key' => $key,
+            ];
+            $extra = [];
+            foreach ($restrictions as $restriction) {
+                switch ($restriction) {
+                    case 'required':
+                        $param['required'] = true;
+                        break;
+                    case 'string':
+                    case 'numeric':
+                        $param['type'] = $restriction;
+                        break;
+                    case 'email':
+                        $param['email'] = true;
+                        break;
+                    default:
+                        array_push($extra, $restriction);
+                }
+            }
+            $param['extra'] = implode(', ', $extra);
+            array_push($params, $param);
+        }
+        return $params;
     }
 }

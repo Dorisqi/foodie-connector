@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Models\ApiUser;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Mail;
@@ -55,5 +56,10 @@ class ForgotPasswordTest extends ApiTestCase
     protected function tag()
     {
         return 'authentication';
+    }
+
+    protected function controller()
+    {
+        return ForgotPasswordController::class;
     }
 }
