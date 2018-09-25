@@ -32,7 +32,7 @@ Request:
 Response:
 ```
 {
-    "api_token": "OWRkNjdhMjU2YzU1Nzc5MWM0M2FlNGQwZWYyOGQzNzM0ZWE5ZTExNWFhZTg5ZjcwMTA2ODY1NDU3NGUxN2FkNzE=",
+    "api_token": "ZWFmOTdjNTA1NWUyOGE5ZjViNjJjODExNWJmMTNhMmU0Y2FhMTM0YmFhYzdlYTJiODY3YmI0OWM5MWRkMTU0MDE=",
     "user": {
         "id": 1,
         "name": "Test User",
@@ -132,7 +132,7 @@ Request:
 Response:
 ```
 {
-    "api_token": "ODcwMjVjMzY2Zjk4MmYxNDVkNDcwMTk0YThmMmVjMGJhNTVjN2IwZTczOTBkMjg4OTAxZDAwZTkyOGVhM2M3ZjE=",
+    "api_token": "MGE2YWRjNzFmMTM4N2RhYzQ0M2Y3ZWQ1MTQ1NWZmODRiYWViZWFmOWEyM2UwNWQwYWZiY2EyMDA0NTE0NDQ4OTE=",
     "user": {
         "id": 1,
         "name": "Test User",
