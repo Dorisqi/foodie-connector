@@ -1,6 +1,6 @@
 # Foodie Connector API Doc
 
-Generated at 2018-09-25 13:39:28
+Generated at 2018-09-25 15:26:44
 
 ## **authentication**
 
@@ -32,14 +32,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "OTczZGE2OTFiNGQzMjYyM2U2NzU1NWU5MTZmMDk1YTdiZTFiZDcxNTEwYmU2OTgzOWU4ZjhkZjA5MzFjOTY2ZTE=",
+    "api_token": "ZGRjNzIzMzZmODE5ZGU2Mzk5MjZmYTVjNjNlMTJhYmViYTRjNWIxM2ZmZGFmNWM5OTQ0MTU5ZjlkMDYyYzMzMjE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-25 13:39:28",
-        "updated_at": "2018-09-25 13:39:28"
+        "created_at": "2018-09-25 15:26:44",
+        "updated_at": "2018-09-25 15:26:44"
     }
 }
 ```
@@ -133,14 +133,14 @@ Request:
 Response:
 ```
 {
-    "api_token": "NTFmZDAwMmYxY2Y3Zjk2OWIxYTY4YzZlNzE5ODQzZTdmOTIwMTA4OWJmNmJmOTFjY2MzNDQyZTBiNTk2ZDY1MDE=",
+    "api_token": "NWY0ZTJkMzVjMjFlYmIwYTU0ZWEzZTcxYTg0YWQ3ZjM3NTNlNGRhMzczMzVmN2VkNjk1MTBhNjVkYmJmN2IwYTE=",
     "user": {
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "email_verified_at": null,
-        "created_at": "2018-09-25 13:39:28",
-        "updated_at": "2018-09-25 13:39:28"
+        "created_at": "2018-09-25 15:26:44",
+        "updated_at": "2018-09-25 15:26:44"
     }
 }
 ```
@@ -196,7 +196,7 @@ Reset password
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| token | required | numeric | min:0, max:99999999 |
+| token | required | integer | between:0,99999999 |
 | email | required | email |  |
 | password | required | string | min:6 |
 
