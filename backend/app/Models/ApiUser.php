@@ -47,6 +47,17 @@ class ApiUser extends Authenticatable
     }
 
     /**
+     * Ignore setRememberToken
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+
+    }
+
+    /**
      * Return password for testing
      *
      * @return string

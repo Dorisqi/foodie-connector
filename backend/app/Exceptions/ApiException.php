@@ -37,6 +37,10 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
+    public static function invalidToken()
+    {
+        return new ApiException('The password reset token is invalid or expired', 401);
+    }
 
     /* Throttle */
     public static function tooManyAttempts(int $seconds)

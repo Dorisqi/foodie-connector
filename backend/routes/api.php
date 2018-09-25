@@ -21,5 +21,6 @@ Route::prefix('v1')->group(function () {
         Route::post('register', 'Auth\RegisterController@register');
         Route::post('login', 'Auth\LoginController@login');
         Route::post('reset-password-email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+        Route::post('reset-password', 'Auth\ResetPasswordController@reset');
     });
 });
