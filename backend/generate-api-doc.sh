@@ -1,7 +1,8 @@
 #!/bin/sh
 
+set -e
+
 rm -f api-doc.sqlite
-echo "" > api-doc.sqlite
 export SQLITE_DATABASE=$PWD/api-doc.sqlite
 php artisan migrate:api-doc
 export GENERATE_API_DOC="true"
