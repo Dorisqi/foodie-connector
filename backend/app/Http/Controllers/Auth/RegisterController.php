@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ApiException;
@@ -43,11 +43,7 @@ class RegisterController extends ApiController
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:api_users',
-            'password' => 'required|string|min:6',
-        ]);
+        $validator = Validator::make($request->all(), $this->rules());
         if ($validator->fails()) {
             if (isset($validator->failed()['email']['Unique'])) {
                 throw ApiException::emailExists();
@@ -68,5 +64,19 @@ class RegisterController extends ApiController
             'api_token' => Auth::guard('api')->token(),
             'user' => Auth::guard('api')->user(),
         ]);
+    }
+
+    /**
+     * Get the validation rules
+     *
+     * @return array
+     */
+    public static function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:api_users',
+            'password' => 'required|string|min:6',
+        ];
     }
 }

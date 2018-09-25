@@ -45,4 +45,24 @@ class ApiUser extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    /**
+     * Ignore setRememberToken
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+    }
+
+    /**
+     * Return password for testing
+     *
+     * @return string
+     */
+    public static function testingPassword()
+    {
+        return 'test123456';
+    }
 }

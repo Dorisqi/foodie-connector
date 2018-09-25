@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 abstract class ApiTestCase extends TestCase
 {
@@ -13,6 +14,11 @@ abstract class ApiTestCase extends TestCase
      * @var array
      */
     protected $requests = [];
+
+    /**
+     * API prefix
+     */
+    protected const PREFIX = '/api/v1';
 
     /**
      * Insert record into request list
@@ -53,9 +59,10 @@ abstract class ApiTestCase extends TestCase
                     ->insert([
                         'value' => json_encode([
                             'method' => $this->method(),
-                            'uri' => $this->uri(),
+                            'uri' => $this::PREFIX . $this->uri(),
                             'summary' => $this->summary(),
                             'tag' => $this->tag(),
+                            'params' => $this->params(),
                             'requests' => $this->requests
                         ]),
                     ]);
@@ -68,15 +75,16 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array $data
      * @param bool $documented [optional]
-     * @return void
+     * @return array
      */
     protected function assertSucceed(array $data, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this->uri(), $data);
+        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
         $response->assertStatus(200);
         if ($documented) {
             $this->insertRequest($data, $response);
         }
+        return $response->json();
     }
 
     /**
@@ -85,15 +93,16 @@ abstract class ApiTestCase extends TestCase
      * @param array $data
      * @param int $code
      * @param bool $documented [optional]
-     * @return void
+     * @return array
      */
     protected function assertFailed(array $data, int $code, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this->uri(), $data);
+        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
         $response->assertStatus($code);
         if ($documented) {
             $this->insertRequest($data, $response);
         }
+        return $response->json();
     }
 
     /**
@@ -134,5 +143,51 @@ abstract class ApiTestCase extends TestCase
     protected function tag()
     {
         throw new \BadMethodCallException('tag() not implemented');
+    }
+
+    /**
+     * Get the controller
+     *
+     * @return mixed
+     */
+    protected function controller()
+    {
+        throw new \BadMethodCallException('controller() not implemented');
+    }
+
+    /**
+     * Get params
+     *
+     * @return array
+     */
+    protected function params()
+    {
+        $params = [];
+        foreach ($this->controller()::rules() as $key => $rule) {
+            $restrictions = explode('|', $rule);
+            $param = [
+                'key' => $key,
+            ];
+            $extra = [];
+            foreach ($restrictions as $restriction) {
+                switch ($restriction) {
+                    case 'required':
+                        $param['required'] = true;
+                        break;
+                    case 'string':
+                    case 'numeric':
+                        $param['type'] = $restriction;
+                        break;
+                    case 'email':
+                        $param['email'] = true;
+                        break;
+                    default:
+                        array_push($extra, $restriction);
+                }
+            }
+            $param['extra'] = implode(', ', $extra);
+            array_push($params, $param);
+        }
+        return $params;
     }
 }

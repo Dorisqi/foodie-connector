@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Support\Facades\Redis;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -30,6 +31,8 @@ abstract class TestCase extends BaseTestCase
      */
     public function runDatabaseMigrations()
     {
+        Redis::flushall();
+
         $this->artisan('migrate:fresh');
 
         $this->app[Kernel::class]->setArtisan(null);

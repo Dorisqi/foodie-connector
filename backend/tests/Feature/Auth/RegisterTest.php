@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Models\ApiUser;
+use Illuminate\Support\Facades\Auth;
 use Tests\ApiTestCase;
 
 class RegisterTest extends ApiTestCase
@@ -17,20 +20,25 @@ class RegisterTest extends ApiTestCase
      */
     public function testRegister()
     {
+        $user = factory(ApiUser::class)->make();
         $this->assertFailed([
-            'email' => $this::EMAIL,
+            'email' => $user->email,
             'password' => 'short',
-            'name' => $this::NAME,
+            'name' => $user->name,
         ], 422);
         $this->assertSucceed([
-            'email' => $this::EMAIL,
-            'password' => $this::PASSWORD,
-            'name' => $this::NAME,
+            'email' => $user->email,
+            'password' => ApiUser::testingPassword(),
+            'name' => $user->name,
         ]);
+        $this->assertTrue(Auth::guard('api')->attempt([
+            'email' => $user->email,
+            'password' => ApiUser::testingPassword(),
+        ]));
         $this->assertFailed([
-            'email' => $this::EMAIL,
-            'password' => $this::PASSWORD,
-            'name' => $this::NAME,
+            'email' => $user->email,
+            'password' => ApiUser::testingPassword(),
+            'name' => $user->name,
         ], 409);
     }
 
@@ -41,7 +49,7 @@ class RegisterTest extends ApiTestCase
 
     protected function uri()
     {
-        return '/api/user/register';
+        return '/auth/register';
     }
 
     protected function summary()
@@ -52,5 +60,10 @@ class RegisterTest extends ApiTestCase
     protected function tag()
     {
         return 'authentication';
+    }
+
+    protected function controller()
+    {
+        return RegisterController::class;
     }
 }
