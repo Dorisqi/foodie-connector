@@ -75,7 +75,7 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array $data
      * @param bool $documented [optional]
-     * @return void
+     * @return array
      */
     protected function assertSucceed(array $data, bool $documented = true)
     {
@@ -84,6 +84,7 @@ abstract class ApiTestCase extends TestCase
         if ($documented) {
             $this->insertRequest($data, $response);
         }
+        return $response->json();
     }
 
     /**
@@ -92,7 +93,7 @@ abstract class ApiTestCase extends TestCase
      * @param array $data
      * @param int $code
      * @param bool $documented [optional]
-     * @return void
+     * @return array
      */
     protected function assertFailed(array $data, int $code, bool $documented = true)
     {
@@ -101,6 +102,7 @@ abstract class ApiTestCase extends TestCase
         if ($documented) {
             $this->insertRequest($data, $response);
         }
+        return $response->json();
     }
 
     /**

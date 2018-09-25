@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\ApiUser;
+use Illuminate\Support\Facades\Auth;
 use Tests\ApiTestCase;
 
 class RegisterTest extends ApiTestCase
@@ -30,6 +31,10 @@ class RegisterTest extends ApiTestCase
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
         ]);
+        $this->assertTrue(Auth::guard('api')->attempt([
+            'email' => $user->email,
+            'password' => ApiUser::testingPassword(),
+        ]));
         $this->assertFailed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),

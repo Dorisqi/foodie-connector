@@ -12,7 +12,7 @@ class ResetPasswordBroker
     /**
      * Storage key
      */
-    protected const STORAGE_KEY = 'PASSWORD_RESET_TOKEN';
+    protected const STORAGE_KEY = 'password_reset_token';
 
     /**
      * Expiration time in seconds

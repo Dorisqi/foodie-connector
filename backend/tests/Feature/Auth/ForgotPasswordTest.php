@@ -5,8 +5,8 @@ namespace Tests\Feature\Auth;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Models\ApiUser;
 use App\Notifications\ResetPassword;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
 
 class ForgotPasswordTest extends ApiTestCase
@@ -23,11 +23,14 @@ class ForgotPasswordTest extends ApiTestCase
         $this->assertSucceed([
             'email' => $user->email,
         ]);
+        $keys = Redis::keys('password_reset_token:' . $user->getAuthIdentifier() . ':*');
+        $this->assertFalse(empty($keys));
+        $token = substr(strrchr($keys[0], ':'), 1);
         Notification::assertSentTo(
             $user,
             ResetPassword::class,
-            function ($notification, $channels) use ($user) {
-                return !is_null($notification->token);
+            function ($notification, $channels) use ($token) {
+                return $notification->token == $token;
             }
         );
         $this->assertFailed([
