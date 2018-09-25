@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Brokers\ResetPasswordBroker;
 use App\Http\Controllers\ApiController;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use App\Models\ApiUser;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends ApiController
 {
@@ -19,8 +22,6 @@ class ResetPasswordController extends ApiController
     | explore this trait and override any methods you wish to tweak.
     |
     */
-
-    use ResetsPasswords;
 
     /**
      * Create a new controller instance.
@@ -49,8 +50,11 @@ class ResetPasswordController extends ApiController
         // database. Otherwise we will parse the error and return the response.
         ResetPasswordBroker::reset(
             $request->only(['email', 'password', 'token']),
-            function ($user, $password) {
-                $this->resetPassword($user, $password);
+            function (ApiUser $user, string $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+                event(new PasswordReset($user));
+                Auth::guard('api')->login($user);
             }
         );
 
