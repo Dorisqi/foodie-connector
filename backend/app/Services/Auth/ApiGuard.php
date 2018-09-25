@@ -7,6 +7,7 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class ApiGuard implements StatefulGuard
@@ -302,7 +303,9 @@ class ApiGuard implements StatefulGuard
     {
         $token = openssl_random_pseudo_bytes($this::TOKEN_BYTES);
         $this->token = bin2hex($token);
-        Redis::set($this->redisKey(), true, 'EX', $this->expire);
+        if (is_null(Redis::set($this->redisKey(), true, 'NX', 'EX', $this->expire))) {
+            $this->generateToken();
+        }
     }
 
     /**
