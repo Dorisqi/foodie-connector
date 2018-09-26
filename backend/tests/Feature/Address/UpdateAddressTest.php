@@ -45,6 +45,10 @@ class UpdateAddressTest extends ApiTestCase
         $this->assertFailed([
             'phone' => 'invalid_phone',
         ], 422);
+        $this->id = 0;
+        $this->assertFailed([
+            'name' => $addressArray['name'],
+        ], 404);
     }
 
     protected function method()

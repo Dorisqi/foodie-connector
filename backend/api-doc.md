@@ -609,6 +609,23 @@ Response:
     "message": "This page requires authentication."
 }
 ```
+#### Status Code: 404
+
+Resource not found.
+
+Request: /api/v1/addresses/0
+```
+{
+    "name": "Changed Name"
+}
+```
+
+Response:
+```
+{
+    "message": "Resource not found."
+}
+```
 #### Status Code: 422
 
 Validation failed.
