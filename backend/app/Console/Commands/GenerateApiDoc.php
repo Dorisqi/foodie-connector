@@ -59,6 +59,10 @@ class GenerateApiDoc extends Command
                 'description' => 'Everything about authentication',
                 'apis' => [],
             ],
+            'address' => [
+                'description' => 'Everything about address',
+                'apis' => [],
+            ]
         ];
         foreach ($apis as $api) {
             $api_decoded = json_decode($api);

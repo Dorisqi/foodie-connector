@@ -2,12 +2,18 @@
 
 namespace Tests;
 
+use App\Models\ApiUser;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 abstract class ApiTestCase extends TestCase
 {
+    /**
+     * API prefix
+     */
+    protected const PREFIX = '/api/v1';
+
     /**
      * API doc
      *
@@ -16,9 +22,11 @@ abstract class ApiTestCase extends TestCase
     protected $requests = [];
 
     /**
-     * API prefix
+     * API token
+     *
+     * @var string|null
      */
-    protected const PREFIX = '/api/v1';
+    protected $token = null;
 
     /**
      * Insert record into request list
@@ -75,16 +83,16 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array $data
      * @param bool $documented [optional]
-     * @return array
+     * @return \Illuminate\Foundation\Testing\TestResponse
      */
     protected function assertSucceed(array $data, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
+        $response = $this->request($data);
         $response->assertStatus(200);
         if ($documented) {
             $this->insertRequest($data, $response);
         }
-        return $response->json();
+        return $response;
     }
 
     /**
@@ -93,16 +101,43 @@ abstract class ApiTestCase extends TestCase
      * @param array $data
      * @param int $code
      * @param bool $documented [optional]
-     * @return array
+     * @return \Illuminate\Foundation\Testing\TestResponse
      */
     protected function assertFailed(array $data, int $code, bool $documented = true)
     {
-        $response = $this->json($this->method(), $this::PREFIX . $this->uri(), $data);
+        $response = $this->request($data);
         $response->assertStatus($code);
         if ($documented) {
             $this->insertRequest($data, $response);
         }
-        return $response->json();
+        return $response;
+    }
+
+    /**
+     * Make request
+     *
+     * @param array $data
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    protected function request(array $data)
+    {
+        $request = $this;
+        if (!is_null($this->token)) {
+            $request->withHeader('Authorization', $this->token);
+        }
+        return $request->json($this->method(), $this::PREFIX . $this->uri(), $data);
+    }
+
+    /**
+     * Login for authorization
+     *
+     * @param \App\Models\ApiUser $user
+     * @return void
+     */
+    protected function login(ApiUser $user)
+    {
+        Auth::guard('api')->login($user);
+        $this->token = Auth::guard('api')->token();
     }
 
     /**
@@ -175,8 +210,11 @@ abstract class ApiTestCase extends TestCase
                         $param['required'] = true;
                         break;
                     case 'string':
+                    case 'boolean':
                     case 'numeric':
                     case 'integer':
+                    case 'phone:US':
+                    case 'zip_code':
                         $param['type'] = $restriction;
                         break;
                     case 'email':

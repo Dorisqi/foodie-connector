@@ -32,7 +32,7 @@ Request:
 Response:
 ```
 {
-    "api_token": "ODdiZGQ2YzQ1OTkyM2NiZDFkNWUyYjU3ZTI3NTU4MTNiMjBlNzg4ZDc4MjE2MDM4ZDBlODkxYjZiN2JhMGUwODE=",
+    "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
         "id": 1,
         "name": "Test User",
@@ -132,7 +132,7 @@ Request:
 Response:
 ```
 {
-    "api_token": "ZTM5Y2ZlYzNmOTlkNDhkNThhNjQzYjAyZGE2NWM4MDNiNzNjYWM0YzU5MGIxNjk1OWFmZDc5MDBjODJmMzFmMDE=",
+    "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
         "id": 1,
         "name": "Test User",
@@ -339,6 +339,122 @@ Response:
     "information": {
         "email": [
             "The email must be a valid email address."
+        ]
+    }
+}
+```
+
+## **address**
+
+Everything about address
+
+### **POST - /api/v1/addresses**
+
+Add a new address
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | optional | string | max:255 |
+| phone | optional | phone:US |  |
+| line_1 | optional | string | max:255 |
+| line_2 | optional | string | max:255 |
+| city | optional | string | max:255 |
+| state | optional | string | max:255 |
+| zip_code | optional | zip_code |  |
+| place_id | optional | string | max:255 |
+| is_default | optional | boolean |  |
+
+#### Status Code: 200
+
+Successful operation
+
+Request:
+```
+{
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "api_user_id": 1,
+    "is_default": false
+}
+```
+
+Response:
+```
+{
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "api_user_id": 1,
+    "id": 1,
+    "is_default": true
+}
+```
+#### Status Code: 401
+
+This page requires authentication.
+
+Request:
+```
+{
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "api_user_id": 1,
+    "is_default": false
+}
+```
+
+Response:
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### Status Code: 422
+
+Validation failed.
+
+Request:
+```
+{
+    "name": "Test User",
+    "phone": "invalid_phone",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "api_user_id": 1,
+    "is_default": true
+}
+```
+
+Response:
+```
+{
+    "message": "Validation failed.",
+    "information": {
+        "phone": [
+            "The phone must be a phone number."
         ]
     }
 }

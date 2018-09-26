@@ -9,7 +9,6 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class ApiGuard implements StatefulGuard
@@ -17,9 +16,15 @@ class ApiGuard implements StatefulGuard
     use GuardHelpers;
 
     /**
+     * API token for testing
+     */
+    protected const API_TOKEN_TESTING =
+        'ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=';
+
+    /**
      * The length of the token
      */
-    private const TOKEN_BYTES = 32;
+    protected const TOKEN_BYTES = 32;
 
     /**
      * The header key from authorization
@@ -135,7 +140,9 @@ class ApiGuard implements StatefulGuard
      */
     public function token()
     {
-        return base64_encode($this->token . $this->user()->getAuthIdentifier());
+        return App::environment('testing') ?
+            $this::API_TOKEN_TESTING :
+            base64_encode($this->token . $this->user()->getAuthIdentifier());
     }
 
     /**
@@ -317,10 +324,10 @@ class ApiGuard implements StatefulGuard
     /**
      * Decode the token
      *
-     * @param string $encodedToken
+     * @param string|null $encodedToken
      * @return array
      */
-    public static function decodeToken(string $encodedToken)
+    protected static function decodeToken($encodedToken)
     {
         if (is_null($encodedToken)) {
             return null;
