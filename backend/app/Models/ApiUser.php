@@ -32,8 +32,18 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'created_at', 'updated_at'
     ];
+
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\Address');
+    }
+
+    public function defaultAddress()
+    {
+        return $this->hasOne('App\Models\Address', 'id', 'default_address');
+    }
 
     /**
      * Send the password reset notification.

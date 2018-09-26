@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends ApiController
@@ -51,9 +52,11 @@ class LoginController extends ApiController
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
-            throw ApiException::tooManyAttempts($this->limiter()->availableIn(
-                $this->throttleKey($request)
-            ));
+            throw ApiException::tooManyAttempts(
+                App::environment('testing')
+                    ? 60
+                    : $this->limiter()->availableIn($this->throttleKey($request))
+            );
         }
 
         if ($this->attemptLogin($request)) {

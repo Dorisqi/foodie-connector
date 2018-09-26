@@ -39,7 +39,6 @@ return [
         'api' => [
             'driver' => 'api',
             'provider' => 'api_users',
-            'expire' => 2592000, // 30 days
         ],
 
         'admin' => [

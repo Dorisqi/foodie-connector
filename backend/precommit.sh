@@ -1,4 +1,8 @@
 #!/bin/sh
 
+set -e
+
 phpcs .
-php vendor/phpunit/phpunit/phpunit
+chmod +x generate-api-doc.sh
+./generate-api-doc.sh
+git add api-doc.md

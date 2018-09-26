@@ -35,6 +35,7 @@ class RegisterTest extends ApiTestCase
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));
+        $this->assertAuthenticated('api');
         $this->assertFailed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
@@ -62,8 +63,8 @@ class RegisterTest extends ApiTestCase
         return 'authentication';
     }
 
-    protected function controller()
+    protected function rules()
     {
-        return RegisterController::class;
+        return RegisterController::rules();
     }
 }

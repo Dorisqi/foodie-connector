@@ -61,8 +61,8 @@ class ForgotPasswordTest extends ApiTestCase
         return 'authentication';
     }
 
-    protected function controller()
+    protected function rules()
     {
-        return ForgotPasswordController::class;
+        return ForgotPasswordController::rules();
     }
 }

@@ -69,7 +69,7 @@ class ResetPasswordController extends ApiController
     public static function rules()
     {
         return [
-            'token' => 'required|numeric|min:0|max:99999999',
+            'token' => 'required|integer|between:0,99999999',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
         ];
