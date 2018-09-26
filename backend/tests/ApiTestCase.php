@@ -70,6 +70,7 @@ abstract class ApiTestCase extends TestCase
                             'uri' => $this::PREFIX . $this->uri(),
                             'summary' => $this->summary(),
                             'tag' => $this->tag(),
+                            'authorization' => !is_null($this->token),
                             'params' => $this->params(),
                             'requests' => $this->requests
                         ]),

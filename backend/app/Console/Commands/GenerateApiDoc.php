@@ -82,6 +82,7 @@ class GenerateApiDoc extends Command
                 'method' => $api_decoded->{'method'},
                 'uri' => $api_decoded->{'uri'},
                 'summary' => $api_decoded->{'summary'},
+                'authorization' => $api_decoded->{'authorization'},
                 'params' => $api_decoded->{'params'},
                 'requests' => $requests,
             ]);

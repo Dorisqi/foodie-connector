@@ -10,6 +10,10 @@ Everything about authentication
 
 Login
 
+#### Authorization
+
+Not required
+
 #### Params
 
 | Key | Required | Type | Extra |
@@ -108,6 +112,10 @@ Response:
 
 Register for a new user
 
+#### Authorization
+
+Not required
+
 #### Params
 
 | Key | Required | Type | Extra |
@@ -189,6 +197,10 @@ Response:
 ### **POST - /api/v1/auth/reset-password**
 
 Reset password
+
+#### Authorization
+
+Not required
 
 #### Params
 
@@ -283,6 +295,10 @@ Response:
 
 Send email containing password reset link
 
+#### Authorization
+
+Not required
+
 #### Params
 
 | Key | Required | Type | Extra |
@@ -351,6 +367,10 @@ Everything about address
 ### **POST - /api/v1/addresses**
 
 Add a new address
+
+#### Authorization
+
+Required
 
 #### Params
 
