@@ -12,6 +12,10 @@ class Address extends Model
         'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id'
     ];
 
+    protected $hidden = [
+        'api_user_id',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\ApiUser', 'id', 'api_user_id');

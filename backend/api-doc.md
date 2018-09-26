@@ -25,7 +25,7 @@ Not required
 
 Successful operation
 
-Request:
+Request: /api/v1/auth/login
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -50,7 +50,7 @@ Response:
 
 These credentials do not match our records.
 
-Request:
+Request: /api/v1/auth/login
 ```
 {
     "email": "wrong@foodie-connector.delivery",
@@ -68,7 +68,7 @@ Response:
 
 Validation failed.
 
-Request:
+Request: /api/v1/auth/login
 ```
 {
     "email": "user@foodie-connector.delivery"
@@ -90,7 +90,7 @@ Response:
 
 Too many attempts
 
-Request:
+Request: /api/v1/auth/login
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -128,7 +128,7 @@ Not required
 
 Successful operation
 
-Request:
+Request: /api/v1/auth/register
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -154,7 +154,7 @@ Response:
 
 The email has already been taken.
 
-Request:
+Request: /api/v1/auth/register
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -173,7 +173,7 @@ Response:
 
 Validation failed.
 
-Request:
+Request: /api/v1/auth/register
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -214,7 +214,7 @@ Not required
 
 Successful operation
 
-Request:
+Request: /api/v1/auth/reset-password
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -231,7 +231,7 @@ Response:
 
 The password reset token is invalid or expired
 
-Request:
+Request: /api/v1/auth/reset-password
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -250,7 +250,7 @@ Response:
 
 We can't find a user with that e-mail address.
 
-Request:
+Request: /api/v1/auth/reset-password
 ```
 {
     "email": "wrong@foodie-connector.delivery",
@@ -269,7 +269,7 @@ Response:
 
 Validation failed.
 
-Request:
+Request: /api/v1/auth/reset-password
 ```
 {
     "email": "user@foodie-connector.delivery"
@@ -309,7 +309,7 @@ Not required
 
 Successful operation
 
-Request:
+Request: /api/v1/auth/reset-password-email
 ```
 {
     "email": "user@foodie-connector.delivery"
@@ -324,7 +324,7 @@ Response:
 
 We can't find a user with that e-mail address.
 
-Request:
+Request: /api/v1/auth/reset-password-email
 ```
 {
     "email": "wrong@foodie-connector.delivery"
@@ -341,7 +341,7 @@ Response:
 
 Validation failed.
 
-Request:
+Request: /api/v1/auth/reset-password-email
 ```
 {
     "email": "not_email"
@@ -381,7 +381,7 @@ Required
 
 Successful operation
 
-Request:
+Request: /api/v1/addresses
 ```
 []
 ```
@@ -399,7 +399,6 @@ Response:
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "api_user_id": "1",
         "is_default": false
     },
     {
@@ -412,7 +411,6 @@ Response:
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "api_user_id": "1",
         "is_default": false
     }
 ]
@@ -421,7 +419,7 @@ Response:
 
 This page requires authentication.
 
-Request:
+Request: /api/v1/addresses
 ```
 []
 ```
@@ -459,7 +457,7 @@ Required
 
 Successful operation
 
-Request:
+Request: /api/v1/addresses
 ```
 {
     "name": "Test User",
@@ -470,7 +468,6 @@ Request:
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "api_user_id": 1,
     "is_default": false
 }
 ```
@@ -486,7 +483,6 @@ Response:
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "api_user_id": 1,
     "id": 1,
     "is_default": true
 }
@@ -495,7 +491,7 @@ Response:
 
 This page requires authentication.
 
-Request:
+Request: /api/v1/addresses
 ```
 {
     "name": "Test User",
@@ -506,7 +502,6 @@ Request:
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "api_user_id": 1,
     "is_default": false
 }
 ```
@@ -521,7 +516,7 @@ Response:
 
 Validation failed.
 
-Request:
+Request: /api/v1/addresses
 ```
 {
     "name": "Test User",
@@ -532,8 +527,96 @@ Request:
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "api_user_id": 1,
     "is_default": true
+}
+```
+
+Response:
+```
+{
+    "message": "Validation failed.",
+    "information": {
+        "phone": [
+            "The phone must be a phone number."
+        ]
+    }
+}
+```
+
+### **PUT - /api/v1/addresses/{id}**
+
+Updating an existed address
+
+#### Authorization
+
+Required
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | optional | string | max:255 |
+| phone | optional | phone:US |  |
+| line_1 | optional | string | max:255 |
+| line_2 | optional | string | max:255 |
+| city | optional | string | max:255 |
+| state | optional | string | max:255 |
+| zip_code | optional | zip_code |  |
+| place_id | optional | string | max:255 |
+| is_default | optional | boolean |  |
+
+#### Status Code: 200
+
+Successful operation
+
+Request: /api/v1/addresses/1
+```
+{
+    "name": "Changed Name",
+    "is_default": true
+}
+```
+
+Response:
+```
+{
+    "id": 1,
+    "name": "Changed Name",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "is_default": true
+}
+```
+#### Status Code: 401
+
+This page requires authentication.
+
+Request: /api/v1/addresses/1
+```
+{
+    "name": "Changed Name"
+}
+```
+
+Response:
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### Status Code: 422
+
+Validation failed.
+
+Request: /api/v1/addresses/1
+```
+{
+    "phone": "invalid_phone"
 }
 ```
 

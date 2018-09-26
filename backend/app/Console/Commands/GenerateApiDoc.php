@@ -70,6 +70,7 @@ class GenerateApiDoc extends Command
             foreach ($api_decoded->{'requests'} as $request) {
                 array_push($requests, [
                     'description' => $request->{'description'},
+                    'uri' => $request->{'uri'},
                     'request' => json_encode($request->{'request'}, JSON_PRETTY_PRINT),
                     'status_code' => $request->{'status_code'},
                     'response' => json_encode($request->{'response'}, JSON_PRETTY_PRINT),

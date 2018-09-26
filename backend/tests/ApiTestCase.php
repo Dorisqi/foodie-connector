@@ -41,6 +41,7 @@ abstract class ApiTestCase extends TestCase
             return;
         }
         $api = [
+            'uri' => $this->processedUri(),
             'request' => $data,
             'status_code' => $response->status(),
             'description' => $response->status() == 200
@@ -126,7 +127,21 @@ abstract class ApiTestCase extends TestCase
         if (!is_null($this->token)) {
             $request->withHeader('Authorization', $this->token);
         }
-        return $request->json($this->method(), $this::PREFIX . $this->uri(), $data);
+        return $request->json($this->method(), $this->processedUri(), $data);
+    }
+
+    /**
+     * Get the processed uri
+     *
+     * @return string
+     */
+    protected function processedUri()
+    {
+        $uri = $this->uri();
+        foreach ($this->uriParams() as $key => $value) {
+            $uri = str_replace('{' . $key . '}', $value, $uri);
+        }
+        return $this::PREFIX . $uri;
     }
 
     /**
@@ -159,6 +174,16 @@ abstract class ApiTestCase extends TestCase
     protected function uri()
     {
         throw new \BadMethodCallException('uri() not implemented');
+    }
+
+    /**
+     * Get the uri params
+     *
+     * @return array
+     */
+    protected function uriParams()
+    {
+        return [];
     }
 
     /**
