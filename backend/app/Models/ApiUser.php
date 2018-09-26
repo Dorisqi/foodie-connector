@@ -32,7 +32,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'created_at', 'updated_at'
+        'password', 'email_verified_at', 'created_at', 'updated_at', 'default_address'
     ];
 
     public function addresses()

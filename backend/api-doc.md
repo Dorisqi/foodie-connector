@@ -46,9 +46,7 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "email_verified_at": null,
-        "default_address": null
+        "email": "user@foodie-connector.delivery"
     }
 }
 ```
@@ -174,9 +172,7 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "email_verified_at": null,
-        "default_address": null
+        "email": "user@foodie-connector.delivery"
     }
 }
 ```
