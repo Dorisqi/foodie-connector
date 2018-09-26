@@ -10,18 +10,18 @@ Everything about authentication
 
 Login
 
-#### Authorization
+#### **Authorization**
 
 Not required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 | email | required | email |  |
 | password | required | string |  |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -52,7 +52,7 @@ Successful operation
     }
 }
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 These credentials do not match our records.
 
@@ -76,7 +76,7 @@ These credentials do not match our records.
     "message": "These credentials do not match our records."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
@@ -104,7 +104,7 @@ Validation failed.
     }
 }
 ```
-#### Status Code: 429
+#### **Status Code: 429**
 
 Too many attempts
 
@@ -136,11 +136,11 @@ Too many attempts
 
 Register for a new user
 
-#### Authorization
+#### **Authorization**
 
 Not required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
@@ -148,7 +148,7 @@ Not required
 | email | required | email | max:255, unique:api_users |
 | password | required | string | min:6 |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -180,7 +180,7 @@ Successful operation
     }
 }
 ```
-#### Status Code: 409
+#### **Status Code: 409**
 
 The email has already been taken.
 
@@ -205,7 +205,7 @@ The email has already been taken.
     "message": "The email has already been taken."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
@@ -240,11 +240,11 @@ Validation failed.
 
 Reset password
 
-#### Authorization
+#### **Authorization**
 
 Not required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
@@ -252,7 +252,7 @@ Not required
 | email | required | email |  |
 | password | required | string | min:6 |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -275,7 +275,7 @@ Successful operation
 ```
 
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 The password reset token is invalid or expired
 
@@ -300,7 +300,7 @@ The password reset token is invalid or expired
     "message": "The password reset token is invalid or expired"
 }
 ```
-#### Status Code: 404
+#### **Status Code: 404**
 
 We can't find a user with that e-mail address.
 
@@ -325,7 +325,7 @@ We can't find a user with that e-mail address.
     "message": "We can't find a user with that e-mail address."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
@@ -361,17 +361,17 @@ Validation failed.
 
 Send email containing password reset link
 
-#### Authorization
+#### **Authorization**
 
 Not required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 | email | required | email |  |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -392,7 +392,7 @@ Successful operation
 ```
 
 ```
-#### Status Code: 404
+#### **Status Code: 404**
 
 We can't find a user with that e-mail address.
 
@@ -415,7 +415,7 @@ We can't find a user with that e-mail address.
     "message": "We can't find a user with that e-mail address."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
@@ -452,16 +452,16 @@ Everything about address
 
 Get a list of all addresses
 
-#### Authorization
+#### **Authorization**
 
 Required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -474,14 +474,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Request Body:**
 ```
-[]
+
 ```
 
 **Response:**
 ```
 [
     {
-        "id": 1,
+        "id": 4,
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce Street",
@@ -493,7 +493,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": false
     },
     {
-        "id": 2,
+        "id": 5,
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce Street",
@@ -506,7 +506,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 ]
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 This page requires authentication.
 
@@ -518,7 +518,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-[]
+
 ```
 
 **Response:**
@@ -532,11 +532,11 @@ This page requires authentication.
 
 Add a new address
 
-#### Authorization
+#### **Authorization**
 
 Required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
@@ -550,7 +550,7 @@ Required
 | place_id | required | string | max:255 |
 | is_default | required | boolean |  |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -572,7 +572,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": false
+    "is_default": true
 }
 ```
 
@@ -591,7 +591,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_default": true
 }
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 This page requires authentication.
 
@@ -603,17 +603,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-{
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": false
-}
+
 ```
 
 **Response:**
@@ -622,7 +612,7 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
@@ -664,16 +654,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Show detail of a specific address
 
-#### Authorization
+#### **Authorization**
 
 Required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -704,11 +694,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_default": false
 }
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
@@ -725,7 +715,7 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### Status Code: 404
+#### **Status Code: 404**
 
 Resource not found.
 
@@ -752,11 +742,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Updating an existed address
 
-#### Authorization
+#### **Authorization**
 
 Required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
@@ -770,7 +760,7 @@ Required
 | place_id | optional | string | max:255 |
 | is_default | optional | boolean |  |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -804,11 +794,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_default": true
 }
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
@@ -816,9 +806,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-{
-    "name": "Changed Name"
-}
+
 ```
 
 **Response:**
@@ -827,7 +815,7 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### Status Code: 404
+#### **Status Code: 404**
 
 Resource not found.
 
@@ -851,11 +839,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Resource not found."
 }
 ```
-#### Status Code: 422
+#### **Status Code: 422**
 
 Validation failed.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/2
 
 **Request Header:**
 ```
@@ -885,16 +873,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Delete an existed address
 
-#### Authorization
+#### **Authorization**
 
 Required
 
-#### Params
+#### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 
-#### Status Code: 200
+#### **Status Code: 200**
 
 Successful operation
 
@@ -914,11 +902,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 
 ```
-#### Status Code: 401
+#### **Status Code: 401**
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
@@ -935,7 +923,7 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### Status Code: 404
+#### **Status Code: 404**
 
 Resource not found.
 

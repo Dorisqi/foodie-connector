@@ -17,11 +17,8 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::guard('api')->user();
         $addresses = $user->addresses;
-        foreach ($addresses as $key => $address) {
-            $addresses[$key]['is_default'] = $address['id'] == $user['default_address'];
-        }
         return $this->response($addresses);
     }
 
@@ -41,14 +38,11 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
             $address = new Address($request->only($this->modelParams()));
-            $user = Auth::user();
+            $user = Auth::guard('api')->user();
             $user->addresses()->save($address);
-            if ($request->input('is_default') === true || is_null(Auth::user()->defaultAddress)) {
-                $user['default_address'] = $address->id;
-                $user->save();
-                $address['is_default'] = true;
-            } else {
-                $address['is_default'] = false;
+            if ($request->input('is_default') === true
+                || is_null(Auth::guard('api')->user()->defaultAddress)) {
+                $address->is_default = true;
             }
             DB::commit();
         } catch (\Exception $exception) {
@@ -70,12 +64,11 @@ class AddressController extends ApiController
      */
     public function show(Request $request, $id)
     {
-        $user = Auth::user();
+        $user = Auth::guard('api')->user();
         $address = Address::where('api_user_id', $user->id)->find($id);
         if (is_null($address)) {
             throw ApiException::resourceNotFound();
         }
-        $address['is_default'] = $user['default_address'] == $address->id;
         return $this->response($address);
     }
 
@@ -96,20 +89,17 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
 
-            $user = Auth::user();
-            $address = Address::where('api_user_id', $user->getAuthIdentifier())->find($id);
+            $user = Auth::guard('api')->user();
+            $address = $user->addresses()->find($id);
             if (is_null($address)) {
                 throw ApiException::resourceNotFound();
             }
 
             $address->fill($request->only($this->modelParams()));
             $address->save();
-
             if ($request->input('is_default') == true) {
-                $user['default_address'] = $address->id;
-                $user->save();
+                $address->is_default = true;
             }
-            $address['is_default'] = $user['default_address'] == $address->id;
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -132,22 +122,21 @@ class AddressController extends ApiController
     {
         try {
             DB::beginTransaction();
-            $user = Auth::user();
-            if ($user['default_address'] == $id) {
-                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->first();
-                if (is_null($newDefaultAddress)) {
-                    $user['default_address'] = null;
-                } else {
-                    $user['default_address'] = $newDefaultAddress->id;
-                }
-                $user->save();
-            }
-            $deletedRows = Address::where('api_user_id', Auth::user()->getAuthIdentifier())
-                ->where('id', $id)
-                ->delete();
-            if ($deletedRows == 0) {
+            $user = Auth::guard('api')->user();
+            $address = $user->addresses()->find($id);
+            if (is_null($address)) {
                 throw ApiException::resourceNotFound();
             }
+            if ($address->is_default) {
+                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->first();
+                if (is_null($newDefaultAddress)) {
+                    $user->default_address = null;
+                    $user->save();
+                } else {
+                    $newDefaultAddress->is_default = true;
+                }
+            }
+            $address->delete();
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();

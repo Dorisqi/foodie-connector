@@ -16,13 +16,9 @@ class StoreAddressTest extends ApiTestCase
      */
     public function testStoreAddress()
     {
-        $user = factory(ApiUser::class)->create();
-        $address = factory(Address::class)->make([
-            'api_user_id' => $user->id,
-            'is_default' => false,
-        ]);
-        $this->assertFailed($address->toArray(), 401);
-        $this->login($user);
+        $this->assertFailed(null, 401);
+        $this->login(factory(ApiUser::class)->create());
+        $address = factory(Address::class)->make();
         $response = $this->assertSucceed($address->toArray());
         $alteredAddress = $address->toArray();
         $alteredAddress['is_default'] = true;

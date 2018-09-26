@@ -15,17 +15,14 @@ class ListAddressTest extends ApiTestCase
      */
     public function testListAddress()
     {
-        $user = factory(ApiUser::class)->create();
-        factory(Address::class, 2)
-            ->create()
-            ->each(function ($address) use ($user) {
-                $address['api_user_id'] = $user->id;
-                $address->save();
-            });
+        $this->assertFailed(null, 401);
+        $this->login(factory(ApiUser::class)->create());
         factory(Address::class, 3)->create();
-        $this->assertFailed([], 401);
-        $this->login($user);
-        $response = $this->assertSucceed([]);
+        $this->login(factory(ApiUser::class)->create([
+            'email' => 'another_user@foodie-connector.delivery'
+        ]));
+        factory(Address::class, 2)->create();
+        $response = $this->assertSucceed(null);
         $response->assertJsonCount(2);
     }
 
