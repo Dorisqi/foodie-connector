@@ -14,7 +14,7 @@ class UpdateAddressTest extends ApiTestCase
      *
      * @param int
      */
-    protected $id = null;
+    protected $id = 0;
 
     /**
      * Test updating address
@@ -23,25 +23,27 @@ class UpdateAddressTest extends ApiTestCase
      */
     public function testUpdateAddress()
     {
-        $user = factory(ApiUser::class)->create();
-        $address = factory(Address::class)->create([
-            'api_user_id' => $user->id,
-        ]);
+        $this->assertFailed(null, 401);
+        $this->login(factory(ApiUser::class)->create());
+        $address = factory(Address::class)->create();
         $this->id = $address->id;
         $addressArray = $address->toArray();
         $addressArray['name'] = 'Changed Name';
-        $addressArray['is_default'] = true;
         unset($addressArray['api_user_id']);
-        $this->assertFailed([
-            'name' => $addressArray['name'],
-        ], 401);
-        $this->login($user);
-        $this->assertSucceed([
+        $response = $this->assertSucceed([
             'name' => $addressArray['name'],
             'is_default' => true,
-        ])
-            ->assertJson($addressArray);
-        $this->assertTrue(ApiUser::find($user->id)['default_address'] == $address->id);
+        ]);
+        $addressArray['is_default'] = true;
+        $response->assertJson($addressArray);
+        $newAddress = factory(Address::class)->create();
+        $this->id = $newAddress->id;
+        $newAddressArray = $newAddress->toArray();
+        $newAddressArray['is_default'] = true;
+        $this->assertSucceed([
+            'is_default' => true,
+        ], false)
+            ->assertJson($newAddressArray);
         $this->assertFailed([
             'phone' => 'invalid_phone',
         ], 422);

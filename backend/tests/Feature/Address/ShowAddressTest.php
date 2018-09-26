@@ -11,7 +11,7 @@ class ShowAddressTest extends ApiTestCase
     /**
      * Address id
      */
-    protected $id = null;
+    protected $id = 0;
 
     /**
      * Test showing address
@@ -20,13 +20,10 @@ class ShowAddressTest extends ApiTestCase
      */
     public function testShowAddress()
     {
-        $user = factory(ApiUser::class)->create();
-        $address = factory(Address::class)->create([
-            'api_user_id' => $user,
-        ]);
-        $this->id = $address->id;
         $this->assertFailed(null, 401);
-        $this->login($user);
+        $this->login(factory(ApiUser::class)->create());
+        $address = factory(Address::class)->create();
+        $this->id = $address->id;
         $addressArray = $address->toArray();
         $addressArray['is_default'] = false;
         $this->assertSucceed(null)->assertJson($addressArray);

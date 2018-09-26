@@ -474,14 +474,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Request Body:**
 ```
-[]
+
 ```
 
 **Response:**
 ```
 [
     {
-        "id": 1,
+        "id": 4,
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce Street",
@@ -493,7 +493,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": false
     },
     {
-        "id": 2,
+        "id": 5,
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce Street",
@@ -518,7 +518,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-[]
+
 ```
 
 **Response:**
@@ -572,7 +572,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": false
+    "is_default": true
 }
 ```
 
@@ -603,17 +603,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-{
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": false
-}
+
 ```
 
 **Response:**
@@ -708,7 +698,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
@@ -808,7 +798,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
@@ -816,9 +806,7 @@ This page requires authentication.
 
 **Request Body:**
 ```
-{
-    "name": "Changed Name"
-}
+
 ```
 
 **Response:**
@@ -855,7 +843,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Validation failed.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/2
 
 **Request Header:**
 ```
@@ -918,7 +906,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Request Header:**
 ```
