@@ -364,6 +364,75 @@ Response:
 
 Everything about address
 
+### **GET - /api/v1/addresses**
+
+Get a list of all addresses
+
+#### Authorization
+
+Required
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+
+#### Status Code: 200
+
+Successful operation
+
+Request:
+```
+[]
+```
+
+Response:
+```
+[
+    {
+        "id": 1,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "api_user_id": "1",
+        "is_default": false
+    },
+    {
+        "id": 2,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "api_user_id": "1",
+        "is_default": false
+    }
+]
+```
+#### Status Code: 401
+
+This page requires authentication.
+
+Request:
+```
+[]
+```
+
+Response:
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
 ### **POST - /api/v1/addresses**
 
 Add a new address

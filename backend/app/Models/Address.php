@@ -14,6 +14,6 @@ class Address extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\ApiUser');
+        return $this->belongsTo('App\Models\ApiUser', 'id', 'api_user_id');
     }
 }
