@@ -632,3 +632,60 @@ Response:
 }
 ```
 
+### **DELETE - /api/v1/addresses/{id}**
+
+Delete an existed address
+
+#### Authorization
+
+Required
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+
+#### Status Code: 200
+
+Successful operation
+
+Request: /api/v1/addresses/1
+```
+[]
+```
+
+Response:
+```
+[]
+```
+#### Status Code: 401
+
+This page requires authentication.
+
+Request: /api/v1/addresses/1
+```
+[]
+```
+
+Response:
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### Status Code: 404
+
+Resource not found.
+
+Request: /api/v1/addresses/0
+```
+[]
+```
+
+Response:
+```
+{
+    "message": "Resource not found."
+}
+```
+
