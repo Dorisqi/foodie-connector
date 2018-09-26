@@ -25,9 +25,13 @@ Not required
 
 Successful operation
 
-Request: /api/v1/auth/login
+**URI**: /api/v1/auth/login
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -35,7 +39,7 @@ Request: /api/v1/auth/login
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
@@ -52,9 +56,13 @@ Response:
 
 These credentials do not match our records.
 
-Request: /api/v1/auth/login
+**URI**: /api/v1/auth/login
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "wrong@foodie-connector.delivery",
@@ -62,7 +70,7 @@ Request: /api/v1/auth/login
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "These credentials do not match our records."
@@ -72,16 +80,20 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/auth/login
+**URI**: /api/v1/auth/login
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -96,9 +108,13 @@ Response:
 
 Too many attempts
 
-Request: /api/v1/auth/login
+**URI**: /api/v1/auth/login
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -106,7 +122,7 @@ Request: /api/v1/auth/login
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Too many attempts",
@@ -136,9 +152,13 @@ Not required
 
 Successful operation
 
-Request: /api/v1/auth/register
+**URI**: /api/v1/auth/register
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -147,7 +167,7 @@ Request: /api/v1/auth/register
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
@@ -164,9 +184,13 @@ Response:
 
 The email has already been taken.
 
-Request: /api/v1/auth/register
+**URI**: /api/v1/auth/register
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -175,7 +199,7 @@ Request: /api/v1/auth/register
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "The email has already been taken."
@@ -185,9 +209,13 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/auth/register
+**URI**: /api/v1/auth/register
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -196,7 +224,7 @@ Request: /api/v1/auth/register
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -228,9 +256,13 @@ Not required
 
 Successful operation
 
-Request: /api/v1/auth/reset-password
+**URI**: /api/v1/auth/reset-password
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -239,17 +271,21 @@ Request: /api/v1/auth/reset-password
 }
 ```
 
-Response:
+**Response:**
 ```
-[]
+
 ```
 #### Status Code: 401
 
 The password reset token is invalid or expired
 
-Request: /api/v1/auth/reset-password
+**URI**: /api/v1/auth/reset-password
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -258,7 +294,7 @@ Request: /api/v1/auth/reset-password
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "The password reset token is invalid or expired"
@@ -268,9 +304,13 @@ Response:
 
 We can't find a user with that e-mail address.
 
-Request: /api/v1/auth/reset-password
+**URI**: /api/v1/auth/reset-password
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "wrong@foodie-connector.delivery",
@@ -279,7 +319,7 @@ Request: /api/v1/auth/reset-password
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -289,16 +329,20 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/auth/reset-password
+**URI**: /api/v1/auth/reset-password
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -331,33 +375,41 @@ Not required
 
 Successful operation
 
-Request: /api/v1/auth/reset-password-email
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery"
 }
 ```
 
-Response:
+**Response:**
 ```
-[]
+
 ```
 #### Status Code: 404
 
 We can't find a user with that e-mail address.
 
-Request: /api/v1/auth/reset-password-email
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "wrong@foodie-connector.delivery"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -367,16 +419,20 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/auth/reset-password-email
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "email": "not_email"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -409,15 +465,19 @@ Required
 
 Successful operation
 
-Request: /api/v1/addresses
+**URI**: /api/v1/addresses
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 []
 ```
 
-Response:
+**Response:**
 ```
 [
     {
@@ -450,14 +510,18 @@ Response:
 
 This page requires authentication.
 
-Request: /api/v1/addresses
+**URI**: /api/v1/addresses
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 []
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "This page requires authentication."
@@ -490,10 +554,14 @@ Required
 
 Successful operation
 
-Request: /api/v1/addresses
+**URI**: /api/v1/addresses
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 {
     "name": "Test User",
@@ -508,7 +576,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "name": "Test User",
@@ -527,9 +595,13 @@ Response:
 
 This page requires authentication.
 
-Request: /api/v1/addresses
+**URI**: /api/v1/addresses
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "name": "Test User",
@@ -544,7 +616,7 @@ Request: /api/v1/addresses
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "This page requires authentication."
@@ -554,10 +626,14 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/addresses
+**URI**: /api/v1/addresses
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 {
     "name": "Test User",
@@ -572,7 +648,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -601,15 +677,19 @@ Required
 
 Successful operation
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-```
-[]
+
+**Request Body:**
 ```
 
-Response:
+```
+
+**Response:**
 ```
 {
     "id": 1,
@@ -628,14 +708,18 @@ Response:
 
 This page requires authentication.
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
-```
-```
-[]
 ```
 
-Response:
+**Request Body:**
+```
+
+```
+
+**Response:**
 ```
 {
     "message": "This page requires authentication."
@@ -645,15 +729,19 @@ Response:
 
 Resource not found.
 
-Request: /api/v1/addresses/0
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-```
-[]
+
+**Request Body:**
 ```
 
-Response:
+```
+
+**Response:**
 ```
 {
     "message": "Resource not found."
@@ -686,10 +774,14 @@ Required
 
 Successful operation
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 {
     "name": "Changed Name",
@@ -697,7 +789,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "id": 1,
@@ -716,16 +808,20 @@ Response:
 
 This page requires authentication.
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
 ```
+
+**Request Body:**
 ```
 {
     "name": "Changed Name"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "This page requires authentication."
@@ -735,17 +831,21 @@ Response:
 
 Resource not found.
 
-Request: /api/v1/addresses/0
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 {
     "name": "Changed Name"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Resource not found."
@@ -755,17 +855,21 @@ Response:
 
 Validation failed.
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
+
+**Request Body:**
 ```
 {
     "phone": "invalid_phone"
 }
 ```
 
-Response:
+**Response:**
 ```
 {
     "message": "Validation failed.",
@@ -794,30 +898,38 @@ Required
 
 Successful operation
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-```
-[]
+
+**Request Body:**
 ```
 
-Response:
 ```
-[]
+
+**Response:**
+```
+
 ```
 #### Status Code: 401
 
 This page requires authentication.
 
-Request: /api/v1/addresses/1
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
 ```
-```
-```
-[]
 ```
 
-Response:
+**Request Body:**
+```
+
+```
+
+**Response:**
 ```
 {
     "message": "This page requires authentication."
@@ -827,15 +939,19 @@ Response:
 
 Resource not found.
 
-Request: /api/v1/addresses/0
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-```
-[]
+
+**Request Body:**
 ```
 
-Response:
+```
+
+**Response:**
 ```
 {
     "message": "Resource not found."

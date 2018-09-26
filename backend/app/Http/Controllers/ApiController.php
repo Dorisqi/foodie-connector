@@ -16,7 +16,9 @@ class ApiController extends Controller
      */
     protected function response($data = null)
     {
-        return response()->json($data ?? []);
+        return is_null($data)
+            ? response()->make()
+            : response()->json($data);
     }
 
     /**

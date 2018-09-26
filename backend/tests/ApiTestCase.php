@@ -31,11 +31,11 @@ abstract class ApiTestCase extends TestCase
     /**
      * Insert record into request list
      *
-     * @param array $data
+     * @param array|null $data
      * @param \Illuminate\Foundation\Testing\TestResponse $response
      * @return void
      */
-    protected function insertRequest(array $data, TestResponse $response)
+    protected function insertRequest($data, TestResponse $response)
     {
         if (is_null(env('GENERATE_API_DOC'))) {
             return;
@@ -50,7 +50,7 @@ abstract class ApiTestCase extends TestCase
             'description' => $response->status() == 200
                 ? 'Successful operation'
                 : $response->json('message'),
-            'response' => $response->json(),
+            'response' => empty($response->content()) ? null : $response->json(),
         ];
         array_push($this->requests, $api);
     }
@@ -86,11 +86,11 @@ abstract class ApiTestCase extends TestCase
     /**
      * Assert JSON API succeed
      *
-     * @param array $data
+     * @param array|null $data
      * @param bool $documented [optional]
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function assertSucceed(array $data, bool $documented = true)
+    protected function assertSucceed($data, bool $documented = true)
     {
         $response = $this->request($data);
         $response->assertStatus(200);
@@ -103,12 +103,12 @@ abstract class ApiTestCase extends TestCase
     /**
      * Assert JSON API Failed
      *
-     * @param array $data
+     * @param array|null $data
      * @param int $code
      * @param bool $documented [optional]
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function assertFailed(array $data, int $code, bool $documented = true)
+    protected function assertFailed($data, int $code, bool $documented = true)
     {
         $response = $this->request($data);
         $response->assertStatus($code);
@@ -121,16 +121,18 @@ abstract class ApiTestCase extends TestCase
     /**
      * Make request
      *
-     * @param array $data
+     * @param array|null $data
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function request(array $data)
+    protected function request($data)
     {
         $request = $this;
         if (!is_null($this->token)) {
             $request->withHeader('Authorization', $this->token);
         }
-        return $request->json($this->method(), $this->processedUri(), $data);
+        return is_null($data)
+            ? $request->call($this->method(), $this->processedUri())
+            : $request->json($this->method(), $this->processedUri(), $data);
     }
 
     /**
