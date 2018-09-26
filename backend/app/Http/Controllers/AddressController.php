@@ -97,7 +97,7 @@ class AddressController extends ApiController
             DB::beginTransaction();
 
             $user = Auth::user();
-            $address = Address::where('api_user_id', $user->getAuthIdentifier())->find($id);
+            $address = $user->addresses()->find($id);
             if (is_null($address)) {
                 throw ApiException::resourceNotFound();
             }
@@ -142,12 +142,11 @@ class AddressController extends ApiController
                 }
                 $user->save();
             }
-            $deletedRows = Address::where('api_user_id', Auth::user()->getAuthIdentifier())
-                ->where('id', $id)
-                ->delete();
-            if ($deletedRows == 0) {
+            $address = $user->addresses()->find($id);
+            if (is_null($address)) {
                 throw ApiException::resourceNotFound();
             }
+            $address->delete();
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
