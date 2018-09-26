@@ -1001,3 +1001,118 @@ This page requires authentication.
 }
 ```
 
+### **PUT - /api/v1/profile/password**
+
+Change the password
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| old_password | required | string |  |
+| new_password | required | password |  |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "new_password"
+}
+```
+
+**Response:**
+```
+
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+```
+
+**Request Body:**
+```
+
+```
+
+**Response:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 401**
+
+The old password does not match our records.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "wrong",
+    "new_password": "new_password"
+}
+```
+
+**Response:**
+```
+{
+    "message": "The old password does not match our records."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "short"
+}
+```
+
+**Response:**
+```
+{
+    "message": "Validation failed.",
+    "information": {
+        "new_password": [
+            "The new password must be a valid password."
+        ]
+    }
+}
+```
+

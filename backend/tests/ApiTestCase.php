@@ -152,13 +152,33 @@ abstract class ApiTestCase extends TestCase
     /**
      * Login for authorization
      *
-     * @param \App\Models\ApiUser $user
+     * @param \App\Models\ApiUser $user [optional]
      * @return void
      */
-    protected function login(ApiUser $user)
+    protected function login(ApiUser $user = null)
     {
-        Auth::guard('api')->login($user);
+        Auth::guard('api')->login($user ?? $this->userFactory()->create());
         $this->token = Auth::guard('api')->token();
+    }
+
+    /**
+     * Get the guard
+     *
+     * @return \App\Services\Auth\ApiGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
+
+    /**
+     * Get user factory
+     *
+     * @return \Illuminate\Database\Eloquent\FactoryBuilder
+     */
+    protected function userFactory()
+    {
+        return factory(ApiUser::class);
     }
 
     /**
