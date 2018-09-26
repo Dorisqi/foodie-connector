@@ -18,7 +18,7 @@ class ApiGuard implements StatefulGuard
     /**
      * API token for testing
      */
-    protected const API_TOKEN_TESTING =
+    public const API_TOKEN_TESTING =
         'ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=';
 
     /**
