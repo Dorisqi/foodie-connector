@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:api')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
-            'index', 'store', 'update', 'destroy'
+            'index', 'store', 'show', 'update', 'destroy'
         ]);
     });
 });
