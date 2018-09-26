@@ -543,6 +543,74 @@ Response:
 }
 ```
 
+### **GET - /api/v1/addresses/{id}**
+
+Show detail of a specific address
+
+#### Authorization
+
+Required
+
+#### Params
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+
+#### Status Code: 200
+
+Successful operation
+
+Request: /api/v1/addresses/1
+```
+[]
+```
+
+Response:
+```
+{
+    "id": 1,
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "is_default": false
+}
+```
+#### Status Code: 401
+
+This page requires authentication.
+
+Request: /api/v1/addresses/1
+```
+[]
+```
+
+Response:
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### Status Code: 404
+
+Resource not found.
+
+Request: /api/v1/addresses/0
+```
+[]
+```
+
+Response:
+```
+{
+    "message": "Resource not found."
+}
+```
+
 ### **PUT - /api/v1/addresses/{id}**
 
 Updating an existed address
