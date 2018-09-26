@@ -51,8 +51,8 @@ class StoreAddressTest extends ApiTestCase
         return 'address';
     }
 
-    protected function controller()
+    protected function rules()
     {
-        return AddressController::class;
+        return AddressController::storeRules();
     }
 }

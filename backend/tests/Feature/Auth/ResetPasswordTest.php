@@ -31,6 +31,7 @@ class ResetPasswordTest extends ApiTestCase
             'password' => $this::NEW_PASSWORD,
             'token' => $token
         ]);
+        $this->assertAuthenticatedAs($user, 'api');
         $this->assertTrue(Auth::guard('api')->attempt([
             'email' => $user->email,
             'password' => $this::NEW_PASSWORD,
@@ -70,8 +71,8 @@ class ResetPasswordTest extends ApiTestCase
         return 'authentication';
     }
 
-    protected function controller()
+    protected function rules()
     {
-        return ResetPasswordController::class;
+        return ResetPasswordController::rules();
     }
 }

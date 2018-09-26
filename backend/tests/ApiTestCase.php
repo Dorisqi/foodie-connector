@@ -181,13 +181,13 @@ abstract class ApiTestCase extends TestCase
     }
 
     /**
-     * Get the controller
+     * Get validation rules
      *
-     * @return mixed
+     * @return array
      */
-    protected function controller()
+    protected function rules()
     {
-        throw new \BadMethodCallException('controller() not implemented');
+        throw new \BadMethodCallException('rules() not implemented');
     }
 
     /**
@@ -198,7 +198,7 @@ abstract class ApiTestCase extends TestCase
     protected function params()
     {
         $params = [];
-        foreach ($this->controller()::rules() as $key => $rule) {
+        foreach ($this->rules() as $key => $rule) {
             $restrictions = explode('|', $rule);
             $param = [
                 'key' => $key,

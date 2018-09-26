@@ -356,15 +356,15 @@ Add a new address
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| name | optional | string | max:255 |
-| phone | optional | phone:US |  |
-| line_1 | optional | string | max:255 |
+| name | required | string | max:255 |
+| phone | required | phone:US |  |
+| line_1 | required | string | max:255 |
 | line_2 | optional | string | max:255 |
-| city | optional | string | max:255 |
-| state | optional | string | max:255 |
-| zip_code | optional | zip_code |  |
-| place_id | optional | string | max:255 |
-| is_default | optional | boolean |  |
+| city | required | string | max:255 |
+| state | required | string | max:255 |
+| zip_code | required | zip_code |  |
+| place_id | required | string | max:255 |
+| is_default | required | boolean |  |
 
 #### Status Code: 200
 

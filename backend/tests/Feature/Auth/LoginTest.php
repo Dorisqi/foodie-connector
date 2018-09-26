@@ -4,26 +4,24 @@ namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\ApiUser;
-use App\Services\Auth\ApiGuard;
-use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
 
 class LoginTest extends ApiTestCase
 {
 
     /**
-     * A basic test example.
+     * Test login
      *
      * @return void
      */
-    public function testExample()
+    public function testLogin()
     {
         $user = factory(ApiUser::class)->create();
-        $response = $this->assertSucceed([
+        $this->assertSucceed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]);
-        $this->assertFalse(is_null(ApiGuard::decodeToken($response['api_token'])));
+        $this->assertAuthenticatedAs($user, 'api');
         $this->assertFailed([
             'email' => $user->email,
         ], 422);
@@ -63,8 +61,8 @@ class LoginTest extends ApiTestCase
         return 'authentication';
     }
 
-    protected function controller()
+    protected function rules()
     {
-        return LoginController::class;
+        return LoginController::rules();
     }
 }
