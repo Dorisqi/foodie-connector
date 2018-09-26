@@ -72,9 +72,13 @@ class GenerateApiDoc extends Command
                     'description' => $request->{'description'},
                     'uri' => $request->{'uri'},
                     'header' => $request->{'header'},
-                    'request' => json_encode($request->{'request'}, JSON_PRETTY_PRINT),
+                    'request' => is_null($request->{'request'})
+                        ? null
+                        : json_encode($request->{'request'}, JSON_PRETTY_PRINT),
                     'status_code' => $request->{'status_code'},
-                    'response' => json_encode($request->{'response'}, JSON_PRETTY_PRINT),
+                    'response' => is_null($request->{'response'})
+                        ? null
+                        : json_encode($request->{'response'}, JSON_PRETTY_PRINT),
                 ]);
             }
             usort($requests, function ($a, $b) {

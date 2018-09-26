@@ -25,13 +25,13 @@ class ShowAddressTest extends ApiTestCase
             'api_user_id' => $user,
         ]);
         $this->id = $address->id;
-        $this->assertFailed([], 401);
+        $this->assertFailed(null, 401);
         $this->login($user);
         $addressArray = $address->toArray();
         $addressArray['is_default'] = false;
-        $this->assertSucceed([])->assertJson($addressArray);
+        $this->assertSucceed(null)->assertJson($addressArray);
         $this->id = 0;
-        $this->assertFailed([], 404);
+        $this->assertFailed(null, 404);
     }
 
     protected function method()

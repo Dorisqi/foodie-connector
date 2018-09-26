@@ -29,13 +29,13 @@ class DeleteAddressTest extends ApiTestCase
         $this->id = $address->id;
         $user['default_address'] = $address->id;
         $user->update();
-        $this->assertFailed([], 401);
+        $this->assertFailed(null, 401);
         $this->login($user);
-        $this->assertSucceed([]);
+        $this->assertSucceed(null);
         $this->assertTrue(is_null(Address::find($address->id)));
         $this->assertTrue(is_null(ApiUser::find($user->id)['default_address']));
         $this->id = 0;
-        $this->assertFailed([], 404);
+        $this->assertFailed(null, 404);
     }
 
     protected function method()

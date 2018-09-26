@@ -153,7 +153,7 @@ class AddressController extends ApiController
             DB::rollBack();
             throw $exception;
         }
-        return $this->response([]);
+        return $this->response();
     }
 
     /**
