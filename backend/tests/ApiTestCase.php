@@ -246,6 +246,7 @@ abstract class ApiTestCase extends TestCase
                     case 'integer':
                     case 'phone:US':
                     case 'zip_code':
+                    case 'password':
                         $param['type'] = $restriction;
                         break;
                     case 'email':

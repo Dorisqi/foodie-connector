@@ -144,7 +144,7 @@ Not required
 | :--- | :--- | :--- | :--- |
 | name | required | string | max:255 |
 | email | required | email | max:255, unique:api_users |
-| password | required | string | min:6 |
+| password | required | password |  |
 
 #### **Status Code: 200**
 
@@ -226,7 +226,7 @@ Validation failed.
     "message": "Validation failed.",
     "information": {
         "password": [
-            "The password must be at least 6 characters."
+            "The password must be a valid password."
         ]
     }
 }

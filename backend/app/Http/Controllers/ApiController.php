@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
@@ -46,5 +47,15 @@ class ApiController extends Controller
     public static function rules()
     {
         return [];
+    }
+
+    /**
+     * Get the guard
+     *
+     * @return \App\Services\Auth\ApiGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
     }
 }

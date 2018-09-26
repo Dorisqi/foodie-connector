@@ -91,6 +91,7 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => 'The :attribute must be a number.',
+    'password'             => 'The :attribute must be a valid password.',
     'phone'                => 'The :attribute must be a phone number.',
     'present'              => 'The :attribute field must be present.',
     'regex'                => 'The :attribute format is invalid.',

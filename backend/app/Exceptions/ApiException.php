@@ -56,6 +56,12 @@ class ApiException extends Exception
         return new ApiException('Resource not found.', 404);
     }
 
+    /* Profile */
+    public static function invalidOldPassword()
+    {
+        return new ApiException('The old password does not match our records.', 401);
+    }
+
 
     /**
      * Extra Exception information

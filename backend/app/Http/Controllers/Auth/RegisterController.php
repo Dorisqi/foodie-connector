@@ -76,7 +76,7 @@ class RegisterController extends ApiController
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:api_users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|password',
         ];
     }
 }
