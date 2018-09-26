@@ -4,7 +4,6 @@ namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\ApiUser;
-use Illuminate\Support\Facades\Auth;
 use Tests\ApiTestCase;
 
 class RegisterTest extends ApiTestCase
@@ -20,7 +19,7 @@ class RegisterTest extends ApiTestCase
      */
     public function testRegister()
     {
-        $user = factory(ApiUser::class)->make();
+        $user = $this->userFactory()->make();
         $this->assertFailed([
             'email' => $user->email,
             'password' => 'short',
@@ -31,7 +30,7 @@ class RegisterTest extends ApiTestCase
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
         ]);
-        $this->assertTrue(Auth::guard('api')->attempt([
+        $this->assertTrue($this->guard()->attempt([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));

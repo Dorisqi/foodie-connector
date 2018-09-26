@@ -54,7 +54,7 @@ class ResetPasswordController extends ApiController
                 $user->password = Hash::make($password);
                 $user->save();
                 event(new PasswordReset($user));
-                Auth::guard('api')->login($user);
+                $this->guard()->login($user);
             }
         );
 

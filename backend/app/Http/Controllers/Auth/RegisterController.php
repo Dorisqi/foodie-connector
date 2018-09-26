@@ -58,7 +58,7 @@ class RegisterController extends ApiController
             'password' => Hash::make($data['password']),
         ]);
 
-        Auth::guard('api')->loginUsingId($user->getAuthIdentifier());
+        $this->guard()->loginUsingId($user->getAuthIdentifier());
 
         return $this->response([
             'api_token' => Auth::guard('api')->token(),

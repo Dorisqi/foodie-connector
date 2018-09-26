@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Profile;
 
-use App\Models\ApiUser;
 use Tests\ApiTestCase;
 
 class ShowProfileTest extends ApiTestCase
@@ -15,7 +14,7 @@ class ShowProfileTest extends ApiTestCase
     public function testShowProfile()
     {
         $this->assertFailed(null, 401);
-        $user = factory(ApiUser::class)->create();
+        $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed(null)->assertJson($user->toArray());
     }

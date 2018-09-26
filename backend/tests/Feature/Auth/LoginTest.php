@@ -16,7 +16,7 @@ class LoginTest extends ApiTestCase
      */
     public function testLogin()
     {
-        $user = factory(ApiUser::class)->create();
+        $user = $this->userFactory()->create();
         $this->assertSucceed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),

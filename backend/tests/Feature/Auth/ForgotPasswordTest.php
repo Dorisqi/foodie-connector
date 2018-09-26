@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Models\ApiUser;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
@@ -19,7 +18,7 @@ class ForgotPasswordTest extends ApiTestCase
     public function testSendingVerificationCode()
     {
         Notification::fake();
-        $user = factory(ApiUser::class)->create();
+        $user = $this->userFactory()->create();
         $this->assertSucceed([
             'email' => $user->email,
         ]);

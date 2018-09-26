@@ -81,7 +81,7 @@ class LoginController extends ApiController
      */
     protected function guard()
     {
-        return Auth::guard('api');
+        return parent::guard();
     }
 
     /**

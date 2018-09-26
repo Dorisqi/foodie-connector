@@ -9,6 +9,11 @@ use Tests\ApiTestCase;
 class ChangePasswordTest extends ApiTestCase
 {
     /**
+     * New password
+     */
+    protected const NEW_PASSWORD = 'new_password';
+
+    /**
      * Test changing password
      *
      * @return void
@@ -20,10 +25,10 @@ class ChangePasswordTest extends ApiTestCase
         $this->login($user);
         $this->assertSucceed([
             'old_password' => ApiUser::testingPassword(),
-            'new_password' => 'new_password',
+            'new_password' => $this::NEW_PASSWORD,
         ]);
         $this->assertTrue($this->guard()->getProvider()->validateCredentials($user, [
-            'password' => 'new_password',
+            'password' => $this::NEW_PASSWORD,
         ]));
         $this->assertFailed([
             'old_password' => ApiUser::testingPassword(),
@@ -31,7 +36,7 @@ class ChangePasswordTest extends ApiTestCase
         ], 422);
         $this->assertFailed([
             'old_password' => 'wrong',
-            'new_password' => 'new_password',
+            'new_password' => $this::NEW_PASSWORD,
         ], 401);
     }
 

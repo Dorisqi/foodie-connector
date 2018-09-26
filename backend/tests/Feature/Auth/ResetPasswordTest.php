@@ -4,8 +4,6 @@ namespace Tests\Feature\Auth;
 
 use App\Brokers\ResetPasswordBroker;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Models\ApiUser;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
 
@@ -23,7 +21,7 @@ class ResetPasswordTest extends ApiTestCase
      */
     public function testResetPassword()
     {
-        $user = factory(ApiUser::class)->create();
+        $user = $this->userFactory()->create();
         $token = '12345678';
         Redis::set(ResetPasswordBroker::redisKey($user, $token), true);
         $this->assertSucceed([
@@ -32,10 +30,9 @@ class ResetPasswordTest extends ApiTestCase
             'token' => $token
         ]);
         $this->assertAuthenticatedAs($user, 'api');
-        $this->assertTrue(Auth::guard('api')->attempt([
-            'email' => $user->email,
+        $this->guard()->getProvider()->validateCredentials($user, [
             'password' => $this::NEW_PASSWORD,
-        ]));
+        ]);
         $this->assertFailed([
             'email' => $user->email,
         ], 422);
