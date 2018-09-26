@@ -458,8 +458,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
@@ -660,8 +659,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
@@ -879,8 +877,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
