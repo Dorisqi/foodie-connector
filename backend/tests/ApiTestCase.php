@@ -44,6 +44,9 @@ abstract class ApiTestCase extends TestCase
             'uri' => $this->processedUri(),
             'request' => $data,
             'status_code' => $response->status(),
+            'header' => is_null($this->token) ? [] : [
+                'Authorization' => $this->token,
+            ],
             'description' => $response->status() == 200
                 ? 'Successful operation'
                 : $response->json('message'),

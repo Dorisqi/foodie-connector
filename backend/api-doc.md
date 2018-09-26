@@ -27,6 +27,8 @@ Successful operation
 
 Request: /api/v1/auth/login
 ```
+```
+```
 {
     "email": "user@foodie-connector.delivery",
     "password": "test123456"
@@ -52,6 +54,8 @@ These credentials do not match our records.
 
 Request: /api/v1/auth/login
 ```
+```
+```
 {
     "email": "wrong@foodie-connector.delivery",
     "password": "test123456"
@@ -69,6 +73,8 @@ Response:
 Validation failed.
 
 Request: /api/v1/auth/login
+```
+```
 ```
 {
     "email": "user@foodie-connector.delivery"
@@ -91,6 +97,8 @@ Response:
 Too many attempts
 
 Request: /api/v1/auth/login
+```
+```
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -130,6 +138,8 @@ Successful operation
 
 Request: /api/v1/auth/register
 ```
+```
+```
 {
     "email": "user@foodie-connector.delivery",
     "password": "test123456",
@@ -156,6 +166,8 @@ The email has already been taken.
 
 Request: /api/v1/auth/register
 ```
+```
+```
 {
     "email": "user@foodie-connector.delivery",
     "password": "test123456",
@@ -174,6 +186,8 @@ Response:
 Validation failed.
 
 Request: /api/v1/auth/register
+```
+```
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -216,6 +230,8 @@ Successful operation
 
 Request: /api/v1/auth/reset-password
 ```
+```
+```
 {
     "email": "user@foodie-connector.delivery",
     "password": "new_password",
@@ -232,6 +248,8 @@ Response:
 The password reset token is invalid or expired
 
 Request: /api/v1/auth/reset-password
+```
+```
 ```
 {
     "email": "user@foodie-connector.delivery",
@@ -252,6 +270,8 @@ We can't find a user with that e-mail address.
 
 Request: /api/v1/auth/reset-password
 ```
+```
+```
 {
     "email": "wrong@foodie-connector.delivery",
     "password": "new_password",
@@ -270,6 +290,8 @@ Response:
 Validation failed.
 
 Request: /api/v1/auth/reset-password
+```
+```
 ```
 {
     "email": "user@foodie-connector.delivery"
@@ -311,6 +333,8 @@ Successful operation
 
 Request: /api/v1/auth/reset-password-email
 ```
+```
+```
 {
     "email": "user@foodie-connector.delivery"
 }
@@ -325,6 +349,8 @@ Response:
 We can't find a user with that e-mail address.
 
 Request: /api/v1/auth/reset-password-email
+```
+```
 ```
 {
     "email": "wrong@foodie-connector.delivery"
@@ -342,6 +368,8 @@ Response:
 Validation failed.
 
 Request: /api/v1/auth/reset-password-email
+```
+```
 ```
 {
     "email": "not_email"
@@ -383,6 +411,9 @@ Successful operation
 
 Request: /api/v1/addresses
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 []
 ```
 
@@ -420,6 +451,8 @@ Response:
 This page requires authentication.
 
 Request: /api/v1/addresses
+```
+```
 ```
 []
 ```
@@ -459,6 +492,9 @@ Successful operation
 
 Request: /api/v1/addresses
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 {
     "name": "Test User",
     "phone": "7653500000",
@@ -493,6 +529,8 @@ This page requires authentication.
 
 Request: /api/v1/addresses
 ```
+```
+```
 {
     "name": "Test User",
     "phone": "7653500000",
@@ -517,6 +555,9 @@ Response:
 Validation failed.
 
 Request: /api/v1/addresses
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
 ```
 {
     "name": "Test User",
@@ -562,6 +603,9 @@ Successful operation
 
 Request: /api/v1/addresses/1
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 []
 ```
 
@@ -586,6 +630,8 @@ This page requires authentication.
 
 Request: /api/v1/addresses/1
 ```
+```
+```
 []
 ```
 
@@ -600,6 +646,9 @@ Response:
 Resource not found.
 
 Request: /api/v1/addresses/0
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
 ```
 []
 ```
@@ -639,6 +688,9 @@ Successful operation
 
 Request: /api/v1/addresses/1
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 {
     "name": "Changed Name",
     "is_default": true
@@ -666,6 +718,8 @@ This page requires authentication.
 
 Request: /api/v1/addresses/1
 ```
+```
+```
 {
     "name": "Changed Name"
 }
@@ -683,6 +737,9 @@ Resource not found.
 
 Request: /api/v1/addresses/0
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 {
     "name": "Changed Name"
 }
@@ -699,6 +756,9 @@ Response:
 Validation failed.
 
 Request: /api/v1/addresses/1
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
 ```
 {
     "phone": "invalid_phone"
@@ -736,6 +796,9 @@ Successful operation
 
 Request: /api/v1/addresses/1
 ```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+```
 []
 ```
 
@@ -748,6 +811,8 @@ Response:
 This page requires authentication.
 
 Request: /api/v1/addresses/1
+```
+```
 ```
 []
 ```
@@ -763,6 +828,9 @@ Response:
 Resource not found.
 
 Request: /api/v1/addresses/0
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
 ```
 []
 ```

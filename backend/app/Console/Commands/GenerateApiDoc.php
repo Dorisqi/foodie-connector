@@ -71,6 +71,7 @@ class GenerateApiDoc extends Command
                 array_push($requests, [
                     'description' => $request->{'description'},
                     'uri' => $request->{'uri'},
+                    'header' => $request->{'header'},
                     'request' => json_encode($request->{'request'}, JSON_PRETTY_PRINT),
                     'status_code' => $request->{'status_code'},
                     'response' => json_encode($request->{'response'}, JSON_PRETTY_PRINT),
