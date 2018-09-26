@@ -939,3 +939,65 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+## **profile**
+
+Everything about profile
+
+### **GET - /api/v1/profile**
+
+Get the profile
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+
+```
+
+**Response:**
+```
+{
+    "name": "Test User",
+    "email": "user@foodie-connector.delivery",
+    "id": 1
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+```
+
+**Request Body:**
+```
+
+```
+
+**Response:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
