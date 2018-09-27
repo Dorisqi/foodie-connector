@@ -95,7 +95,7 @@ Validation failed.
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "password": [
             "The password field is required."
         ]
@@ -123,10 +123,7 @@ Too many attempts
 **Response:**
 ```
 {
-    "message": "Too many attempts",
-    "information": {
-        "available_seconds": 60
-    }
+    "message": "Too many attempts"
 }
 ```
 
@@ -224,7 +221,7 @@ Validation failed.
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "password": [
             "The password must be a valid password."
         ]
@@ -342,7 +339,7 @@ Validation failed.
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "token": [
             "The token field is required."
         ],
@@ -432,7 +429,7 @@ Validation failed.
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "email": [
             "The email must be a valid email address."
         ]
@@ -637,7 +634,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "phone": [
             "The phone must be a phone number."
         ]
@@ -855,7 +852,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "phone": [
             "The phone must be a phone number."
         ]
@@ -1108,7 +1105,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "new_password": [
             "The new password must be a valid password."
         ]

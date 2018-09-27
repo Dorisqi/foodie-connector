@@ -17,7 +17,7 @@ class ApiException extends Exception
     /* Validation */
     public static function validationFailed(Validator $validator)
     {
-        return new ApiException('Validation failed.', 422, $validator->errors());
+        return new ApiException('Validation failed.', 422, null, $validator->errors());
     }
 
     /* User and Authentication */
@@ -25,9 +25,12 @@ class ApiException extends Exception
     {
         return new ApiException('The email has already been taken.', 409);
     }
-    public static function loginFailed()
+    public static function loginFailed(int $limit, int $remaining)
     {
-        return new ApiException('These credentials do not match our records.', 401);
+        return new ApiException('These credentials do not match our records.', 401, [
+            "X-RateLimit-Limit" => $limit,
+            "X-RateLimit-Remaining" => $remaining,
+        ]);
     }
     public static function requireAuthentication()
     {
@@ -43,10 +46,12 @@ class ApiException extends Exception
     }
 
     /* Throttle */
-    public static function tooManyAttempts(int $seconds)
+    public static function tooManyAttempts(int $retryAfter, int $limit)
     {
         return new ApiException('Too many attempts', 429, [
-            'available_seconds' => $seconds,
+            'Retry-After' => $retryAfter,
+            'X-RateLimit-Limit' => $limit,
+            'X-RateLimit-Remaining' => 0,
         ]);
     }
 
@@ -64,28 +69,38 @@ class ApiException extends Exception
 
 
     /**
-     * Extra Exception information
+     * Headers
      *
-     * @var mixed
+     * @var array
      */
-    private $errorInformation = null;
+    protected $headers = null;
+
+    /**
+     * Data
+     *
+     * @mixed array
+     */
+    protected $data = null;
 
     /**
      * Construct the exception
      *
      * @param string $message [optional] The Exception message to throw.
      * @param int $code [optional] The Exception code.
-     * @param mixed $errorInformation [optional] Extra Exception information.
+     * @param array $headers [optional] Headers.
+     * @param mixed $data [optional] Data
      * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
     public function __construct(
         string $message = "Internal Server Error",
         int $code = 500,
-        $errorInformation = null,
+        array $headers = null,
+        $data = null,
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
-        $this->errorInformation = $errorInformation;
+        $this->headers = $headers;
+        $this->data = $data;
     }
 
     /**
@@ -99,10 +114,13 @@ class ApiException extends Exception
         $data = [
             'message' => $this->getMessage(),
         ];
-        if (!is_null($this->errorInformation)) {
-            $data['information'] = $this->errorInformation;
+        if (!is_null($this->data)) {
+            $data['data'] = $this->data;
         }
-        return response()
-            ->json($data, $this->getCode());
+        $response = response()->json($data, $this->getCode());
+        if (!is_null($this->headers)) {
+            $response->headers->add($this->headers);
+        }
+        return $response;
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends ApiController
 {
@@ -23,6 +22,13 @@ class LoginController extends ApiController
     */
 
     use AuthenticatesUsers;
+
+    /**
+     * Decay minutes for throttle
+     *
+     * @var int
+     */
+    protected $decayMinutes = 10;
 
     /**
      * Create a new controller instance.
@@ -55,7 +61,8 @@ class LoginController extends ApiController
             throw ApiException::tooManyAttempts(
                 App::environment('testing')
                     ? 60
-                    : $this->limiter()->availableIn($this->throttleKey($request))
+                    : $this->limiter()->availableIn($this->throttleKey($request)),
+                $this->maxAttempts()
             );
         }
 
@@ -71,7 +78,10 @@ class LoginController extends ApiController
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        throw ApiException::loginFailed();
+        throw ApiException::loginFailed(
+            $this->maxAttempts(),
+            $this->limiter()->retriesLeft($this->throttleKey($request), $this->maxAttempts())
+        );
     }
 
     /**
