@@ -25,10 +25,8 @@ class LoginController extends ApiController
 
     /**
      * Decay minutes for throttle
-     *
-     * @var int
      */
-    protected $decayMinutes = 10;
+    protected const DECAY_MINUTES = 10;
 
     /**
      * Create a new controller instance.
@@ -92,6 +90,16 @@ class LoginController extends ApiController
     protected function guard()
     {
         return parent::guard();
+    }
+
+    /**
+     * Get the decay minutes
+     *
+     * @return int
+     */
+    public function decayMinutes()
+    {
+        return $this::DECAY_MINUTES;
     }
 
     /**

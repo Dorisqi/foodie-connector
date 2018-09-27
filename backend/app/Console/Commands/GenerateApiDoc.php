@@ -83,6 +83,9 @@ class GenerateApiDoc extends Command
                     'response' => is_null($request->{'response'})
                         ? null
                         : json_encode($request->{'response'}, JSON_PRETTY_PRINT),
+                    'response_header' => is_null($request->{'response_header'})
+                        ? null
+                        : json_encode($request->{'response_header'}, JSON_PRETTY_PRINT),
                 ]);
             }
             usort($requests, function ($a, $b) {

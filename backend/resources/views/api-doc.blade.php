@@ -34,6 +34,7 @@ No param
 {!! $request['description'] !!}
 
 **URI**: {!! $request['uri'] !!}
+@if (!empty($request['header']))
 
 **Request Header:**
 ```
@@ -41,16 +42,28 @@ No param
 {!! $key !!}: {!! $value !!}
 @endforeach
 ```
+@endif
+@if (!is_null($request['request']))
 
 **Request Body:**
 ```
-{!! $request['request'] ?? '' !!}
+{!! $request['request'] !!}
 ```
+@endif
+@if (!is_null($request['response_header']))
 
-**Response:**
+**Response Header:**
 ```
-{!! $request['response'] ?? '' !!}
+{!! $request['response_header'] !!}
 ```
+@endif
+@if (!is_null($request['response']))
+
+**Response Body:**
+```
+{!! $request['response'] !!}
+```
+@endif
 @endforeach
 
 @endforeach

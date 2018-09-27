@@ -33,7 +33,7 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array|null $data
      * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @return void
+     * @return array
      */
     protected function insertRequest($data, TestResponse $response)
     {
@@ -50,9 +50,11 @@ abstract class ApiTestCase extends TestCase
             'description' => $response->status() == 200
                 ? 'Successful operation'
                 : $response->json('message'),
+            'response_header' => null,
             'response' => empty($response->content()) ? null : $response->json(),
         ];
         array_push($this->requests, $api);
+        return $api;
     }
 
     /**
@@ -95,7 +97,7 @@ abstract class ApiTestCase extends TestCase
         $response = $this->request($data);
         $response->assertStatus(200);
         if ($documented) {
-            $this->insertRequest($data, $response);
+            $response->api = $this->insertRequest($data, $response);
         }
         return $response;
     }
@@ -113,9 +115,35 @@ abstract class ApiTestCase extends TestCase
         $response = $this->request($data);
         $response->assertStatus($code);
         if ($documented) {
-            $this->insertRequest($data, $response);
+            $response->api = $this->insertRequest($data, $response);
         }
         return $response;
+    }
+
+    /**
+     * Assert throttle headers
+     *
+     * @param \Illuminate\Foundation\Testing\TestResponse
+     * @param int $limit
+     * @param int $remaining
+     * @param int $retryAfter [optional]
+     * @return void
+     */
+    protected function assertThrottle(TestResponse $response, int $limit, int $remaining, int $retryAfter = null)
+    {
+        $response->assertHeader('X-RateLimit-Limit', $limit);
+        $response->assertHeader('X-RateLimit-Remaining', $remaining);
+        $response_header = [
+            'X-RateLimit-Limit' => $limit,
+            'X-RateLimit-Remaining' => $remaining,
+        ];
+        if (!is_null($retryAfter)) {
+            $response->assertHeader('Retry-After');
+            $response_header['Retry-After'] = $retryAfter;
+        }
+        if (isset($response->api)) {
+            $this->requests[count($this->requests) - 1]['response_header'] = $response_header;
+        }
     }
 
     /**

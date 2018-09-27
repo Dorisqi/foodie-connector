@@ -22,7 +22,7 @@ class ApiGuardDecodeTokenTest extends TestCase
         $userId = 10;
         $token = bin2hex(openssl_random_pseudo_bytes(32));
         Redis::set('api_token:10:' . $token, true);
-        $method = new \ReflectionMethod('\App\Services\Auth\ApiGuard', 'decodeToken');
+        $method = new \ReflectionMethod(ApiGuard::class, 'decodeToken');
         $method->setAccessible(true);
         $this->assertTrue(is_null($method->invoke(null, null)));
         $this->assertTrue(is_null($method->invoke(null, 'not_base64')));

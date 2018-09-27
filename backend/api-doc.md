@@ -27,10 +27,6 @@ Successful operation
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -39,7 +35,7 @@ Successful operation
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
@@ -56,10 +52,6 @@ These credentials do not match our records.
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -68,7 +60,15 @@ These credentials do not match our records.
 }
 ```
 
-**Response:**
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 4
+}
+```
+
+**Response Body:**
 ```
 {
     "message": "These credentials do not match our records."
@@ -80,10 +80,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -91,7 +87,7 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -108,10 +104,6 @@ Too many attempts
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -120,7 +112,16 @@ Too many attempts
 }
 ```
 
-**Response:**
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 600
+}
+```
+
+**Response Body:**
 ```
 {
     "message": "Too many attempts"
@@ -149,10 +150,6 @@ Successful operation
 
 **URI**: /api/v1/auth/register
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -162,7 +159,7 @@ Successful operation
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
@@ -179,10 +176,6 @@ The email has already been taken.
 
 **URI**: /api/v1/auth/register
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -192,7 +185,7 @@ The email has already been taken.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "The email has already been taken."
@@ -204,10 +197,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/register
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -217,7 +206,7 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -251,10 +240,6 @@ Successful operation
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -262,11 +247,6 @@ Successful operation
     "password": "new_password",
     "token": "12345678"
 }
-```
-
-**Response:**
-```
-
 ```
 #### **Status Code: 401**
 
@@ -274,10 +254,6 @@ The password reset token is invalid or expired
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -287,7 +263,7 @@ The password reset token is invalid or expired
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "The password reset token is invalid or expired"
@@ -299,10 +275,6 @@ We can't find a user with that e-mail address.
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -312,7 +284,7 @@ We can't find a user with that e-mail address.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -324,10 +296,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -335,7 +303,7 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -370,30 +338,17 @@ Successful operation
 
 **URI**: /api/v1/auth/reset-password-email
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery"
 }
 ```
-
-**Response:**
-```
-
-```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.
 
 **URI**: /api/v1/auth/reset-password-email
-
-**Request Header:**
-```
-```
 
 **Request Body:**
 ```
@@ -402,7 +357,7 @@ We can't find a user with that e-mail address.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -414,10 +369,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/reset-password-email
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -425,7 +376,7 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -464,12 +415,7 @@ Successful operation
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 [
     {
@@ -504,16 +450,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -568,7 +505,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "name": "Test User",
@@ -589,16 +526,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -630,7 +558,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -665,12 +593,7 @@ Successful operation
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "id": 1,
@@ -691,16 +614,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -717,12 +631,7 @@ Resource not found.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
@@ -770,7 +679,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "id": 1,
@@ -791,16 +700,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -824,7 +724,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
@@ -848,7 +748,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
@@ -882,32 +782,13 @@ Successful operation
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
-```
-
-```
 #### **Status Code: 401**
 
 This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -924,12 +805,7 @@ Resource not found.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
@@ -963,12 +839,7 @@ Successful operation
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "name": "Test User",
@@ -982,16 +853,7 @@ This page requires authentication.
 
 **URI**: /api/v1/profile
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -1031,27 +893,13 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "new_password": "new_password"
 }
 ```
-
-**Response:**
-```
-
-```
 #### **Status Code: 401**
 
 This page requires authentication.
 
 **URI**: /api/v1/profile/password
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -1076,7 +924,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "The old password does not match our records."
@@ -1101,7 +949,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",

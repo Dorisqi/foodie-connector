@@ -13,6 +13,8 @@ class LoginTest extends ApiTestCase
      * Test login
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function testLogin()
     {
@@ -25,20 +27,21 @@ class LoginTest extends ApiTestCase
         $this->assertFailed([
             'email' => $user->email,
         ], 422);
-        $this->assertFailed([
+        $this->assertThrottle($this->assertFailed([
             'email' => 'wrong@foodie-connector.delivery',
             'password' => ApiUser::testingPassword(),
-        ], 401);
+        ], 401), 5, 4);
         foreach (range(1, 5) as $i) {
-            $this->assertFailed([
+            $this->assertThrottle($this->assertFailed([
                 'email' => $user->email,
                 'password' => 'wrong',
-            ], 401, false);
+            ], 401, false), 5, 5 - $i);
         }
-        $this->assertFailed([
+        $decayMinute = new \ReflectionClassConstant(LoginController::class, 'DECAY_MINUTES');
+        $this->assertThrottle($this->assertFailed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
-        ], 429);
+        ], 429), 5, 0, $decayMinute->getValue() * 60);
     }
 
     protected function method()
