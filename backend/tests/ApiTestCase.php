@@ -33,7 +33,7 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array|null $data
      * @param \Illuminate\Foundation\Testing\TestResponse $response
-     * @return array
+     * @return void
      */
     protected function insertRequest($data, TestResponse $response)
     {
@@ -54,7 +54,7 @@ abstract class ApiTestCase extends TestCase
             'response' => empty($response->content()) ? null : $response->json(),
         ];
         array_push($this->requests, $api);
-        return $api;
+        $response->api = true;
     }
 
     /**
@@ -97,7 +97,7 @@ abstract class ApiTestCase extends TestCase
         $response = $this->request($data);
         $response->assertStatus(200);
         if ($documented) {
-            $response->api = $this->insertRequest($data, $response);
+            $this->insertRequest($data, $response);
         }
         return $response;
     }
@@ -115,7 +115,7 @@ abstract class ApiTestCase extends TestCase
         $response = $this->request($data);
         $response->assertStatus($code);
         if ($documented) {
-            $response->api = $this->insertRequest($data, $response);
+            $this->insertRequest($data, $response);
         }
         return $response;
     }

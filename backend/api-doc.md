@@ -344,6 +344,15 @@ Successful operation
     "email": "user@foodie-connector.delivery"
 }
 ```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.
@@ -385,6 +394,34 @@ Validation failed.
             "The email must be a valid email address."
         ]
     }
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 
