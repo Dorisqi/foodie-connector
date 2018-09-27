@@ -67,6 +67,16 @@ class ApiUser extends Authenticatable
     }
 
     /**
+     * Get throttle key for send emails
+     *
+     * @return string
+     */
+    public function emailThrottleKey()
+    {
+        return 'send_email|' . $this->email;
+    }
+
+    /**
      * Return password for testing
      *
      * @return string

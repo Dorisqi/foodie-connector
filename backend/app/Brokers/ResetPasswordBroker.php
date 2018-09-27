@@ -22,14 +22,14 @@ class ResetPasswordBroker
     /**
      * Send reset code and link through email
      *
-     * @param string $email
+     * @param \App\Models\ApiUser $user
      * @return void
      *
      * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
-    public static function sendResetEmail(string $email)
+    public static function sendResetEmail(ApiUser $user)
     {
-        $user = ApiUser::where('email', $email)->first();
         if (is_null($user)) {
             throw ApiException::userNotFound();
         }
