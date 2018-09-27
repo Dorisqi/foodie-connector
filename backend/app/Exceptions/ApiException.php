@@ -26,12 +26,13 @@ class ApiException extends Exception
     {
         return new ApiException('The email has already been taken.', 409);
     }
-    public static function loginFailed(int $limit, int $remaining)
+    public static function loginFailed(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
-        return new ApiException('These credentials do not match our records.', 401, [
-            "X-RateLimit-Limit" => $limit,
-            "X-RateLimit-Remaining" => $remaining,
-        ]);
+        return new ApiException(
+            'These credentials do not match our records.',
+            401,
+            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
+        );
     }
     public static function requireAuthentication()
     {
@@ -41,7 +42,7 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
-    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter)
+    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
             'The password reset token is invalid or expired',
@@ -51,13 +52,13 @@ class ApiException extends Exception
     }
 
     /* Throttle */
-    public static function tooManyAttempts(int $retryAfter, int $limit)
+    public static function tooManyAttempts(int $rateLimit, int $retryAfter)
     {
-        return new ApiException('Too many attempts', 429, [
-            'Retry-After' => $retryAfter,
-            'X-RateLimit-Limit' => $limit,
-            'X-RateLimit-Remaining' => 0,
-        ]);
+        return new ApiException(
+            'Too many attempts',
+            429,
+            ApiThrottle::throttleHeaders($rateLimit, 0, $retryAfter)
+        );
     }
 
     /* Resource */

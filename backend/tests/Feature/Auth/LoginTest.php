@@ -27,21 +27,21 @@ class LoginTest extends ApiTestCase
         $this->assertFailed([
             'email' => $user->email,
         ], 422);
-        $this->assertThrottle($this->assertFailed([
-            'email' => 'wrong@foodie-connector.delivery',
-            'password' => ApiUser::testingPassword(),
-        ], 401), 5, 4);
-        foreach (range(1, 5) as $i) {
-            $this->assertThrottle($this->assertFailed([
-                'email' => $user->email,
-                'password' => 'wrong',
-            ], 401, false), 5, 5 - $i);
+        $rateLimitReflection = new \ReflectionClassConstant(LoginController::class, 'RATE_LIMIT');
+        $rateLimit = $rateLimitReflection->getValue();
+        $decayMinuteReflection = new \ReflectionClassConstant(LoginController::class, 'DECAY_MINUTES');
+        $decayMinute = $decayMinuteReflection->getValue();
+        foreach (range(1, 6) as $i) {
+            $this->assertThrottle(
+                $this->assertFailed([
+                    'email' => $user->email,
+                    'password' => 'wrong',
+                ], $i <= $rateLimit ? 401 : 429, $i == 1 || $i == 6),
+                $rateLimit,
+                $i <= $rateLimit ? $rateLimit - $i : 0,
+                $i >= $rateLimit ? $decayMinute * 60 : null
+            );
         }
-        $decayMinute = new \ReflectionClassConstant(LoginController::class, 'DECAY_MINUTES');
-        $this->assertThrottle($this->assertFailed([
-            'email' => $user->email,
-            'password' => ApiUser::testingPassword(),
-        ], 429), 5, 0, $decayMinute->getValue() * 60);
     }
 
     protected function method()

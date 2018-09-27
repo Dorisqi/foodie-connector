@@ -64,7 +64,7 @@ class ResetPasswordController extends ApiController
 
         $throttleKey = $user->resetPasswordThrottleKey();
         if ($this->limiter()->tooManyAttempts($throttleKey, $this::RATE_LIMIT)) {
-            throw ApiException::tooManyAttempts($this->limiter()->availableIn($throttleKey), $this::RATE_LIMIT);
+            throw ApiException::tooManyAttempts($this::RATE_LIMIT, $this->limiter()->availableIn($throttleKey));
         }
 
         // Here we will attempt to reset the user's password. If it is successful we

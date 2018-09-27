@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Brokers\ResetPasswordBroker;
 use App\Exceptions\ApiException;
+use App\Facades\ApiThrottle;
 use App\Http\Controllers\ApiController;
 use App\Models\ApiUser;
 use Illuminate\Cache\RateLimiter;
@@ -59,7 +60,7 @@ class ForgotPasswordController extends ApiController
 
         $throttleKey = $user->emailThrottleKey();
         if ($this->limiter()->tooManyAttempts($throttleKey, 1)) {
-            throw ApiException::tooManyAttempts($this->limiter()->availableIn($throttleKey), 1);
+            throw ApiException::tooManyAttempts(1, $this->limiter()->availableIn($throttleKey));
         }
 
         // We will send the password reset link to this user. Once we have attempted
@@ -69,11 +70,9 @@ class ForgotPasswordController extends ApiController
         $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
 
         $response = $this->response();
-        $response->headers->add([
-            'X-RateLimit-Limit' => 1,
-            'X-RateLimit-Remaining' => 0,
-            'Retry-After' => $this->limiter()->availableIn($throttleKey),
-        ]);
+        $response->headers->add(
+            ApiThrottle::throttleHeaders(1, 0, $this::DECAY_MINUTES)
+        );
         return $response;
     }
 

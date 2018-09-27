@@ -25,6 +25,11 @@ class LoginController extends ApiController
     use AuthenticatesUsers;
 
     /**
+     * Rate limit
+     */
+    protected const RATE_LIMIT = 5;
+
+    /**
      * Decay minutes for throttle
      */
     protected const DECAY_MINUTES = 10;
@@ -51,6 +56,8 @@ class LoginController extends ApiController
     {
         $this->validateInput($request);
 
+        $throttleKey = $this->throttleKey($request);
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -58,10 +65,8 @@ class LoginController extends ApiController
             $this->fireLockoutEvent($request);
 
             throw ApiException::tooManyAttempts(
-                App::environment('testing')
-                    ? 60
-                    : $this->limiter()->availableIn($this->throttleKey($request)),
-                $this->maxAttempts()
+                $this->maxAttempts(),
+                $this->limiter()->availableIn($throttleKey)
             );
         }
 
@@ -79,7 +84,8 @@ class LoginController extends ApiController
 
         throw ApiException::loginFailed(
             $this->maxAttempts(),
-            $this->limiter()->retriesLeft($this->throttleKey($request), $this->maxAttempts())
+            $this->limiter()->retriesLeft($throttleKey, $this::RATE_LIMIT),
+            $this->limiter()->availableIn($throttleKey)
         );
     }
 
@@ -101,6 +107,16 @@ class LoginController extends ApiController
     public function decayMinutes()
     {
         return $this::DECAY_MINUTES;
+    }
+
+    /**
+     * Get the rate limit
+     *
+     * @return int
+     */
+    public function maxAttempts()
+    {
+        return $this::RATE_LIMIT;
     }
 
     /**

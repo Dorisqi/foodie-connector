@@ -51,7 +51,7 @@ class ResetPasswordTest extends ApiTestCase
                     'email' => $user->email,
                     'password' => $this::NEW_PASSWORD,
                     'token' => $token,
-                ], $i <= $rateLimit ? 401 : 429),
+                ], $i <= $rateLimit ? 401 : 429, $i == 1 || $i == $rateLimit + 1),
                 $rateLimit,
                 $i <= $rateLimit ? $rateLimit - $i : 0,
                 $i >= $rateLimit ? $decayMinutes * 60 : null
