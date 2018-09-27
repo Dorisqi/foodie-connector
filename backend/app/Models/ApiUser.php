@@ -77,6 +77,16 @@ class ApiUser extends Authenticatable
     }
 
     /**
+     * Get the throttle key for resetting password
+     *
+     * @return string
+     */
+    public function resetPasswordThrottleKey()
+    {
+        return 'reset_password|' . $this->email;
+    }
+
+    /**
      * Return password for testing
      *
      * @return string

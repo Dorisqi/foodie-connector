@@ -41,26 +41,26 @@ class ResetPasswordBroker
     /**
      * Reset password
      *
-     * @param array $credentials
-     * @param \Closure $callback
+     * @param \App\Models\ApiUser $user
+     * @param string $token
+     * @param \Closure $invalidKeyCallback
+     * @param \Closure $resetPasswordCallback
      * @return void
-     *
-     * @throws \App\Exceptions\ApiException
      */
-    public static function reset(array $credentials, Closure $callback)
-    {
-        $user = ApiUser::where('email', $credentials['email'])->first();
-        if (is_null($user)) {
-            throw ApiException::userNotFound();
-        }
-
-        $token_exists = Redis::get(self::redisKey($user, $credentials['token']));
+    public static function reset(
+        ApiUser $user,
+        string $token,
+        Closure $invalidKeyCallback,
+        Closure $resetPasswordCallback
+    ) {
+        $token_exists = Redis::get(self::redisKey($user, $token));
         if (is_null($token_exists)) {
-            throw ApiException::invalidToken();
+            $invalidKeyCallback();
+            return;
         }
 
-        $callback($user, $credentials['password']);
-        Redis::del(self::redisKey($user, $credentials['token']));
+        $resetPasswordCallback($user);
+        Redis::del(self::redisKey($user, $token));
     }
 
     /**

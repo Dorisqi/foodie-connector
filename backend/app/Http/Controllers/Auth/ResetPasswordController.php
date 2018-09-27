@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Brokers\ResetPasswordBroker;
+use App\Exceptions\ApiException;
 use App\Http\Controllers\ApiController;
 use App\Models\ApiUser;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +24,16 @@ class ResetPasswordController extends ApiController
     | explore this trait and override any methods you wish to tweak.
     |
     */
+
+    /**
+     * Throttle rate limit
+     */
+    protected const RATE_LIMIT = 5;
+
+    /**
+     * Throttle decay minutes
+     */
+    protected const DECAY_MINUTES = 10;
 
     /**
      * Create a new controller instance.
@@ -45,13 +57,32 @@ class ResetPasswordController extends ApiController
     {
         $this->validateInput($request);
 
+        $user = ApiUser::where('email', $request->input('email'))->first();
+        if (is_null($user)) {
+            throw ApiException::userNotFound();
+        }
+
+        $throttleKey = $user->resetPasswordThrottleKey();
+        if ($this->limiter()->tooManyAttempts($throttleKey, $this::RATE_LIMIT)) {
+            throw ApiException::tooManyAttempts($this->limiter()->availableIn($throttleKey), $this::RATE_LIMIT);
+        }
+
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         ResetPasswordBroker::reset(
-            $request->only(['email', 'password', 'token']),
-            function (ApiUser $user, string $password) {
-                $user->password = Hash::make($password);
+            $user,
+            $request->input('token'),
+            function () use ($throttleKey) {
+                $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
+                throw ApiException::invalidToken(
+                    $this::RATE_LIMIT,
+                    $this->limiter()->retriesLeft($throttleKey, $this::RATE_LIMIT),
+                    $this->limiter()->availableIn($throttleKey)
+                );
+            },
+            function (ApiUser $user) use ($request) {
+                $user->password = Hash::make($request->input('password'));
                 $user->save();
                 event(new PasswordReset($user));
                 $this->guard()->login($user);
@@ -59,6 +90,16 @@ class ResetPasswordController extends ApiController
         );
 
         return $this->response();
+    }
+
+    /**
+     * Get the rate limiter
+     *
+     * @return \Illuminate\Cache\RateLimiter
+     */
+    protected function limiter()
+    {
+        return app(RateLimiter::class);
     }
 
     /**

@@ -263,6 +263,131 @@ The password reset token is invalid or expired
 }
 ```
 
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 4
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The password reset token is invalid or expired"
+}
+```
+#### **Status Code: 401**
+
+The password reset token is invalid or expired
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 3
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The password reset token is invalid or expired"
+}
+```
+#### **Status Code: 401**
+
+The password reset token is invalid or expired
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 2
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The password reset token is invalid or expired"
+}
+```
+#### **Status Code: 401**
+
+The password reset token is invalid or expired
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The password reset token is invalid or expired"
+}
+```
+#### **Status Code: 401**
+
+The password reset token is invalid or expired
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 600
+}
+```
+
 **Response Body:**
 ```
 {
@@ -315,6 +440,36 @@ Validation failed.
             "The password field is required."
         ]
     }
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 600
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 

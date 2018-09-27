@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Facades\ApiThrottle;
 use Exception;
 use Illuminate\Contracts\Validation\Validator;
 use Throwable;
@@ -40,9 +41,13 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
-    public static function invalidToken()
+    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter)
     {
-        return new ApiException('The password reset token is invalid or expired', 401);
+        return new ApiException(
+            'The password reset token is invalid or expired',
+            401,
+            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
+        );
     }
 
     /* Throttle */

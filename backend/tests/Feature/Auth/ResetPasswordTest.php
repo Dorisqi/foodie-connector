@@ -41,11 +41,22 @@ class ResetPasswordTest extends ApiTestCase
             'password' => $this::NEW_PASSWORD,
             'token' => $token,
         ], 404);
-        $this->assertFailed([
-            'email' => $user->email,
-            'password' => $this::NEW_PASSWORD,
-            'token' => $token,
-        ], 401);
+        $rateLimitReflection = new \ReflectionClassConstant(ResetPasswordController::class, 'RATE_LIMIT');
+        $rateLimit = $rateLimitReflection->getValue();
+        $decayMinutesReflection = new \ReflectionClassConstant(ResetPasswordController::class, 'DECAY_MINUTES');
+        $decayMinutes = $decayMinutesReflection->getValue();
+        foreach (range(1, $rateLimit + 1) as $i) {
+            $this->assertThrottle(
+                $this->assertFailed([
+                    'email' => $user->email,
+                    'password' => $this::NEW_PASSWORD,
+                    'token' => $token,
+                ], $i <= $rateLimit ? 401 : 429),
+                $rateLimit,
+                $i <= $rateLimit ? $rateLimit - $i : 0,
+                $i >= $rateLimit ? $decayMinutes * 60 : null
+            );
+        }
     }
 
     protected function method()
