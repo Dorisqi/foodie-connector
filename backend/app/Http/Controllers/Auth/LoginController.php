@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class LoginController extends ApiController
 {
@@ -100,6 +101,17 @@ class LoginController extends ApiController
     public function decayMinutes()
     {
         return $this::DECAY_MINUTES;
+    }
+
+    /**
+     * Get throttle key
+     *
+     * @param \Illuminate\Http\Request
+     * @return string
+     */
+    protected function throttleKey(Request $request)
+    {
+        return 'login|' . Str::lower($request->input($this->username()));
     }
 
     /**
