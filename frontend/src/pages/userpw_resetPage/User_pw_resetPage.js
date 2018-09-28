@@ -1,26 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "../../material-kit/assets/scss/material-kit-react.css?v=1.2.0";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
-import tooltipsStyle from "assets/jss/material-kit-react/tooltipsStyle.jsx";
 
 
 // core components
-import Card from "../../material-kit/components/Card/Card.jsx";
-import CardBody from "../../material-kit/components/Card/CardBody.jsx";
-import CardHeader from "../../material-kit/components/Card/CardHeader.jsx";
-import Button from "../../material-kit/components/CustomButtons/Button.jsx";
-import { cardTitle } from "../../material-kit/assets/jss/material-kit-react.jsx";
-import Badge from '../../material-kit/components/Badge/Badge.jsx';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from '@material-ui/core/Tooltip';
+import CardHeader from '../../material-kit/components/Card/CardHeader';
+import Button from '../../material-kit/components/CustomButtons/Button';
 
 const styles = theme => ({
   layout: {
@@ -66,29 +58,29 @@ function PwReset(props) {
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-        <CardHeader style = {{textAlign: "center"}} color="warning">Resetting My Password</CardHeader>
-          <Avatar className={classes.avatar}>
-            
-          </Avatar>
-          <Avatar
-        alt="userimg"
-        src="https://image.freepik.com/free-icon/user-image-with-black-background_318-34564.jpg"
-        className={classNames(classes.avatar, classes.bigAvatar)}
-      	/>
-          
+          <CardHeader style={{ textAlign: 'center' }} color="warning">Resetting My Password</CardHeader>
+          <Avatar className={classes.avatar} />
+
+
           <form className={classes.form}>
-           <Tooltip
-          id="tooltip-right"
-          title="Please include at least 1 Capital letter,1 digit!!"
-          placement="right"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <Button>Requirement</Button>
-        </Tooltip>
+            <Tooltip
+              id="tooltip-right"
+              title="Please include at least 1 Capital letter,1 digit!!"
+              placement="right"
+              classes={{ tooltip: classes.tooltip }}
+            >
+              <Button>Requirement</Button>
+            </Tooltip>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Enter Old Password</InputLabel>
-              <Input id="password" name="oldpw" autoComplete="oldpw" autoFocus />
+              <InputLabel htmlFor="password">Confirm the Emial to receive the verify code</InputLabel>
+              <Input
+                id="emailtem"
+                name="emailtem"
+                autoComplete="emailtem"
+                autoFocus
+              />
             </FormControl>
+
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Enter New Password</InputLabel>
               <Input
@@ -98,6 +90,7 @@ function PwReset(props) {
                 autoComplete="newpassword"
               />
             </FormControl>
+
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Enter New Password again</InputLabel>
               <Input
@@ -111,7 +104,7 @@ function PwReset(props) {
               type="submit"
               fullWidth
               variant="raised"
-              color="rose"
+              color="primary"
               className={classes.submit}
             >
               Confirm Changes
@@ -124,28 +117,7 @@ function PwReset(props) {
 }
 
 PwReset.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.element.isRequired,
 };
 
 export default withStyles(styles)(PwReset);
-
-
-
-/*class Cards extends React.Component {
-  render() {
-    const { classes } = this.props
-    return (
-    	<Card style={{width: "10rem"},{height: "10rem"}}>
-        <CardHeader style = {{textAlign: "center"}} color="warning">Password Resetting</CardHeader>
-        <CardBody>
-        <h4 style = {{textAlign: "center"}}>Please enter your OLD password, and the NEW password!</h4>
-        <Button color="rose">Confirm</Button>
-        </CardBody>
-      	</Card>
-    );
-  }
-}
-
-export default withStyles(style)(Cards);*/
-
-
