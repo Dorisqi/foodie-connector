@@ -1,5 +1,5 @@
-import Base from './components/base/Base';
-import RestaurantListPage from './pages/restaurantListPage/RestaurantListPage';
+import Base from './components/Base/Base';
+import RestaurantListPage from './pages/RestaurantListPage/RestaurantListPage';
 import UserpwresetPage from './pages/userpw_resetPage/User_pw_resetPage';
 
 

@@ -1,31 +1,31 @@
-.card {
-  maxWidth: 400;
+button.label {
+  margin: 10px;
+  padding: 5px 5px;
+  font-size: 13px;
 }
-
-.media {
-  height: 0;
-  paddingTop: '56.25%';
+img.resize {
+  width: 400px;
+  height: 200px;
 }
+h2.restaurantName {
 
-.actions {
-  display: 'flex';
+  margin-left: 10px;
 }
-
-.expand {
-  transform: 'rotate(0deg)';
-  /* transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  });
-  marginLeft: 'auto';
-  [theme.breakpoints.up('sm')]: {
-    marginRight: -8,
-  }; */
+img.thumbUp {
+  margin-right: 20px;
+  color: red;
 }
-
-.expandOpen {
-  transform: 'rotate(180deg)';
+p.tags {
+  margin-left: 15px;
+  color: #CBBFBF;
 }
-
-.avatar {
-  backgroundColor: red[500];
+span.rateText {
+  margin-top: 2px;
+  margin-right: 15px;
+  margin-left: 4px;
+  float: right;
+  font-size: 15px;
+}
+span.thumbUp {
+  float: right;
 }

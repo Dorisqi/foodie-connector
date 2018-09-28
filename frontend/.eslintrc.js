@@ -7,4 +7,12 @@ module.exports = {
         "jest": true,
         "browser": true,
     },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["src/material-kit"]
+        }
+      }
+    }
+
 };

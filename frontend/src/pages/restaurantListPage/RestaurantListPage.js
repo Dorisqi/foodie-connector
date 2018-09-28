@@ -1,5 +1,5 @@
 import React from 'react';
-import RestaurantList from '../../components/restaurantList/RestaurantList';
+import RestaurantList from '../../components/RestaurantList/RestaurantList';
 
 const restaurantList = [
   {
@@ -11,7 +11,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 96,
-    image: '/static/img/1.jpg',
+    tags: ['Pizza', 'FastFood', 'Wings'],
+    image: '/images/1.jpg',
   },
   {
     id: 2,
@@ -22,7 +23,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 80,
-    image: '/static/img/1.jpg',
+    tags: ['Pizza', 'FastFood', 'Wings'],
+    image: '/images/1.jpg',
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 100,
-    image: '/static/img/1.jpg',
+    tags: ['Pizza', 'FastFood', 'Wings'],
+    image: '/images/1.jpg',
   },
   {
     id: 4,
@@ -44,7 +47,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 96,
-    image: '/static/img/1.jpg',
+    tags: ['Chinese', 'FastFood'],
+    image: '/images/1.jpg',
   },
   {
     id: 5,
@@ -55,7 +59,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 96,
-    image: '/static/img/1.jpg',
+    tags: ['Thai', 'FastFood'],
+    image: '/images/1.jpg',
   },
   {
     id: 6,
@@ -66,7 +71,8 @@ const restaurantList = [
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 96,
-    image: '/static/img/1.jpg',
+    tags: ['Mexican', 'FastFood'],
+    image: '/images/1.jpg',
   },
 ];
 
