@@ -10,7 +10,7 @@ module.exports = {
     "settings": {
       "import/resolver": {
         "node": {
-          "paths": ["src/material-kit"]
+          "paths": ["src/material-kit", "src/"]
         }
       }
     }
