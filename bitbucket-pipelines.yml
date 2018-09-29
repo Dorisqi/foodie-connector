@@ -38,7 +38,7 @@ pipelines:
         script:
         - cd docker/test-php
         - docker build -t ${IMAGE_NAME}:test-php .
-        - cd ../ && chmod +x docker-login.sh && ./docker-login.sh
+        - ../docker-login.sh
         - docker push ${IMAGE_NAME}:test-php
     release/ci/docker-deploy-base:
     - step:
@@ -50,8 +50,18 @@ pipelines:
         script:
         - cd docker/deploy-base
         - docker build -t ${IMAGE_NAME}:deploy-base .
-        - cd ../ && chmod +x docker-login.sh && ./docker-login.sh
+        - ../docker-login.sh
         - docker push ${IMAGE_NAME}:deploy-base
+    release/app/*:
+    - step:
+        name: Build docker for deployment
+        services:
+        - docker
+        caches:
+        - docker
+        script:
+        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
+        - sed -e "s/\[TYPE\]/${TYPE}/g" build.sh | bash
   custom:
     build-testing:
     - step:
