@@ -8,4 +8,4 @@ COPY backend /app/backend
 RUN cd /app/backend && chmod +x predeploy.sh && ./predeploy.sh
 
 # Set version id
-RUN echo "[VERSION_ID]" > /app/backend/public/version
+RUN echo "[BUILD_ID]" > /app/backend/public/version
