@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brokers\VerifyEmailBroker;
 use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,9 +85,12 @@ class ProfileController extends ApiController
             throw ApiException::validationFailed($validator);
         }
 
-        $user = $this->guard()->user();
+        $user = $this->user();
         $user->email = $request->input('email');
+        $user->email_verified_at = null;
         $user->save();
+
+        VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
 
         return $this->response($user);
     }

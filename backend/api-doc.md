@@ -42,7 +42,8 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery"
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
     }
 }
 ```
@@ -166,7 +167,8 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery"
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
     }
 }
 ```
@@ -218,6 +220,93 @@ Validation failed.
 }
 ```
 
+### **POST - /api/v1/auth/resend-verification-email**
+
+Resend verification email
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 403**
+
+The email address is already verified.
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The email address is already verified."
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
+}
+```
+
 ### **POST - /api/v1/auth/reset-password**
 
 Reset password
@@ -250,7 +339,7 @@ Successful operation
 ```
 #### **Status Code: 401**
 
-The password reset token is invalid or expired
+The password reset token is invalid or expired.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -274,7 +363,7 @@ The password reset token is invalid or expired
 **Response Body:**
 ```
 {
-    "message": "The password reset token is invalid or expired"
+    "message": "The password reset token is invalid or expired."
 }
 ```
 #### **Status Code: 404**
@@ -389,6 +478,25 @@ Successful operation
     "X-RateLimit-Limit": 1,
     "X-RateLimit-Remaining": 0,
     "Retry-After": 60
+}
+```
+#### **Status Code: 403**
+
+The email address has not been verified
+
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email address has not been verified"
 }
 ```
 #### **Status Code: 404**
@@ -919,7 +1027,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**
@@ -972,7 +1081,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**
@@ -1054,7 +1164,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**

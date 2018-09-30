@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\ApiUser;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -207,6 +208,36 @@ abstract class ApiTestCase extends TestCase
     protected function userFactory()
     {
         return factory(ApiUser::class);
+    }
+
+    /**
+     * Get the current user
+     *
+     * @return \App\Models\ApiUser
+     */
+    protected function user()
+    {
+        return $this->guard()->user();
+    }
+
+    /**
+     * Get the guard config
+     *
+     * @return array
+     */
+    protected function guardConfig()
+    {
+        return config('auth.guards.api');
+    }
+
+    /**
+     * Get the rate limiter
+     *
+     * @return \Illuminate\Cache\RateLimiter
+     */
+    protected function limiter()
+    {
+        return app(RateLimiter::class);
     }
 
     /**

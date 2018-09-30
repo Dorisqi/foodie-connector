@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Notifications\VerifyEmail as VerifyEmailNotification;
 
 class ApiUser extends Authenticatable
 {
@@ -45,6 +46,18 @@ class ApiUser extends Authenticatable
         return $this->hasOne('App\Models\Address', 'id', 'default_address');
     }
 
+    public function getIsEmailVerifiedAttribute()
+    {
+        return !is_null($this->email_verified_at);
+    }
+
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['is_email_verified'] = $this->is_email_verified;
+        return $data;
+    }
+
     /**
      * Send the password reset notification.
      *
@@ -54,6 +67,17 @@ class ApiUser extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendEmailVerificationNotificationEmail($token)
+    {
+        $this->notify(new VerifyEmailNotification($token));
     }
 
     /**

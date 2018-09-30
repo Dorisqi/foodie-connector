@@ -39,6 +39,14 @@ return [
         'api' => [
             'driver' => 'api',
             'provider' => 'api_users',
+            'verify_email' => [
+                'storage_key' => 'email_verification_token',
+                'expires' => 86400, // 24 hrs
+                'token_bytes' => 32,
+            ],
+            'email' => [
+                'decay_minutes' => 1,
+            ],
         ],
 
         'admin' => [

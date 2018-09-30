@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Notifications\ResetPassword;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
@@ -19,8 +20,12 @@ class ForgotPasswordTest extends ApiTestCase
     {
         Notification::fake();
         $user = $this->userFactory()->create();
-        $decayMinutesReflection = new \ReflectionClassConstant(ForgotPasswordController::class, 'DECAY_MINUTES');
-        $decayMinutes = $decayMinutesReflection->getValue();
+        $this->assertFailed([
+            'email' => $user->email,
+        ], 403);
+        $user->email_verified_at = Carbon::now()->getTimestamp();
+        $user->save();
+        $decayMinutes = $this->guardConfig()['email']['decay_minutes'];
         $this->assertThrottle($this->assertSucceed([
             'email' => $user->email,
         ]), 1, 0, $decayMinutes * 60);

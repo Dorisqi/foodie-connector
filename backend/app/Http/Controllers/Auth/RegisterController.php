@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Brokers\VerifyEmailBroker;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ApiException;
 use App\Models\ApiUser;
@@ -40,6 +41,7 @@ class RegisterController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
     public function register(Request $request)
     {
@@ -57,6 +59,8 @@ class RegisterController extends ApiController
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
 
         $this->guard()->loginUsingId($user->getAuthIdentifier());
 
