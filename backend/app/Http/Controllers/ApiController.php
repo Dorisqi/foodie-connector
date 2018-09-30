@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Models\ApiUser;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -57,5 +59,33 @@ class ApiController extends Controller
     protected function guard()
     {
         return Auth::guard('api');
+    }
+
+    /**
+     * Get the current user
+     *
+     * @return \App\Models\ApiUser
+     */
+    protected function user()
+    {
+        return $this->guard()->user();
+    }
+
+    /**
+     * Get the rate limiter
+     *
+     * @return \Illuminate\Cache\RateLimiter
+     */
+    protected function limiter()
+    {
+        return app(RateLimiter::class);
+    }
+
+    /**
+     * Get the guard config
+     */
+    protected function guardConfig()
+    {
+        return config('auth.guards.api');
     }
 }

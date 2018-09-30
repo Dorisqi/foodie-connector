@@ -19,8 +19,7 @@ class ForgotPasswordTest extends ApiTestCase
     {
         Notification::fake();
         $user = $this->userFactory()->create();
-        $decayMinutesReflection = new \ReflectionClassConstant(ForgotPasswordController::class, 'DECAY_MINUTES');
-        $decayMinutes = $decayMinutesReflection->getValue();
+        $decayMinutes = $this->guardConfig()['email']['decay_minutes'];
         $this->assertThrottle($this->assertSucceed([
             'email' => $user->email,
         ]), 1, 0, $decayMinutes * 60);

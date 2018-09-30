@@ -42,7 +42,8 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery"
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": null
     }
 }
 ```
@@ -166,7 +167,8 @@ Successful operation
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery"
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": null
     }
 }
 ```
@@ -215,6 +217,76 @@ Validation failed.
             "The password must be a valid password."
         ]
     }
+}
+```
+
+### **POST - /api/v1/auth/resend-verification-email**
+
+Resend verification email
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 
@@ -919,7 +991,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": null
 }
 ```
 #### **Status Code: 401**
@@ -972,7 +1045,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": null
 }
 ```
 #### **Status Code: 401**
@@ -1054,7 +1128,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
-    "id": 1
+    "id": 1,
+    "is_email_verified": null
 }
 ```
 #### **Status Code: 401**

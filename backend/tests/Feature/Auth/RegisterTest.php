@@ -4,6 +4,9 @@ namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\ApiUser;
+use App\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
 
 class RegisterTest extends ApiTestCase
@@ -19,6 +22,7 @@ class RegisterTest extends ApiTestCase
      */
     public function testRegister()
     {
+        Notification::fake();
         $user = $this->userFactory()->make();
         $this->assertFailed([
             'email' => $user->email,
@@ -30,11 +34,24 @@ class RegisterTest extends ApiTestCase
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
         ]);
+        $this->assertAuthenticated('api');
+        $user = $this->user();
+        $keys = Redis::keys($this->guardConfig()['verify_email']['storage_key'] . ':' .
+            $user->getAuthIdentifier() . ':*');
+        $this->assertFalse(empty($keys));
+        $token = substr(strrchr($keys[0], ':'), 1);
+        Notification::assertSentTo(
+            $user,
+            VerifyEmail::class,
+            function ($notification, $channels) use ($token) {
+                return $notification->token == $token;
+            }
+        );
+        $this->assertTrue($this->limiter()->tooManyAttempts($user->emailThrottleKey(), 1));
         $this->assertTrue($this->guard()->attempt([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));
-        $this->assertAuthenticated('api');
         $this->assertFailed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),

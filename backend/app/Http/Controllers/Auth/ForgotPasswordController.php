@@ -27,11 +27,6 @@ class ForgotPasswordController extends ApiController
     use SendsPasswordResetEmails;
 
     /**
-     * Decay minutes
-     */
-    protected const DECAY_MINUTES = 1;
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -67,23 +62,13 @@ class ForgotPasswordController extends ApiController
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
         ResetPasswordBroker::sendResetEmail($user);
-        $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
+        $this->limiter()->hit($throttleKey, $this->guardConfig()['email']['decay_minutes']);
 
         $response = $this->response();
         $response->headers->add(
-            ApiThrottle::throttleHeaders(1, 0, $this::DECAY_MINUTES)
+            ApiThrottle::throttleHeaders(1, 0, $this->guardConfig()['email']['decay_minutes'])
         );
         return $response;
-    }
-
-    /**
-     * Get the rate limiter
-     *
-     * @return \Illuminate\Cache\RateLimiter
-     */
-    protected function limiter()
-    {
-        return app(RateLimiter::class);
     }
 
     /**
