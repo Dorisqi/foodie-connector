@@ -15,7 +15,7 @@ pipelines:
         - cd backend
         - phpcs .
         - composer install
-        - cp .env.example
+        - cp .env.example .env
         - php artisan key:generate
         - phpunit
     dev/frontend*:
