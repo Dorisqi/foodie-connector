@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends ApiController
 {
@@ -66,6 +67,31 @@ class ProfileController extends ApiController
     }
 
     /**
+     * Update the email address
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function updateEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), $this::updateEmailRules());
+        if ($validator->fails()) {
+            if (isset($validator->failed()['email']['Unique'])) {
+                throw ApiException::emailExists();
+            }
+            throw ApiException::validationFailed($validator);
+        }
+
+        $user = $this->guard()->user();
+        $user->email = $request->input('email');
+        $user->save();
+
+        return $this->response($user);
+    }
+
+    /**
      * Get the rule for changing password
      *
      * @return array
@@ -87,6 +113,18 @@ class ProfileController extends ApiController
     {
         return [
             'name' => 'string|max:255',
+        ];
+    }
+
+    /**
+     * Get the rule for updating email
+     *
+     * @return array
+     */
+    public static function updateEmailRules()
+    {
+        return [
+            'email' => 'required|email|max:255|unique:api_users'
         ];
     }
 }

@@ -43,7 +43,7 @@ class RegisterController extends ApiController
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), $this->rules());
+        $validator = Validator::make($request->all(), $this::rules());
         if ($validator->fails()) {
             if (isset($validator->failed()['email']['Unique'])) {
                 throw ApiException::emailExists();
