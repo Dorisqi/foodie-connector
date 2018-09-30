@@ -480,6 +480,25 @@ Successful operation
     "Retry-After": 60
 }
 ```
+#### **Status Code: 403**
+
+The email address has not been verified
+
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email address has not been verified"
+}
+```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.

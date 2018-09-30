@@ -54,6 +54,10 @@ class ApiException extends Exception
     {
         return new ApiException('The email address is already verified.', 403);
     }
+    public static function emailNotVerified()
+    {
+        return new ApiException('The email address has not been verified', 403);
+    }
 
     /* Throttle */
     public static function tooManyAttempts(int $rateLimit, int $retryAfter)
