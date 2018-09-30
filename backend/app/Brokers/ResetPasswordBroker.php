@@ -4,6 +4,7 @@ namespace App\Brokers;
 
 use App\Exceptions\ApiException;
 use App\Models\ApiUser;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 use Closure;
 
@@ -22,13 +23,14 @@ class ResetPasswordBroker
     /**
      * Send reset code and link through email
      *
+     * @param \Illuminate\Cache\RateLimiter
      * @param \App\Models\ApiUser $user
      * @return void
      *
      * @throws \App\Exceptions\ApiException
      * @throws \Exception
      */
-    public static function sendResetEmail(ApiUser $user)
+    public static function sendResetEmail(RateLimiter $limiter, ApiUser $user)
     {
         if (is_null($user)) {
             throw ApiException::userNotFound();
@@ -36,6 +38,7 @@ class ResetPasswordBroker
         $user->sendPasswordResetNotification(
             self::generateResetToken($user)
         );
+        $limiter->hit($user->emailThrottleKey(), config('auth.guards.api.email.decay_minutes'));
     }
 
     /**

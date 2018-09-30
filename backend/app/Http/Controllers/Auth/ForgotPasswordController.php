@@ -64,8 +64,7 @@ class ForgotPasswordController extends ApiController
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        ResetPasswordBroker::sendResetEmail($user);
-        $this->limiter()->hit($throttleKey, $this->guardConfig()['email']['decay_minutes']);
+        ResetPasswordBroker::sendResetEmail($this->limiter(), $user);
 
         $response = $this->response();
         $response->headers->add(

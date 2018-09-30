@@ -60,8 +60,7 @@ class RegisterController extends ApiController
             'password' => Hash::make($data['password']),
         ]);
 
-        VerifyEmailBroker::sendVerificationEmail($user);
-        $this->limiter()->hit($user->emailThrottleKey(), config('auth.guards.api.email.decay_minutes'));
+        VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
 
         $this->guard()->loginUsingId($user->getAuthIdentifier());
 

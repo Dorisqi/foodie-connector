@@ -4,6 +4,9 @@ namespace Tests\Feature\Profile;
 
 use App\Http\Controllers\ProfileController;
 use App\Models\ApiUser;
+use App\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
 
 class UpdateEmailTest extends ApiTestCase
@@ -15,6 +18,7 @@ class UpdateEmailTest extends ApiTestCase
      */
     public function testUpdateEmail()
     {
+        Notification::fake();
         $this->assertFailed(null, 401);
         $user = $this->userFactory()->create();
         $this->login($user);
@@ -23,6 +27,18 @@ class UpdateEmailTest extends ApiTestCase
         ]);
         $user = ApiUser::find($user->id);
         $this->assertTrue($user->email === 'new@foodie-connector.delivery');
+        $this->assertFalse($user->is_email_verified);
+        $keys = Redis::keys($this->guardConfig()['verify_email']['storage_key'] . ':' .
+            $user->getAuthIdentifier() . ':*');
+        $this->assertFalse(empty($keys));
+        $token = substr(strrchr($keys[0], ':'), 1);
+        Notification::assertSentTo(
+            $user,
+            VerifyEmail::class,
+            function ($notification) use ($token) {
+                return $notification->token == $token;
+            }
+        );
         $this->userFactory()->create([
             'email' => 'exist@foodie-connector.delivery',
         ]);

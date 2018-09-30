@@ -3,6 +3,7 @@
 namespace App\Brokers;
 
 use App\Models\ApiUser;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 
 class VerifyEmailBroker
@@ -10,16 +11,18 @@ class VerifyEmailBroker
     /**
      * Send the verification email
      *
+     * @param \Illuminate\Cache\RateLimiter
      * @param \App\Models\ApiUser $user
      * @return void
      *
      * @throws \Exception
      */
-    public static function sendVerificationEmail(ApiUser $user)
+    public static function sendVerificationEmail(RateLimiter $limiter, ApiUser $user)
     {
         $user->sendEmailVerificationNotificationEmail(
             self::generateVerificationToken($user)
         );
+        $limiter->hit($user->emailThrottleKey(), config('auth.guards.api.email.decay_minutes'));
     }
 
     /**

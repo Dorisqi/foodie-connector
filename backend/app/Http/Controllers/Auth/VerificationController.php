@@ -40,8 +40,7 @@ class VerificationController extends ApiController
             throw ApiException::tooManyAttempts(1, $this->limiter()->availableIn($throttleKey));
         }
 
-        VerifyEmailBroker::sendVerificationEmail($user);
-        $this->limiter()->hit($throttleKey, $this->guardConfig()['email']['decay_minutes']);
+        VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
 
         $response = $this->response();
         $response->headers->add(
