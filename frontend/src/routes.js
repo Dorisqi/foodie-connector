@@ -17,7 +17,7 @@ const routes = {
     {
       path: '/trying',
       component: ChangepwBox,
-    }
+    },
   ],
 };
 
