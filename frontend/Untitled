@@ -1,0 +1,37 @@
+const { classes } = props;
+return (
+  <React.Fragment>
+    <CssBaseline />
+    <main className={classes.layout}>
+      <Paper className={classes.paper}>
+        <form className={classes.form}>
+          <FormControl margin="normal"  fullWidth false>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <Input id="email" name="email" autoComplete="email" autoFocus />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
+              name="password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign in
+          </Button>
+        </form>
+      </Paper>
+    </main>
+  </React.Fragment>
+);
+
+
+<center><Typography variant="headline">Sign in</Typography></center>
