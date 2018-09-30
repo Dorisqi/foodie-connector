@@ -4,7 +4,7 @@ pipelines:
     - step:
         name: "PHP CodeSniffer and PHPUnit"
         image:
-            name: foodieconnectorphp/foodie-connector-php:php-testing-latest
+            name: foodieconnectorphp/foodie-connector-php:test-php
             username: $DOCKER_HUB_USERNAME
             password: $DOCKER_HUB_PASSWORD
             email: $DOCKER_HUB_EMAIL
