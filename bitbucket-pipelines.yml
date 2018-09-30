@@ -62,31 +62,11 @@ pipelines:
         script:
         - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
         - sed -e "s/\[TYPE\]/${TYPE}/g" build.sh | bash
-  custom:
-    build-testing:
     - step:
-        name: Build docker for testing
-        services:
-        - docker
-        caches:
-        - docker
+        name: Deploy docker to the server
         script:
-        - export APP_KEY=$TESTING_APP_KEY
-        - export APP_URL=$TESTING_APP_URL
-        - export DB_DATABASE=$TESTING_DB_DATABASE
-        - export REDIS_HOST=$TESTING_REDIS_HOST
-        - export REDIS_PASSWORD=$TESTING_REDIS_PASSWORD
-        - export SPARKPOST_SECRET=$TESTING_SPARKPOST_SECRET
-        - export IMAGE_TAG=test
-        - chmod +x build.sh
-        - ./build.sh
-    - step:
-        name: Deloy testing server
-        deployment: test
-        script:
-        - export IMAGE_TAG=test
-        - chmod +x deploy.sh
-        - ./deploy.sh
+        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
+        - sed -e "s/\[TYPE\]/${TYPE}/g" deploy.sh | bash
 
 definitions:
   caches:
