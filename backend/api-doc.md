@@ -1017,6 +1017,112 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **PUT - /api/v1/profile/email**
+
+Update the email address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email | max:255, unique:api_users |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "new@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "email": "new@foodie-connector.delivery",
+    "id": 1
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 409**
+
+The email has already been taken.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "exist@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email has already been taken."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "not_email"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email must be a valid email address."
+        ]
+    }
+}
+```
+
 ### **PUT - /api/v1/profile/password**
 
 Change the password
