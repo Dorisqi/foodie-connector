@@ -20,6 +20,27 @@ class ProfileController extends ApiController
     }
 
     /**
+     * Update the profile
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function update(Request $request)
+    {
+        $this->validateInput($request, $this::updateProfileRules());
+
+        $user = $this->guard()->user();
+        $user->fill($request->only([
+            'name',
+        ]));
+        $user->save();
+
+        return $this->response($user);
+    }
+
+    /**
      * Change the password
      *
      * @param \Illuminate\Http\Request
@@ -54,6 +75,18 @@ class ProfileController extends ApiController
         return [
             'old_password' => 'required|string',
             'new_password' => 'required|password',
+        ];
+    }
+
+    /**
+     * Get the rule for updating profile
+     *
+     * @return array
+     */
+    public static function updateProfileRules()
+    {
+        return [
+            'name' => 'string|max:255',
         ];
     }
 }
