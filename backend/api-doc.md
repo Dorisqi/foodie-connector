@@ -43,6 +43,7 @@ Successful operation
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "stripe_id": null,
         "is_email_verified": false
     }
 }
@@ -168,6 +169,7 @@ Successful operation
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "stripe_id": null,
         "is_email_verified": false
     }
 }

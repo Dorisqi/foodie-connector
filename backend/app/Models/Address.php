@@ -28,14 +28,14 @@ class Address extends Model
         if (is_null($user)) {
             return false;
         }
-        return $user->default_address === $this->id;
+        return $user->default_address_id === $this->id;
     }
 
     public function setIsDefaultAttribute($value)
     {
         if ($value === true) {
             $user = Auth::guard('api')->user();
-            $user->default_address = $this->id;
+            $user->default_address_id = $this->id;
             $user->save();
         }
     }

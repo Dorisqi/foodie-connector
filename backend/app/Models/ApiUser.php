@@ -33,7 +33,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'email_verified_at', 'created_at', 'updated_at', 'default_address'
+        'password', 'email_verified_at', 'created_at', 'updated_at', 'default_address_id', 'default_card_id'
     ];
 
     public function addresses()
@@ -43,7 +43,7 @@ class ApiUser extends Authenticatable
 
     public function defaultAddress()
     {
-        return $this->hasOne('App\Models\Address', 'id', 'default_address');
+        return $this->hasOne('App\Models\Address', 'id', 'default_address_id');
     }
 
     public function getIsEmailVerifiedAttribute()

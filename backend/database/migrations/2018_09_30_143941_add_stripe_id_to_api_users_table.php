@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDefaultAddressToApiUsersTable extends Migration
+class AddStripeIdToApiUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddDefaultAddressToApiUsersTable extends Migration
     public function up()
     {
         Schema::table('api_users', function (Blueprint $table) {
-            $table->unsignedInteger('default_address_id')->nullable();
-
-            $table->foreign('default_address_id')->references('id')->on('addresses');
+            $table->string('stripe_id')->nullable();
         });
     }
 
@@ -28,11 +26,7 @@ class AddDefaultAddressToApiUsersTable extends Migration
     public function down()
     {
         Schema::table('api_users', function (Blueprint $table) {
-            $table->dropForeign(['default_address_id']);
-        });
-
-        Schema::table('api_users', function (Blueprint $table) {
-            $table->dropColumn('default_address_id');
+            $table->dropColumn('stripe_id');
         });
     }
 }
