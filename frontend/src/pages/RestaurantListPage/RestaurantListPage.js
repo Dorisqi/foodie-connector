@@ -1,7 +1,7 @@
 import React from 'react';
 import RestaurantList from '../../components/RestaurantList/RestaurantList';
 
-const restaurantList = [
+const mockRestaurantList = [
   {
     id: 1,
     name: 'ColdBox Pizza',
@@ -76,8 +76,34 @@ const restaurantList = [
   },
 ];
 
-const RestaurantListPage = () => (
-  <RestaurantList restaurantList={restaurantList} />
-);
+class RestaurantListPage extends React.Component {
+  constructor() {
+    super();
+    this.state = { restaurantList: [] };
+  }
+
+  componentDidMount() {
+    this.loadList();
+  }
+
+  loadList() {
+    this.setState({ restaurantList: mockRestaurantList });
+  }
+
+  renderRestaurants() {
+    const { restaurantList } = this.state;
+    return (
+      <RestaurantList restaurantList={restaurantList} />
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderRestaurants()}
+      </div>
+    );
+  }
+}
 
 export default RestaurantListPage;
