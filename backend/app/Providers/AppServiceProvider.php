@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
             return preg_match('/^[0-9]{5}(\-[0-9]{4})?$/', $value);
         });
 
+        Validator::extend('password', function ($attribute, $value) {
+            return strlen($value) >= 6; // TODO: password complexity check
+        });
+
         Auth::extend('api', function ($app, $name, array $config) {
             return new ApiGuard(
                 Auth::createUserProvider($config['provider']),

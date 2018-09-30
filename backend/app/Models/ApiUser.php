@@ -32,7 +32,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'created_at', 'updated_at'
+        'password', 'email_verified_at', 'created_at', 'updated_at', 'default_address'
     ];
 
     public function addresses()
@@ -64,6 +64,26 @@ class ApiUser extends Authenticatable
      */
     public function setRememberToken($value)
     {
+    }
+
+    /**
+     * Get throttle key for send emails
+     *
+     * @return string
+     */
+    public function emailThrottleKey()
+    {
+        return 'send_email|' . $this->email;
+    }
+
+    /**
+     * Get the throttle key for resetting password
+     *
+     * @return string
+     */
+    public function resetPasswordThrottleKey()
+    {
+        return 'reset_password|' . $this->email;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Models\ApiUser;
 use App\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
@@ -19,10 +18,12 @@ class ForgotPasswordTest extends ApiTestCase
     public function testSendingVerificationCode()
     {
         Notification::fake();
-        $user = factory(ApiUser::class)->create();
-        $this->assertSucceed([
+        $user = $this->userFactory()->create();
+        $decayMinutesReflection = new \ReflectionClassConstant(ForgotPasswordController::class, 'DECAY_MINUTES');
+        $decayMinutes = $decayMinutesReflection->getValue();
+        $this->assertThrottle($this->assertSucceed([
             'email' => $user->email,
-        ]);
+        ]), 1, 0, $decayMinutes * 60);
         $keys = Redis::keys('password_reset_token:' . $user->getAuthIdentifier() . ':*');
         $this->assertFalse(empty($keys));
         $token = substr(strrchr($keys[0], ':'), 1);
@@ -33,6 +34,9 @@ class ForgotPasswordTest extends ApiTestCase
                 return $notification->token == $token;
             }
         );
+        $this->assertThrottle($this->assertFailed([
+            'email' => $user->email,
+        ], 429), 1, 0, $decayMinutes * 60);
         $this->assertFailed([
             'email' => 'wrong@foodie-connector.delivery',
         ], 404);

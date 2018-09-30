@@ -13,9 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('register', 'Auth\RegisterController@register');
@@ -28,5 +25,12 @@ Route::prefix('v1')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+
+        Route::prefix('profile')->group(function () {
+            Route::get('', 'ProfileController@show');
+            Route::put('', 'ProfileController@update');
+            Route::put('password', 'ProfileController@changePassword');
+            Route::put('email', 'ProfileController@updateEmail');
+        });
     });
 });

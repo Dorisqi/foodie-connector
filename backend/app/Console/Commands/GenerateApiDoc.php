@@ -62,7 +62,11 @@ class GenerateApiDoc extends Command
             'address' => [
                 'description' => 'Everything about address',
                 'apis' => [],
-            ]
+            ],
+            'profile' => [
+                'description' => 'Everything about profile',
+                'apis' => [],
+            ],
         ];
         foreach ($apis as $api) {
             $api_decoded = json_decode($api);
@@ -79,6 +83,9 @@ class GenerateApiDoc extends Command
                     'response' => is_null($request->{'response'})
                         ? null
                         : json_encode($request->{'response'}, JSON_PRETTY_PRINT),
+                    'response_header' => is_null($request->{'response_header'})
+                        ? null
+                        : json_encode($request->{'response_header'}, JSON_PRETTY_PRINT),
                 ]);
             }
             usort($requests, function ($a, $b) {

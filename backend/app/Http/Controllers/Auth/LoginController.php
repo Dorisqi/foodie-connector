@@ -7,7 +7,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LoginController extends ApiController
 {
@@ -23,6 +23,16 @@ class LoginController extends ApiController
     */
 
     use AuthenticatesUsers;
+
+    /**
+     * Rate limit
+     */
+    protected const RATE_LIMIT = 5;
+
+    /**
+     * Decay minutes for throttle
+     */
+    protected const DECAY_MINUTES = 10;
 
     /**
      * Create a new controller instance.
@@ -46,6 +56,8 @@ class LoginController extends ApiController
     {
         $this->validateInput($request);
 
+        $throttleKey = $this->throttleKey($request);
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -53,9 +65,8 @@ class LoginController extends ApiController
             $this->fireLockoutEvent($request);
 
             throw ApiException::tooManyAttempts(
-                App::environment('testing')
-                    ? 60
-                    : $this->limiter()->availableIn($this->throttleKey($request))
+                $this->maxAttempts(),
+                $this->limiter()->availableIn($throttleKey)
             );
         }
 
@@ -71,7 +82,11 @@ class LoginController extends ApiController
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        throw ApiException::loginFailed();
+        throw ApiException::loginFailed(
+            $this->maxAttempts(),
+            $this->limiter()->retriesLeft($throttleKey, $this::RATE_LIMIT),
+            $this->limiter()->availableIn($throttleKey)
+        );
     }
 
     /**
@@ -81,7 +96,38 @@ class LoginController extends ApiController
      */
     protected function guard()
     {
-        return Auth::guard('api');
+        return parent::guard();
+    }
+
+    /**
+     * Get the decay minutes
+     *
+     * @return int
+     */
+    public function decayMinutes()
+    {
+        return $this::DECAY_MINUTES;
+    }
+
+    /**
+     * Get the rate limit
+     *
+     * @return int
+     */
+    public function maxAttempts()
+    {
+        return $this::RATE_LIMIT;
+    }
+
+    /**
+     * Get throttle key
+     *
+     * @param \Illuminate\Http\Request
+     * @return string
+     */
+    protected function throttleKey(Request $request)
+    {
+        return 'login|' . Str::lower($request->input($this->username()));
     }
 
     /**

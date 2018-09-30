@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  db:
+    image: redis:alpine
+    container_name: redis-test
+    restart: unless-stopped
+    command: redis-server --requirepass secret
+
+networks:
+  default:
+    external:
+      name: webproxy

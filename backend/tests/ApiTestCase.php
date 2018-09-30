@@ -50,9 +50,11 @@ abstract class ApiTestCase extends TestCase
             'description' => $response->status() == 200
                 ? 'Successful operation'
                 : $response->json('message'),
+            'response_header' => null,
             'response' => empty($response->content()) ? null : $response->json(),
         ];
         array_push($this->requests, $api);
+        $response->api = true;
     }
 
     /**
@@ -119,6 +121,32 @@ abstract class ApiTestCase extends TestCase
     }
 
     /**
+     * Assert throttle headers
+     *
+     * @param \Illuminate\Foundation\Testing\TestResponse
+     * @param int $limit
+     * @param int $remaining
+     * @param int $retryAfter [optional]
+     * @return void
+     */
+    protected function assertThrottle(TestResponse $response, int $limit, int $remaining, int $retryAfter = null)
+    {
+        $response->assertHeader('X-RateLimit-Limit', $limit);
+        $response->assertHeader('X-RateLimit-Remaining', $remaining);
+        $response_header = [
+            'X-RateLimit-Limit' => $limit,
+            'X-RateLimit-Remaining' => $remaining,
+        ];
+        if (!is_null($retryAfter)) {
+            $response->assertHeader('Retry-After');
+            $response_header['Retry-After'] = $retryAfter;
+        }
+        if (isset($response->api)) {
+            $this->requests[count($this->requests) - 1]['response_header'] = $response_header;
+        }
+    }
+
+    /**
      * Make request
      *
      * @param array|null $data
@@ -152,13 +180,33 @@ abstract class ApiTestCase extends TestCase
     /**
      * Login for authorization
      *
-     * @param \App\Models\ApiUser $user
+     * @param \App\Models\ApiUser $user [optional]
      * @return void
      */
-    protected function login(ApiUser $user)
+    protected function login(ApiUser $user = null)
     {
-        Auth::guard('api')->login($user);
+        Auth::guard('api')->login($user ?? $this->userFactory()->create());
         $this->token = Auth::guard('api')->token();
+    }
+
+    /**
+     * Get the guard
+     *
+     * @return \App\Services\Auth\ApiGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
+
+    /**
+     * Get user factory
+     *
+     * @return \Illuminate\Database\Eloquent\FactoryBuilder
+     */
+    protected function userFactory()
+    {
+        return factory(ApiUser::class);
     }
 
     /**
@@ -246,6 +294,7 @@ abstract class ApiTestCase extends TestCase
                     case 'integer':
                     case 'phone:US':
                     case 'zip_code':
+                    case 'password':
                         $param['type'] = $restriction;
                         break;
                     case 'email':

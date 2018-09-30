@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Facades\ApiThrottle;
 use Exception;
 use Illuminate\Contracts\Validation\Validator;
 use Throwable;
@@ -17,7 +18,7 @@ class ApiException extends Exception
     /* Validation */
     public static function validationFailed(Validator $validator)
     {
-        return new ApiException('Validation failed.', 422, $validator->errors());
+        return new ApiException('Validation failed.', 422, null, $validator->errors());
     }
 
     /* User and Authentication */
@@ -25,9 +26,13 @@ class ApiException extends Exception
     {
         return new ApiException('The email has already been taken.', 409);
     }
-    public static function loginFailed()
+    public static function loginFailed(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
-        return new ApiException('These credentials do not match our records.', 401);
+        return new ApiException(
+            'These credentials do not match our records.',
+            401,
+            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
+        );
     }
     public static function requireAuthentication()
     {
@@ -37,17 +42,23 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
-    public static function invalidToken()
+    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
-        return new ApiException('The password reset token is invalid or expired', 401);
+        return new ApiException(
+            'The password reset token is invalid or expired',
+            401,
+            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
+        );
     }
 
     /* Throttle */
-    public static function tooManyAttempts(int $seconds)
+    public static function tooManyAttempts(int $rateLimit, int $retryAfter)
     {
-        return new ApiException('Too many attempts', 429, [
-            'available_seconds' => $seconds,
-        ]);
+        return new ApiException(
+            'Too many attempts',
+            429,
+            ApiThrottle::throttleHeaders($rateLimit, 0, $retryAfter)
+        );
     }
 
     /* Resource */
@@ -56,30 +67,46 @@ class ApiException extends Exception
         return new ApiException('Resource not found.', 404);
     }
 
+    /* Profile */
+    public static function invalidOldPassword()
+    {
+        return new ApiException('The old password does not match our records.', 401);
+    }
+
 
     /**
-     * Extra Exception information
+     * Headers
      *
-     * @var mixed
+     * @var array
      */
-    private $errorInformation = null;
+    protected $headers = null;
+
+    /**
+     * Data
+     *
+     * @mixed array
+     */
+    protected $data = null;
 
     /**
      * Construct the exception
      *
      * @param string $message [optional] The Exception message to throw.
      * @param int $code [optional] The Exception code.
-     * @param mixed $errorInformation [optional] Extra Exception information.
+     * @param array $headers [optional] Headers.
+     * @param mixed $data [optional] Data
      * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
     public function __construct(
         string $message = "Internal Server Error",
         int $code = 500,
-        $errorInformation = null,
+        array $headers = null,
+        $data = null,
         Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
-        $this->errorInformation = $errorInformation;
+        $this->headers = $headers;
+        $this->data = $data;
     }
 
     /**
@@ -93,10 +120,13 @@ class ApiException extends Exception
         $data = [
             'message' => $this->getMessage(),
         ];
-        if (!is_null($this->errorInformation)) {
-            $data['information'] = $this->errorInformation;
+        if (!is_null($this->data)) {
+            $data['data'] = $this->data;
         }
-        return response()
-            ->json($data, $this->getCode());
+        $response = response()->json($data, $this->getCode());
+        if (!is_null($this->headers)) {
+            $response->headers->add($this->headers);
+        }
+        return $response;
     }
 }

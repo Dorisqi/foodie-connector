@@ -27,10 +27,6 @@ Successful operation
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -39,16 +35,14 @@ Successful operation
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "email_verified_at": null,
-        "default_address": null
+        "email": "user@foodie-connector.delivery"
     }
 }
 ```
@@ -58,19 +52,23 @@ These credentials do not match our records.
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
-    "email": "wrong@foodie-connector.delivery",
-    "password": "test123456"
+    "email": "user@foodie-connector.delivery",
+    "password": "wrong"
 }
 ```
 
-**Response:**
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 4
+}
+```
+
+**Response Body:**
 ```
 {
     "message": "These credentials do not match our records."
@@ -82,10 +80,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -93,11 +87,11 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "password": [
             "The password field is required."
         ]
@@ -110,25 +104,27 @@ Too many attempts
 
 **URI**: /api/v1/auth/login
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "test123456"
+    "password": "wrong"
 }
 ```
 
-**Response:**
+**Response Header:**
 ```
 {
-    "message": "Too many attempts",
-    "information": {
-        "available_seconds": 60
-    }
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 600
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 
@@ -146,17 +142,13 @@ Not required
 | :--- | :--- | :--- | :--- |
 | name | required | string | max:255 |
 | email | required | email | max:255, unique:api_users |
-| password | required | string | min:6 |
+| password | required | password |  |
 
 #### **Status Code: 200**
 
 Successful operation
 
 **URI**: /api/v1/auth/register
-
-**Request Header:**
-```
-```
 
 **Request Body:**
 ```
@@ -167,16 +159,14 @@ Successful operation
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "email_verified_at": null,
-        "default_address": null
+        "email": "user@foodie-connector.delivery"
     }
 }
 ```
@@ -186,10 +176,6 @@ The email has already been taken.
 
 **URI**: /api/v1/auth/register
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -199,7 +185,7 @@ The email has already been taken.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "The email has already been taken."
@@ -211,10 +197,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/register
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -224,13 +206,13 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "password": [
-            "The password must be at least 6 characters."
+            "The password must be a valid password."
         ]
     }
 }
@@ -258,10 +240,6 @@ Successful operation
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -269,11 +247,6 @@ Successful operation
     "password": "new_password",
     "token": "12345678"
 }
-```
-
-**Response:**
-```
-
 ```
 #### **Status Code: 401**
 
@@ -281,10 +254,6 @@ The password reset token is invalid or expired
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -294,7 +263,15 @@ The password reset token is invalid or expired
 }
 ```
 
-**Response:**
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 4
+}
+```
+
+**Response Body:**
 ```
 {
     "message": "The password reset token is invalid or expired"
@@ -306,10 +283,6 @@ We can't find a user with that e-mail address.
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -319,7 +292,7 @@ We can't find a user with that e-mail address.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -331,10 +304,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/reset-password
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -342,11 +311,11 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "token": [
             "The token field is required."
         ],
@@ -354,6 +323,36 @@ Validation failed.
             "The password field is required."
         ]
     }
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new_password",
+    "token": "12345678"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 5,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 600
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 
@@ -377,10 +376,6 @@ Successful operation
 
 **URI**: /api/v1/auth/reset-password-email
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -388,19 +383,19 @@ Successful operation
 }
 ```
 
-**Response:**
+**Response Header:**
 ```
-
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
 ```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.
 
 **URI**: /api/v1/auth/reset-password-email
-
-**Request Header:**
-```
-```
 
 **Request Body:**
 ```
@@ -409,7 +404,7 @@ We can't find a user with that e-mail address.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "We can't find a user with that e-mail address."
@@ -421,10 +416,6 @@ Validation failed.
 
 **URI**: /api/v1/auth/reset-password-email
 
-**Request Header:**
-```
-```
-
 **Request Body:**
 ```
 {
@@ -432,15 +423,43 @@ Validation failed.
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "email": [
             "The email must be a valid email address."
         ]
     }
+}
+```
+#### **Status Code: 429**
+
+Too many attempts
+
+**URI**: /api/v1/auth/reset-password-email
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery"
+}
+```
+
+**Response Header:**
+```
+{
+    "X-RateLimit-Limit": 1,
+    "X-RateLimit-Remaining": 0,
+    "Retry-After": 60
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Too many attempts"
 }
 ```
 
@@ -458,8 +477,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
@@ -472,12 +490,7 @@ Successful operation
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 [
     {
@@ -512,16 +525,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -576,7 +580,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "name": "Test User",
@@ -597,16 +601,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -638,11 +633,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "phone": [
             "The phone must be a phone number."
         ]
@@ -660,8 +655,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
@@ -674,12 +668,7 @@ Successful operation
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "id": 1,
@@ -700,16 +689,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -726,12 +706,7 @@ Resource not found.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
@@ -779,7 +754,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "id": 1,
@@ -800,16 +775,7 @@ This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -833,7 +799,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
@@ -857,11 +823,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Validation failed.",
-    "information": {
+    "data": {
         "phone": [
             "The phone must be a phone number."
         ]
@@ -879,8 +845,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
+No param
 
 #### **Status Code: 200**
 
@@ -892,32 +857,13 @@ Successful operation
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
-```
-
-```
 #### **Status Code: 401**
 
 This page requires authentication.
 
 **URI**: /api/v1/addresses/0
 
-**Request Header:**
-```
-```
-
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "This page requires authentication."
@@ -934,15 +880,347 @@ Resource not found.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-
-```
-
-**Response:**
+**Response Body:**
 ```
 {
     "message": "Resource not found."
+}
+```
+
+## **profile**
+
+Everything about profile
+
+### **GET - /api/v1/profile**
+
+Get the profile
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "email": "user@foodie-connector.delivery",
+    "id": 1
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
+### **PUT - /api/v1/profile**
+
+Update the profile
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | optional | string | max:255 |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "New Name"
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "New Name",
+    "email": "user@foodie-connector.delivery",
+    "id": 1
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "name": [
+            "The name may not be greater than 255 characters."
+        ]
+    }
+}
+```
+
+### **PUT - /api/v1/profile/email**
+
+Update the email address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email | max:255, unique:api_users |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "new@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "email": "new@foodie-connector.delivery",
+    "id": 1
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 409**
+
+The email has already been taken.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "exist@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email has already been taken."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "not_email"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email must be a valid email address."
+        ]
+    }
+}
+```
+
+### **PUT - /api/v1/profile/password**
+
+Change the password
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| old_password | required | string |  |
+| new_password | required | password |  |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "new_password"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/password
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 401**
+
+The old password does not match our records.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "wrong",
+    "new_password": "new_password"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The old password does not match our records."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "short"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "new_password": [
+            "The new password must be a valid password."
+        ]
+    }
 }
 ```
 

@@ -1,40 +1,72 @@
 pipelines:
-  default:
-  - step:
-      name: "PHP CodeSniffer"
-      image:
-        name: foodieconnectorphp/foodie-connector-php:php-testing-latest
-        username: $DOCKER_HUB_USERNAME
-        password: $DOCKER_HUB_PASSWORD
-        email: $DOCKER_HUB_EMAIL
-      script:
-      - cd backend
-      - phpcs .
-  - step:
-      name: "PHPUnit"
-      image:
-        name: foodieconnectorphp/foodie-connector-php:php-testing-latest
-        username: $DOCKER_HUB_USERNAME
-        password: $DOCKER_HUB_PASSWORD
-        email: $DOCKER_HUB_EMAIL
-      caches:
-      - backend-vendor
-      script:
-      - /usr/bin/redis-server --daemonize yes
-      - cd backend
-      - composer install
-      - cp .env.example .env
-      - php artisan key:generate
-      - phpunit
-  - step:
-      name: "ESLint"
-      image: node:8-alpine
-      caches:
-      - frontend-node-modules
-      script:
-      - cd frontend
-      - yarn
-      - yarn run lint
+  branches:
+    dev/backend*:
+    - step:
+        name: "PHP CodeSniffer and PHPUnit"
+        image:
+            name: foodieconnectorphp/foodie-connector-php:test-php
+            username: $DOCKER_HUB_USERNAME
+            password: $DOCKER_HUB_PASSWORD
+            email: $DOCKER_HUB_EMAIL
+        caches:
+        - backend-vendor
+        script:
+        - /entrypoint.sh
+        - cd backend
+        - phpcs .
+        - composer install
+        - cp .env.example .env
+        - php artisan key:generate
+        - phpunit
+    dev/frontend*:
+    - step:
+        name: "ESLint"
+        image: node:8-alpine
+        caches:
+        - frontend-node-modules
+        script:
+        - cd frontend
+        - yarn
+        - yarn run lint
+    release/ci/docker-test-php:
+    - step:
+        name: Build docker for PHP tests
+        services:
+        - docker
+        caches:
+        - docker
+        script:
+        - cd docker/test-php
+        - docker build -t ${IMAGE_NAME}:test-php .
+        - ../docker-login.sh
+        - docker push ${IMAGE_NAME}:test-php
+    release/ci/docker-deploy-base:
+    - step:
+        name: Build base docker for deployment
+        services:
+        - docker
+        caches:
+        - docker
+        script:
+        - cd docker/deploy-base
+        - docker build -t ${IMAGE_NAME}:deploy-base .
+        - ../docker-login.sh
+        - docker push ${IMAGE_NAME}:deploy-base
+    release/app/*:
+    - step:
+        name: Build docker for deployment
+        services:
+        - docker
+        caches:
+        - docker
+        script:
+        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
+        - sed -e "s/\[TYPE\]/${TYPE}/g" build.sh | bash
+    - step:
+        name: Deploy docker to the server
+        script:
+        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
+        - sed -e "s/\[TYPE\]/${TYPE}/g" deploy.sh | bash
 
 definitions:
   caches:

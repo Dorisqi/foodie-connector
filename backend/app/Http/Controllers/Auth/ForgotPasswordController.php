@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Brokers\ResetPasswordBroker;
+use App\Exceptions\ApiException;
+use App\Facades\ApiThrottle;
 use App\Http\Controllers\ApiController;
+use App\Models\ApiUser;
+use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 
@@ -21,6 +25,11 @@ class ForgotPasswordController extends ApiController
     */
 
     use SendsPasswordResetEmails;
+
+    /**
+     * Decay minutes
+     */
+    protected const DECAY_MINUTES = 1;
 
     /**
      * Create a new controller instance.
@@ -44,11 +53,37 @@ class ForgotPasswordController extends ApiController
     {
         $this->validateInput($request);
 
+        $user = ApiUser::where('email', $request->input('email'))->first();
+        if (is_null($user)) {
+            throw ApiException::userNotFound();
+        }
+
+        $throttleKey = $user->emailThrottleKey();
+        if ($this->limiter()->tooManyAttempts($throttleKey, 1)) {
+            throw ApiException::tooManyAttempts(1, $this->limiter()->availableIn($throttleKey));
+        }
+
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        ResetPasswordBroker::sendResetEmail($request->input('email'));
-        return $this->response();
+        ResetPasswordBroker::sendResetEmail($user);
+        $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
+
+        $response = $this->response();
+        $response->headers->add(
+            ApiThrottle::throttleHeaders(1, 0, $this::DECAY_MINUTES)
+        );
+        return $response;
+    }
+
+    /**
+     * Get the rate limiter
+     *
+     * @return \Illuminate\Cache\RateLimiter
+     */
+    protected function limiter()
+    {
+        return app(RateLimiter::class);
     }
 
     /**
