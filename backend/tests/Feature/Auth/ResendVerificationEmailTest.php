@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Notifications\VerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
@@ -34,6 +35,9 @@ class ResendVerificationEmailTest extends ApiTestCase
             }
         );
         $this->assertThrottle($this->assertFailed(null, 429), 1, 0, $decayMinutes *60);
+        $user->email_verified_at = Carbon::now()->getTimestamp();
+        $user->save();
+        $this->assertFailed(null, 403);
     }
 
     protected function method()

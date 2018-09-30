@@ -46,7 +46,7 @@ class ApiUser extends Authenticatable
         return $this->hasOne('App\Models\Address', 'id', 'default_address');
     }
 
-    public function getIsEmailVerified()
+    public function getIsEmailVerifiedAttribute()
     {
         return !is_null($this->email_verified_at);
     }

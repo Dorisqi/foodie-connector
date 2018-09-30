@@ -43,7 +43,7 @@ Successful operation
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
-        "is_email_verified": null
+        "is_email_verified": false
     }
 }
 ```
@@ -168,7 +168,7 @@ Successful operation
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
-        "is_email_verified": null
+        "is_email_verified": false
     }
 }
 ```
@@ -263,6 +263,23 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
+#### **Status Code: 403**
+
+The email address is already verified.
+
+**URI**: /api/v1/auth/resend-verification-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The email address is already verified."
+}
+```
 #### **Status Code: 429**
 
 Too many attempts
@@ -322,7 +339,7 @@ Successful operation
 ```
 #### **Status Code: 401**
 
-The password reset token is invalid or expired
+The password reset token is invalid or expired.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -346,7 +363,7 @@ The password reset token is invalid or expired
 **Response Body:**
 ```
 {
-    "message": "The password reset token is invalid or expired"
+    "message": "The password reset token is invalid or expired."
 }
 ```
 #### **Status Code: 404**
@@ -992,7 +1009,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
     "id": 1,
-    "is_email_verified": null
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**
@@ -1046,7 +1063,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
     "id": 1,
-    "is_email_verified": null
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**
@@ -1129,7 +1146,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
     "id": 1,
-    "is_email_verified": null
+    "is_email_verified": false
 }
 ```
 #### **Status Code: 401**

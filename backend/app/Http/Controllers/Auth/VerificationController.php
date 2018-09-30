@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Brokers\VerifyEmailBroker;
 use App\Exceptions\ApiException;
 use App\Facades\ApiThrottle;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -33,6 +32,9 @@ class VerificationController extends ApiController
     public function resendEmail(Request $request)
     {
         $user = $this->user();
+        if ($user->is_email_verified) {
+            throw ApiException::emailAlreadyVerified();
+        }
         $throttleKey = $user->emailThrottleKey();
         if ($this->limiter()->tooManyAttempts($throttleKey, 1)) {
             throw ApiException::tooManyAttempts(1, $this->limiter()->availableIn($throttleKey));

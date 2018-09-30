@@ -45,10 +45,14 @@ class ApiException extends Exception
     public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
-            'The password reset token is invalid or expired',
+            'The password reset token is invalid or expired.',
             401,
             ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
         );
+    }
+    public static function emailAlreadyVerified()
+    {
+        return new ApiException('The email address is already verified.', 403);
     }
 
     /* Throttle */
