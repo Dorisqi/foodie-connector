@@ -14,6 +14,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CardHeader from '../../material-kit/components/Card/CardHeader';
 import Button from '../../material-kit/components/CustomButtons/Button';
 
+
+
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -50,8 +52,22 @@ const styles = theme => ({
   },
 });
 
+function handleConfirm() {
+  
+
+}
+function handleChange1() {
+  //event.preventDefault();
+  const match = this.state.newpw1 ===this.state.newpw2;
+  match ? alert("matched") : alert("please match new password!")
+
+  //alert("confirm");
+ //this.setState({oldpw: event.target.value});
+}
+
 function PwReset(props) {
   const { classes } = props;
+
 
   return (
     <React.Fragment>
@@ -59,24 +75,34 @@ function PwReset(props) {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <CardHeader style={{ textAlign: 'center' }} color="warning">Resetting My Password</CardHeader>
-          <Avatar className={classes.avatar} />
+          <Avatar
+        alt="login"
+        src="https://cdn1.iconfinder.com/data/icons/navigation-elements/512/user-login-man-human-body-mobile-person-512.png"
+        className={classes.avatar, classes.bigAvatar}
+      />
 
-
+          <Tooltip
+            id="tooltip-right"
+            title="Please include at least 1 Capital letter,1 digit!!"
+            placement="bottom"
+            classes={{ tooltip: classes.tooltip }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0z"/>
+                <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+                </svg>
+          </Tooltip>
           <form className={classes.form}>
-            <Tooltip
-              id="tooltip-right"
-              title="Please include at least 1 Capital letter,1 digit!!"
-              placement="right"
-              classes={{ tooltip: classes.tooltip }}
-            >
-              <Button>Requirement</Button>
-            </Tooltip>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Confirm the Emial to receive the verify code</InputLabel>
               <Input
                 id="emailtem"
                 name="emailtem"
                 autoComplete="emailtem"
+                //onChange={handleChange1}
                 autoFocus
               />
             </FormControl>
@@ -87,8 +113,10 @@ function PwReset(props) {
                 name="newpw"
                 type="password"
                 id="newpassword"
+
                 autoComplete="newpassword"
               />
+
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -106,6 +134,7 @@ function PwReset(props) {
               variant="raised"
               color="primary"
               className={classes.submit}
+              onClick={handleConfirm()}
             >
               Confirm Changes
             </Button>
