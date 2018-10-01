@@ -38,10 +38,10 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
             $address = new Address($request->only($this->modelParams()));
-            $user = Auth::guard('api')->user();
+            $user = $this->user();
             $user->addresses()->save($address);
             if ($request->input('is_default') === true
-                || is_null(Auth::guard('api')->user()->defaultAddress)) {
+                || is_null($user->defaultAddress)) {
                 $address->is_default = true;
             }
             DB::commit();

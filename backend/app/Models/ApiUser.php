@@ -24,7 +24,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'stripe_id'
     ];
 
     /**
@@ -33,7 +33,13 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'email_verified_at', 'created_at', 'updated_at', 'default_address_id', 'default_card_id'
+        'password',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
+        'default_address_id',
+        'default_card_id',
+        'stripe_id',
     ];
 
     public function addresses()
@@ -44,6 +50,16 @@ class ApiUser extends Authenticatable
     public function defaultAddress()
     {
         return $this->hasOne('App\Models\Address', 'id', 'default_address_id');
+    }
+
+    public function cards()
+    {
+        return $this->hasMany('App\Models\Card');
+    }
+
+    public function defaultCard()
+    {
+        return $this->hasOne('App\Models\Card', 'id', 'default_card_id');
     }
 
     public function getIsEmailVerifiedAttribute()

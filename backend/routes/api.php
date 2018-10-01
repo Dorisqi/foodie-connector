@@ -28,6 +28,9 @@ Route::prefix('v1')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+        Route::resource('cards', 'CardController')->only([
+            'index', 'store', 'show', 'update', 'destroy'
+        ]);
 
         Route::prefix('profile')->group(function () {
             Route::get('', 'ProfileController@show');

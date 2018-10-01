@@ -8,8 +8,10 @@ use App\Exceptions\ApiException;
 use App\Models\ApiUser;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Stripe\Customer;
 
 class RegisterController extends ApiController
 {
@@ -32,6 +34,7 @@ class RegisterController extends ApiController
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('stripe');
     }
 
     /**
@@ -53,16 +56,30 @@ class RegisterController extends ApiController
             throw ApiException::validationFailed($validator);
         }
 
-        $data = $request->all();
-        $user = ApiUser::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            DB::beginTransaction();
 
-        VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
+            $user = ApiUser::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
 
-        $this->guard()->loginUsingId($user->getAuthIdentifier());
+            $customer = Customer::create([
+                'description' => 'ApiUser-' . $user->id,
+            ]);
+            $user->stripe_id = $customer->id;
+            $user->save();
+
+            VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
+
+            $this->guard()->loginUsingId($user->getAuthIdentifier());
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
 
         return $this->response([
             'api_token' => Auth::guard('api')->token(),
