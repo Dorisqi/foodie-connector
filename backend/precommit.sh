@@ -5,4 +5,5 @@ set -e
 phpcs .
 chmod +x generate-api-doc.sh
 ./generate-api-doc.sh
-git add api-doc.md
+cd ../
+git add backend/api-doc.md
