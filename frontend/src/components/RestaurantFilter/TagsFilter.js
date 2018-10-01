@@ -14,73 +14,52 @@ const TAGS = [
 ];
 
 
+function initAllTags(bool) {
+  return TAGS.reduce((o, val) => {
+    o[val] = bool;
+    return o;
+  }, {
+    tags: ['All'].concat(TAGS),
+    All: bool,
+  });
+}
+
 class TagsFilter extends React.Component {
   constructor() {
     super();
-    this.state = this.initAllTags(true);
+    this.state = initAllTags(true);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  initAllTags(bool) {
-    return TAGS.reduce((o, val) => {
-      o[val] = bool;
-      return o;
-    }, {
-      tags: ['All'].concat(TAGS),
-      All: bool,
-    });
-  }
-
-  // handleChange(event) {
-  //   const { name, checked } = event.target;
-  //   if (name === 'All') {
-  //     this.setState((state, props) => {
-  //       this.props.onFilterChange(
-  //         checked
-  //           ? state.tags
-  //           : [],
-  //       );
-  //       return this.initAllTags(checked);
-  //     });
-  //   } else {
-  //       if (!checked) {
-  //         this.setState({ All: checked });
-  //       }
-  //       this.setState((state, props) => {
-  //         state[name] = checked;
-  //         this.props.onFilterChange(state.tags.filter(t => state[t]));
-  //         return { [name]: checked };
-  //       });
-  //   }
-  // }
   handleChange(event) {
-    const name = event.target.value;
-    const checked = event.target.checked;
-    if (name === 'All') {
-      this.setState((state, props) => {
-        console.log(this.state);
-        this.props.onFilterChange(checked ? this.state.tags : []);
-        return this.initAllTags(checked);
+    const { value, checked } = event.target;
+    const { onFilterChange } = this.props;
+    const { tags } = this.state;
+    if (value === 'All') {
+      this.setState(() => {
+        onFilterChange(checked ? tags : []);
+        return initAllTags(checked);
+      });
+    } else {
+      if (!checked) {
+        this.setState({ All: checked });
+      }
+      this.setState((state) => {
+        state[value] = checked;
+        onFilterChange(tags.filter(t => state[t]));
+        return { [value]: checked };
       });
     }
-    else {
-        if (!checked) {
-          this.setState({ All: checked });
-        }
-        this.setState((state, props) => {
-          state[name] = checked;
-          this.props.onFilterChange(state.tags.filter(t => state[t]));
-          return { [name]: checked };
-        });
-    }
   }
+
   render() {
     const { tags } = this.state;
+    const { state } = this;
     const checkboxes = tags.map(item => (
       <FormControlLabel
         control={(
           <Checkbox
-            checked={this.state[item]}
+            checked={state[item]}
             onChange={this.handleChange}
             value={item}
             color="primary"

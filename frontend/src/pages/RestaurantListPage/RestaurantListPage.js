@@ -108,7 +108,7 @@ class RestaurantListPage extends React.Component {
   handleFilterChange(selectedTags) {
     const { originalList } = this.state;
     this.setState({
-      changedList: originalList.filter(item => item.tags.some(t => selectedTags.includes(t)))
+      changedList: originalList.filter(item => item.tags.some(t => selectedTags.includes(t))),
     });
   }
 

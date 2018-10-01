@@ -13,7 +13,8 @@ class RestaurantFilter extends React.Component {
   }
 
   handleChange(value) {
-    this.props.onFilterChange(value);
+    const { onFilterChange } = this.props;
+    onFilterChange(value);
   }
 
   render() {
