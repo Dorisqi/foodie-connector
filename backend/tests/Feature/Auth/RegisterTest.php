@@ -39,7 +39,7 @@ class RegisterTest extends ApiTestCase
         $keys = Redis::keys($this->guardConfig()['verify_email']['storage_key'] . ':' .
             $user->getAuthIdentifier() . ':*');
         $this->assertFalse(empty($keys));
-        $token = substr(strrchr($keys[0], ':'), 1);
+        $token = base64_encode(substr(strrchr($keys[0], ':'), 1) . $user->getAuthIdentifier());
         Notification::assertSentTo(
             $user,
             VerifyEmail::class,

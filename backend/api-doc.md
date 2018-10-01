@@ -571,6 +571,74 @@ Too many attempts
 }
 ```
 
+### **POST - /api/v1/auth/verify-email**
+
+Verify the email
+
+#### **Authorization**
+
+Not required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| token | required | string | max:255 |
+
+#### **Status Code: 200**
+
+Successful operation
+
+**URI**: /api/v1/auth/verify-email
+
+**Request Body:**
+```
+{
+    "token": "MjIxYmJiYzdmYzUyMmExZTc1OTMwMmQ4NThhNzZjNWM5MjgyNDVjMDhiNjU4MDkyODZmZGYwYTc1MzI2YWRhODE="
+}
+```
+#### **Status Code: 401**
+
+The email verification token is invalid or expired.
+
+**URI**: /api/v1/auth/verify-email
+
+**Request Body:**
+```
+{
+    "token": "invalid_token"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email verification token is invalid or expired."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/auth/verify-email
+
+**Request Body:**
+```
+[]
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "token": [
+            "The token field is required."
+        ]
+    }
+}
+```
+
 ## **address**
 
 Everything about address

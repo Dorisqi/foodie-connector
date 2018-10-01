@@ -75,7 +75,7 @@ class ResetPasswordController extends ApiController
             $request->input('token'),
             function () use ($throttleKey) {
                 $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
-                throw ApiException::invalidToken(
+                throw ApiException::invalidResetPasswordToken(
                     $this::RATE_LIMIT,
                     $this->limiter()->retriesLeft($throttleKey, $this::RATE_LIMIT),
                     $this->limiter()->availableIn($throttleKey)

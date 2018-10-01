@@ -42,7 +42,7 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
-    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
+    public static function invalidResetPasswordToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
             'The password reset token is invalid or expired.',
@@ -57,6 +57,10 @@ class ApiException extends Exception
     public static function emailNotVerified()
     {
         return new ApiException('The email address has not been verified', 403);
+    }
+    public static function invalidEmailVerificationToken()
+    {
+        return new ApiException('The email verification token is invalid or expired.', 401);
     }
 
     /* Throttle */

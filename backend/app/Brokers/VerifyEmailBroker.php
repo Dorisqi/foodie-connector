@@ -2,9 +2,11 @@
 
 namespace App\Brokers;
 
+use App\Exceptions\ApiException;
 use App\Models\ApiUser;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Redis;
+use \Closure;
 
 class VerifyEmailBroker
 {
@@ -26,6 +28,26 @@ class VerifyEmailBroker
     }
 
     /**
+     * Verify the email
+     *
+     * @param string $encodedToken
+     * @param \Closure $verifyEmailCallback
+     * @return void
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public static function verify(string $encodedToken, Closure $verifyEmailCallback)
+    {
+        $decodedToken = self::decodeToken($encodedToken);
+        if (is_null($decodedToken)) {
+            throw ApiException::invalidEmailVerificationToken();
+        }
+
+        $verifyEmailCallback($decodedToken['user_id']);
+        Redis::del(self::redisKey($decodedToken['user_id'], $decodedToken['token']));
+    }
+
+    /**
      * Generate the verification token
      *
      * @param \App\Models\ApiUser $user
@@ -37,7 +59,7 @@ class VerifyEmailBroker
     {
         $token = bin2hex(openssl_random_pseudo_bytes(self::config()['token_bytes']));
         if (is_null(Redis::set(
-            self::redisKey($user, $token),
+            self::redisKey($user->getAuthIdentifier(), $token),
             true,
             'NX',
             'EX',
@@ -45,7 +67,7 @@ class VerifyEmailBroker
         ))) {
             return self::generateVerificationToken($user);
         }
-        return $token;
+        return base64_encode($token . $user->getAuthIdentifier());
     }
 
     /**
@@ -61,14 +83,42 @@ class VerifyEmailBroker
     /**
      * Get Redis key
      *
-     * @param \App\Models\ApiUser $user
+     * @param int $userId
      * @param string $token
      * @return string
      */
-    protected static function redisKey(ApiUser $user, string $token)
+    public static function redisKey(int $userId, string $token)
     {
-        return self::config()['storage_key'] . ':' .
-            $user->getAuthIdentifier() . ':' .
-            $token;
+        return self::config()['storage_key'] . ':' . $userId . ':' . $token;
+    }
+
+    /**
+     * Decode the token
+     *
+     * @param string $encodedToken
+     * @return array|null
+     */
+    protected static function decodeToken(string $encodedToken)
+    {
+        $decodedToken = base64_decode($encodedToken);
+        if (!$decodedToken) {
+            return null;
+        }
+        $token = substr($decodedToken, 0, self::config()['token_bytes'] * 2);
+        if (!$token) {
+            return null;
+        }
+        $userId = substr($decodedToken, self::config()['token_bytes'] * 2);
+        if (!$userId) {
+            return null;
+        }
+        $token_exists = Redis::get(self::redisKey($userId, $token));
+        if (is_null($token_exists)) {
+            return null;
+        }
+        return [
+            'token' => $token,
+            'user_id' => $userId,
+        ];
     }
 }
