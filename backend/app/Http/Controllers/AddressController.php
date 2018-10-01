@@ -17,7 +17,7 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $user = Auth::guard('api')->user();
+        $user = $this->user();
         $addresses = $user->addresses;
         return $this->response($addresses);
     }
@@ -64,7 +64,7 @@ class AddressController extends ApiController
      */
     public function show(Request $request, $id)
     {
-        $user = Auth::guard('api')->user();
+        $user = $this->user();
         $address = Address::where('api_user_id', $user->id)->find($id);
         if (is_null($address)) {
             throw ApiException::resourceNotFound();
@@ -89,7 +89,7 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
 
-            $user = Auth::guard('api')->user();
+            $user = $this->user();
             $address = $user->addresses()->find($id);
             if (is_null($address)) {
                 throw ApiException::resourceNotFound();
@@ -122,7 +122,7 @@ class AddressController extends ApiController
     {
         try {
             DB::beginTransaction();
-            $user = Auth::guard('api')->user();
+            $user = $this->user();
             $address = $user->addresses()->find($id);
             if (is_null($address)) {
                 throw ApiException::resourceNotFound();

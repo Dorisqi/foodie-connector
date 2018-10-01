@@ -186,8 +186,8 @@ abstract class ApiTestCase extends TestCase
      */
     protected function login(ApiUser $user = null)
     {
-        Auth::guard('api')->login($user ?? $this->userFactory()->create());
-        $this->token = Auth::guard('api')->token();
+        $this->guard()->login($user ?? $this->userFactory()->create());
+        $this->token = $this->guard()->token();
     }
 
     /**

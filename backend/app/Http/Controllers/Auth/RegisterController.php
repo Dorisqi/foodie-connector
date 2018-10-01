@@ -82,8 +82,8 @@ class RegisterController extends ApiController
         }
 
         return $this->response([
-            'api_token' => Auth::guard('api')->token(),
-            'user' => Auth::guard('api')->user(),
+            'api_token' => $this->guard()->token(),
+            'user' => $this->user(),
         ]);
     }
 
