@@ -15,8 +15,8 @@ const styles = theme => ({
     fontSize: '11px',
   },
   resize: {
-    width: '350px',
-    height: '200px',
+    width: 'auto',
+    height: '220px',
   },
   restaurantName: {
     marginLeft: '10px',
@@ -39,14 +39,10 @@ const styles = theme => ({
   thumbUp: {
     float: 'right',
   },
-  card: {
-    margin: '30px 30px 30px 30px',
-  },
 });
 
 const RestaurantCard = (props) => {
   const { item, classes } = props;
-  console.log(classes);
   const tags = item.tags.join(', ');
   const labels = {
     distance: `${item.distance} mile`,
