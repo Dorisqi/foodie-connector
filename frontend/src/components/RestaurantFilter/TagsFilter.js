@@ -57,6 +57,7 @@ class TagsFilter extends React.Component {
     const { state } = this;
     const checkboxes = tags.map(item => (
       <FormControlLabel
+        key={item}
         control={(
           <Checkbox
             checked={state[item]}
@@ -69,7 +70,7 @@ class TagsFilter extends React.Component {
       />
     ));
     return (
-      <FormGroup row="row">
+      <FormGroup row={true}>
         {checkboxes}
       </FormGroup>
     );

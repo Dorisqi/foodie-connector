@@ -35,7 +35,7 @@ const RestaurantList = (props) => {
   const rows = [];
   for (let i = 0; i < restaurantList.length; i += 3) {
     rows.push(
-      <Grid item container direction="row" xs={8} spacing={24} alignItems="center" justify="flex-start">
+      <Grid key={i} item container direction="row" xs={8} spacing={24} alignItems="center" justify="flex-start">
         <RestaurantRow restaurants={restaurantList.slice(i, i + 3)} />
       </Grid>,
     );

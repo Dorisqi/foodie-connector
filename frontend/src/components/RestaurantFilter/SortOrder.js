@@ -53,7 +53,7 @@ class SortOrder extends React.Component {
     const { classes } = this.props;
     const { order } = this.state;
     const radios = orderChoices.map(sortOrder => (
-      <div>
+      <div key={sortOrder}>
         <Radio
           checked={order === sortOrder}
           onChange={this.handleChange}
