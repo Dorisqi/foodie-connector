@@ -52,12 +52,13 @@ class ChangepwBox extends React.Component {
     const x = [];
     x[modal] = false;
     this.setState(x);
-    const Checkold_New = this.state.oldpw === this.state.newpw1;
-    checkold_new ? alert("new password and old password shouldn't be the same") : alert('newpassword ok');
-    const match = this.state.newpw1 === this.state.newpw2;
+    const { oldpw, newpw1, newpw2 } = this.state;
+    const CheckoldNew = oldpw === newpw1;
+    CheckoldNew ? alert("new password and old password shouldn't be the same") : alert('newpassword ok');
+    const match = newpw1 === newpw2;
     match ? alert('matched') : alert('please match new password!');
 
-    alert(`${'Success: ' + '('}${this.state.oldpw} ${this.state.newpw1} ${this.state.newpw2}`);
+    // alert(`${'Success: ' + '('}${this.state.oldpw} ${this.state.newpw1} ${this.state.newpw2}`);
   }
 
   handleChange1(event) {

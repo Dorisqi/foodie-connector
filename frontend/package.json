@@ -10,7 +10,8 @@
     "react-dom": "^16.5.1",
     "react-router": "3.2.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-swipeable-views": "^0.13.0"
   },
   "scripts": {
     "start": "NODE_PATH=./src/material-kit react-scripts start",

@@ -1,7 +1,8 @@
 import Base from './components/base/Base';
 import RestaurantListPage from './pages/restaurantListPage/RestaurantListPage';
 import UserpwresetPage from './pages/userpw_resetPage/User_pw_resetPage';
-import ChangepwBox from './components/ChangepwBox/ChangepwBox';
+import AddingAddress from './components/UserAddress/AddingAddress';
+import UserprofilePage from './pages/userprofilePage/UserprofilePage';
 
 const routes = {
   component: Base,
@@ -16,7 +17,11 @@ const routes = {
     },
     {
       path: '/trying',
-      component: ChangepwBox,
+      component: AddingAddress,
+    },
+    {
+      path: '/userprofile',
+      component: UserprofilePage,
     },
   ],
 };
