@@ -51,11 +51,11 @@ class SortOrder extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const { order } = this.state;
     const radios = orderChoices.map(sortOrder => (
       <div>
         <Radio
-          checked={this.state.order === sortOrder}
+          checked={order === sortOrder}
           onChange={this.handleChange}
           color="primary"
           value={sortOrder}
@@ -74,6 +74,7 @@ class SortOrder extends React.Component {
 
 SortOrder.propTypes = {
   onSortChange: PropTypes.func.isRequired,
+  classes: PropTypes.shape({}).isRequired,
 };
 
 export default withStyles(styles)(SortOrder);

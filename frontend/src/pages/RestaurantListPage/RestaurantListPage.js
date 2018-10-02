@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import RestaurantList from '../../components/RestaurantList/RestaurantList';
 import RestaurantFilter from '../../components/RestaurantFilter/RestaurantFilter';
 
@@ -8,7 +10,7 @@ const mockRestaurantList = [
     name: 'ColdBox Pizza',
     distance: 4.5,
     delivery_fee: 3.99,
-    order_minimum: 20,
+    order_minimum: 9,
     estimate_time_lo: 20,
     estimate_time_hi: 30,
     rate: 96,
@@ -20,9 +22,9 @@ const mockRestaurantList = [
     id: 2,
     name: 'Mad Carrot Pizza',
     distance: 5,
-    delivery_fee: 3.99,
-    order_minimum: 20,
-    estimate_time_lo: 20,
+    delivery_fee: 2,
+    order_minimum: 12,
+    estimate_time_lo: 15,
     estimate_time_hi: 30,
     rate: 80,
     tags: [
@@ -32,10 +34,10 @@ const mockRestaurantList = [
   }, {
     id: 3,
     name: 'Pizza House',
-    distance: 10,
-    delivery_fee: 3.99,
-    order_minimum: 20,
-    estimate_time_lo: 20,
+    distance: 3,
+    delivery_fee: 2.5,
+    order_minimum: 18,
+    estimate_time_lo: 10,
     estimate_time_hi: 30,
     rate: 100,
     tags: [
@@ -46,11 +48,11 @@ const mockRestaurantList = [
     id: 4,
     name: 'Chinese food',
     distance: 2.4,
-    delivery_fee: 3.99,
-    order_minimum: 20,
-    estimate_time_lo: 20,
+    delivery_fee: 5.99,
+    order_minimum: 14,
+    estimate_time_lo: 14,
     estimate_time_hi: 30,
-    rate: 96,
+    rate: 67,
     tags: [
       'Chinese', 'Fast Food',
     ],
@@ -58,12 +60,12 @@ const mockRestaurantList = [
   }, {
     id: 5,
     name: 'Thai food',
-    distance: 4.5,
-    delivery_fee: 3.99,
-    order_minimum: 20,
+    distance: 7.8,
+    delivery_fee: 4.99,
+    order_minimum: 15,
     estimate_time_lo: 20,
     estimate_time_hi: 30,
-    rate: 96,
+    rate: 86,
     tags: [
       'Thai', 'Fast Food',
     ],
@@ -71,18 +73,22 @@ const mockRestaurantList = [
   }, {
     id: 6,
     name: 'Mexican food',
-    distance: 4.5,
-    delivery_fee: 3.99,
+    distance: 9.1,
+    delivery_fee: 1.5,
     order_minimum: 20,
-    estimate_time_lo: 20,
-    estimate_time_hi: 30,
-    rate: 96,
+    estimate_time_lo: 30,
+    estimate_time_hi: 40,
+    rate: 60,
     tags: [
       'Mexican', 'Fast Food',
     ],
     image: '/images/1.jpg',
   },
 ];
+
+const styles = ({
+
+});
 
 class RestaurantListPage extends React.Component {
   constructor() {
@@ -92,6 +98,7 @@ class RestaurantListPage extends React.Component {
       changedList: [],
     };
     this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
   }
 
   componentWillMount() {
@@ -112,15 +119,30 @@ class RestaurantListPage extends React.Component {
     });
   }
 
+  handleSortChange(sortOrder) {
+    const { changedList } = this.state;
+    this.setState({
+      changedList: changedList.sort((o1, o2) => sortOrder(o1, o2)),
+    });
+  }
+
   render() {
     const { changedList } = this.state;
+    const { classes } = this.props;
     return (
-      <div>
-        <RestaurantFilter onFilterChange={this.handleFilterChange} />
+      <div className={classes.root}>
+        <RestaurantFilter
+          onFilterChange={this.handleFilterChange}
+          onSortChange={this.handleSortChange}
+        />
         <RestaurantList restaurantList={changedList} />
       </div>
     );
   }
 }
 
-export default RestaurantListPage;
+RestaurantListPage.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+};
+
+export default withStyles(styles)(RestaurantListPage);

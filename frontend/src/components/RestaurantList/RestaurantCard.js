@@ -11,12 +11,13 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
   label: {
     margin: theme.spacing.unit,
+    marginRight: theme.spacing.unit / 3,
     padding: '5px 5px',
-    fontSize: '11px',
+    fontSize: '9px',
   },
   resize: {
-    width: 'auto',
-    height: '220px',
+    width: theme.spacing.unit * 35.5,
+    height: '200px',
   },
   restaurantName: {
     marginLeft: '10px',
