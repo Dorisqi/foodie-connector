@@ -1,26 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TagsFilter from './TagsFilter';
-
-// const SortBy = (props) => {
-//
-// }
+import SortOrder from './SortOrder';
 
 class RestaurantFilter extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
   }
 
-  handleChange(value) {
+  handleFilterChange(selectedTags) {
     const { onFilterChange } = this.props;
-    onFilterChange(value);
+    onFilterChange(selectedTags);
+  }
+
+  handleSortChange(sortBy) {
+    const { onSortChange } = this.props;
+    onSortChange(sortBy);
   }
 
   render() {
     return (
       <div>
-        <TagsFilter onFilterChange={this.handleChange} />
+        <TagsFilter onFilterChange={this.handleFilterChange} />
+        <SortOrder onSortChange={this.handleSortChange} />
       </div>
     );
   }
@@ -28,6 +32,7 @@ class RestaurantFilter extends React.Component {
 
 RestaurantFilter.propTypes = {
   onFilterChange: PropTypes.func.isRequired,
+  onSortChange: PropTypes.func.isRequired,
 };
 
 export default RestaurantFilter;
