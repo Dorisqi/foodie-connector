@@ -94,11 +94,13 @@ class RestaurantListPage extends React.Component {
   constructor() {
     super();
     this.state = {
+      address: '',
       originalList: [],
       changedList: [],
     };
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -106,9 +108,17 @@ class RestaurantListPage extends React.Component {
   }
 
   loadList() {
+    const { address } = this.state;
+    console.log(address);
     this.setState({
       originalList: mockRestaurantList.slice(),
       changedList: mockRestaurantList.slice(),
+    });
+  }
+
+  handleSubmit(address) {
+    this.setState({
+      address,
     });
   }
 
@@ -132,6 +142,7 @@ class RestaurantListPage extends React.Component {
     return (
       <div className={classes.root}>
         <RestaurantFilter
+          onSubmit={this.handleSubmit}
           onFilterChange={this.handleFilterChange}
           onSortChange={this.handleSortChange}
         />

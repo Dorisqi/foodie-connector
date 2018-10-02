@@ -16,7 +16,7 @@ const styles = theme => ({
     fontSize: '9px',
   },
   resize: {
-    width: theme.spacing.unit * 35.5,
+    width: theme.spacing.unit * 36.5,
     height: '200px',
   },
   restaurantName: {
