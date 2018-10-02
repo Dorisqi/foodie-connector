@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -12,6 +10,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CurrentGeolocation from '../../components/currentLocation/CurrentLocation';
 
 const styles = theme => ({
   layout: {
@@ -34,10 +33,6 @@ const styles = theme => ({
 
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
   tabs: {
     alignItems: 'center',
   },
@@ -55,7 +50,9 @@ function TabContainer(props) {
 //const { children } = props;
 
  return (
-   <Typography component="main" style={{ padding: 1 * 1 }}>
+   <Typography component="main"
+                color="default"
+                style={{ padding: 1 * 1 }}>
       {props.children}
     </Typography>
  );
@@ -130,14 +127,13 @@ class SimpleTabs extends React.Component {
     this.setState({value});
     window.location.href = "/reset_password";
   }
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
 
     return (
       <main className={classes.layout}>
-
+        <CurrentGeolocation/>
           <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -177,8 +173,8 @@ class SimpleTabs extends React.Component {
                   color="primary"
                   variant="contained"
                   size="small"
-                  className={classes.button}>
-                >
+                  className={classes.button}
+              >
                   Forget Password?
                 </Button>
               <Button onClick={this.handleLogin}
