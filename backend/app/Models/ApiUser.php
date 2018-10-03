@@ -11,6 +11,8 @@ class ApiUser extends Authenticatable
 {
     use Notifiable;
 
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     /**
      * The column name of the remember tokens
      *
