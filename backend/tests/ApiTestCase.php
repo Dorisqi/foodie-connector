@@ -32,18 +32,24 @@ abstract class ApiTestCase extends TestCase
     /**
      * Insert record into request list
      *
-     * @param array|null $data
+     * @param array|null $requestData
      * @param \Illuminate\Foundation\Testing\TestResponse $response
+     * @param array|null $documentedRequest [optional]
      * @return void
      */
-    protected function insertRequest($data, TestResponse $response)
+    protected function insertRequest($requestData, TestResponse $response, $documentedRequest = null)
     {
         if (is_null(env('GENERATE_API_DOC'))) {
             return;
         }
+        if (!is_null($documentedRequest)) {
+            foreach ($documentedRequest as $key => $value) {
+                $requestData[$key] = $value;
+            }
+        }
         $api = [
             'uri' => $this->processedUri(),
-            'request' => $data,
+            'request' => $requestData,
             'status_code' => $response->status(),
             'header' => is_null($this->token) ? [] : [
                 'Authorization' => $this->token,
@@ -91,14 +97,15 @@ abstract class ApiTestCase extends TestCase
      *
      * @param array|null $data
      * @param bool $documented [optional]
+     * @param array|null $documentedRequest [optional]
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function assertSucceed($data, bool $documented = true)
+    protected function assertSucceed($data, bool $documented = true, $documentedRequest = null)
     {
         $response = $this->request($data);
         $response->assertStatus(200);
         if ($documented) {
-            $this->insertRequest($data, $response);
+            $this->insertRequest($data, $response, $documentedRequest);
         }
         return $response;
     }

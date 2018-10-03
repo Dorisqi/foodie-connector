@@ -24,6 +24,8 @@ class StoreCardTest extends ApiTestCase
             'nickname' => $card->nickname,
             'token' => Card::testToken(),
             'is_default' => false,
+        ], true, [
+            'token' => 'tok_L0l2TZ715VLoMA',
         ]);
         $user = ApiUser::find($user->id);
         $this->assertFalse(is_null($user->defaultCard));
