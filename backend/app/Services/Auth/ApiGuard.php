@@ -102,7 +102,7 @@ class ApiGuard implements StatefulGuard
 
         if (App::environment('local')) {
             if ($this->request->header($this::HEADER_KEY) === 'authorized') {
-                return ApiUser::find(1);
+                return ApiUser::first();
             }
             return null;
         }

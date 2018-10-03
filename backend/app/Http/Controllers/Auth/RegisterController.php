@@ -71,7 +71,10 @@ class RegisterController extends ApiController
             $user->stripe_id = $customer->id;
             $user->save();
 
-            VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
+            try {
+                VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
+            } catch (\Exception $exception) {
+            }
 
             $this->guard()->loginUsingId($user->getAuthIdentifier());
 

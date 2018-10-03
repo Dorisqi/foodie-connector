@@ -1407,6 +1407,67 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Everything about card
 
+### **GET - /api/v1/cards**
+
+Get the card list
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": 4,
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47906",
+        "is_default": false
+    },
+    {
+        "id": 5,
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47906",
+        "is_default": false
+    }
+]
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
 ### **POST - /api/v1/cards**
 
 Add a new card
@@ -1438,7 +1499,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "nickname": "Test Visa",
-    "token": "tok_b3eBoR4u3pJ164",
+    "token": "tok_pYYZeQvPo2zXGe",
     "is_default": false
 }
 ```

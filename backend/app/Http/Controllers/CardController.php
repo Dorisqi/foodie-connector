@@ -26,11 +26,11 @@ class CardController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        return $this->response($this->user()->cards);
     }
 
     /**
@@ -60,7 +60,6 @@ class CardController extends ApiController
                 throw ApiException::invalidStripeToken();
             }
 
-            $isTest = App::environment('testing');
             $card = new Card([
                 'nickname' => $request->input('nickname'),
                 'brand' => $source->brand,
