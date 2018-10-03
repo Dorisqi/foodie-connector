@@ -12,7 +12,7 @@ echo "DB_PASSWORD=${[TYPE]_DB_PASSWORD}" >> .env.deploy
 echo "REDIS_HOST=${[TYPE]_REDIS_HOST}" >> .env.deploy
 echo "REDIS_PASSWORD=${[TYPE]_REDIS_PASSWORD}" >> .env.deploy
 echo "SPARKPOST_SECRET=${[TYPE]_SPARKPOST_SECRET}" >> .env.deploy
-echo "STRIPE_SECRET=${[TYPE]_STRIPE_SECRET}" >> env.deploy
+echo "STRIPE_SECRET=${[TYPE]_STRIPE_SECRET}" >> .env.deploy
 cd ../
 ./docker/docker-login.sh
 BUILD_ID=${BITBUCKET_BRANCH}_${BITBUCKET_COMMIT}_${BITBUCKET_BUILD_NUMBER}

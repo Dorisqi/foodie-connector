@@ -1499,7 +1499,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "nickname": "Test Visa",
-    "token": "tok_pYYZeQvPo2zXGe",
+    "token": "tok_d2tnzOZH9TM0yQ",
     "is_default": false
 }
 ```
