@@ -76,7 +76,27 @@ class ApiException extends Exception
     /* Card */
     public static function invalidStripeToken()
     {
-        return new ApiException('The stripe token provided is invalid.', 422);
+        return new ApiException('Validation Failed.', 422, null, [
+            'token' => [
+                'The stripe token is invalid.',
+            ]
+        ]);
+    }
+    public static function expirationYearPassed()
+    {
+        return new ApiException('Validation Failed.', 422, null, [
+            'expiration_year' => [
+                'The expiration_year must be a current or future year.',
+            ],
+        ]);
+    }
+    public static function expirationMonthPassed()
+    {
+        return new ApiException('Validation Failed', 422, null, [
+            'expiration_month' => [
+                'The expiration_month must be a current or future month.',
+            ],
+        ]);
     }
 
     /* Resource */

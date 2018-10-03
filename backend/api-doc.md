@@ -1531,7 +1531,7 @@ This page requires authentication.
 ```
 #### **Status Code: 422**
 
-The stripe token provided is invalid.
+Validation Failed.
 
 **URI**: /api/v1/cards
 
@@ -1552,7 +1552,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "The stripe token provided is invalid."
+    "message": "Validation Failed.",
+    "data": {
+        "token": [
+            "The stripe token is invalid."
+        ]
+    }
 }
 ```
 #### **Status Code: 422**
@@ -1652,6 +1657,116 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+
+### **PUT - /api/v1/cards/{id}**
+
+Update an existed card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| nickname | optional | string | max:255 |
+| expiration_month | optional | integer | between:1,12 |
+| expiration_year | optional | integer | digits:4 |
+| zip_code | optional | integer | nullable |
+| is_default | optional | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "zip_code": "47907",
+    "is_default": true
+}
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": "12",
+    "expiration_year": "2030",
+    "zip_code": "47907",
+    "is_default": true
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/cards/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation Failed
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "expiration_month": 1,
+    "expiration_year": 2018
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation Failed",
+    "data": {
+        "expiration_month": [
+            "The expiration_month must be a current or future month."
+        ]
+    }
 }
 ```
 

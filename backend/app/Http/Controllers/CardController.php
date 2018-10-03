@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use App\Models\Card;
-use GuzzleHttp\Client;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class CardController extends ApiController
     public function __construct()
     {
         $this->middleware('stripe')->only([
-            'store', 'destroy'
+            'store', 'destroy', 'update'
         ]);
     }
 
@@ -109,11 +109,74 @@ class CardController extends ApiController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
     public function update(Request $request, $id)
     {
-        //
+        $card = $this->user()->cards->find($id);
+        if (is_null($card)) {
+            throw ApiException::resourceNotFound();
+        }
+
+        $this->validateInput($request, $this::updateRules());
+        if ($request->has(['expiration_month', 'expiration_year'])) {
+            $expMonth = (int)$request->input('expiration_month');
+            $expYear = (int)$request->input('expiration_year');
+            $now = Carbon::now();
+            if ($expYear < $now->year) {
+                throw ApiException::expirationYearPassed();
+            } elseif ($expYear == $now->year && $expMonth < $now->month) {
+                throw ApiException::expirationMonthPassed();
+            }
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if (!App::environment('testing')) {
+                $customer = Customer::retrieve($this->user()->stripe_id);
+                $source = $customer->sources->retrieve($card->stripe_id);
+                if ($request->has('expiration_month')) {
+                    $source->exp_month = $request->input('expiration_month');
+                }
+                if ($request->has('expiration_year')) {
+                    $source->exp_year = $request->input('expiration_year');
+                }
+                if ($request->has('zip_code')) {
+                    $source->address_zip = $request->input('zip_code');
+                }
+                $source->save();
+                // TODO: Improve testing
+            }
+
+            if ($request->has('expiration_month')) {
+                $card->expiration_month = $request->input('expiration_month');
+            }
+            if ($request->has('expiration_year')) {
+                $card->expiration_year = $request->input('expiration_year');
+            }
+            if ($request->has('zip_code')) {
+                $card->zip_code = $request->input('zip_code');
+            }
+            if ($request->has('nickname')) {
+                $card->nickname = $request->input('nickname');
+            }
+            $card->save();
+
+            if ($request->input('is_default') === true) {
+                $card->is_default = true;
+            }
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return $this->response($card);
     }
 
     /**
@@ -171,8 +234,9 @@ class CardController extends ApiController
         return [
             'nickname' => 'string|max:255',
             'expiration_month' => 'integer|between:1,12',
-            'expiration_year' => 'numeric|between:1,31',
-            'zip_code' => 'zip_code'
+            'expiration_year' => 'integer|digits:4',
+            'zip_code' => 'nullable|integer',
+            'is_default' => 'boolean',
         ];
     }
 

@@ -82,16 +82,15 @@ class AddressController extends ApiController
      */
     public function update(Request $request, $id)
     {
+        $address = $this->user()->addresses()->find($id);
+        if (is_null($address)) {
+            throw ApiException::resourceNotFound();
+        }
+
         $this->validateInput($request);
 
         try {
             DB::beginTransaction();
-
-            $user = $this->user();
-            $address = $user->addresses()->find($id);
-            if (is_null($address)) {
-                throw ApiException::resourceNotFound();
-            }
 
             $address->fill($request->only($this->modelParams()));
             $address->save();
