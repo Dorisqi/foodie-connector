@@ -1,8 +1,9 @@
 import Base from './components/base/Base';
 import RestaurantListPage from './pages/restaurantListPage/RestaurantListPage';
 import UserpwresetPage from './pages/userpw_resetPage/User_pw_resetPage';
-import AddingAddress from './components/UserAddress/AddingAddress';
+import AddressLists from './components/UserAddress/AddressLists';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';
+import AddingAddress from './components/UserAddress/AddingAddress';
 
 const routes = {
   component: Base,
@@ -17,12 +18,16 @@ const routes = {
     },
     {
       path: '/trying',
-      component: AddingAddress,
+      component: AddressLists,
     },
     {
       path: '/userprofile',
       component: UserprofilePage,
     },
+    {
+      path: '/addaddress',
+      component: AddingAddress,
+    }
   ],
 };
 

@@ -7,6 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import ChangepwBox from '../../components/ChangepwBox/ChangepwBox';
+import Paper from '@material-ui/core/Paper';
+import AddressLists from "../../components/UserAddress/AddressLists";
 
 function TabContainer({ children, dir }) {
   return (
@@ -24,7 +26,19 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 800,
+    width: 900,
+    minHeight:600,
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    alignItems: 'center',
+    direction: "column",
+    justify: "center",
+    //padding:1*1,
+    marginTop: theme.spacing.unit * 7,
+    margin: '10px auto 0 auto',
+
+
   },
 });
 
@@ -45,7 +59,12 @@ class ProfileTabs extends React.Component {
     const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div>
+      <Paper className={classes.root} elevation={12}>
+        <Typography variant="headline" component="h3">
+          User Profile
+        </Typography>
+
         <AppBar position="static" color="default">
           <Tabs
             value={this.state.value}
@@ -67,7 +86,10 @@ class ProfileTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>Order History</TabContainer>
-          <TabContainer dir={theme.direction}>Address</TabContainer>
+          <TabContainer dir={theme.direction}>
+          <AddressLists>
+          </AddressLists>
+          </TabContainer>
           <TabContainer dir={theme.direction}>Email</TabContainer>
           <TabContainer dir={theme.direction}>
           <div>
@@ -77,7 +99,9 @@ class ProfileTabs extends React.Component {
           </TabContainer>
           <TabContainer dir={theme.direction}>Payment detail</TabContainer>
         </SwipeableViews>
+        </Paper>
       </div>
+
     );
   }
 }
