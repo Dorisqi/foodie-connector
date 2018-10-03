@@ -73,6 +73,12 @@ class ApiException extends Exception
         );
     }
 
+    /* Card */
+    public static function invalidStripeToken()
+    {
+        return new ApiException('The stripe token provided is invalid.', 422);
+    }
+
     /* Resource */
     public static function resourceNotFound()
     {

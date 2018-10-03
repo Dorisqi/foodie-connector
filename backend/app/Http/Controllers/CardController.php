@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiException;
 use App\Models\Card;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Stripe\Error\InvalidRequest;
 
 class CardController extends ApiController
 {
@@ -48,10 +51,16 @@ class CardController extends ApiController
 
             $user = $this->user();
             $customer = \Stripe\Customer::retrieve($user->stripe_id);
-            $source = $customer->sources->create([
-                'source' => $request->input('stripe_id')
-            ]);
 
+            try {
+                $source = $customer->sources->create([
+                    'source' => $request->input('token')
+                ]);
+            } catch (InvalidRequest $exception) {
+                throw ApiException::invalidStripeToken();
+            }
+
+            $isTest = App::environment('testing');
             $card = new Card([
                 'nickname' => $request->input('nickname'),
                 'brand' => $source->brand,
@@ -135,7 +144,7 @@ class CardController extends ApiController
     {
         return [
             'nickname' => 'required|string|max:255',
-            'stripe_id' => 'required|string|max:255',
+            'token' => 'required|string|max:255',
             'is_default' => 'required|boolean'
         ];
     }

@@ -20,5 +20,11 @@ $factory->define(ApiUser::class, function (Faker $faker) {
         'name' => 'Test User',
         'email' => 'user@foodie-connector.delivery',
         'password' => Hash::make(ApiUser::testingPassword()),
+        'stripe_id' => function () {
+            $customer = \Stripe\Customer::create([
+                'description' => 'ApiUser-Test',
+            ]);
+            return $customer->id;
+        }
     ];
 });

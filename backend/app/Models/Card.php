@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Token;
 
 class Card extends Model
 {
@@ -45,5 +46,17 @@ class Card extends Model
         $data = parent::toArray();
         $data['is_default'] = $this->is_default;
         return $data;
+    }
+
+    public static function testToken()
+    {
+        $token = Token::create([
+            'card[number]' => 4242424242424242,
+            'card[exp_month]' => 12,
+            'card[exp_year]' => 2030,
+            'card[cvc]' => 111,
+            'card[address_zip]' => 47906,
+        ]);
+        return $token->id;
     }
 }

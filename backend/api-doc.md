@@ -23,7 +23,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/login
 
@@ -147,7 +147,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/register
 
@@ -234,7 +234,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/resend-verification-email
 
@@ -325,7 +325,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -461,7 +461,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/reset-password-email
 
@@ -587,7 +587,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/verify-email
 
@@ -639,6 +639,346 @@ Validation failed.
 }
 ```
 
+## **profile**
+
+Everything about profile
+
+### **GET - /api/v1/profile**
+
+Get the profile
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "email": "user@foodie-connector.delivery",
+    "id": 1,
+    "is_email_verified": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
+### **PUT - /api/v1/profile**
+
+Update the profile
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | optional | string | max:255 |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "New Name"
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "New Name",
+    "email": "user@foodie-connector.delivery",
+    "id": 1,
+    "is_email_verified": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "name": [
+            "The name may not be greater than 255 characters."
+        ]
+    }
+}
+```
+
+### **PUT - /api/v1/profile/email**
+
+Update the email address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email | max:255, unique:api_users |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "new@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "email": "new@foodie-connector.delivery",
+    "id": 1,
+    "is_email_verified": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 409**
+
+The email has already been taken.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "exist@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The email has already been taken."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "not_email"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email must be a valid email address."
+        ]
+    }
+}
+```
+
+### **PUT - /api/v1/profile/password**
+
+Change the password
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| old_password | required | string |  |
+| new_password | required | password |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "new_password"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/profile/password
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 401**
+
+The old password does not match our records.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "wrong",
+    "new_password": "new_password"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The old password does not match our records."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "test123456",
+    "new_password": "short"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "new_password": [
+            "The new password must be a valid password."
+        ]
+    }
+}
+```
+
 ## **address**
 
 Everything about address
@@ -657,7 +997,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/addresses
 
@@ -732,7 +1072,7 @@ Required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/addresses
 
@@ -835,7 +1175,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/addresses/1
 
@@ -913,7 +1253,7 @@ Required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/addresses/1
 
@@ -1025,7 +1365,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/addresses/1
 
@@ -1063,58 +1403,13 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-## **profile**
+## **card**
 
-Everything about profile
+Everything about card
 
-### **GET - /api/v1/profile**
+### **POST - /api/v1/cards**
 
-Get the profile
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-No param
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/profile
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "name": "Test User",
-    "email": "user@foodie-connector.delivery",
-    "id": 1,
-    "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-
-### **PUT - /api/v1/profile**
-
-Update the profile
+Add a new card
 
 #### **Authorization**
 
@@ -1124,13 +1419,15 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| name | optional | string | max:255 |
+| nickname | required | string | max:255 |
+| token | required | string | max:255 |
+| is_default | required | boolean |  |
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
-**URI**: /api/v1/profile
+**URI**: /api/v1/cards
 
 **Request Header:**
 ```
@@ -1140,24 +1437,30 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Request Body:**
 ```
 {
-    "name": "New Name"
+    "nickname": "Test Visa",
+    "token": "tok_WZDDvdMUvoLazF",
+    "is_default": false
 }
 ```
 
 **Response Body:**
 ```
 {
-    "name": "New Name",
-    "email": "user@foodie-connector.delivery",
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": 12,
+    "expiration_year": 2030,
+    "zip_code": "47906",
     "id": 1,
-    "is_email_verified": false
+    "is_default": true
 }
 ```
 #### **Status Code: 401**
 
 This page requires authentication.
 
-**URI**: /api/v1/profile
+**URI**: /api/v1/cards
 
 **Response Body:**
 ```
@@ -1167,53 +1470,9 @@ This page requires authentication.
 ```
 #### **Status Code: 422**
 
-Validation failed.
+The stripe token provided is invalid.
 
-**URI**: /api/v1/profile
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "name": "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "name": [
-            "The name may not be greater than 255 characters."
-        ]
-    }
-}
-```
-
-### **PUT - /api/v1/profile/email**
-
-Update the email address
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| email | required | email | max:255, unique:api_users |
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/profile/email
+**URI**: /api/v1/cards
 
 **Request Header:**
 ```
@@ -1223,60 +1482,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Request Body:**
 ```
 {
-    "email": "new@foodie-connector.delivery"
+    "nickname": "Test Visa",
+    "token": "not_token",
+    "is_default": false
 }
 ```
 
 **Response Body:**
 ```
 {
-    "name": "Test User",
-    "email": "new@foodie-connector.delivery",
-    "id": 1,
-    "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile/email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 409**
-
-The email has already been taken.
-
-**URI**: /api/v1/profile/email
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "email": "exist@foodie-connector.delivery"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The email has already been taken."
+    "message": "The stripe token provided is invalid."
 }
 ```
 #### **Status Code: 422**
 
 Validation failed.
 
-**URI**: /api/v1/profile/email
+**URI**: /api/v1/cards
 
 **Request Header:**
 ```
@@ -1285,9 +1507,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Request Body:**
 ```
-{
-    "email": "not_email"
-}
+[]
 ```
 
 **Response Body:**
@@ -1295,109 +1515,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "email": [
-            "The email must be a valid email address."
-        ]
-    }
-}
-```
-
-### **PUT - /api/v1/profile/password**
-
-Change the password
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| old_password | required | string |  |
-| new_password | required | password |  |
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/profile/password
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "old_password": "test123456",
-    "new_password": "new_password"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile/password
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 401**
-
-The old password does not match our records.
-
-**URI**: /api/v1/profile/password
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "old_password": "wrong",
-    "new_password": "new_password"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The old password does not match our records."
-}
-```
-#### **Status Code: 422**
-
-Validation failed.
-
-**URI**: /api/v1/profile/password
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "old_password": "test123456",
-    "new_password": "short"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "new_password": [
-            "The new password must be a valid password."
+        "nickname": [
+            "The nickname field is required."
+        ],
+        "token": [
+            "The token field is required."
+        ],
+        "is_default": [
+            "The is default field is required."
         ]
     }
 }

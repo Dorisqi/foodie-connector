@@ -49,7 +49,7 @@ abstract class ApiTestCase extends TestCase
                 'Authorization' => $this->token,
             ],
             'description' => $response->status() == 200
-                ? 'Successful operation'
+                ? 'Successful operation.'
                 : $response->json('message'),
             'response_header' => null,
             'response' => empty($response->content()) ? null : $response->json(),
