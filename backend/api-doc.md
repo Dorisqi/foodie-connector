@@ -1589,3 +1589,69 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **GET - /api/v1/cards/{id}**
+
+Show detail of a specific card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": "12",
+    "expiration_year": "2030",
+    "zip_code": "47906",
+    "is_default": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards/0
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/cards/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+

@@ -89,11 +89,17 @@ class CardController extends ApiController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
      */
     public function show($id)
     {
-        //
+        $card = $this->user()->cards()->find($id);
+        if (is_null($card)) {
+            throw ApiException::resourceNotFound();
+        }
+        return $this->response($card);
     }
 
     /**

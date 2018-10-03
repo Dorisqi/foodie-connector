@@ -56,16 +56,14 @@ class AddressController extends ApiController
     /**
      * Show the specific resource
      *
-     * @param \Illuminate\Http\Request $request
-     * @paran int $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $user = $this->user();
-        $address = Address::where('api_user_id', $user->id)->find($id);
+        $address = $this->user()->addresses()->find($id);
         if (is_null($address)) {
             throw ApiException::resourceNotFound();
         }

@@ -1,32 +1,31 @@
 <?php
 
-namespace Tests\Feature\Address;
+namespace Tests\Feature\Card;
 
-use App\Models\Address;
-use App\Models\ApiUser;
+use App\Models\Card;
 use Tests\ApiTestCase;
 
-class ShowAddressTest extends ApiTestCase
+class ShowCardTest extends ApiTestCase
 {
     /**
-     * Address id
+     * Card id
      */
     protected $id = 0;
 
     /**
-     * Test showing address
+     * Test showing card
      *
      * @return void
      */
-    public function testShowAddress()
+    public function testShowCard()
     {
         $this->assertFailed(null, 401);
         $this->login();
-        $address = factory(Address::class)->create();
-        $this->id = $address->id;
-        $addressArray = $address->toArray();
-        $addressArray['is_default'] = false;
-        $this->assertSucceed(null)->assertJson($addressArray);
+        $card = factory(Card::class)->create();
+        $this->id = $card->id;
+        $cardArray = $card->toArray();
+        $cardArray['is_default'] = false;
+        $this->assertSucceed(null)->assertJson($cardArray);
         $this->id = 0;
         $this->assertFailed(null, 404);
     }
@@ -38,7 +37,7 @@ class ShowAddressTest extends ApiTestCase
 
     protected function uri()
     {
-        return '/addresses/{id}';
+        return '/cards/{id}';
     }
 
     protected function uriParams()
@@ -50,12 +49,12 @@ class ShowAddressTest extends ApiTestCase
 
     protected function summary()
     {
-        return 'Show detail of a specific address';
+        return 'Show detail of a specific card';
     }
 
     protected function tag()
     {
-        return 'address';
+        return 'card';
     }
 
     protected function rules()
