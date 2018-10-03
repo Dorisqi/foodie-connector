@@ -11,7 +11,7 @@ class ShowAddressTest extends ApiTestCase
     /**
      * Address id
      */
-    protected $id = 0;
+    protected $id = 1;
 
     /**
      * Test showing address

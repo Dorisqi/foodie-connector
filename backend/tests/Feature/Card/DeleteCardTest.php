@@ -1,34 +1,35 @@
 <?php
 
-namespace Tests\Feature\Address;
+namespace Tests\Feature\Card;
 
-use App\Models\Address;
 use App\Models\ApiUser;
+use App\Models\Card;
 use Tests\ApiTestCase;
 
-class DeleteAddressTest extends ApiTestCase
+class DeleteCardTest extends ApiTestCase
 {
+
     /**
-     * Address id
+     * Card id
      *
      * @var int
      */
     protected $id = 1;
 
     /**
-     * Test deleting address
+     * Test deleting card
      *
      * @return void
      */
-    public function testDeleteAddress()
+    public function testDeleteCard()
     {
         $this->assertFailed(null, 401);
         $user = $this->userFactory()->create();
         $this->login($user);
-        $address = factory(Address::class)->create();
-        $this->id = $address->id;
+        $card = factory(Card::class)->create();
+        $this->id = $card->id;
         $this->assertSucceed(null);
-        $this->assertTrue(is_null(Address::find($address->id)));
+        $this->assertTrue(is_null(Card::find($card->id)));
         $this->assertTrue(is_null(ApiUser::find($user->id)->defaultAddress));
         $this->id = 0;
         $this->assertFailed(null, 404);
@@ -41,7 +42,7 @@ class DeleteAddressTest extends ApiTestCase
 
     protected function uri()
     {
-        return '/addresses/{id}';
+        return '/cards/{id}';
     }
 
     protected function uriParams()
@@ -53,12 +54,12 @@ class DeleteAddressTest extends ApiTestCase
 
     protected function summary()
     {
-        return 'Delete an existed address';
+        return 'Delete an existed card';
     }
 
     protected function tag()
     {
-        return 'address';
+        return 'card';
     }
 
     protected function rules()

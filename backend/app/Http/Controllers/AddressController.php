@@ -126,9 +126,9 @@ class AddressController extends ApiController
                 throw ApiException::resourceNotFound();
             }
             if ($address->is_default) {
-                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->first();
+                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->orderByDesc('id')->first();
                 if (is_null($newDefaultAddress)) {
-                    $user->default_address = null;
+                    $user->default_address_id = null;
                     $user->save();
                 } else {
                     $newDefaultAddress->is_default = true;

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use App\Models\Card;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Stripe\Customer;
 use Stripe\Error\InvalidRequest;
 
 class CardController extends ApiController
@@ -19,7 +21,7 @@ class CardController extends ApiController
     public function __construct()
     {
         $this->middleware('stripe')->only([
-            'store',
+            'store', 'destroy'
         ]);
     }
 
@@ -118,11 +120,45 @@ class CardController extends ApiController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $user = $this->user();
+            $card = $user->cards()->find($id);
+            if (is_null($card)) {
+                throw ApiException::resourceNotFound();
+            }
+
+            if ($card->is_default) {
+                $newDefaultCard = $user->cards()->where('id', '<>', $id)->orderByDesc('id')->first();
+                if (is_null($newDefaultCard)) {
+                    $user->default_card_id = null;
+                    $user->save();
+                } else {
+                    $newDefaultCard->is_default = true;
+                }
+            }
+
+            if (!App::environment('testing')) {
+                $customer = Customer::retrieve($user->stripe_id);
+                $customer->sources->retrieve($card->stripe_id)->delete();
+                // TODO: Improve sources testing
+            }
+
+            $card->delete();
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+        return $this->response();
     }
 
     /**

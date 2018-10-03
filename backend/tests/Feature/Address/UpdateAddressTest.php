@@ -14,7 +14,7 @@ class UpdateAddressTest extends ApiTestCase
      *
      * @param int
      */
-    protected $id = 0;
+    protected $id = 1;
 
     /**
      * Test updating address

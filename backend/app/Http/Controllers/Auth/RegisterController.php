@@ -10,6 +10,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Stripe\Customer;
 
@@ -74,6 +75,7 @@ class RegisterController extends ApiController
             try {
                 VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
             } catch (\Exception $exception) {
+                Log::error($exception->getMessage(), $exception->getTrace());
             }
 
             $this->guard()->loginUsingId($user->getAuthIdentifier());

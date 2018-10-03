@@ -10,7 +10,7 @@ class ShowCardTest extends ApiTestCase
     /**
      * Card id
      */
-    protected $id = 0;
+    protected $id = 1;
 
     /**
      * Test showing card
