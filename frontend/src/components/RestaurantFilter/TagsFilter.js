@@ -70,7 +70,7 @@ class TagsFilter extends React.Component {
       />
     ));
     return (
-      <FormGroup row={true}>
+      <FormGroup row>
         {checkboxes}
       </FormGroup>
     );
