@@ -1438,7 +1438,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "nickname": "Test Visa",
-    "token": "tok_WZDDvdMUvoLazF",
+    "token": "tok_b3eBoR4u3pJ164",
     "is_default": false
 }
 ```
