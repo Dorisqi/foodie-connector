@@ -27,7 +27,7 @@ const routes = {
     {
       path: '/addaddress',
       component: AddingAddress,
-    }
+    },
   ],
 };
 

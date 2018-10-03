@@ -20,19 +20,20 @@ function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
 
-class ChangepwBox extends React.Component {
+class UseremailChange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
 
-      oldpw: '',
-      newpw1: '',
-      newpw2: '',
+      newemail: '',
+      newemail2: '',
+      Current: '',
+      flag: 0,
 
     };
+
     this.handleChange1 = this.handleChange1.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
-    this.handleChange3 = this.handleChange3.bind(this);
   }
 
   handleClickOpen(modal) {
@@ -47,15 +48,24 @@ class ChangepwBox extends React.Component {
     this.setState(x);
   }
 
+  handleChange1(event) {
+    event.preventDefault();
+    this.setState({ newemail: event.target.value });
+  }
+
+  handleChange2(event) {
+    event.preventDefault();
+    this.setState({ newemail2: event.target.value });
+  }
+
   handleConfirm(modal) {
-    const { oldpw, newpw1, newpw2 } = this.state;
-    if (oldpw === newpw1) {
-      alert("new password and old password shouldn't be the same");
-    } else if (newpw1 !== newpw2) {
-      alert('please check and match new password!');
+    const { newemail, newemail2 } = this.state;
+    if (newemail !== newemail2) {
+      alert('Email not Match! Please match two email');
     } else {
-      alert('Success');
-      this.setState({ oldpw: '', newpw1: '', newpw2: '' });
+      alert('You will receive the email from us to verify Your new Email Address later. Thank you');
+      this.setState({ Current: this.state.newemail, newemail: '', newemail2: '' });
+      // Current = this.state.newemail;
       const x = [];
       x[modal] = false;
       this.setState(x);
@@ -65,23 +75,14 @@ class ChangepwBox extends React.Component {
     // alert(`${'Success: ' + '('}${this.state.oldpw} ${this.state.newpw1} ${this.state.newpw2}`);
   }
 
-  handleChange1(event) {
-    event.preventDefault();
-    this.setState({ oldpw: event.target.value });
-  }
-
-  handleChange2(event) {
-    event.preventDefault();
-    this.setState({ newpw1: event.target.value });
-  }
-
-  handleChange3(event) {
-    event.preventDefault();
-    this.setState({ newpw2: event.target.value });
-  }
 
   render() {
-    const { classes } = this.props;
+    const { classes, Current } = this.props;
+    if (this.state.flag == 0) {
+      this.state.Current = Current;
+      this.state.flag = 1;
+    }
+    // this.state.Current = Current;
     return (
       <div>
         <Button
@@ -89,7 +90,9 @@ class ChangepwBox extends React.Component {
           round
           onClick={() => this.handleClickOpen('modal')}
         >
-          Change  Password
+          Change Current Email Address:
+          {' '}
+          {this.state.Current}
         </Button>
         <Dialog
           classes={{
@@ -107,42 +110,30 @@ class ChangepwBox extends React.Component {
             id="modal-slide-description"
             className={classes.modalBody}
           >
-            <h3>please enter the old password and the new password!</h3>
-            <h4 id="alert" />
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Enter Old Password</InputLabel>
+              <InputLabel htmlFor="password">Please enter new Email Address</InputLabel>
               <Input
-                name="newpw"
-                type="password"
-                id="newpassword"
-                value={this.state.oldpw}
+                name="newemail"
+                type="text"
+                id="newemail"
+                value={this.state.newemail}
                 onChange={this.handleChange1}
                 autoComplete="newpassword"
               />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Enter New Password</InputLabel>
+              <InputLabel htmlFor="password">Please enter New Email Address again</InputLabel>
               <Input
-                name="newpw"
-                type="password"
-                id="newpassword"
-                value={this.state.newpw1}
+                name="newemail2"
+                type="text"
+                id="newemail2"
+                value={this.state.newemail2}
                 onChange={this.handleChange2}
                 autoComplete="newpassword"
               />
             </FormControl>
 
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Enter New Password again</InputLabel>
-              <Input
-                name="newpw2"
-                type="password"
-                id="newpassword2"
-                value={this.state.newpw2}
-                onChange={this.handleChange3}
-                autoComplete="newpassword2"
-              />
-            </FormControl>
+
           </DialogContent>
           <DialogActions
             className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
@@ -152,19 +143,20 @@ class ChangepwBox extends React.Component {
               onClick={() => this.handleConfirm('modal')}
               color="primary"
             >
-              confirm changing
+            confirm changing
             </Button>
             <Button
               onClick={() => this.handleClose('modal')}
               color="rose"
             >
-              Cancle
+            Cancle
             </Button>
           </DialogActions>
         </Dialog>
       </div>
+
     );
   }
 }
 
-export default withStyles(modalStyle)(ChangepwBox);
+export default withStyles(modalStyle)(UseremailChange);

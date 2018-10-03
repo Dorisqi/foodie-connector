@@ -7,6 +7,15 @@ import TextField from '@material-ui/core/TextField';
 import States from '../../Statesfile';
 import Paper from '@material-ui/core/Paper';
 import Button from '../../material-kit/components/CustomButtons/Button';
+import Dialog from '@material-ui/core/Dialog';
+
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Slide from '@material-ui/core/Slide';
+
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
 
 const styles = theme => ({
   container: {
@@ -77,6 +86,17 @@ constructor(props){
   componentDidMount() {
       this.forceUpdate();
     }
+    handleClickOpen(modal) {
+      const x = [];
+      x[modal] = true;
+      this.setState(x);
+    }
+
+    handleClose(modal) {
+      const x = [];
+      x[modal] = false;
+      this.setState(x);
+    }
 
   handleChangeadd1 = event => {
       this.setState({ Address1: event.target.value });
@@ -109,7 +129,30 @@ constructor(props){
     render(){
       const{classes} = this.props;
       return(
-          <Paper className={classes.root} elevation={1}>
+        <div>
+          <Button
+            color="primary"
+            round
+            onClick={() => this.handleClickOpen('modal')}
+          >
+            ADD+
+          </Button>
+          <Dialog
+            classes={{
+              root: classes.center,
+              paper: classes.modal,
+            }}
+            open={this.state.modal}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={() => this.handleClose('modal')}
+            aria-labelledby="modal-slide-title"
+            aria-describedby="modal-slide-description"
+          >
+            <DialogContent
+              id="modal-slide-description"
+              className={classes.modalBody}
+            >
 
           <Button className={classes.button} focusRipple
             onClick={() => this.handleConfirm('modal')}
@@ -117,12 +160,18 @@ constructor(props){
           >
             Confirm
           </Button>
-          <Button className={classes.buttonright} focusRipple
-            onClick={() => this.handleConfirm('modal')}
+
+          <Button className={classes.button} focusRipple
+            onClick={() => this.handleClose('modal')}
             color=""
           >
-            Back
+            Cancle
           </Button>
+          <Button className={classes.button}
+           color="info">
+           User Current Location
+           </Button>
+
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
             required
@@ -199,8 +248,26 @@ constructor(props){
 
 
           </form>
-        </Paper>
+          </DialogContent>
+          <DialogActions
+            className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
+          >
 
+            <Button
+              onClick={() => this.handleConfirm('modal')}
+              color="primary"
+            >
+              confirm changing
+            </Button>
+            <Button
+              onClick={() => this.handleClose('modal')}
+              color="rose"
+            >
+              Cancle
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </div>
 
 
 

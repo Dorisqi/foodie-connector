@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import ChangepwBox from '../../components/ChangepwBox/ChangepwBox';
 import Paper from '@material-ui/core/Paper';
 import AddressLists from "../../components/UserAddress/AddressLists";
-
+import Badge from 'components/Badge/Badge';
+import UseremailChange from "../../components/UseremailChange/UseremailChange";
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -27,19 +28,25 @@ const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 900,
-    minHeight:600,
+    minHeight:200,
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit ,
     paddingBottom: theme.spacing.unit * 2,
     alignItems: 'center',
     direction: "column",
     justify: "center",
-    //padding:1*1,
+    padding:1*1,
     marginTop: theme.spacing.unit * 7,
     margin: '10px auto 0 auto',
 
 
   },
+  itermlocation: {
+    marginTop: theme.spacing.unit * 7,
+    alignItems: 'center',
+    direction: "column",
+    justify: "center",
+  }
 });
 
 class ProfileTabs extends React.Component {
@@ -90,7 +97,10 @@ class ProfileTabs extends React.Component {
           <AddressLists>
           </AddressLists>
           </TabContainer>
-          <TabContainer dir={theme.direction}>Email</TabContainer>
+          <TabContainer className={classes.itermlocation} dir={theme.direction}>
+
+          <UseremailChange Current="123@purdue.edu"></UseremailChange>
+          </TabContainer>
           <TabContainer dir={theme.direction}>
           <div>
             <ChangepwBox>
