@@ -14,6 +14,7 @@ import CurrentGeolocation from '../../components/currentLocation/CurrentLocation
 import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
+import { browserHistory } from 'react-router';
 
 
 const styles = theme => ({
@@ -103,13 +104,14 @@ class SimpleTabs extends React.Component {
   handleName (event)  {
     this.setState({name: event.target.value});
   }
-  handlePassword = (event) => {
+  handlePassword (event) {
     this.setState({password: event.target.value});
   }
-  handleRetypePassword = (event) => {
+  handleRetypePassword (event) {
     this.setState({retyped_password: event.target.value});
   }
-  handleSignup = (event, value) => {
+  handleSignup (event, value) {
+    event.preventDefault();
     const mathces = this.state.password === this.state.retyped_password;
     if (mathces)
     {
@@ -121,28 +123,30 @@ class SimpleTabs extends React.Component {
       }).then(res => {
         console.log(res);
         console.log(res.api_token, email);
+
+        window.location.href = "http://localhost:3000/restaurantlist";
         Auth.authenticateUser(res.api_token, email);
-        window.location.href = '/restaurantlist';
+
       }).catch(err => {
         const { response } = err;
         if (response) {
           if (response.status === 409) {
             //TOOD
-
-
-            this.setState({value: 1});
+            //this.setState({value: 1});
             this.setState({ errorMessage: ''})
+            alert("The email has already been taken.");
           }
           else if (response.status === 422) {
             this.setState({value: 1});
             this.setState({ errorMessage: '' })
-
+            alert("The password must be a valid password");
           }
         }
         else {
           this.setState({value: 1});
           console.log(err);
         }
+        this.setState({redirect: false});
       })
     }
     else {
@@ -150,27 +154,21 @@ class SimpleTabs extends React.Component {
       alert("Please re-enter your password!");
     }
   }
-
-
-
   handleLogin (event, value){
-
     //if password is correct, redireft to browse page;
-
     if(true)
     {
-      window.location.href = "/restaurantlist";
+      window.location.href = "http://localhost:3000/restaurantlist";
     }
     else{
       this.setState({value: 0});
-      alert("whaaaaaaaat ");
     }
     event.preventDefault();
     this.setState({value});
   }
   handleRest = (event, value) => {
     this.setState({value});
-    window.location.href = "/reset_password";
+    window.location.href ="http://localhost:3000/reset_password"
   }
   render() {
     const { classes } = this.props;
