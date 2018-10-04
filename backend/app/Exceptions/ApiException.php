@@ -20,7 +20,7 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors($validator->errors());
     }
-    protected static function validationFailedErrors($errors)
+    public static function validationFailedErrors($errors)
     {
         return new ApiException('Validation failed.', 422, null, $errors);
     }
@@ -124,7 +124,14 @@ class ApiException extends Exception
             ],
         ]);
     }
-
+    public static function invalidAddressId()
+    {
+        return self::validationFailedErrors([
+            'address_id' => [
+                'The address_id is invalid',
+            ],
+        ]);
+    }
 
     /**
      * Headers

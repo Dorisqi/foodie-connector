@@ -74,7 +74,7 @@ class CardController extends ApiController
             $user->cards()->save($card);
 
             if ($request->input('is_default') === true
-                || is_null($user->defaultCard)) {
+                || is_null($user->default_card_id)) {
                 $card->is_default = true;
             }
 

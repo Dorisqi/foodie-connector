@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'name', 'order_minimum', 'delivery_fee',
     ];

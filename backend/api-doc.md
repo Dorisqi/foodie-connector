@@ -1019,8 +1019,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "latitude": "40.4227584",
-        "longitude": "-86.9090892",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
         "is_default": false
     },
     {
@@ -1033,8 +1033,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "latitude": "40.4227584",
-        "longitude": "-86.9090892",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
         "is_default": false
     }
 ]
@@ -1096,8 +1096,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "latitude": "40.4227584",
-    "longitude": "-86.9090892",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
     "is_default": true
 }
 ```
@@ -1113,8 +1113,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "latitude": "40.4227584",
-    "longitude": "-86.9090892",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
     "id": 1,
     "user": {
         "id": 1,
@@ -1159,8 +1159,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "latitude": "40.4227584",
-    "longitude": "-86.9090892",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
     "user": {
         "id": 1,
         "name": "Test User",
@@ -1218,8 +1218,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "latitude": "40.4227584",
-    "longitude": "-86.9090892",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
     "is_default": false
 }
 ```
@@ -1307,8 +1307,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJPbVda67iEogRTWzmvivderE",
-    "latitude": "40.4248",
-    "longitude": "-86.911",
+    "lat": "40.4248",
+    "lng": "-86.911",
     "user": {
         "id": 1,
         "name": "Test User",
@@ -1864,6 +1864,179 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+
+## **restaurant**
+
+Everything about restaurant
+
+### **GET - /api/v1/restaurants**
+
+Get a list of all available restaurants
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| address_id | optional | integer |  |
+| place_id | optional | string |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": 1,
+        "name": "HotBox Pizza",
+        "order_minimum": "10",
+        "delivery_fee": "2.99",
+        "address": {
+            "id": 1,
+            "name": "HotBox Pizza",
+            "phone": "765567765",
+            "line_1": "135 S Chauncey Ave",
+            "line_2": null,
+            "city": "West Lafayette",
+            "state": " IN",
+            "zip_code": "47906",
+            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+            "lat": "40.423593",
+            "lng": "-86.9080874"
+        },
+        "distance": 0.1,
+        "estimated_delivery_time": 20
+    },
+    {
+        "id": 2,
+        "name": "Heisei Japanese Restaurant",
+        "order_minimum": "25",
+        "delivery_fee": "3.99",
+        "address": {
+            "id": 2,
+            "name": "Heisei Japanese Restaurant",
+            "phone": "765432234",
+            "line_1": "907 Sagamore Pkwy W",
+            "line_2": null,
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
+            "lat": "40.4519488",
+            "lng": "-86.9195979"
+        },
+        "distance": 2.1,
+        "estimated_delivery_time": 26
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants?address_id=3
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": 1,
+        "name": "HotBox Pizza",
+        "order_minimum": "10",
+        "delivery_fee": "2.99",
+        "address": {
+            "id": 1,
+            "name": "HotBox Pizza",
+            "phone": "765567765",
+            "line_1": "135 S Chauncey Ave",
+            "line_2": null,
+            "city": "West Lafayette",
+            "state": " IN",
+            "zip_code": "47906",
+            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+            "lat": "40.423593",
+            "lng": "-86.9080874"
+        },
+        "distance": 0.1,
+        "estimated_delivery_time": 20
+    },
+    {
+        "id": 2,
+        "name": "Heisei Japanese Restaurant",
+        "order_minimum": "25",
+        "delivery_fee": "3.99",
+        "address": {
+            "id": 2,
+            "name": "Heisei Japanese Restaurant",
+            "phone": "765432234",
+            "line_1": "907 Sagamore Pkwy W",
+            "line_2": null,
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
+            "lat": "40.4519488",
+            "lng": "-86.9195979"
+        },
+        "distance": 2.1,
+        "estimated_delivery_time": 26
+    }
+]
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/restaurants
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/restaurants
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "Must provide address_id or place_id."
+        ],
+        "place_id": [
+            "Must provide address_id or place_id."
+        ]
+    }
 }
 ```
 

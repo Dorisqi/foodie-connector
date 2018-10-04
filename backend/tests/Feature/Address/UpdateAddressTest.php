@@ -37,8 +37,8 @@ class UpdateAddressTest extends ApiTestCase
             'is_default' => true,
         ]);
         $addressArray['is_default'] = true;
-        $addressArray['latitude'] = '40.4248';
-        $addressArray['longitude'] = '-86.911';
+        $addressArray['lat'] = '40.4248';
+        $addressArray['lng'] = '-86.911';
         $response->assertJson($addressArray);
         $newAddress = factory(Address::class)->create();
         $this->id = $newAddress->id;

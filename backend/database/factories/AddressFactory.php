@@ -15,7 +15,7 @@ $factory->define(\App\Models\Address::class, function () {
         'api_user_id' => function () {
             return Auth::guard('api')->user()->id;
         },
-        'latitude' => '40.4227584',
-        'longitude' => '-86.9090892',
+        'lat' => '40.4227584',
+        'lng' => '-86.9090892',
     ];
 });

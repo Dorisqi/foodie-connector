@@ -28,7 +28,6 @@ class AddressController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \App\Exceptions\ApiException
      * @throws \Exception
      */
@@ -42,13 +41,13 @@ class AddressController extends ApiController
             $addressFromGoogleMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
             $addressArray = $request->only($this->modelParams());
             $location = $addressFromGoogleMaps[0]->{'geometry'}->{'location'};
-            $addressArray['latitude'] = (string)$location->{'lat'};
-            $addressArray['longitude'] = (string)$location->{'lng'};
+            $addressArray['lat'] = (string)$location->{'lat'};
+            $addressArray['lng'] = (string)$location->{'lng'};
             $address = new Address($addressArray);
             $user = $this->user();
             $user->addresses()->save($address);
             if ($request->input('is_default') === true
-                || is_null($user->defaultAddress)) {
+                || is_null($user->default_address_id)) {
                 $address->is_default = true;
             }
 
@@ -104,8 +103,8 @@ class AddressController extends ApiController
             if ($request->has('place_id')) {
                 $addressFromMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
                 $location = $addressFromMaps[0]->{'geometry'}->{'location'};
-                $addressArray['latitude'] = (string)$location->{'lat'};
-                $addressArray['longitude'] = (string)$location->{'lng'};
+                $addressArray['lat'] = (string)$location->{'lat'};
+                $addressArray['lng'] = (string)$location->{'lng'};
             }
             $address->fill($addressArray);
             $address->save();

@@ -20,22 +20,18 @@ class Card extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\ApiUser', 'id', 'api_user_id');
+        return $this->belongsTo('App\Models\ApiUser', 'api_user_id');
     }
 
     public function getIsDefaultAttribute()
     {
-        $user = Auth::guard('api')->user();
-        if (is_null($user)) {
-            return false;
-        }
-        return $user->default_card_id === $this->id;
+        return $this->user->default_card_id === $this->id;
     }
 
     public function setIsDefaultAttribute($value)
     {
         if ($value === true) {
-            $user = Auth::guard('api')->user();
+            $user = $this->user;
             $user->default_card_id = $this->id;
             $user->save();
         }

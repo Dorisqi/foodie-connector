@@ -48,8 +48,8 @@ abstract class ApiTestCase extends TestCase
             }
         }
         $api = [
-            'uri' => $this->processedUri(),
-            'request' => $requestData,
+            'uri' => $this->processedUri($requestData),
+            'request' => $this->method() === 'GET' ? null : $requestData,
             'status_code' => $response->status(),
             'header' => is_null($this->token) ? [] : [
                 'Authorization' => $this->token,
@@ -167,20 +167,27 @@ abstract class ApiTestCase extends TestCase
             $request->withHeader('Authorization', $this->token);
         }
         return is_null($data)
-            ? $request->call($this->method(), $this->processedUri())
-            : $request->json($this->method(), $this->processedUri(), $data);
+            ? $request->call($this->method(), $this->processedUri($data))
+            : $request->json($this->method(), $this->processedUri($data), $data);
     }
 
     /**
      * Get the processed uri
      *
+     * @param array|null $requestData
      * @return string
      */
-    protected function processedUri()
+    protected function processedUri($requestData)
     {
         $uri = $this->uri();
         foreach ($this->uriParams() as $key => $value) {
             $uri = str_replace('{' . $key . '}', $value, $uri);
+        }
+        if ($this->method() === 'GET' && !is_null($requestData)) {
+            $queryAdded = false;
+            foreach ($requestData as $key => $value) {
+                $uri .= $queryAdded ? '&' : '?' . urlencode($key) . '=' . urlencode($value);
+            }
         }
         return $this::PREFIX . $uri;
     }

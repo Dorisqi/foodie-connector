@@ -22,7 +22,7 @@ class CreateCardsTable extends Migration
             $table->integer('expiration_year');
             $table->string('zip_code')->nullable();
             $table->string('stripe_id');
-            $table->unsignedInteger('api_user_id')->nullable();
+            $table->unsignedInteger('api_user_id');
 
             $table->foreign('api_user_id')->references('id')->on('api_users');
         });

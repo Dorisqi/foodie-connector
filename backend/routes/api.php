@@ -37,5 +37,7 @@ Route::prefix('v1')->group(function () {
             Route::put('password', 'ProfileController@changePassword');
             Route::put('email', 'ProfileController@updateEmail');
         });
+
+        Route::get('restaurants', 'RestaurantController@index');
     });
 });
