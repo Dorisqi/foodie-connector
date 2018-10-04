@@ -1019,6 +1019,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "latitude": "40.4227584",
+        "longitude": "-86.9090892",
         "is_default": false
     },
     {
@@ -1031,6 +1033,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "state": "IN",
         "zip_code": "47906-5123",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "latitude": "40.4227584",
+        "longitude": "-86.9090892",
         "is_default": false
     }
 ]
@@ -1092,6 +1096,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "latitude": "40.4227584",
+    "longitude": "-86.9090892",
     "is_default": true
 }
 ```
@@ -1107,6 +1113,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "latitude": "40.4227584",
+    "longitude": "-86.9090892",
     "id": 1,
     "is_default": true
 }
@@ -1145,6 +1153,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "latitude": "40.4227584",
+    "longitude": "-86.9090892",
     "is_default": true
 }
 ```
@@ -1196,6 +1206,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "latitude": "40.4227584",
+    "longitude": "-86.9090892",
     "is_default": false
 }
 ```
@@ -1266,6 +1278,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "name": "Changed Name",
+    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
     "is_default": true
 }
 ```
@@ -1281,7 +1294,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
+    "latitude": "40.4248",
+    "longitude": "-86.911",
     "is_default": true
 }
 ```
@@ -1531,7 +1546,7 @@ This page requires authentication.
 ```
 #### **Status Code: 422**
 
-Validation Failed.
+Validation failed.
 
 **URI**: /api/v1/cards
 
@@ -1552,7 +1567,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation Failed.",
+    "message": "Validation failed.",
     "data": {
         "token": [
             "The stripe token is invalid."
@@ -1741,7 +1756,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation Failed
+Validation failed.
 
 **URI**: /api/v1/cards/1
 
@@ -1761,7 +1776,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation Failed",
+    "message": "Validation failed.",
     "data": {
         "expiration_month": [
             "The expiration_month must be a current or future month."

@@ -23,6 +23,8 @@ class CreateAddressesTable extends Migration
             $table->string('state');
             $table->string('zip_code');
             $table->string('place_id');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->unsignedInteger('api_user_id')->nullable();
 
             $table->foreign('api_user_id')

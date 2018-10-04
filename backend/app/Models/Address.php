@@ -10,7 +10,7 @@ class Address extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id'
+        'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id', 'latitude', 'longitude',
     ];
 
     protected $hidden = [

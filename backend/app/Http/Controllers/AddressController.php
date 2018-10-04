@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Facades\Maps;
 use App\Models\Address;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends ApiController
@@ -28,6 +28,7 @@ class AddressController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \App\Exceptions\ApiException
      * @throws \Exception
      */
@@ -37,13 +38,20 @@ class AddressController extends ApiController
 
         try {
             DB::beginTransaction();
-            $address = new Address($request->only($this->modelParams()));
+
+            $addressFromGoogleMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
+            $addressArray = $request->only($this->modelParams());
+            $location = $addressFromGoogleMaps[0]->{'geometry'}->{'location'};
+            $addressArray['latitude'] = (string)$location->{'lat'};
+            $addressArray['longitude'] = (string)$location->{'lng'};
+            $address = new Address($addressArray);
             $user = $this->user();
             $user->addresses()->save($address);
             if ($request->input('is_default') === true
                 || is_null($user->defaultAddress)) {
                 $address->is_default = true;
             }
+
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -92,7 +100,14 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
 
-            $address->fill($request->only($this->modelParams()));
+            $addressArray = $request->only($this->modelParams());
+            if ($request->has('place_id')) {
+                $addressFromMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
+                $location = $addressFromMaps[0]->{'geometry'}->{'location'};
+                $addressArray['latitude'] = (string)$location->{'lat'};
+                $addressArray['longitude'] = (string)$location->{'lng'};
+            }
+            $address->fill($addressArray);
             $address->save();
             if ($request->input('is_default') == true) {
                 $address->is_default = true;

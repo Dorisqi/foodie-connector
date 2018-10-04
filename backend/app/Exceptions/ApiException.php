@@ -18,7 +18,11 @@ class ApiException extends Exception
     /* Validation */
     public static function validationFailed(Validator $validator)
     {
-        return new ApiException('Validation failed.', 422, null, $validator->errors());
+        return self::validationFailedErrors($validator->errors());
+    }
+    protected static function validationFailedErrors($errors)
+    {
+        return new ApiException('Validation failed.', 422, null, $errors);
     }
 
     /* User and Authentication */
@@ -76,7 +80,7 @@ class ApiException extends Exception
     /* Card */
     public static function invalidStripeToken()
     {
-        return new ApiException('Validation Failed.', 422, null, [
+        return self::validationFailedErrors([
             'token' => [
                 'The stripe token is invalid.',
             ]
@@ -84,7 +88,7 @@ class ApiException extends Exception
     }
     public static function expirationYearPassed()
     {
-        return new ApiException('Validation Failed.', 422, null, [
+        return self::validationFailedErrors([
             'expiration_year' => [
                 'The expiration_year must be a current or future year.',
             ],
@@ -92,7 +96,7 @@ class ApiException extends Exception
     }
     public static function expirationMonthPassed()
     {
-        return new ApiException('Validation Failed', 422, null, [
+        return self::validationFailedErrors([
             'expiration_month' => [
                 'The expiration_month must be a current or future month.',
             ],
@@ -109,6 +113,16 @@ class ApiException extends Exception
     public static function invalidOldPassword()
     {
         return new ApiException('The old password does not match our records.', 401);
+    }
+
+    /* Address */
+    public static function invalidPlaceId()
+    {
+        return self::validationFailedErrors([
+            'place_id' => [
+                'The place_id is invalid',
+            ],
+        ]);
     }
 
 

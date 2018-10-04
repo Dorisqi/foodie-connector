@@ -14,6 +14,8 @@ $factory->define(\App\Models\Address::class, function () {
         'place_id' => 'ChIJO_0IEK_iEogR4GrIyYopzz8',
         'api_user_id' => function () {
             return Auth::guard('api')->user()->id;
-        }
+        },
+        'latitude' => '40.4227584',
+        'longitude' => '-86.9090892',
     ];
 });
