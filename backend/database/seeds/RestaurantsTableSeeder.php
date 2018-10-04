@@ -29,6 +29,7 @@ class RestaurantsTableSeeder extends Seeder
             'name' => 'HotBox Pizza',
             'order_minimum' => '10',
             'delivery_fee' => '2.99',
+            'rating' => '4.8',
         ]);
         $restaurant->address_id = $address->id;
         $restaurant->save();
@@ -51,6 +52,7 @@ class RestaurantsTableSeeder extends Seeder
             'name' => 'Heisei Japanese Restaurant',
             'order_minimum' => '25',
             'delivery_fee' => '3.99',
+            'rating' => '4.9',
         ]);
         $restaurant->address_id = $address->id;
         $restaurant->save();

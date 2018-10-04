@@ -6,7 +6,7 @@ use App\Exceptions\ApiException;
 use App\Facades\Maps;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class RestaurantController extends ApiController
@@ -65,31 +65,50 @@ class RestaurantController extends ApiController
         }
 
         $distanceFilter = $this->numericFilter($request, 'filter_distance');
-        $deliveryTimeFilter = $this->numericFilter($request, 'filter_delivery_time');
+        $deliveryTimeFilter = $this->numericFilter($request, 'filter_estimated_delivery_time');
         $deliveryFeeFilter = $this->numericFilter($request, 'filter_delivery_fee');
         $orderMinimumFilter = $this->numericFilter($request, 'filter_order_minimum');
+        $ratingFilter = $this->numericFilter($request, 'filter_rating');
 
         $query = Restaurant::with('address', 'restaurantCategories');
-        if (!is_null($deliveryFeeFilter)) {
-            if (!is_null($deliveryFeeFilter['min'])) {
-                $query->where('delivery_fee', '>=', $deliveryFeeFilter['min']);
-            }
-            if (!is_null($deliveryFeeFilter['max'])) {
-                $query->where('delivery_fee', '<=', $deliveryFeeFilter['max']);
-            }
-        }
-        if (!is_null($orderMinimumFilter)) {
-            if (!is_null($orderMinimumFilter['min'])) {
-                $query->where('order_minimum', '>=', $orderMinimumFilter['min']);
-            }
-            if (!is_null($orderMinimumFilter['max'])) {
-                $query->where('order_minimum', '<=', $orderMinimumFilter['max']);
-            }
-        }
+        $query = $this->filterQuery($query, $deliveryFeeFilter, 'delivery_fee');
+        $query = $this->filterQuery($query, $orderMinimumFilter, 'order_minimum');
+        $query = $this->filterQuery($query, $ratingFilter, 'rating');
         if (!is_null($categories)) {
             $query->whereHas('restaurantCategories', function ($query) use ($categories) {
                 $query->whereIn('id', $categories);
             });
+        }
+
+        $orderBy = $request->query('order_by');
+        $isDesc = false;
+        if (is_null($orderBy) && !is_null($request->query('order_by_desc'))) {
+            $orderBy = $request->query('order_by_desc');
+            $isDesc = true;
+        }
+        if (!is_null($orderBy)) {
+            switch ($orderBy) {
+                case 'delivery_fee':
+                case 'order_minimum':
+                case 'rating':
+                    if ($isDesc) {
+                        $query = $query->orderByDesc($orderBy);
+                    } else {
+                        $query = $query->orderBy($orderBy);
+                    }
+                    break;
+                case 'distance':
+                case 'estimated_delivery_time':
+                    break;
+                default:
+                    $key = $isDesc ? 'order_by_desc' : 'order_by';
+                    throw ApiException::validationFailedErrors([
+                        $key => [
+                            'The ' . $key .
+                                ' must be delivery_fee, order_minimum, rating, distance, or estimated_delivery_time',
+                        ],
+                    ]);
+            }
         }
 
         $restaurants = $query->get();
@@ -120,6 +139,20 @@ class RestaurantController extends ApiController
             array_push($availableRestaurants, $restaurantArray);
         }
 
+        if (is_null($orderBy) || $orderBy === 'distance') {
+            usort($availableRestaurants, function ($a, $b) use ($isDesc) {
+                return $isDesc
+                    ? $b['distance'] <=> $a['distance']
+                    : $a['distance'] <=> $b['distance'];
+            });
+        } elseif ($orderBy === 'estimated_delivery_time') {
+            usort($availableRestaurants, function ($a, $b) use ($isDesc) {
+                return $isDesc
+                    ? $b['estimated_delivery_time'] <=> $a['estimated_delivery_time']
+                    : $a['estimated_delivery_time'] <=> $b['estimated_delivery_time'];
+            });
+        }
+
         $categories = RestaurantCategory::all();
 
         return $this->response([
@@ -148,15 +181,15 @@ class RestaurantController extends ApiController
                 $param => 'The ' . $param . ' must be in the pattern [min]_[max].',
             ]);
         }
-        if ((strlen($values[0]) > 0 && !ctype_digit($values[0]))
-            || (strlen($values[1] > 0 && !ctype_digit($values[1])))) {
+        if ((strlen($values[0]) > 0 && !is_numeric($values[0]))
+            || (strlen($values[1] > 0 && !is_numeric($values[1])))) {
             throw ApiException::validationFailedErrors([
-                $param => 'The ' . $param . ' must be integers',
+                $param => 'The ' . $param . ' must be numbers',
             ]);
         }
         return [
-            'min' => strlen($values[0]) > 0 ? (int)$values[0] : null,
-            'max' => strlen($values[1]) > 0 ? (int)$values[1] : null,
+            'min' => strlen($values[0]) > 0 ? (double)$values[0] : null,
+            'max' => strlen($values[1]) > 0 ? (double)$values[1] : null,
         ];
     }
 
@@ -179,6 +212,26 @@ class RestaurantController extends ApiController
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array|null $filter
+     * @param string $param
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function filterQuery(Builder $query, $filter, string $param)
+    {
+        if (is_null($filter)) {
+            return $query;
+        }
+        if (!is_null($filter['min'])) {
+            $query = $query->where($param, '>=', $filter['min']);
+        }
+        if (!is_null($filter['max'])) {
+            $query = $query->where($param, '<=', $filter['max']);
+        }
+        return $query;
     }
 
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/

@@ -22,11 +22,16 @@ class ListRestaurantTest extends ApiTestCase
         $response = $this->assertSucceed([
             'address_id' => $address->id,
             'filter_categories' => '1_2',
+            'order_by_desc' => 'rating',
         ]);
         $this->assertCount(2, $response->json('restaurants'));
+        $this->assertLessThan(
+            $response->json('restaurants')[0]['rating'],
+            $response->json('restaurants')[1]['rating']
+        );
         $response = $this->assertSucceed([
             'place_id' => $address->place_id,
-            'filter_distance' => '_1'
+            'filter_distance' => '_1',
         ]);
         $this->assertCount(1, $response->json('restaurants'));
         $response = $this->assertSucceed([
@@ -69,9 +74,12 @@ class ListRestaurantTest extends ApiTestCase
             'place_id' => 'string',
             'filter_categories' => 'string|pattern:id_id_...',
             'filter_distance' => 'string|pattern:[min]_[max]',
-            'filter_delivery_time' => 'string|pattern:[min]_[max]',
+            'filter_estimated_delivery_time' => 'string|pattern:[min]_[max]',
             'filter_delivery_fee' => 'string|pattern:[min]_[max]',
             'filter_order_minimum' => 'string|pattern:[min]_[max]',
+            'filter_rating' => 'string|pattern:[min]_[max]',
+            'order_by' => 'string',
+            'order_by_desc' => 'string',
         ];
     }
 }

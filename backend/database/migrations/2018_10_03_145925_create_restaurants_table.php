@@ -19,6 +19,7 @@ class CreateRestaurantsTable extends Migration
             $table->unsignedInteger('address_id');
             $table->decimal('order_minimum');
             $table->decimal('delivery_fee');
+            $table->decimal('rating', 2, 1);
 
             $table->foreign('address_id')->references('id')->on('addresses');
         });

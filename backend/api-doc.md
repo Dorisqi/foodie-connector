@@ -1887,9 +1887,12 @@ Required
 | place_id | optional | string |  |
 | filter_categories | optional | string | pattern:id_id_... |
 | filter_distance | optional | string | pattern:[min]_[max] |
-| filter_delivery_time | optional | string | pattern:[min]_[max] |
+| filter_estimated_delivery_time | optional | string | pattern:[min]_[max] |
 | filter_delivery_fee | optional | string | pattern:[min]_[max] |
 | filter_order_minimum | optional | string | pattern:[min]_[max] |
+| filter_rating | optional | string | pattern:[min]_[max] |
+| order_by | optional | string |  |
+| order_by_desc | optional | string |  |
 
 #### **Status Code: 200**
 
@@ -1921,6 +1924,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "name": "HotBox Pizza",
             "order_minimum": "10",
             "delivery_fee": "2.99",
+            "rating": "4.8",
             "address": {
                 "id": 1,
                 "name": "HotBox Pizza",
@@ -1947,7 +1951,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Successful operation.
 
-**URI**: /api/v1/restaurants?address_id=3&filter_categories=1_2
+**URI**: /api/v1/restaurants?address_id=3&filter_categories=1_2&order_by_desc=rating
 
 **Request Header:**
 ```
@@ -1969,34 +1973,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ],
     "restaurants": [
         {
-            "id": 1,
-            "name": "HotBox Pizza",
-            "order_minimum": "10",
-            "delivery_fee": "2.99",
-            "address": {
-                "id": 1,
-                "name": "HotBox Pizza",
-                "phone": "765567765",
-                "line_1": "135 S Chauncey Ave",
-                "line_2": null,
-                "city": "West Lafayette",
-                "state": " IN",
-                "zip_code": "47906",
-                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-                "lat": "40.423593",
-                "lng": "-86.9080874"
-            },
-            "categories": [
-                "Pizza"
-            ],
-            "distance": 0.1,
-            "estimated_delivery_time": 20
-        },
-        {
             "id": 2,
             "name": "Heisei Japanese Restaurant",
             "order_minimum": "25",
             "delivery_fee": "3.99",
+            "rating": "4.9",
             "address": {
                 "id": 2,
                 "name": "Heisei Japanese Restaurant",
@@ -2015,6 +1996,31 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ],
             "distance": 2.1,
             "estimated_delivery_time": 26
+        },
+        {
+            "id": 1,
+            "name": "HotBox Pizza",
+            "order_minimum": "10",
+            "delivery_fee": "2.99",
+            "rating": "4.8",
+            "address": {
+                "id": 1,
+                "name": "HotBox Pizza",
+                "phone": "765567765",
+                "line_1": "135 S Chauncey Ave",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": " IN",
+                "zip_code": "47906",
+                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+                "lat": "40.423593",
+                "lng": "-86.9080874"
+            },
+            "categories": [
+                "Pizza"
+            ],
+            "distance": 0.1,
+            "estimated_delivery_time": 20
         }
     ]
 }

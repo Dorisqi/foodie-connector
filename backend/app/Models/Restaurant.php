@@ -9,7 +9,7 @@ class Restaurant extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'order_minimum', 'delivery_fee',
+        'name', 'order_minimum', 'delivery_fee', 'rating'
     ];
 
     protected $hidden = [
