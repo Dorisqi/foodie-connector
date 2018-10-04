@@ -6,7 +6,6 @@ import compose from 'recompose/compose';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Geocode from 'react-geocode';
 
-
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -32,14 +31,11 @@ class CurrentGeoLocation extends React.Component {
   }
 
   handleClick() {
-    Geocode.setApiKey('AIzaSyByyQbkhN7phUklrozYqk6QWw28lDU_dMg');
-    Geocode.enableDebug();
-    console.log(typeof this.props.coords.latitude);
     Geocode.fromLatLng(this.props.coords.latitude, this.props.coords.longitude).then(
       (response) => {
         const address = response.results[0].formatted_address;
         this.setState({ address: address });
-        //console.log(address);
+        console.log(response);
       },
       (error) => {
         //console.error(error);

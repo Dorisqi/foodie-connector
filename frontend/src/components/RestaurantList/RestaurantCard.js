@@ -44,10 +44,10 @@ const styles = theme => ({
 
 const RestaurantCard = (props) => {
   const { item, classes } = props;
-  const tags = item.tags.join(', ');
+  const tags = item.categories.join(', ');
   const labels = {
     distance: `${item.distance} mile`,
-    time: `${item.estimate_time_lo} - ${item.estimate_time_hi} mins`,
+    time: `${item.estimated_delivery_time} mins`,
     fee: `$${item.delivery_fee} Fee`,
     minimum: `$${item.order_minimum} Minimum`,
   };
@@ -65,7 +65,7 @@ const RestaurantCard = (props) => {
           <h2 className={classes.restaurantName}>
             {item.name}
             <span className={classes.rateText}>
-              {`${item.rate}%`}
+              {item.rating}
             </span>
             <Icon className={classes.thumbUp} fontSize="small" color="secondary">
               thumb_up

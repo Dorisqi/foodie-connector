@@ -71,7 +71,6 @@ class ProfileTabs extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-
     return (
       <div>
       <Paper className={classes.root} elevation={12}>

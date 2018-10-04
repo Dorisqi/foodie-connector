@@ -1,8 +1,5 @@
-import axios from 'axios';
 import Auth from './Auth/Auth';
 
-axios.defaults.baseURL = 'https://testing.foodie-connector.delivery';
-axios.defaults.headers.common['Authorization'] = Auth.getToken();
 
 const apiList = {
   login: '/api/v1/auth/login',
@@ -18,6 +15,7 @@ const apiList = {
   addressDetail: '/api/v1/addresses/',
   card: '/api/v1/cards',
   cardDetail: '/api/v1/cards/',
+  restaurants: '/api/v1/restaurants',
 }
 
 export default apiList;

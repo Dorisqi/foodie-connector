@@ -22,16 +22,17 @@ class RestaurantFilter extends React.Component {
     onSortChange(sortBy);
   }
 
-  handleSubmit(address) {
+  handleSubmit(place_id) {
     const { onSubmit } = this.props;
-    onSubmit(address);
+    onSubmit(place_id);
   }
 
   render() {
+    const { tags } = this.props;
     return (
       <div>
         <AddressSearchBar onSubmit={this.handleSubmit} />
-        <TagsFilter onFilterChange={this.handleFilterChange} />
+        <TagsFilter onFilterChange={this.handleFilterChange} tags={tags}/>
         <SortOrder onSortChange={this.handleSortChange} />
       </div>
     );

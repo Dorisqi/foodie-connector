@@ -7,10 +7,10 @@ import { withStyles } from '@material-ui/core/styles';
 const orderChoices = [
   'default',
   'distance',
-  'estimate_time_lo',
+  'estimated_delivery_time',
   'delivery_fee',
   'order_minimum',
-  'rate',
+  'rating',
 ];
 
 const styles = ({
@@ -20,7 +20,7 @@ const styles = ({
 });
 
 function Sorts(sortBy) {
-  if (sortBy === 'rate') {
+  if (sortBy === 'rating') {
     return (o1, o2) => (o2[sortBy] - o1[sortBy]);
   }
 
