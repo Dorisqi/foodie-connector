@@ -15,6 +15,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import AddingAddress from './AddingAddress';
+import Auth from '../../Auth/Auth';
+import apiList from '../../apiList';
+import axios from 'axios';
+import { Link } from 'react-router';
 
 const styles = theme => ({
   root: {
@@ -50,8 +54,24 @@ class AddressTable extends React.Component {
     this.state = {
       // checked:[1,0,0],
       selectedEnabled: 1,
+      addresses: [],
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('load addresses');
+    this.loadAddresses();
+  }
+
+  loadAddresses() {
+    axios.get(apiList.addresses)
+    .then(res => this.setState({ addresses: res }))
+    .catch(err => {
+      if (err.response.status === 401) {
+        console.log('not authenticated');
+      }
+    });
   }
 
   handleChangeEnabled(event) {

@@ -68,9 +68,7 @@ class _SplitForm extends React.Component {
 
   handleSetDefault(event) {
     const { checked } = event.target;
-    this.setState({
-      is_default: checked,
-    }, () => console.log(this.state));
+    this.setState({ is_default: checked });
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -79,7 +77,6 @@ class _SplitForm extends React.Component {
         .createToken()
         .then((payload) => {
           const { name, is_default } = this.state;
-          console.log('token', payload.token);
           this.postPaymentInfo(payload.token.id, name, is_default);
       });
     } else {
@@ -93,7 +90,6 @@ class _SplitForm extends React.Component {
       nickname: name,
       is_default: is_default,
     }
-    console.log('body', body);
     postPaymentInfo(body);
   }
   render() {

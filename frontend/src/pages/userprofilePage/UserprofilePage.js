@@ -11,6 +11,10 @@ import Paper from '@material-ui/core/Paper';
 import AddressLists from "../../components/UserAddress/AddressLists";
 import Badge from 'components/Badge/Badge';
 import UseremailChange from "../../components/UseremailChange/UseremailChange";
+import Auth from '../../Auth/Auth';
+import apiList from '../../apiList';
+import { Redirect } from 'react-router';
+
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -55,10 +59,12 @@ class ProfileTabs extends React.Component {
   };
 
   handleChange = (event, value) => {
+    console.log(value);
     this.setState({ value });
   };
 
   handleChangeIndex = index => {
+    console.log('change', index);
     this.setState({ value: index });
   };
 

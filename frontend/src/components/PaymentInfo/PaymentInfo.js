@@ -26,7 +26,7 @@ class PaymentInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.getPaymentInfo
+    
   }
 
 
