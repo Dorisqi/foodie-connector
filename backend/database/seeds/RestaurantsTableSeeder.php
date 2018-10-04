@@ -22,12 +22,17 @@ class RestaurantsTableSeeder extends Seeder
             'lat' => '40.423593',
             'lng' => '-86.9080874',
         ]);
-        \Illuminate\Support\Facades\DB::table('restaurants')->insert([
+        $category = \App\Models\RestaurantCategory::create([
+            'name' => 'Pizza',
+        ]);
+        $restaurant = new \App\Models\Restaurant([
             'name' => 'HotBox Pizza',
             'order_minimum' => '10',
             'delivery_fee' => '2.99',
-            'address_id' => $address->id,
         ]);
+        $restaurant->address_id = $address->id;
+        $restaurant->save();
+        $restaurant->restaurantCategories()->attach($category->id);
         $address = \App\Models\Address::create([
             'name' => 'Heisei Japanese Restaurant',
             'phone' => '765432234',
@@ -39,11 +44,16 @@ class RestaurantsTableSeeder extends Seeder
             'lat' => '40.4519488',
             'lng' => '-86.9195979',
         ]);
-        \Illuminate\Support\Facades\DB::table('restaurants')->insert([
+        $category = \App\Models\RestaurantCategory::create([
+            'name' => 'Japanese',
+        ]);
+        $restaurant = new \App\Models\Restaurant([
             'name' => 'Heisei Japanese Restaurant',
             'order_minimum' => '25',
             'delivery_fee' => '3.99',
-            'address_id' => $address->id,
         ]);
+        $restaurant->address_id = $address->id;
+        $restaurant->save();
+        $restaurant->restaurantCategories()->attach($category->id);
     }
 }

@@ -1918,6 +1918,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.423593",
             "lng": "-86.9080874"
         },
+        "categories": [
+            "Pizza"
+        ],
         "distance": 0.1,
         "estimated_delivery_time": 20
     },
@@ -1939,6 +1942,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.4519488",
             "lng": "-86.9195979"
         },
+        "categories": [
+            "Japanese"
+        ],
         "distance": 2.1,
         "estimated_delivery_time": 26
     }
@@ -1976,6 +1982,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.423593",
             "lng": "-86.9080874"
         },
+        "categories": [
+            "Pizza"
+        ],
         "distance": 0.1,
         "estimated_delivery_time": 20
     },
@@ -1997,6 +2006,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.4519488",
             "lng": "-86.9195979"
         },
+        "categories": [
+            "Japanese"
+        ],
         "distance": 2.1,
         "estimated_delivery_time": 26
     }
