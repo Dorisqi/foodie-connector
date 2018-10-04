@@ -62,7 +62,7 @@ class _SplitForm extends React.Component {
     this.handleNameOnChange = this.handleNameOnChange.bind(this);
   }
   handleNameOnChange(event) {
-    const value = event.target.value;
+    const { value } = event.target;
     this.setState({ name: value});
   }
 

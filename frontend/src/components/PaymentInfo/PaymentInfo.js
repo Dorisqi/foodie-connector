@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CardForm from './CardForm';
 import axios from 'axios';
 import Auth from '../../Auth/Auth';
-import request from '../../request';
+import apiList from '../../apiList';
 
 const styles = theme => ({
   textField: {
@@ -31,7 +31,7 @@ class PaymentInfo extends React.Component {
 
 
   postPaymentInfo(body) {
-    request.post('/api/v1/cards', body)
+    axios.post(apiList.addCards, body)
     .then((res) => console.log('res', res))
     .catch((err) => console.log('err', err));
 
