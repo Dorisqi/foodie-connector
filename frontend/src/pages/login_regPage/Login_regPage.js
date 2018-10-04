@@ -11,6 +11,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CurrentGeolocation from '../../components/currentLocation/CurrentLocation';
+import axios from 'axios';
+import Auth from '../../Auth/Auth';
+import apiList from '../../apiList';
 
 const styles = theme => ({
   layout: {
@@ -65,10 +68,11 @@ class SimpleTabs extends React.Component {
     super(props);
     this.state = {
         value: 0,
-        username:'',
+        name:'',
         email:'',
         password:'',
         retyped_password:'',
+        errorMessage: '',
     };
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -79,6 +83,7 @@ class SimpleTabs extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRest = this.handleRest.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleName = this.handleName.bind(this);
   }
   handleChange (event, value) {
       this.setState({ value });
@@ -90,25 +95,47 @@ class SimpleTabs extends React.Component {
   handleLogInPassword (event, value) {
     this.setState({password: event.target.value});
   }
-  handleEmail  (event, value)  {
+  handleEmail (event)  {
     this.setState({email: event.target.value});
-    /*const mathces = this.state.password === this.state.retyped_password;
-    alert("password:" + this.state.password);
-    alert("retyped_password: " + this.state.retyped_password);*/
-    //mathces ? alert("Success!") : alert("Please re-enter your password!")
   }
-  handlePassword = (event, value) => {
+  handleName (event)  {
+    this.setState({name: event.target.value});
+  }
+  handlePassword = (event) => {
     this.setState({password: event.target.value});
   }
-  handleRetypePassword = (event, value) => {
+  handleRetypePassword = (event) => {
     this.setState({retyped_password: event.target.value});
   }
   handleSignup = (event, value) => {
     const mathces = this.state.password === this.state.retyped_password;
     if (mathces)
     {
-      alert("Success!");
-      window.location = '/restaurantlist'
+      const { name, email, password } = this.state;
+      axios.post(apiList.register, {
+        name: name,
+        email: email,
+        password: password
+      }).then(res => {
+        console.log(res);
+        console.log(res.api_token, email);
+        Auth.authenticateUser(res.api_token, email);
+        window.location.href = '/restaurantlist';
+      }).catch(err => {
+        const { response } = err;
+        if (response) {
+          if (response.status === 409) {
+            //TOOD
+            alert("This email has already been taken.");
+          }
+          else if (response.status === 422) {
+            alert("The password is not be a valid.");
+          }
+        }
+        else {
+          console.log(err);
+        }
+      })
     }
     else {
 
@@ -116,8 +143,9 @@ class SimpleTabs extends React.Component {
     }
     this.setState({value});
   }
-  handleLogin = (event, value) => {
+  handleLogin (event, value)  {
     //if password is correct, redireft to browse page;
+
     if(true)
     {
       window.location.href = "/restaurantlist";
@@ -195,6 +223,16 @@ class SimpleTabs extends React.Component {
           <Paper className={classes.paper}>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="name">name</InputLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  value = {this.state.name}
+                  onChange = {this.handleName}
+                  autoFocus/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input
                   id="email"
@@ -202,7 +240,7 @@ class SimpleTabs extends React.Component {
                   autoComplete="email"
                   value = {this.state.email}
                   onChange = {this.handleEmail}
-                  autoFocus/>
+                />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">New Password</InputLabel>
