@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import AddressLists from "../../components/UserAddress/AddressLists";
 import Badge from 'components/Badge/Badge';
 import UseremailChange from "../../components/UseremailChange/UseremailChange";
+import PaymentInfo from "../../components/PaymentInfo/PaymentInfo";
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -107,7 +108,10 @@ class ProfileTabs extends React.Component {
             </ChangepwBox>
           </div>
           </TabContainer>
-          <TabContainer dir={theme.direction}>Payment detail</TabContainer>
+          <TabContainer dir={theme.direction}>
+          Payment detail
+          <PaymentInfo></PaymentInfo>
+          </TabContainer>
         </SwipeableViews>
         </Paper>
       </div>

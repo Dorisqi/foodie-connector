@@ -6,6 +6,7 @@ import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import request from '../../request';
 
+
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -14,6 +15,8 @@ const styles = theme => ({
   },
 
 });
+
+
 
 class PaymentInfo extends React.Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class PaymentInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.getPaymentInfo
+
   }
 
 
@@ -38,9 +41,12 @@ class PaymentInfo extends React.Component {
   }
 
   render() {
+  
+
     return (
-      <CardForm postPaymentInfo={this.postPaymentInfo}/>
-    )
+      <CardForm></CardForm>
+
+    );
   }
 }
 
