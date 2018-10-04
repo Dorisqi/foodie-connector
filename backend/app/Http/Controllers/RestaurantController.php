@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\ApiException;
 use App\Facades\Maps;
 use App\Models\Restaurant;
+use App\Models\RestaurantCategory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class RestaurantController extends ApiController
@@ -47,7 +49,50 @@ class RestaurantController extends ApiController
                 ],
             ]);
         }
-        $restaurants = Restaurant::with('address')->get();
+
+        $categories = null;
+        if (!is_null($request->query('filter_categories'))) {
+            $categories = explode('_', $request->query('filter_categories'));
+            foreach ($categories as $category) {
+                if (!ctype_digit($category)) {
+                    throw ApiException::validationFailedErrors([
+                        'filter_categories' => [
+                            'The filter_categories must contain category ids separated by `_`.',
+                        ],
+                    ]);
+                }
+            }
+        }
+
+        $distanceFilter = $this->numericFilter($request, 'filter_distance');
+        $deliveryTimeFilter = $this->numericFilter($request, 'filter_delivery_time');
+        $deliveryFeeFilter = $this->numericFilter($request, 'filter_delivery_fee');
+        $orderMinimumFilter = $this->numericFilter($request, 'filter_order_minimum');
+
+        $query = Restaurant::with('address', 'restaurantCategories');
+        if (!is_null($deliveryFeeFilter)) {
+            if (!is_null($deliveryFeeFilter['min'])) {
+                $query->where('delivery_fee', '>=', $deliveryFeeFilter['min']);
+            }
+            if (!is_null($deliveryFeeFilter['max'])) {
+                $query->where('delivery_fee', '<=', $deliveryFeeFilter['max']);
+            }
+        }
+        if (!is_null($orderMinimumFilter)) {
+            if (!is_null($orderMinimumFilter['min'])) {
+                $query->where('order_minimum', '>=', $orderMinimumFilter['min']);
+            }
+            if (!is_null($orderMinimumFilter['max'])) {
+                $query->where('order_minimum', '<=', $orderMinimumFilter['max']);
+            }
+        }
+        if (!is_null($categories)) {
+            $query->whereHas('restaurantCategories', function ($query) use ($categories) {
+                $query->whereIn('id', $categories);
+            });
+        }
+
+        $restaurants = $query->get();
         $availableRestaurants = [];
         foreach ($restaurants as $restaurant) {
             // TODO: operation hours
@@ -62,12 +107,78 @@ class RestaurantController extends ApiController
             if ($distance > 5) {
                 continue;
             }
+            if (!$this->filterAccepted($distanceFilter, $distance)) {
+                continue;
+            }
+            $estimatedDeliveryTime = (int)(20 + $distance * 3); // TODO: A better calculation of delivery time
+            if (!$this->filterAccepted($deliveryTimeFilter, $estimatedDeliveryTime)) {
+                continue;
+            }
             $restaurantArray = $restaurant->toArray();
             $restaurantArray['distance'] = round($distance, 1);
             $restaurantArray['estimated_delivery_time'] = (int)(20 + $distance * 3);
             array_push($availableRestaurants, $restaurantArray);
         }
-        return $this->response($availableRestaurants);
+
+        $categories = RestaurantCategory::all();
+
+        return $this->response([
+            'categories' => $categories,
+            'restaurants' => $availableRestaurants,
+        ]);
+    }
+
+    /**
+     * Get numeric filter range from query
+     *
+     * @param \Illuminate\Http\Request
+     * @param string $param
+     * @return array
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    protected function numericFilter(Request $request, string $param)
+    {
+        if (is_null($request->query($param))) {
+            return null;
+        }
+        $values = explode('_', $request->query($param));
+        if (count($values) != 2) {
+            throw ApiException::validationFailedErrors([
+                $param => 'The ' . $param . ' must be in the pattern [min]_[max].',
+            ]);
+        }
+        if ((strlen($values[0]) > 0 && !ctype_digit($values[0]))
+            || (strlen($values[1] > 0 && !ctype_digit($values[1])))) {
+            throw ApiException::validationFailedErrors([
+                $param => 'The ' . $param . ' must be integers',
+            ]);
+        }
+        return [
+            'min' => strlen($values[0]) > 0 ? (int)$values[0] : null,
+            'max' => strlen($values[1]) > 0 ? (int)$values[1] : null,
+        ];
+    }
+
+    /**
+     * Filter a number
+     *
+     * @param array|null $filter
+     * @param int|double $number
+     * @return bool
+     */
+    protected function filterAccepted($filter, $number)
+    {
+        if (is_null($filter)) {
+            return true;
+        }
+        if (!is_null($filter['min']) && $number < $filter['min']) {
+            return false;
+        }
+        if (!is_null($filter['max']) && $number > $filter['max']) {
+            return false;
+        }
+        return true;
     }
 
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/

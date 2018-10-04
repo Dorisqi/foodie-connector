@@ -19,15 +19,26 @@ class ListRestaurantTest extends ApiTestCase
         $this->assertFailed(null, 401);
         $this->login();
         $address = factory(Address::class)->create();
-        $this->assertSucceed([
+        $response = $this->assertSucceed([
             'address_id' => $address->id,
-        ])->assertJsonCount(2);
-        $this->assertSucceed([
+            'filter_categories' => '1_2',
+        ]);
+        $this->assertCount(2, $response->json('restaurants'));
+        $response = $this->assertSucceed([
             'place_id' => $address->place_id,
-        ])->assertJsonCount(2);
-        $this->assertSucceed([
+            'filter_distance' => '_1'
+        ]);
+        $this->assertCount(1, $response->json('restaurants'));
+        $response = $this->assertSucceed([
             'place_id' => 'ChIJA2p5p_9Qa4gRfOq5QPadjtY',
-        ], false)->assertJsonCount(0);
+        ], false);
+        $this->assertCount(0, $response->json('restaurants'));
+        $response = $this->assertSucceed([
+            'address_id' => $address->id,
+            'filter_order_minimum' => '15_',
+            'filter_delivery_fee' => '_3',
+        ], false);
+        $this->assertCount(0, $response->json('restaurants'));
         $this->assertFailed(null, 422);
     }
 
@@ -56,6 +67,11 @@ class ListRestaurantTest extends ApiTestCase
         return [
             'address_id' => 'integer',
             'place_id' => 'string',
+            'filter_categories' => 'string|pattern:id_id_...',
+            'filter_distance' => 'string|pattern:[min]_[max]',
+            'filter_delivery_time' => 'string|pattern:[min]_[max]',
+            'filter_delivery_fee' => 'string|pattern:[min]_[max]',
+            'filter_order_minimum' => 'string|pattern:[min]_[max]',
         ];
     }
 }

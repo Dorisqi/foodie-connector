@@ -1885,12 +1885,17 @@ Required
 | :--- | :--- | :--- | :--- |
 | address_id | optional | integer |  |
 | place_id | optional | string |  |
+| filter_categories | optional | string | pattern:id_id_... |
+| filter_distance | optional | string | pattern:[min]_[max] |
+| filter_delivery_time | optional | string | pattern:[min]_[max] |
+| filter_delivery_fee | optional | string | pattern:[min]_[max] |
+| filter_order_minimum | optional | string | pattern:[min]_[max] |
 
 #### **Status Code: 200**
 
 Successful operation.
 
-**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8
+**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8&filter_distance=_1
 
 **Request Header:**
 ```
@@ -1899,62 +1904,50 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-[
-    {
-        "id": 1,
-        "name": "HotBox Pizza",
-        "order_minimum": "10",
-        "delivery_fee": "2.99",
-        "address": {
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Pizza"
+        },
+        {
+            "id": 2,
+            "name": "Japanese"
+        }
+    ],
+    "restaurants": [
+        {
             "id": 1,
             "name": "HotBox Pizza",
-            "phone": "765567765",
-            "line_1": "135 S Chauncey Ave",
-            "line_2": null,
-            "city": "West Lafayette",
-            "state": " IN",
-            "zip_code": "47906",
-            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-            "lat": "40.423593",
-            "lng": "-86.9080874"
-        },
-        "categories": [
-            "Pizza"
-        ],
-        "distance": 0.1,
-        "estimated_delivery_time": 20
-    },
-    {
-        "id": 2,
-        "name": "Heisei Japanese Restaurant",
-        "order_minimum": "25",
-        "delivery_fee": "3.99",
-        "address": {
-            "id": 2,
-            "name": "Heisei Japanese Restaurant",
-            "phone": "765432234",
-            "line_1": "907 Sagamore Pkwy W",
-            "line_2": null,
-            "city": "West Lafayette",
-            "state": "IN",
-            "zip_code": "47906",
-            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-            "lat": "40.4519488",
-            "lng": "-86.9195979"
-        },
-        "categories": [
-            "Japanese"
-        ],
-        "distance": 2.1,
-        "estimated_delivery_time": 26
-    }
-]
+            "order_minimum": "10",
+            "delivery_fee": "2.99",
+            "address": {
+                "id": 1,
+                "name": "HotBox Pizza",
+                "phone": "765567765",
+                "line_1": "135 S Chauncey Ave",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": " IN",
+                "zip_code": "47906",
+                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+                "lat": "40.423593",
+                "lng": "-86.9080874"
+            },
+            "categories": [
+                "Pizza"
+            ],
+            "distance": 0.1,
+            "estimated_delivery_time": 20
+        }
+    ]
+}
 ```
 #### **Status Code: 200**
 
 Successful operation.
 
-**URI**: /api/v1/restaurants?address_id=3
+**URI**: /api/v1/restaurants?address_id=3&filter_categories=1_2
 
 **Request Header:**
 ```
@@ -1963,56 +1956,68 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-[
-    {
-        "id": 1,
-        "name": "HotBox Pizza",
-        "order_minimum": "10",
-        "delivery_fee": "2.99",
-        "address": {
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Pizza"
+        },
+        {
+            "id": 2,
+            "name": "Japanese"
+        }
+    ],
+    "restaurants": [
+        {
             "id": 1,
             "name": "HotBox Pizza",
-            "phone": "765567765",
-            "line_1": "135 S Chauncey Ave",
-            "line_2": null,
-            "city": "West Lafayette",
-            "state": " IN",
-            "zip_code": "47906",
-            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-            "lat": "40.423593",
-            "lng": "-86.9080874"
+            "order_minimum": "10",
+            "delivery_fee": "2.99",
+            "address": {
+                "id": 1,
+                "name": "HotBox Pizza",
+                "phone": "765567765",
+                "line_1": "135 S Chauncey Ave",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": " IN",
+                "zip_code": "47906",
+                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+                "lat": "40.423593",
+                "lng": "-86.9080874"
+            },
+            "categories": [
+                "Pizza"
+            ],
+            "distance": 0.1,
+            "estimated_delivery_time": 20
         },
-        "categories": [
-            "Pizza"
-        ],
-        "distance": 0.1,
-        "estimated_delivery_time": 20
-    },
-    {
-        "id": 2,
-        "name": "Heisei Japanese Restaurant",
-        "order_minimum": "25",
-        "delivery_fee": "3.99",
-        "address": {
+        {
             "id": 2,
             "name": "Heisei Japanese Restaurant",
-            "phone": "765432234",
-            "line_1": "907 Sagamore Pkwy W",
-            "line_2": null,
-            "city": "West Lafayette",
-            "state": "IN",
-            "zip_code": "47906",
-            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-            "lat": "40.4519488",
-            "lng": "-86.9195979"
-        },
-        "categories": [
-            "Japanese"
-        ],
-        "distance": 2.1,
-        "estimated_delivery_time": 26
-    }
-]
+            "order_minimum": "25",
+            "delivery_fee": "3.99",
+            "address": {
+                "id": 2,
+                "name": "Heisei Japanese Restaurant",
+                "phone": "765432234",
+                "line_1": "907 Sagamore Pkwy W",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": "IN",
+                "zip_code": "47906",
+                "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
+                "lat": "40.4519488",
+                "lng": "-86.9195979"
+            },
+            "categories": [
+                "Japanese"
+            ],
+            "distance": 2.1,
+            "estimated_delivery_time": 26
+        }
+    ]
+}
 ```
 #### **Status Code: 401**
 

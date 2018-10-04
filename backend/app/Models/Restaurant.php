@@ -31,6 +31,7 @@ class Restaurant extends Model
         $data = parent::toArray();
         $data['address'] = $this->address->toArray();
         $categories = $this->restaurantCategories;
+        unset($data['restaurant_categories']);
         $data['categories'] = [];
         foreach ($categories as $category) {
             array_push($data['categories'], $category->name);

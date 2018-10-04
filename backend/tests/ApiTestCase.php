@@ -186,7 +186,8 @@ abstract class ApiTestCase extends TestCase
         if ($this->method() === 'GET' && !is_null($requestData)) {
             $queryAdded = false;
             foreach ($requestData as $key => $value) {
-                $uri .= $queryAdded ? '&' : '?' . urlencode($key) . '=' . urlencode($value);
+                $uri .= ($queryAdded ? '&' : '?') . urlencode($key) . '=' . urlencode($value);
+                $queryAdded = true;
             }
         }
         return $this::PREFIX . $uri;
