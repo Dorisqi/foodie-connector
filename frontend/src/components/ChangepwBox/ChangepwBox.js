@@ -54,13 +54,12 @@ class ChangepwBox extends React.Component {
   handleConfirm(modal) {
     const { oldpw, newpw1, newpw2 } = this.state;
 
-    if (oldpw === newpw1) {
-      axios.post(apiList.resetPassword, {
-        token: 12345678,
-        email: 'sadf@asdf.sadf',
-        password: 'asdf123',
+    if (newpw1 === newpw2) {
+      axios.put(apiList.profilePassword, {
+        old_password: oldpw,
+        new_password: newpw1,
       }).then(res => {
-        console.log(res);
+        console.log('success', res);
       }).catch(err => {
         console.log(err);
       })
@@ -68,7 +67,6 @@ class ChangepwBox extends React.Component {
     } else if (newpw1 !== newpw2) {
       alert('please check and match new password!');
     } else {
-      alert('Success');
       this.setState({ oldpw: '', newpw1: '', newpw2: '' });
       const x = [];
       x[modal] = false;

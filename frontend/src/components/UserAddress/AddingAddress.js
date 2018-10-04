@@ -143,7 +143,6 @@ constructor(props){
     x[modal] = false;
     this.setState(x);
 
-    alert(name+phone+line_1+line_2+city+state+zip_code);
     axios.post(apiList.addressDetail, {
       name: name,
       phone: phone,
@@ -156,13 +155,9 @@ constructor(props){
       is_default: is_default
     }).then(res => {
       console.log(res);
-      handleAddAddress(res);
-      const x = [];
-      x[modal] = false;
-      this.setState(x);
+      handleAddAddress(res.data);
     }).catch(err => {
       console.log(err);
-
     })
 
   }
