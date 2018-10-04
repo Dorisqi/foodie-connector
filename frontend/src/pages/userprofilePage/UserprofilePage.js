@@ -33,7 +33,7 @@ const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 900,
-    minHeight:200,
+    minHeight:400,
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit ,
     paddingBottom: theme.spacing.unit * 2,

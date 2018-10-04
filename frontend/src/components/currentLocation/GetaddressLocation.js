@@ -64,12 +64,12 @@ class CurrentGeoLocation extends React.Component {
           ? (
             <Button className={classes.Button}
               onClick={this.handleClick}
-              color="default"
+              color="info"
               variant="contained"
 
 
             >
-              {this.state.isClick ? 'Current Address' : this.state.address}
+              {this.state.isClick ? 'Get Current Location' : this.state.address}
             </Button>
           )
           : <div>Getting the location data&hellip; </div>;
