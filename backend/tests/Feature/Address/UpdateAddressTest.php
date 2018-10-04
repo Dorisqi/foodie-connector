@@ -14,7 +14,7 @@ class UpdateAddressTest extends ApiTestCase
      *
      * @param int
      */
-    protected $id = 0;
+    protected $id = 1;
 
     /**
      * Test updating address
@@ -30,11 +30,15 @@ class UpdateAddressTest extends ApiTestCase
         $addressArray = $address->toArray();
         $addressArray['name'] = 'Changed Name';
         unset($addressArray['api_user_id']);
+        $addressArray['place_id'] = 'ChIJPbVda67iEogRTWzmvivderE';
         $response = $this->assertSucceed([
             'name' => $addressArray['name'],
+            'place_id' => $addressArray['place_id'],
             'is_default' => true,
         ]);
         $addressArray['is_default'] = true;
+        $addressArray['lat'] = '40.4248';
+        $addressArray['lng'] = '-86.911';
         $response->assertJson($addressArray);
         $newAddress = factory(Address::class)->create();
         $this->id = $newAddress->id;

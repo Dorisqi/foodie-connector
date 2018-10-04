@@ -75,7 +75,7 @@ class ResetPasswordController extends ApiController
             $request->input('token'),
             function () use ($throttleKey) {
                 $this->limiter()->hit($throttleKey, $this::DECAY_MINUTES);
-                throw ApiException::invalidToken(
+                throw ApiException::invalidResetPasswordToken(
                     $this::RATE_LIMIT,
                     $this->limiter()->retriesLeft($throttleKey, $this::RATE_LIMIT),
                     $this->limiter()->availableIn($throttleKey)
@@ -110,7 +110,7 @@ class ResetPasswordController extends ApiController
     public static function rules()
     {
         return [
-            'token' => 'required|integer|between:0,99999999',
+            'token' => 'required|integer|digits:8',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
         ];

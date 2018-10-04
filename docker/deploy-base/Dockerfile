@@ -16,7 +16,7 @@ RUN apt-get install -y nginx
 RUN apt-get install -y php7.2-fpm
 
 # Install PHP extensions
-RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-sybase
+RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-sybase php7.2-curl
 
 # Setup directory for PHP sock
 RUN mkdir /run/php && chown www-data /run/php

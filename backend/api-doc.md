@@ -23,7 +23,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/login
 
@@ -147,7 +147,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/register
 
@@ -234,7 +234,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/resend-verification-email
 
@@ -319,13 +319,13 @@ Not required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| token | required | integer | between:0,99999999 |
+| token | required | integer | digits:8 |
 | email | required | email |  |
 | password | required | string | min:6 |
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -461,7 +461,7 @@ Not required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/auth/reset-password-email
 
@@ -571,174 +571,60 @@ Too many attempts
 }
 ```
 
-## **address**
+### **POST - /api/v1/auth/verify-email**
 
-Everything about address
-
-### **GET - /api/v1/addresses**
-
-Get a list of all addresses
+Verify the email
 
 #### **Authorization**
 
-Required
-
-#### **Params**
-
-No param
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/addresses
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-[
-    {
-        "id": 4,
-        "name": "Test User",
-        "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
-        "city": "West Lafayette",
-        "state": "IN",
-        "zip_code": "47906-5123",
-        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "is_default": false
-    },
-    {
-        "id": 5,
-        "name": "Test User",
-        "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
-        "city": "West Lafayette",
-        "state": "IN",
-        "zip_code": "47906-5123",
-        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "is_default": false
-    }
-]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-
-### **POST - /api/v1/addresses**
-
-Add a new address
-
-#### **Authorization**
-
-Required
+Not required
 
 #### **Params**
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| name | required | string | max:255 |
-| phone | required | phone:US |  |
-| line_1 | required | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | required | string | max:255 |
-| state | required | string | max:255 |
-| zip_code | required | zip_code |  |
-| place_id | required | string | max:255 |
-| is_default | required | boolean |  |
+| token | required | string | max:255 |
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
-**URI**: /api/v1/addresses
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
+**URI**: /api/v1/auth/verify-email
 
 **Request Body:**
 ```
 {
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": true
-}
-```
-
-**Response Body:**
-```
-{
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "id": 1,
-    "is_default": true
+    "token": "MjIxYmJiYzdmYzUyMmExZTc1OTMwMmQ4NThhNzZjNWM5MjgyNDVjMDhiNjU4MDkyODZmZGYwYTc1MzI2YWRhODE="
 }
 ```
 #### **Status Code: 401**
 
-This page requires authentication.
+The email verification token is invalid or expired.
 
-**URI**: /api/v1/addresses
+**URI**: /api/v1/auth/verify-email
+
+**Request Body:**
+```
+{
+    "token": "invalid_token"
+}
+```
 
 **Response Body:**
 ```
 {
-    "message": "This page requires authentication."
+    "message": "The email verification token is invalid or expired."
 }
 ```
 #### **Status Code: 422**
 
 Validation failed.
 
-**URI**: /api/v1/addresses
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
+**URI**: /api/v1/auth/verify-email
 
 **Request Body:**
 ```
-{
-    "name": "Test User",
-    "phone": "invalid_phone",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": true
-}
+[]
 ```
 
 **Response Body:**
@@ -746,252 +632,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "phone": [
-            "The phone must be a phone number."
+        "token": [
+            "The token field is required."
         ]
     }
-}
-```
-
-### **GET - /api/v1/addresses/{id}**
-
-Show detail of a specific address
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-No param
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/addresses/1
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "id": 1,
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 404**
-
-Resource not found.
-
-**URI**: /api/v1/addresses/0
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "message": "Resource not found."
-}
-```
-
-### **PUT - /api/v1/addresses/{id}**
-
-Updating an existed address
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| name | optional | string | max:255 |
-| phone | optional | phone:US |  |
-| line_1 | optional | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | optional | string | max:255 |
-| state | optional | string | max:255 |
-| zip_code | optional | zip_code |  |
-| place_id | optional | string | max:255 |
-| is_default | optional | boolean |  |
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/addresses/1
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "name": "Changed Name",
-    "is_default": true
-}
-```
-
-**Response Body:**
-```
-{
-    "id": 1,
-    "name": "Changed Name",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "is_default": true
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 404**
-
-Resource not found.
-
-**URI**: /api/v1/addresses/0
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "name": "Changed Name"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "Resource not found."
-}
-```
-#### **Status Code: 422**
-
-Validation failed.
-
-**URI**: /api/v1/addresses/2
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "phone": "invalid_phone"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "phone": [
-            "The phone must be a phone number."
-        ]
-    }
-}
-```
-
-### **DELETE - /api/v1/addresses/{id}**
-
-Delete an existed address
-
-#### **Authorization**
-
-Required
-
-#### **Params**
-
-No param
-
-#### **Status Code: 200**
-
-Successful operation
-
-**URI**: /api/v1/addresses/1
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 404**
-
-Resource not found.
-
-**URI**: /api/v1/addresses/0
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "message": "Resource not found."
 }
 ```
 
@@ -1013,7 +657,7 @@ No param
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/profile
 
@@ -1060,7 +704,7 @@ Required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/profile
 
@@ -1143,7 +787,7 @@ Required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/profile/email
 
@@ -1251,7 +895,7 @@ Required
 
 #### **Status Code: 200**
 
-Successful operation
+Successful operation.
 
 **URI**: /api/v1/profile/password
 
@@ -1330,6 +974,1090 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "data": {
         "new_password": [
             "The new password must be a valid password."
+        ]
+    }
+}
+```
+
+## **address**
+
+Everything about address
+
+### **GET - /api/v1/addresses**
+
+Get a list of all addresses
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/addresses
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": 4,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "is_default": false
+    },
+    {
+        "id": 5,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "is_default": false
+    }
+]
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/addresses
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
+### **POST - /api/v1/addresses**
+
+Add a new address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | required | string | max:255 |
+| phone | required | phone:US |  |
+| line_1 | required | string | max:255 |
+| line_2 | optional | string | max:255 |
+| city | required | string | max:255 |
+| state | required | string | max:255 |
+| zip_code | required | zip_code |  |
+| place_id | required | string | max:255 |
+| is_default | required | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/addresses
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "is_default": true
+}
+```
+
+**Response Body:**
+```
+{
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "id": 1,
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
+    "is_default": true
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/addresses
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/addresses
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "Test User",
+    "phone": "invalid_phone",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
+    "is_default": true
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "phone": [
+            "The phone must be a phone number."
+        ]
+    }
+}
+```
+
+### **GET - /api/v1/addresses/{id}**
+
+Show detail of a specific address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "Test User",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "is_default": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/addresses/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
+### **PUT - /api/v1/addresses/{id}**
+
+Updating an existed address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| name | optional | string | max:255 |
+| phone | optional | phone:US |  |
+| line_1 | optional | string | max:255 |
+| line_2 | optional | string | max:255 |
+| city | optional | string | max:255 |
+| state | optional | string | max:255 |
+| zip_code | optional | zip_code |  |
+| place_id | optional | string | max:255 |
+| is_default | optional | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "Changed Name",
+    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
+    "is_default": true
+}
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "Changed Name",
+    "phone": "7653500000",
+    "line_1": "134 Pierce Street",
+    "line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
+    "lat": "40.4248",
+    "lng": "-86.911",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
+    "is_default": true
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/addresses/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "name": "Changed Name"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/addresses/2
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "phone": "invalid_phone"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "phone": [
+            "The phone must be a phone number."
+        ]
+    }
+}
+```
+
+### **DELETE - /api/v1/addresses/{id}**
+
+Delete an existed address
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/addresses/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/addresses/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/addresses/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
+## **card**
+
+Everything about card
+
+### **GET - /api/v1/cards**
+
+Get the card list
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": 4,
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47906",
+        "is_default": false
+    },
+    {
+        "id": 5,
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47906",
+        "is_default": false
+    }
+]
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
+### **POST - /api/v1/cards**
+
+Add a new card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| nickname | required | string | max:255 |
+| token | required | string | max:255 |
+| is_default | required | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "nickname": "Test Visa",
+    "token": "tok_L0l2TZ715VLoMA",
+    "is_default": false
+}
+```
+
+**Response Body:**
+```
+{
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": 12,
+    "expiration_year": 2030,
+    "zip_code": "47906",
+    "id": 1,
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
+    "is_default": true
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cards
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "nickname": "Test Visa",
+    "token": "not_token",
+    "is_default": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "token": [
+            "The stripe token is invalid."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cards
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+[]
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "nickname": [
+            "The nickname field is required."
+        ],
+        "token": [
+            "The token field is required."
+        ],
+        "is_default": [
+            "The is default field is required."
+        ]
+    }
+}
+```
+
+### **GET - /api/v1/cards/{id}**
+
+Show detail of a specific card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": "12",
+    "expiration_year": "2030",
+    "zip_code": "47906",
+    "is_default": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/cards/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
+### **PUT - /api/v1/cards/{id}**
+
+Update an existed card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| nickname | optional | string | max:255 |
+| expiration_month | optional | integer | between:1,12 |
+| expiration_year | optional | integer | digits:4 |
+| zip_code | optional | integer | nullable |
+| is_default | optional | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "zip_code": "47907",
+    "is_default": true
+}
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "nickname": "Test Visa",
+    "brand": "Visa",
+    "last_four": "4242",
+    "expiration_month": "12",
+    "expiration_year": "2030",
+    "zip_code": "47907",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
+    "is_default": true
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/cards/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "expiration_month": 1,
+    "expiration_year": 2018
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "expiration_month": [
+            "The expiration_month must be a current or future month."
+        ]
+    }
+}
+```
+
+### **DELETE - /api/v1/cards/{id}**
+
+Delete an existed card
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cards/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cards/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/cards/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
+## **restaurant**
+
+Everything about restaurant
+
+### **GET - /api/v1/restaurants**
+
+Get a list of all available restaurants
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| address_id | optional | integer |  |
+| place_id | optional | string |  |
+| filter_categories | optional | string | pattern:id_id_... |
+| filter_distance | optional | string | pattern:[min]_[max] |
+| filter_estimated_delivery_time | optional | string | pattern:[min]_[max] |
+| filter_delivery_fee | optional | string | pattern:[min]_[max] |
+| filter_order_minimum | optional | string | pattern:[min]_[max] |
+| filter_rating | optional | string | pattern:[min]_[max] |
+| order_by | optional | string |  |
+| order_by_desc | optional | string |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8&filter_distance=_1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Pizza"
+        },
+        {
+            "id": 2,
+            "name": "Japanese"
+        }
+    ],
+    "restaurants": [
+        {
+            "id": 1,
+            "name": "HotBox Pizza",
+            "order_minimum": "10",
+            "delivery_fee": "2.99",
+            "rating": "4.8",
+            "address": {
+                "id": 1,
+                "name": "HotBox Pizza",
+                "phone": "765567765",
+                "line_1": "135 S Chauncey Ave",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": " IN",
+                "zip_code": "47906",
+                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+                "lat": "40.423593",
+                "lng": "-86.9080874"
+            },
+            "categories": [
+                "Pizza"
+            ],
+            "distance": 0.1,
+            "estimated_delivery_time": 20
+        }
+    ]
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants?address_id=3&filter_categories=1_2&order_by_desc=rating
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Pizza"
+        },
+        {
+            "id": 2,
+            "name": "Japanese"
+        }
+    ],
+    "restaurants": [
+        {
+            "id": 2,
+            "name": "Heisei Japanese Restaurant",
+            "order_minimum": "25",
+            "delivery_fee": "3.99",
+            "rating": "4.9",
+            "address": {
+                "id": 2,
+                "name": "Heisei Japanese Restaurant",
+                "phone": "765432234",
+                "line_1": "907 Sagamore Pkwy W",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": "IN",
+                "zip_code": "47906",
+                "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
+                "lat": "40.4519488",
+                "lng": "-86.9195979"
+            },
+            "categories": [
+                "Japanese"
+            ],
+            "distance": 2.1,
+            "estimated_delivery_time": 26
+        },
+        {
+            "id": 1,
+            "name": "HotBox Pizza",
+            "order_minimum": "10",
+            "delivery_fee": "2.99",
+            "rating": "4.8",
+            "address": {
+                "id": 1,
+                "name": "HotBox Pizza",
+                "phone": "765567765",
+                "line_1": "135 S Chauncey Ave",
+                "line_2": null,
+                "city": "West Lafayette",
+                "state": " IN",
+                "zip_code": "47906",
+                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+                "lat": "40.423593",
+                "lng": "-86.9080874"
+            },
+            "categories": [
+                "Pizza"
+            ],
+            "distance": 0.1,
+            "estimated_delivery_time": 20
+        }
+    ]
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/restaurants
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/restaurants
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "Must provide address_id or place_id."
+        ],
+        "place_id": [
+            "Must provide address_id or place_id."
         ]
     }
 }

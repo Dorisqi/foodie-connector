@@ -59,12 +59,20 @@ class GenerateApiDoc extends Command
                 'description' => 'Everything about authentication',
                 'apis' => [],
             ],
+            'profile' => [
+                'description' => 'Everything about profile',
+                'apis' => [],
+            ],
             'address' => [
                 'description' => 'Everything about address',
                 'apis' => [],
             ],
-            'profile' => [
-                'description' => 'Everything about profile',
+            'card' => [
+                'description' => 'Everything about card',
+                'apis' => [],
+            ],
+            'restaurant' => [
+                'description' => 'Everything about restaurant',
                 'apis' => [],
             ],
         ];

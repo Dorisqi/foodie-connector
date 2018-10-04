@@ -9,6 +9,9 @@ RUN curl -L https://phar.phpunit.de/phpunit-7.phar > /usr/bin/phpunit && chmod +
 RUN curl -L https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar > /usr/bin/phpcs && chmod +x /usr/bin/phpcs
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+# Install localstripe
+RUN apk add python3 && \
+    pip3 install localstripe
+
 # Copy entrypoint
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh

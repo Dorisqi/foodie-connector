@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Facades\Maps;
 use App\Models\Address;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AddressController extends ApiController
@@ -17,7 +17,7 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $user = Auth::guard('api')->user();
+        $user = $this->user();
         $addresses = $user->addresses;
         return $this->response($addresses);
     }
@@ -37,13 +37,20 @@ class AddressController extends ApiController
 
         try {
             DB::beginTransaction();
-            $address = new Address($request->only($this->modelParams()));
-            $user = Auth::guard('api')->user();
+
+            $addressFromGoogleMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
+            $addressArray = $request->only($this->modelParams());
+            $location = $addressFromGoogleMaps[0]->{'geometry'}->{'location'};
+            $addressArray['lat'] = (string)$location->{'lat'};
+            $addressArray['lng'] = (string)$location->{'lng'};
+            $address = new Address($addressArray);
+            $user = $this->user();
             $user->addresses()->save($address);
             if ($request->input('is_default') === true
-                || is_null(Auth::guard('api')->user()->defaultAddress)) {
+                || is_null($user->default_address_id)) {
                 $address->is_default = true;
             }
+
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -56,16 +63,14 @@ class AddressController extends ApiController
     /**
      * Show the specific resource
      *
-     * @param \Illuminate\Http\Request $request
-     * @paran int $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $user = Auth::guard('api')->user();
-        $address = Address::where('api_user_id', $user->id)->find($id);
+        $address = $this->user()->addresses()->find($id);
         if (is_null($address)) {
             throw ApiException::resourceNotFound();
         }
@@ -84,18 +89,24 @@ class AddressController extends ApiController
      */
     public function update(Request $request, $id)
     {
+        $address = $this->user()->addresses()->find($id);
+        if (is_null($address)) {
+            throw ApiException::resourceNotFound();
+        }
+
         $this->validateInput($request);
 
         try {
             DB::beginTransaction();
 
-            $user = Auth::guard('api')->user();
-            $address = $user->addresses()->find($id);
-            if (is_null($address)) {
-                throw ApiException::resourceNotFound();
+            $addressArray = $request->only($this->modelParams());
+            if ($request->has('place_id')) {
+                $addressFromMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
+                $location = $addressFromMaps[0]->{'geometry'}->{'location'};
+                $addressArray['lat'] = (string)$location->{'lat'};
+                $addressArray['lng'] = (string)$location->{'lng'};
             }
-
-            $address->fill($request->only($this->modelParams()));
+            $address->fill($addressArray);
             $address->save();
             if ($request->input('is_default') == true) {
                 $address->is_default = true;
@@ -122,15 +133,15 @@ class AddressController extends ApiController
     {
         try {
             DB::beginTransaction();
-            $user = Auth::guard('api')->user();
+            $user = $this->user();
             $address = $user->addresses()->find($id);
             if (is_null($address)) {
                 throw ApiException::resourceNotFound();
             }
             if ($address->is_default) {
-                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->first();
+                $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->orderByDesc('id')->first();
                 if (is_null($newDefaultAddress)) {
-                    $user->default_address = null;
+                    $user->default_address_id = null;
                     $user->save();
                 } else {
                     $newDefaultAddress->is_default = true;

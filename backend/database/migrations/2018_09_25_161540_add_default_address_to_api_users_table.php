@@ -14,9 +14,9 @@ class AddDefaultAddressToApiUsersTable extends Migration
     public function up()
     {
         Schema::table('api_users', function (Blueprint $table) {
-            $table->unsignedInteger('default_address')->nullable();
+            $table->unsignedInteger('default_address_id')->nullable();
 
-            $table->foreign('default_address')->references('id')->on('addresses');
+            $table->foreign('default_address_id')->references('id')->on('addresses');
         });
     }
 
@@ -28,11 +28,11 @@ class AddDefaultAddressToApiUsersTable extends Migration
     public function down()
     {
         Schema::table('api_users', function (Blueprint $table) {
-            $table->dropForeign(['default_address']);
+            $table->dropForeign(['default_address_id']);
         });
 
         Schema::table('api_users', function (Blueprint $table) {
-            $table->dropColumn('default_address');
+            $table->dropColumn('default_address_id');
         });
     }
 }

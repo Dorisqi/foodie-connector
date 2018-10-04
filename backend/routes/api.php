@@ -19,13 +19,15 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'Auth\LoginController@login');
         Route::post('reset-password-email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
         Route::post('reset-password', 'Auth\ResetPasswordController@reset');
-        Route::middleware('auth:api')->group(function () {
-            Route::post('resend-verification-email', 'Auth\VerificationController@resendEmail');
-        });
+        Route::post('resend-verification-email', 'Auth\VerificationController@resendEmail');
+        Route::post('verify-email', 'Auth\VerificationController@verify');
     });
 
     Route::middleware('auth:api')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
+            'index', 'store', 'show', 'update', 'destroy'
+        ]);
+        Route::resource('cards', 'CardController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
 
@@ -35,5 +37,7 @@ Route::prefix('v1')->group(function () {
             Route::put('password', 'ProfileController@changePassword');
             Route::put('email', 'ProfileController@updateEmail');
         });
+
+        Route::get('restaurants', 'RestaurantController@index');
     });
 });

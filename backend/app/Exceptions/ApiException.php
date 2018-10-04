@@ -18,7 +18,11 @@ class ApiException extends Exception
     /* Validation */
     public static function validationFailed(Validator $validator)
     {
-        return new ApiException('Validation failed.', 422, null, $validator->errors());
+        return self::validationFailedErrors($validator->errors());
+    }
+    public static function validationFailedErrors($errors)
+    {
+        return new ApiException('Validation failed.', 422, null, $errors);
     }
 
     /* User and Authentication */
@@ -42,7 +46,7 @@ class ApiException extends Exception
     {
         return new ApiException('We can\'t find a user with that e-mail address.', 404);
     }
-    public static function invalidToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
+    public static function invalidResetPasswordToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
             'The password reset token is invalid or expired.',
@@ -58,6 +62,10 @@ class ApiException extends Exception
     {
         return new ApiException('The email address has not been verified', 403);
     }
+    public static function invalidEmailVerificationToken()
+    {
+        return new ApiException('The email verification token is invalid or expired.', 401);
+    }
 
     /* Throttle */
     public static function tooManyAttempts(int $rateLimit, int $retryAfter)
@@ -67,6 +75,32 @@ class ApiException extends Exception
             429,
             ApiThrottle::throttleHeaders($rateLimit, 0, $retryAfter)
         );
+    }
+
+    /* Card */
+    public static function invalidStripeToken()
+    {
+        return self::validationFailedErrors([
+            'token' => [
+                'The stripe token is invalid.',
+            ]
+        ]);
+    }
+    public static function expirationYearPassed()
+    {
+        return self::validationFailedErrors([
+            'expiration_year' => [
+                'The expiration_year must be a current or future year.',
+            ],
+        ]);
+    }
+    public static function expirationMonthPassed()
+    {
+        return self::validationFailedErrors([
+            'expiration_month' => [
+                'The expiration_month must be a current or future month.',
+            ],
+        ]);
     }
 
     /* Resource */
@@ -81,6 +115,23 @@ class ApiException extends Exception
         return new ApiException('The old password does not match our records.', 401);
     }
 
+    /* Address */
+    public static function invalidPlaceId()
+    {
+        return self::validationFailedErrors([
+            'place_id' => [
+                'The place_id is invalid',
+            ],
+        ]);
+    }
+    public static function invalidAddressId()
+    {
+        return self::validationFailedErrors([
+            'address_id' => [
+                'The address_id is invalid',
+            ],
+        ]);
+    }
 
     /**
      * Headers

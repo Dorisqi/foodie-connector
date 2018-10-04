@@ -26,16 +26,16 @@ class ResendVerificationEmailTest extends ApiTestCase
         $keys = Redis::keys($this->guardConfig()['verify_email']['storage_key'] . ':' .
             $user->getAuthIdentifier() . ':*');
         $this->assertFalse(empty($keys));
-        $token = substr(strrchr($keys[0], ':'), 1);
+        $token = base64_encode(substr(strrchr($keys[0], ':'), 1) . $user->getAuthIdentifier());
         Notification::assertSentTo(
             $user,
             VerifyEmail::class,
             function ($notification) use ($token) {
-                return $notification->token == $token;
+                return $notification->token === $token;
             }
         );
         $this->assertThrottle($this->assertFailed(null, 429), 1, 0, $decayMinutes *60);
-        $user->email_verified_at = Carbon::now()->getTimestamp();
+        $user->email_verified_at = Carbon::now();
         $user->save();
         $this->assertFailed(null, 403);
     }

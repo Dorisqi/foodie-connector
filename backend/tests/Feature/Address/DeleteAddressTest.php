@@ -13,7 +13,7 @@ class DeleteAddressTest extends ApiTestCase
      *
      * @var int
      */
-    protected $id = 0;
+    protected $id = 1;
 
     /**
      * Test deleting address
@@ -23,13 +23,13 @@ class DeleteAddressTest extends ApiTestCase
     public function testDeleteAddress()
     {
         $this->assertFailed(null, 401);
-        $user = factory(ApiUser::class)->create();
+        $user = $this->userFactory()->create();
         $this->login($user);
         $address = factory(Address::class)->create();
         $this->id = $address->id;
         $this->assertSucceed(null);
         $this->assertTrue(is_null(Address::find($address->id)));
-        $this->assertTrue(is_null(ApiUser::find($user->id)->default_address));
+        $this->assertTrue(is_null(ApiUser::find($user->id)->defaultAddress));
         $this->id = 0;
         $this->assertFailed(null, 404);
     }
