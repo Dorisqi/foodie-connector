@@ -35,16 +35,14 @@ const styles = theme => ({
 });
 
 const id = 0;
-function createData(id, Address) {
+function createData(id,name,full_address,zip_code,is_default) {
   id += 1;
-  return { id, Address };
+  return {id,name,full_address,zip_code,is_default};
 }
 
-const rows = [
-  createData(0, 'Apt11,123 W Street,West Lafayette,IN'),
-  createData(1, 'Apt11,123 W Street,West Lafayette,IN'),
-  createData(2, 'Apt11,122 W Street,West Lafayette,IN'),
-];
+
+
+
 
 class AddressTable extends React.Component {
   constructor(props) {
@@ -52,6 +50,31 @@ class AddressTable extends React.Component {
     this.state = {
       // checked:[1,0,0],
       selectedEnabled: 1,
+      address:[{
+        "id": 4,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "is_default": false
+    },
+    {
+        "id": 5,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce Street",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906-5123",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "is_default": true
+    }
+  ]
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
     this.handleAddAddress = this.handleAddAddress.bind(this);
@@ -85,6 +108,7 @@ class AddressTable extends React.Component {
     const { value, checked } = event.target;
     this.setState(() => {
       this.state.selectedEnabled = value;
+
       return { selectedEnabled: value };
     });
   }
@@ -92,6 +116,18 @@ class AddressTable extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const rows = [];
+    for (let i = 0; i < this.state.address.length; i++){
+      const addr = this.state.address[i].line_2+','+
+                   this.state.address[i].line_1+','+
+                   this.state.address[i].city+','+
+                   this.state.address[i].state;
+
+            rows.push(
+                createData(i,this.state.address[i].name,addr,this.state.address[i].zip_code,this.state.address[i.is_default])
+
+            );
+    }
     const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal,
@@ -103,8 +139,9 @@ class AddressTable extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell numeric>ID</TableCell>
+              <TableCell >Name</TableCell>
               <TableCell>Address</TableCell>
+              <TableCell>Zip code</TableCell>
               <AddingAddress handleAddAddress={this.handleAddAddress}/>
 
             </TableRow>
@@ -116,8 +153,9 @@ class AddressTable extends React.Component {
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
+
                         <Radio
-                          checked={this.state.selectedEnabled == row.id}
+                          checked={this.state.selectedEnabled==row.id}
                           onChange={this.handleChangeEnabled}
                           value={row.id}
                           name="radio button enabled"
@@ -126,7 +164,7 @@ class AddressTable extends React.Component {
                             <FiberManualRecord
                               className={classes.radioUnchecked}
                             />
-)}
+                          )}
                           checkedIcon={
                             <FiberManualRecord className={classes.radioChecked} />
                         }
@@ -134,7 +172,7 @@ class AddressTable extends React.Component {
                             checked: classes.radio,
                           }}
                         />
-)}
+                      )}
                       classes={{
                         label: classes.label,
                       }}
@@ -142,8 +180,10 @@ class AddressTable extends React.Component {
                     />
                   </div>
                 </TableCell>
-                <TableCell numeric>{row.id}</TableCell>
-                <TableCell>{row.Address}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.full_address}</TableCell>
+                <TableCell>{row.zip_code}</TableCell>
+
               </TableRow>
             ))}
           </TableBody>
