@@ -16,6 +16,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import modalStyle from '../../material-kit/assets/jss/material-kit-react/modalStyle';
 
+import axios from 'axios';
+import apiList from '../../apiList';
+import Auth from '../../Auth/Auth';
+
 function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
@@ -27,7 +31,7 @@ class UseremailChange extends React.Component {
 
       newemail: '',
       newemail2: '',
-      Current: '',
+      Current: Auth.getEmail(),
       flag: 0,
 
     };
@@ -63,7 +67,16 @@ class UseremailChange extends React.Component {
     if (newemail !== newemail2) {
       alert('Email not Match! Please match two email');
     } else {
-      alert('You will receive the email from us to verify Your new Email Address later. Thank you');
+      axios.put(apiList.profileEmail, {
+        email: newemail,
+      }).then(res => {
+        console.log(res);
+        Auth.setEmail(newemail);
+        alert('You will receive the email from us to verify Your new Email Address later. Thank you');
+      }).catch(err => {
+        console.log(err);
+      })
+
       this.setState({ Current: this.state.newemail, newemail: '', newemail2: '' });
       // Current = this.state.newemail;
       const x = [];

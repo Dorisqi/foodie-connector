@@ -39,7 +39,7 @@ const styles = theme => ({
 const id = 0;
 function createData(id,name,full_address,zip_code,is_default,) {
   id += 1;
-  return {id,name,full_address,zip_code,is_default};
+  return {id: id,name:name,full_address:full_address,zip_code:zip_code,is_default:is_default};
 }
 
 
@@ -64,13 +64,13 @@ class AddressTable extends React.Component {
   }
   handleAddAddress(address) {
     this.setState(state => {
-      console.log([...state.addresses, address]);
-      return { addresses: [...state.addresses, address] }
+      console.log([...state.address, address]);
+      return { address: [...state.address, address] }
     })
   }
   loadAddresses() {
     axios.get(apiList.addresses)
-    .then(res => this.setState({ addresses: res.data }))
+    .then(res => this.setState({ address: res.data }))
     .catch(err => {
       const { response } = err;
       if (response && response.status === 401) {
@@ -125,17 +125,17 @@ class AddressTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
+            {this.state.address.map(address => (
+              <TableRow key={address.id}>
                 <TableCell>
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
 
                         <Radio
-                          checked={this.state.selectedEnabled==row.id}
+                          checked={this.state.selectedEnabled==address.id}
                           onChange={this.handleChangeEnabled}
-                          value={row.id}
+                          value={address.id}
                           name="radio button enabled"
                           aria-label="A"
                           icon={(
@@ -158,17 +158,17 @@ class AddressTable extends React.Component {
                     />
                   </div>
                 </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.full_address}</TableCell>
-                <TableCell>{row.zip_code}</TableCell>
-                <EditAddress phone={this.state.address[row.id-1].phone}
-                  line_1={this.state.address[row.id-1].line_1}
-                  line_2={this.state.address[row.id-1].line_2}
-                    city={this.state.address[row.id-1].city}
-                    state={this.state.address[row.id-1].state}
-                    zip_code={this.state.address[row.id-1].zip_code}
-                  ></EditAddress>
+                <TableCell>{address.name}</TableCell>
+                <TableCell>{address.line_1+', '+address.line_2+', '+address.city+', '+address.state}</TableCell>
+                <TableCell>{address.zip_code}</TableCell>
 
+                <EditAddress phone={address.phone}
+                  line_1={address.line_1}
+                  line_2={address.line_2}
+                  city={address.city}
+                  state={address.state}
+                  zip_code={address.zip_code}>
+                </EditAddress>
               </TableRow>
             ))}
           </TableBody>

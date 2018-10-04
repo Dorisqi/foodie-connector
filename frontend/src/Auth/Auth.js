@@ -20,4 +20,7 @@ export default class Auth {
   static getEmail() {
     return localStorage.getItem('email');
   }
+  static setEmail(email) {
+    localStorage.setItem('email', email);
+  }
 }

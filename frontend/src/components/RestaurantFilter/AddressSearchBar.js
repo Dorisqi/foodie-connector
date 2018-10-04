@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
+import Geocode from 'react-geocode';
 
 const styles = theme => ({
   textField: {
@@ -26,7 +27,15 @@ class AddressSearchBar extends React.Component {
   handleSubmit(event) {
     const { address } = this.state;
     const { onSubmit } = this.props;
-    onSubmit(address);
+    Geocode.fromAddress(address)
+    .then(
+      res => {
+        onSubmit(res.results[0].place_id);
+      }
+    , err => {
+        console.log(err)
+      }
+    )
     event.preventDefault();
   }
 
@@ -36,6 +45,7 @@ class AddressSearchBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { address } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -46,7 +56,7 @@ class AddressSearchBar extends React.Component {
           margin="normal"
           onChange={this.handleChange}
         />
-        <Input type="submit" value="Submit" />
+        <Input type="submit" value="Submit"/>
       </form>
     );
   }

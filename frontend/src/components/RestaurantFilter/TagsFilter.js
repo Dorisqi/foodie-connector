@@ -4,69 +4,74 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const TAGS = [
-  'Wings',
-  'Pizza',
-  'Fast Food',
-  'Chinese',
-  'Thai',
-  'Mexican',
-];
+// const TAGS = [
+//   'Wings',
+//   'Pizza',
+//   'Fast Food',
+//   'Chinese',
+//   'Thai',
+//   'Mexican',
+// ];
 
-
-function initAllTags(bool) {
-  return TAGS.reduce((o, val) => {
-    o[val] = bool;
-    return o;
-  }, {
-    tags: ['All'].concat(TAGS),
-    All: bool,
-  });
-}
 
 class TagsFilter extends React.Component {
-  constructor() {
-    super();
-    this.state = initAllTags(true);
+  constructor(props) {
+    super(props);
+    const { tags } = this.props;
+    this.state = {
+      tags: ['All', ...tags],
+      selectedTags: ['All', ...tags],
+    }
     this.handleChange = this.handleChange.bind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.tags !== this.props.tags) {
+      this.setState({
+        tags: ['All', ...nextProps.tags],
+        selectedTags: ['All', ...nextProps.tags],
+      })
+    }
+  }
   handleChange(event) {
     const { value, checked } = event.target;
     const { onFilterChange } = this.props;
     const { tags } = this.state;
     if (value === 'All') {
       this.setState(() => {
-        onFilterChange(checked ? tags : []);
-        return initAllTags(checked);
+        const selectedTags = checked ? tags : [];
+        onFilterChange(selectedTags);
+        return { selectedTags: selectedTags };
       });
     } else {
       if (!checked) {
-        this.setState({ All: checked });
+        const { selectedTags } = this.state;
+        const res = selectedTags.filter(t => t != 'All' && t != value);
+        this.setState({ selectedTags: res});
+        onFilterChange(res);
       }
-      this.setState((state) => {
-        state[value] = checked;
-        onFilterChange(tags.filter(t => state[t]));
-        return { [value]: checked };
-      });
+      else {
+        const { selectedTags } = this.state;
+        const res = [...selectedTags, value];
+        this.setState({ selectedTags: res });
+        onFilterChange(res);
+      }
     }
   }
 
   render() {
-    const { tags } = this.state;
-    const { state } = this;
-    const checkboxes = tags.map(item => (
+    const { tags, selectedTags } = this.state;
+    const checkboxes = tags.map(t => (
       <FormControlLabel
-        key={item}
+        key={t}
         control={(
           <Checkbox
-            checked={state[item]}
+            checked={selectedTags.includes(t)}
             onChange={this.handleChange}
-            value={item}
+            value={t}
             color="primary"
           />
       )}
-        label={item}
+        label={t}
       />
     ));
     return (

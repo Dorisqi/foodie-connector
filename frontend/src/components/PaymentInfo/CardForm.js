@@ -103,16 +103,11 @@ class CardForm extends React.Component {
               className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
             >
 
-              <Button
-                onClick={() => this.handleConfirm('modal')}
-                color="primary"
-              >
-              confirm changing
-              </Button>
+
               <Button
                 onClick={() => this.handleClose('modal')}
                 color="rose">
-              Cancle
+              close
               </Button>
             </DialogActions>
           </Dialog>
