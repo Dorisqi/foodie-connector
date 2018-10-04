@@ -6,7 +6,6 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 RUN apt-get update
 
 # Install tools
-RUN apt-get install -y apt-utils
 RUN apt-get install -y curl git gnupg2 
 
 # Install NGINX
@@ -16,24 +15,10 @@ RUN apt-get install -y nginx
 RUN apt-get install -y php7.2-fpm
 
 # Install PHP extensions
-RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-sybase php7.2-curl
+RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-mysql php7.2-curl
 
 # Setup directory for PHP sock
 RUN mkdir /run/php && chown www-data /run/php
-
-# Install sqlsrv
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
-    ACCEPT_EULA=Y apt-get install -y mssql-tools && \
-    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile && \
-    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc && \
-    apt-get -y install unixodbc-dev && \
-    pecl install sqlsrv && \
-    pecl install pdo_sqlsrv && \
-    echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/30-pdo_sqlsrv.ini && \
-    echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20-sqlsrv.ini
 
 # Install composer
 RUN curl https://getcomposer.org/installer -o composer-setup.php && \
