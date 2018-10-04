@@ -113,6 +113,7 @@ class SimpleTabs extends React.Component {
   handleSignup (event, value) {
     event.preventDefault();
     const mathces = this.state.password === this.state.retyped_password;
+    event.preventDefault;
     if (mathces)
     {
       const { name, email, password } = this.state;
@@ -141,6 +142,9 @@ class SimpleTabs extends React.Component {
             this.setState({ errorMessage: '' })
             alert("The password must be a valid password");
           }
+          else {
+            console.log(err);
+          }
         }
         else {
           this.setState({value: 1});
@@ -150,23 +154,41 @@ class SimpleTabs extends React.Component {
       })
     }
     else {
-      event.preventDefault();
       alert("Please re-enter your password!");
     }
   }
-  handleLogin (event, value){
+  handleLogin (event) {
     //if password is correct, redireft to browse page;
-    if(true)
-    {
-      window.location.href = "http://localhost:3000/restaurantlist";
-    }
-    else{
-      this.setState({value: 0});
-    }
-    event.preventDefault();
-    this.setState({value});
+    const { email, password } = this.state;
+    axios.post(apiList.login, {
+      email: email,
+      password: password
+    }).then(res => {
+      console.log(res)
+      Auth.authenticateUser(res.api_token, email);
+      window.location.href = "/restaurantlist";
+    }).catch(err => {
+      const { response } = err;
+      if (response) {
+        if (response.status === 401) {
+
+        }
+        else if (response.status === 422) {
+
+        }
+        else if (response.status === 429) {
+
+        }
+        else {
+          console.log(err);
+        }
+      }
+      else {
+        console.log(err);
+      }
+    })
   }
-  handleRest = (event, value) => {
+  handleRest (event, value) {
     this.setState({value});
     window.location.href ="http://localhost:3000/reset_password"
   }
