@@ -15,6 +15,7 @@ import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 
+
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -85,6 +86,7 @@ class SimpleTabs extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleName = this.handleName.bind(this);
   }
+
   handleChange (event, value) {
       this.setState({ value });
     };
@@ -126,30 +128,37 @@ class SimpleTabs extends React.Component {
         if (response) {
           if (response.status === 409) {
             //TOOD
+            this.setState({value: 1});
             this.setState({ errorMessage: ''})
           }
           else if (response.status === 422) {
+            this.setState({value: 1});
             this.setState({ errorMessage: '' })
           }
         }
         else {
+          this.setState({value: 1});
           console.log(err);
         }
       })
     }
     else {
-
+      event.preventDefault();
       alert("Please re-enter your password!");
     }
-    this.setState({value});
   }
-  handleLogin (event, value) => {
+  handleLogin (event, value){
     //if password is correct, redireft to browse page;
-    
+
     if(true)
     {
       window.location.href = "/restaurantlist";
     }
+    else{
+      this.setState({value: 0});
+      alert("whaaaaaaaat ");
+    }
+    event.preventDefault();
     this.setState({value});
   }
   handleRest = (event, value) => {
@@ -173,7 +182,7 @@ class SimpleTabs extends React.Component {
             <Tab label="Log In" />
             <Tab label="Sign Up" />
           </Tabs>
-        {value === 0 && <TabContainer>
+        {value == 0 && <TabContainer>
           <Paper className={classes.paper}>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
@@ -219,11 +228,11 @@ class SimpleTabs extends React.Component {
           </Paper>
         </TabContainer>}
 
-        {value === 1 && <TabContainer>
+        {value == 1 && <TabContainer>
           <Paper className={classes.paper}>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="name">name</InputLabel>
+                <InputLabel htmlFor="name">Username</InputLabel>
                 <Input
                   id="name"
                   name="name"
