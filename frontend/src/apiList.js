@@ -16,7 +16,7 @@ const apiList = {
   profilePassword: '/api/v1/profile/password',
   addresses: '/api/v1/addresses',
   addressDetail: '/api/v1/addresses/',
-  addCards: '/api/v1/cards',
+  card: '/api/v1/cards',
   cardDetail: '/api/v1/cards/',
 }
 

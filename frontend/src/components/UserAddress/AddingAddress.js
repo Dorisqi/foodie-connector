@@ -134,7 +134,7 @@ constructor(props){
     this.setState({ phone: event.target.value });
   };
 
-  handleConfirm(event){
+  handleConfirm(modal){
     const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
     const { handleAddAddress } = this.props;
     axios.post(apiList.addressDetail, {
@@ -150,6 +150,9 @@ constructor(props){
     }).then(res => {
       console.log(res);
       handleAddAddress(res);
+      const x = [];
+      x[modal] = false;
+      this.setState(x);
     }).catch(err => {
       console.log(err);
     })

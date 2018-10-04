@@ -52,6 +52,7 @@ class AddressTable extends React.Component {
     this.state = {
       // checked:[1,0,0],
       selectedEnabled: 1,
+      address: [],
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
     this.handleAddAddress = this.handleAddAddress.bind(this);
