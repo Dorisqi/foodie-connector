@@ -1116,6 +1116,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "latitude": "40.4227584",
     "longitude": "-86.9090892",
     "id": 1,
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
     "is_default": true
 }
 ```
@@ -1155,6 +1161,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
     "latitude": "40.4227584",
     "longitude": "-86.9090892",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
     "is_default": true
 }
 ```
@@ -1297,6 +1309,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "place_id": "ChIJPbVda67iEogRTWzmvivderE",
     "latitude": "40.4248",
     "longitude": "-86.911",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
     "is_default": true
 }
 ```
@@ -1529,6 +1547,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "expiration_year": 2030,
     "zip_code": "47906",
     "id": 1,
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
     "is_default": true
 }
 ```
@@ -1722,6 +1746,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "expiration_month": "12",
     "expiration_year": "2030",
     "zip_code": "47907",
+    "user": {
+        "id": 1,
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "is_email_verified": false
+    },
     "is_default": true
 }
 ```
