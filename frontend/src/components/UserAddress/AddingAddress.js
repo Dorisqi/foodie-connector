@@ -157,7 +157,9 @@ constructor(props){
     }).then(res => {
       console.log(res);
       handleAddAddress(res);
-
+      const x = [];
+      x[modal] = false;
+      this.setState(x);
     }).catch(err => {
       console.log(err);
 

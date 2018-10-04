@@ -22,6 +22,7 @@ class CardForm extends React.Component {
     super(props);
     this.state = {
       elementFontSize: window.innerWidth < 450 ? '14px' : '18px',
+      flag: false,
     };
     this.postPaymentInfo = this.postPaymentInfo.bind(this);
 
@@ -57,6 +58,8 @@ class CardForm extends React.Component {
         const x = [];
         x[modal] = false;
         this.setState(x);
+        this.setState({flag:true});
+
   }
 
   render() {
@@ -91,7 +94,7 @@ class CardForm extends React.Component {
 
 
               <Elements>
-                <SplitForm postPaymentInfo={this.postPaymentInfo} fontSize={this.state.elementFontSize} />
+                <SplitForm postPaymentInfo={this.postPaymentInfo} fontSize={this.state.elementFontSize} flag={this.state.flag}/>
               </Elements>
 
 

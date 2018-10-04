@@ -56,30 +56,8 @@ class PaymentInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [
-    {
-        "id": 4,
-        "nickname": "Test Visa",
-        "brand": "Visa",
-        "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
-        "zip_code": "47906",
-        "is_default": false
-    },
-    {
-        "id": 5,
-        "nickname": "Test Visa",
-        "brand": "Visa",
-        "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
-        "zip_code": "47906",
-        "is_default": false
-    }
-],
-      token: '',
-      selectedEnabled: 1
+      cards: [],
+      selectedEnabled: 1,
     }
     this.postPaymentInfo = this.postPaymentInfo.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -87,7 +65,21 @@ class PaymentInfo extends React.Component {
   }
 
   componentDidMount() {
+    this.loadPaymentInfo();
+  }
 
+  loadPaymentInfo() {
+    axios.get(apiList.card)
+    .then(res => this.setState({ cards: res.data }))
+    .catch(err => {
+      const { response } = err;
+      if (response && response.status === 401) {
+        console.log('not authenticated');
+      }
+      else {
+        console.log(err);
+      }
+    });
   }
 
   handleChangeEnabled(event) {
@@ -98,12 +90,30 @@ class PaymentInfo extends React.Component {
     });
   }
 
-
   postPaymentInfo(body) {
-    axios.post(apiList.addCards, body)
-    .then((res) => console.log('res', res))
-    .catch((err) => console.log('err', err));
-
+    axios.post(apiList.card, body)
+    .then(res => {
+      this.setState(state => {
+        console.log([...state.cards, res.data]);
+        return { cards: [...state.cards, res.data] }
+      })
+    }).catch(err => {
+      const { response } = err;
+      if (response) {
+        if (response.status === 401) {
+          console.log('not authenticated')
+        }
+        else if (response.status === 422) {
+          console.log('invalid information')
+        }
+        else {
+          console.log(err);
+        }
+      }
+      else {
+        console.log(err);
+      }
+    });
   }
 
   render() {
@@ -136,7 +146,7 @@ class PaymentInfo extends React.Component {
               <TableCell numeric>Last_fout digit</TableCell>
               <TableCell>Expiration</TableCell>
 
-              <CardForm />
+              <CardForm postPaymentInfo={this.postPaymentInfo}/>
 
             </TableRow>
           </TableHead>

@@ -52,31 +52,7 @@ class AddressTable extends React.Component {
     this.state = {
       // checked:[1,0,0],
       selectedEnabled: 1,
-      address:[{
-        "id": 4,
-        "name": "Test User",
-        "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
-        "city": "West Lafayette",
-        "state": "IN",
-        "zip_code": "47906-5123",
-        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "is_default": false
-    },
-    {
-        "id": 5,
-        "name": "Test User",
-        "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
-        "city": "West Lafayette",
-        "state": "IN",
-        "zip_code": "47906-5123",
-        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "is_default": true
-    }
-  ]
+      address: [],
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
     this.handleAddAddress = this.handleAddAddress.bind(this);

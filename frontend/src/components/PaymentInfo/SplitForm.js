@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 import {
   CardElement,
   injectStripe,
@@ -56,11 +56,14 @@ class _SplitForm extends React.Component {
       token: '',
       name: '',
       is_default: false,
+
     }
     this.handleSetDefault = this.handleSetDefault.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNameOnChange = this.handleNameOnChange.bind(this);
   }
+
+
   handleNameOnChange(event) {
     const { value } = event.target;
     this.setState({ name: value});
@@ -70,28 +73,29 @@ class _SplitForm extends React.Component {
     const { checked } = event.target;
     this.setState({ is_default: checked });
   }
+
   handleSubmit(event) {
     event.preventDefault();
+    console.log('submitted')
+    const { postPaymentInfo, flag } = this.props;
     if (this.props.stripe) {
       this.props.stripe
         .createToken()
         .then((payload) => {
+          console.log('payload', payload)
           const { name, is_default } = this.state;
-          this.postPaymentInfo(payload.token.id, name, is_default);
+          const body = {
+            token: payload.token.id,
+            nickname: name,
+            is_default: is_default
+          }
+          postPaymentInfo(body);
       });
     } else {
       console.log("Stripe.js hasn't loaded yet.");
     }
   };
-  postPaymentInfo(token, name, is_default) {
-    const { postPaymentInfo } = this.props;
-    const body = {
-      token: token,
-      nickname: name,
-      is_default: is_default,
-    }
-    postPaymentInfo(body);
-  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -128,7 +132,7 @@ class _SplitForm extends React.Component {
           set to default
         </label>
         <br/>
-      
+        <Input type="submit" value="Submit" />
       </form>
     );
   }

@@ -50,7 +50,6 @@ class CurrentGeoLocation extends React.Component {
       isClick: !state.isClick,
     }));
   }
-
   render() {
     const { classes } = this.props;
     return !this.props.isGeolocationAvailable
