@@ -128,7 +128,7 @@ class _SplitForm extends React.Component {
           set to default
         </label>
         <br/>
-        <Input type="submit" value="Submit">Add Credit Card</Input>
+      
       </form>
     );
   }

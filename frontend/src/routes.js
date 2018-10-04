@@ -18,10 +18,6 @@ const routes = {
       component: UserpwresetPage,
     },
     {
-      path: '/trying',
-      component: AddressLists,
-    },
-    {
       path: '/userprofile',
       component: UserprofilePage,
     },

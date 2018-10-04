@@ -14,6 +14,7 @@ import UseremailChange from "../../components/UseremailChange/UseremailChange";
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 import { Redirect } from 'react-router';
+import PaymentInfo from '../../components/PaymentInfo/PaymentInfo';
 
 function TabContainer({ children, dir }) {
   return (
@@ -113,7 +114,9 @@ class ProfileTabs extends React.Component {
             </ChangepwBox>
           </div>
           </TabContainer>
-          <TabContainer dir={theme.direction}>Payment detail</TabContainer>
+          <TabContainer dir={theme.direction}>
+          <PaymentInfo></PaymentInfo>
+          </TabContainer>
         </SwipeableViews>
         </Paper>
       </div>
