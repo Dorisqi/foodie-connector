@@ -16,6 +16,7 @@ pipelines:
         - phpcs .
         - composer install
         - cp .env.example .env
+        - echo "GOOGLE_MAPS_SECRET=${TEST_GOOGLE_MAPS_SECRET}" >> .env
         - php artisan key:generate
         - phpunit
     dev/frontend*:
