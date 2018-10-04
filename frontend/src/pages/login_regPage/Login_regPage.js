@@ -124,7 +124,6 @@ class SimpleTabs extends React.Component {
       }).then(res => {
         console.log(res);
         console.log(res.api_token, email);
-
         window.location.href = "http://localhost:3000/restaurantlist";
         Auth.authenticateUser(res.api_token, email);
 
@@ -133,7 +132,7 @@ class SimpleTabs extends React.Component {
         if (response) {
           if (response.status === 409) {
             //TOOD
-            //this.setState({value: 1});
+            this.setState({value: 1});
             this.setState({ errorMessage: ''})
             alert("The email has already been taken.");
           }
@@ -150,15 +149,15 @@ class SimpleTabs extends React.Component {
           this.setState({value: 1});
           console.log(err);
         }
-        this.setState({redirect: false});
       })
     }
     else {
       alert("Please re-enter your password!");
     }
   }
-  handleLogin (event) {
+  handleLogin (event, value) {
     //if password is correct, redireft to browse page;
+    event.preventDefault();
     const { email, password } = this.state;
     axios.post(apiList.login, {
       email: email,
@@ -166,24 +165,31 @@ class SimpleTabs extends React.Component {
     }).then(res => {
       console.log(res)
       Auth.authenticateUser(res.api_token, email);
-      window.location.href = "/restaurantlist";
+      window.location.href = "http://localhost:3000/restaurantlist";
     }).catch(err => {
       const { response } = err;
       if (response) {
         if (response.status === 401) {
-
+            this.setState({value: 0});
+            this.setState({ errorMessage: '' })
+            alert("These credentials do not match our records.");
         }
         else if (response.status === 422) {
-
+            this.setState({value: 0});
+            this.setState({ errorMessage: '' })
+            alert("Validation failed.");
         }
         else if (response.status === 429) {
-
+            this.setState({value: 0});
+            this.setState({ errorMessage: '' })
+            alert("Too many attempts");
         }
         else {
           console.log(err);
         }
       }
       else {
+        this.setState({value: 0});
         console.log(err);
       }
     })
