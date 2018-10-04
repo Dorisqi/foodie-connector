@@ -78,18 +78,19 @@ class SimpleTabs extends React.Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRest = this.handleRest.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange = (event, value) => {
+  handleChange (event, value) {
       this.setState({ value });
     };
 
-  handleLogInEmail = (event, value) => {
+  handleLogInEmail (event, value) {
     this.setState({email: event.target.value});
   }
-  handleLogInPassword = (event, value) => {
+  handleLogInPassword (event, value) {
     this.setState({password: event.target.value});
   }
-  handleEmail = (event, value) => {
+  handleEmail  (event, value)  {
     this.setState({email: event.target.value});
     /*const mathces = this.state.password === this.state.retyped_password;
     alert("password:" + this.state.password);

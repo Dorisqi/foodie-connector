@@ -26,7 +26,6 @@ class CurrentGeoLocation extends React.Component {
     super(props);
     this.state = {
       address: '',
-      error: '',
       isClick: true,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -35,6 +34,7 @@ class CurrentGeoLocation extends React.Component {
   handleClick() {
     Geocode.setApiKey('AIzaSyByyQbkhN7phUklrozYqk6QWw28lDU_dMg');
     Geocode.enableDebug();
+    console.log(typeof this.props.coords.latitude);
     Geocode.fromLatLng(this.props.coords.latitude, this.props.coords.longitude).then(
       (response) => {
         const address = response.results[0].formatted_address;
@@ -43,7 +43,7 @@ class CurrentGeoLocation extends React.Component {
       },
       (error) => {
         //console.error(error);
-        this.setState({error: error});
+        this.setState({ error: error });
       },
     );
     this.setState(state => ({
@@ -73,7 +73,11 @@ class CurrentGeoLocation extends React.Component {
   }
 }
 CurrentGeoLocation.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.element.isRequired,
+  coords: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }).isRequired,
 };
 export default compose(
   withStyles(styles),
