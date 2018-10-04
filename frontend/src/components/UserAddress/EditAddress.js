@@ -16,6 +16,9 @@ import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
+import Avatar from '@material-ui/core/Avatar';
+import iconn from './edit.svg';
+import Icon from '@material-ui/core/Icon';
 
 function Transition(props) {
   return <Slide direction="down" {...props} />;
@@ -43,6 +46,14 @@ const styles = theme => ({
     marginTop: 12,
     marginRight: 10
   },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  bigAvatar: {
+    width: 30,
+    height: 30,
+  },
   adjustinput: {
     marginTop: 12,
     marginLeft: theme.spacing.unit*6
@@ -55,12 +66,12 @@ const styles = theme => ({
     width: 500,
     minHeight:300,
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 6,
+    paddingTop: theme.spacing.unit * 7,
     paddingBottom: theme.spacing.unit * 2,
     alignItems: 'center',
     justify: "center",
     padding:1*1,
-    marginTop: theme.spacing.unit ,
+    marginTop: theme.spacing.unit * 7,
     margin: '10px auto 0 auto',
 
 
@@ -72,6 +83,7 @@ class AddingAddress extends React.Component{
 constructor(props){
   super(props);
   this.state = {
+
     name: "username",
     phone: "",
     line_1: "",
@@ -134,15 +146,13 @@ constructor(props){
     this.setState({ phone: event.target.value });
   };
 
-  handleConfirm(modal){
-
+  handleConfirm(modal,event){
     const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
     const { handleAddAddress } = this.props;
-
     const x = [];
-    x[modal] = false;
+    x[modal] = true;
     this.setState(x);
-
+    alert(name+phone+line_1+line_2+city+state+zip_code);
     axios.post(apiList.addressDetail, {
       name: name,
       phone: phone,
@@ -152,27 +162,30 @@ constructor(props){
       state: state,
       zip_code: zip_code,
       place_id: place_id,
-      is_default: is_default
+      is_default: is_default,
+      flag:0
     }).then(res => {
       console.log(res);
-      handleAddAddress(res.data);
+      handleAddAddress(res);
+
     }).catch(err => {
       console.log(err);
+
     })
 
   }
 
     render(){
-      const{classes} = this.props;
+      const{classes,phone,line_1,line_2,city,state,zip_code} = this.props;
+      if(this.state.flag == 0){
+        this.state.state = state;
+        this.state.flag = 1;
+      }
       return(
         <div>
-          <Button
-            color="primary"
-            round
-            onClick={() => this.handleClickOpen('modal')}
-          >
-            ADD+
-          </Button>
+        <Button onClick={() => this.handleClickOpen('modal')}>
+        <Icon >edit</Icon>
+        </Button>
           <Dialog
             classes={{
               root: classes.center,
@@ -200,6 +213,7 @@ constructor(props){
             required
             id="outlined-dense"
             label="Street Address"
+            value={line_1}
             className={classNames(classes.textField, classes.dense)}
             margin="dense"
             fullWidth
@@ -210,6 +224,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Apt #"
+              value={line_2}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -219,6 +234,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="City"
+              value={city}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -230,7 +246,7 @@ constructor(props){
               label="state"
               className={classes.textField}
               value={this.state.state}
-              onChange={this.handleState('State')}
+              onChange={this.handleState(this.state)}
               SelectProps={{
               native: true,
               MenuProps: {
@@ -250,6 +266,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Zipcode"
+              value={zip_code}
               className={classNames(classes.textField, classes.adjustinput)}
               margin="dense"
               variant="outlined"
@@ -269,6 +286,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Phone Number"
+              value={phone}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"

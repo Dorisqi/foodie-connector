@@ -106,7 +106,7 @@ class ProfileTabs extends React.Component {
           </TabContainer>
           <TabContainer className={classes.itermlocation} dir={theme.direction}>
 
-          <UseremailChange Current="123@purdue.edu"></UseremailChange>
+          <UseremailChange Current={Auth.getEmail()}></UseremailChange>
           </TabContainer>
           <TabContainer dir={theme.direction}>
           <div>

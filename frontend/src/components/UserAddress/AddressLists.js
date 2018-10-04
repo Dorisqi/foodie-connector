@@ -17,6 +17,8 @@ import Button from '../../material-kit/components/CustomButtons/Button';
 import AddingAddress from './AddingAddress';
 import axios from 'axios';
 import apiList from '../../apiList';
+import EditAddress from './EditAddress';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
@@ -35,16 +37,14 @@ const styles = theme => ({
 });
 
 const id = 0;
-function createData(id, Address) {
+function createData(id,name,full_address,zip_code,is_default,) {
   id += 1;
-  return { id, Address };
+  return {id: id,name:name,full_address:full_address,zip_code:zip_code,is_default:is_default};
 }
 
-const rows = [
-  createData(0, 'Apt11,123 W Street,West Lafayette,IN'),
-  createData(1, 'Apt11,123 W Street,West Lafayette,IN'),
-  createData(2, 'Apt11,122 W Street,West Lafayette,IN'),
-];
+
+
+
 
 class AddressTable extends React.Component {
   constructor(props) {
@@ -64,13 +64,13 @@ class AddressTable extends React.Component {
   }
   handleAddAddress(address) {
     this.setState(state => {
-      console.log([...state.addresses, address]);
-      return { addresses: [...state.addresses, address] }
+      console.log([...state.address, address]);
+      return { address: [...state.address, address] }
     })
   }
   loadAddresses() {
     axios.get(apiList.addresses)
-    .then(res => this.setState({ addresses: res.data }))
+    .then(res => this.setState({ address: res.data }))
     .catch(err => {
       const { response } = err;
       if (response && response.status === 401) {
@@ -86,6 +86,7 @@ class AddressTable extends React.Component {
     const { value, checked } = event.target;
     this.setState(() => {
       this.state.selectedEnabled = value;
+
       return { selectedEnabled: value };
     });
   }
@@ -93,6 +94,18 @@ class AddressTable extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const rows = [];
+    for (let i = 0; i < this.state.address.length; i++){
+      const addr = this.state.address[i].line_2+','+
+                   this.state.address[i].line_1+','+
+                   this.state.address[i].city+','+
+                   this.state.address[i].state;
+
+            rows.push(
+                createData(i,this.state.address[i].name,addr,this.state.address[i].zip_code,this.state.address[i.is_default])
+
+            );
+    }
     const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal,
@@ -104,30 +117,32 @@ class AddressTable extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell numeric>ID</TableCell>
+              <TableCell >Name</TableCell>
               <TableCell>Address</TableCell>
+              <TableCell>Zip code</TableCell>
               <AddingAddress handleAddAddress={this.handleAddAddress}/>
 
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
+            {this.state.address.map(address => (
+              <TableRow key={address.id}>
                 <TableCell>
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
+
                         <Radio
-                          checked={this.state.selectedEnabled == row.id}
+                          checked={this.state.selectedEnabled==address.id}
                           onChange={this.handleChangeEnabled}
-                          value={row.id}
+                          value={address.id}
                           name="radio button enabled"
                           aria-label="A"
                           icon={(
                             <FiberManualRecord
                               className={classes.radioUnchecked}
                             />
-)}
+                          )}
                           checkedIcon={
                             <FiberManualRecord className={classes.radioChecked} />
                         }
@@ -135,7 +150,7 @@ class AddressTable extends React.Component {
                             checked: classes.radio,
                           }}
                         />
-)}
+                      )}
                       classes={{
                         label: classes.label,
                       }}
@@ -143,8 +158,17 @@ class AddressTable extends React.Component {
                     />
                   </div>
                 </TableCell>
-                <TableCell numeric>{row.id}</TableCell>
-                <TableCell>{row.Address}</TableCell>
+                <TableCell>{address.name}</TableCell>
+                <TableCell>{address.line_1+', '+address.line_2+', '+address.city+', '+address.state}</TableCell>
+                <TableCell>{address.zip_code}</TableCell>
+
+                <EditAddress phone={address.phone}
+                  line_1={address.line_1}
+                  line_2={address.line_2}
+                  city={address.city}
+                  state={address.state}
+                  zip_code={address.zip_code}>
+                </EditAddress>
               </TableRow>
             ))}
           </TableBody>

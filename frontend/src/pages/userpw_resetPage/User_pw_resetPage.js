@@ -13,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import CardHeader from '../../material-kit/components/Card/CardHeader';
 import Button from '../../material-kit/components/CustomButtons/Button';
+import EntercodeModal from './EntercodeModal';
 
 
 const styles = theme => ({
@@ -87,11 +88,11 @@ class PwReset extends React.Component {
     event.preventDefault();
     const { value } = event.target;
     this.setState(() => {
-      this.isEnabled = value > 0;
+      this.state.isEnabled = value > 0;
       if (value == 0) {
-        this.changecolor = '';
+        this.state.changecolor = '';
       } else {
-        this.changecolor = 'primary';
+        this.state.changecolor = 'primary';
       }
       return { email: value };
     });
@@ -112,6 +113,7 @@ class PwReset extends React.Component {
               alt="login"
               src="https://cdn1.iconfinder.com/data/icons/navigation-elements/512/user-login-man-human-body-mobile-person-512.png"
               className={classes.avatar, classes.bigAvatar}
+
             />
 
             <Tooltip
@@ -143,9 +145,8 @@ class PwReset extends React.Component {
               </FormControl>
 
               <FormControl className={classes.buttonform} margin="normal">
-                <Button variant="outlined" color={this.changecolor} disabled={!this.isEnabled} className={classes.button}>
-                  Send Code
-                </Button>
+
+                <EntercodeModal isEnabled={this.state.isEnabled} color={this.state.changecolor}></EntercodeModal>
               </FormControl>
 
               <FormControl margin="normal" required fullWidth>

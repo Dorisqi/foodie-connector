@@ -113,7 +113,6 @@ class SimpleTabs extends React.Component {
   handleSignup (event, value) {
     event.preventDefault();
     const mathces = this.state.password === this.state.retyped_password;
-    event.preventDefault;
     if (mathces)
     {
       const { name, email, password } = this.state;
@@ -123,9 +122,10 @@ class SimpleTabs extends React.Component {
         password: password
       }).then(res => {
         console.log(res);
-        console.log(res.api_token, email);
+        console.log(res.data.api_token, email);
         window.location.href = "http://localhost:3000/restaurantlist";
-        Auth.authenticateUser(res.api_token, email);
+        Auth.authenticateUser(res.data.api_token, email);
+        axios.defaults.headers.common['Authorization'] = Auth.getToken();
 
       }).catch(err => {
         const { response } = err;
@@ -164,8 +164,9 @@ class SimpleTabs extends React.Component {
       password: password
     }).then(res => {
       console.log(res)
-      Auth.authenticateUser(res.api_token, email);
-      window.location.href = "http://localhost:3000/restaurantlist";
+      Auth.authenticateUser(res.data.api_token, email);
+      axios.defaults.headers.common['Authorization'] = Auth.getToken();
+      window.location.href = "/restaurantlist";
     }).catch(err => {
       const { response } = err;
       if (response) {
