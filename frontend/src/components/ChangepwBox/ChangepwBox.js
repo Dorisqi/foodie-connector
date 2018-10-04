@@ -16,6 +16,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import modalStyle from '../../material-kit/assets/jss/material-kit-react/modalStyle';
 
+import axios from 'axios';
+import Auth from '../../Auth/Auth';
+import apiList from '../../apiList';
+
 function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
@@ -49,8 +53,18 @@ class ChangepwBox extends React.Component {
 
   handleConfirm(modal) {
     const { oldpw, newpw1, newpw2 } = this.state;
+
     if (oldpw === newpw1) {
-      alert("new password and old password shouldn't be the same");
+      axios.post(apiList.resetPassword, {
+        token: 12345678,
+        email: 'sadf@asdf.sadf',
+        password: 'asdf123',
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+      //alert("new password and old password shouldn't be the same");
     } else if (newpw1 !== newpw2) {
       alert('please check and match new password!');
     } else {

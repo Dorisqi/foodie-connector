@@ -57,19 +57,29 @@ class AddressTable extends React.Component {
       addresses: [],
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
+    this.handleAddAddress = this.handleAddAddress.bind(this);
   }
 
   componentDidMount() {
     console.log('load addresses');
     this.loadAddresses();
   }
-
+  handleAddAddress(address) {
+    this.setState(state => {
+      console.log([...state.addresses, address]);
+      return { addresses: [...state.addresses, address] }
+    })
+  }
   loadAddresses() {
     axios.get(apiList.addresses)
-    .then(res => this.setState({ addresses: res }))
+    .then(res => this.setState({ addresses: res.data }))
     .catch(err => {
-      if (err.response.status === 401) {
+      const { response } = err;
+      if (response && response.status === 401) {
         console.log('not authenticated');
+      }
+      else {
+        console.log(err);
       }
     });
   }
@@ -98,7 +108,7 @@ class AddressTable extends React.Component {
               <TableCell />
               <TableCell numeric>ID</TableCell>
               <TableCell>Address</TableCell>
-              <AddingAddress />
+              <AddingAddress handleAddAddress={this.handleAddAddress}/>
 
             </TableRow>
           </TableHead>

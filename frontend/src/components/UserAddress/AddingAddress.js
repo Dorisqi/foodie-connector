@@ -13,6 +13,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Slide from '@material-ui/core/Slide';
 
+import axios from 'axios';
+import Auth from '../../Auth/Auth';
+import apiList from '../../apiList';
+
 function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
@@ -68,61 +72,87 @@ class AddingAddress extends React.Component{
 constructor(props){
   super(props);
   this.state = {
-    Address1: "",
-    Address2: "",
-    City: "",
-    State: "",
-    Country: "",
-    Zipcode: "",
-    Phonenum: ""
+    name: "username",
+    phone: "",
+    line_1: "",
+    line_2: "",
+    city: "",
+    state: "",
+    zip_code: "",
+    place_id: "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    is_default: false,
   };
 
   this.handleConfirm = this.handleConfirm.bind(this);
+  this.line_1 = this.line_1.bind(this);
+  this.line_2 = this.line_2.bind(this);
+  this.handleCity = this.handleCity.bind(this);
+  this.handleState = this.handleState.bind(this);
+  this.handleCountry = this.handleCountry.bind(this);
+  this.handleZipcode = this.handleZipcode.bind(this);
+  this.handlePhone = this.handlePhone.bind(this);
 }
-
-
-
 
   componentDidMount() {
       this.forceUpdate();
-    }
-    handleClickOpen(modal) {
-      const x = [];
-      x[modal] = true;
-      this.setState(x);
-    }
-
-    handleClose(modal) {
-      const x = [];
-      x[modal] = false;
-      this.setState(x);
-    }
-
-  handleChangeadd1 = event => {
-      this.setState({ Address1: event.target.value });
-  };
-
-  handleChangeadd2 = event => {
-        this.setState({ Address2: event.target.value });
-  };
-
-  handleState = name => event => {
-        this.setState({ State: event.target.value });
-  };
-  handleZip = event => {
-        this.setState({ Zipcode: event.target.value });
-    };
-  handlePhonenum(event) {
-        this.setState({ Phonenum: event.target.value });
-  };
-  handleConfirm(event){
-      alert('Street:' + this.state.Address1 +' apt:' + this.state.Address2 +
-            ' city:' + this.state.City + ' State:' + this.state.State + ' Country: US'
-            +' Phonenumber:' + this.state.Phonenum);
-      window.location = '/userprofile';
-
   }
-  handleBack(event){
+  handleClickOpen(modal) {
+    const x = [];
+    x[modal] = true;
+    this.setState(x);
+  }
+
+  handleClose(modal) {
+    const x = [];
+    x[modal] = false;
+    this.setState(x);
+  }
+
+  line_1 (event) {
+    this.setState({ line_1: event.target.value });
+  };
+
+  line_2 (event) {
+    this.setState({ line_2: event.target.value });
+  };
+
+  handleCity (event) {
+    this.setState({ city: event.target.value });
+  };
+  handleState (name) {
+    return event => {
+      this.setState({ state: event.target.value });
+    }
+  };
+  handleZipcode (event) {
+    this.setState({ zip_code: event.target.value });
+  };
+  handleCountry (event) {
+    this.setState({ country: event.target.value });
+  };
+  handlePhone (event) {
+    this.setState({ phone: event.target.value });
+  };
+
+  handleConfirm(event){
+    const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
+    const { handleAddAddress } = this.props;
+    axios.post(apiList.addressDetail, {
+      name: name,
+      phone: phone,
+      line_1: line_1,
+      line_2: line_2,
+      city: city,
+      state: state,
+      zip_code: zip_code,
+      place_id: place_id,
+      is_default: is_default
+    }).then(res => {
+      console.log(res);
+      handleAddAddress(res);
+    }).catch(err => {
+      console.log(err);
+    })
 
   }
 
@@ -154,19 +184,6 @@ constructor(props){
               className={classes.modalBody}
             >
 
-          <Button className={classes.button} focusRipple
-            onClick={() => this.handleConfirm('modal')}
-            color="rose"
-          >
-            Confirm
-          </Button>
-
-          <Button className={classes.button} focusRipple
-            onClick={() => this.handleClose('modal')}
-            color=""
-          >
-            Cancle
-          </Button>
           <Button className={classes.button}
            color="info">
            User Current Location
@@ -181,6 +198,7 @@ constructor(props){
             margin="dense"
             fullWidth
             variant="outlined"
+            onChange={this.line_1}
             />
             <TextField
               required
@@ -189,6 +207,7 @@ constructor(props){
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
+              onChange={this.line_2}
             />
             <TextField
               required
@@ -197,13 +216,14 @@ constructor(props){
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
+              onChange={this.handleCity}
             />
             <TextField
               id="selectStates"
               select
-              label="States"
+              label="state"
               className={classes.textField}
-              value={this.state.State}
+              value={this.state.state}
               onChange={this.handleState('State')}
               SelectProps={{
               native: true,
@@ -227,6 +247,7 @@ constructor(props){
               className={classNames(classes.textField, classes.adjustinput)}
               margin="dense"
               variant="outlined"
+              onChange={this.handleZipcode}
             />
             <TextField
               required
@@ -236,6 +257,7 @@ constructor(props){
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
+              onChange={this.handleCountry}
             />
             <TextField
               required
@@ -244,6 +266,7 @@ constructor(props){
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
+              onChange={this.handlePhone}
             />
 
 
