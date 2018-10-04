@@ -15,6 +15,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import AddingAddress from './AddingAddress';
+import axios from 'axios';
+import apiList from '../../apiList';
 
 const styles = theme => ({
   root: {
