@@ -11,51 +11,48 @@ class RestaurantsTableSeeder extends Seeder
      */
     public function run()
     {
-        $address = \App\Models\Address::create([
-            'name' => 'HotBox Pizza',
+        $restaurant = \App\Models\Restaurant::firstOrNew([
+            'name' => 'ColdBox Pizza',
+        ]);
+        $restaurant->fill([
+            'order_minimum' => '10',
+            'delivery_fee' => '2.99',
+            'rating' => '4.8',
             'phone' => '765567765',
-            'line_1' => '135 S Chauncey Ave',
+            'address_line_1' => '135 S Chauncey Ave',
             'city' => 'West Lafayette',
             'state' =>' IN',
             'zip_code' => '47906',
             'place_id' => 'ChIJ6SGX2a7iEogRPb45KHbDAUI',
             'lat' => '40.423593',
             'lng' => '-86.9080874',
+        ])->save();
+        $restaurant->restaurantCategories()->detach();
+        $restaurant->restaurantCategories()->attach(
+            \App\Models\RestaurantCategory::where('name', 'Pizza')->first()->id
+        );
+        $restaurant = \App\Models\Restaurant::firstOrNew([
+            'name' => 'Seihei Japanese Restaurant',
         ]);
-        $category = \App\Models\RestaurantCategory::create([
-            'name' => 'Pizza',
-        ]);
-        $restaurant = new \App\Models\Restaurant([
-            'name' => 'HotBox Pizza',
-            'order_minimum' => '10',
-            'delivery_fee' => '2.99',
-            'rating' => '4.8',
-        ]);
-        $restaurant->address_id = $address->id;
-        $restaurant->save();
-        $restaurant->restaurantCategories()->attach($category->id);
-        $address = \App\Models\Address::create([
-            'name' => 'Heisei Japanese Restaurant',
+        $restaurant->fill([
+            'order_minimum' => '25',
+            'delivery_fee' => '3.99',
+            'rating' => '4.9',
             'phone' => '765432234',
-            'line_1' => '907 Sagamore Pkwy W',
+            'address_line_1' => '907 Sagamore Pkwy W',
             'city' => 'West Lafayette',
             'state' => 'IN',
             'zip_code' => '47906',
             'place_id' => 'ChIJKyr9T2r9EogRMUn4njQf-H8',
             'lat' => '40.4519488',
             'lng' => '-86.9195979',
-        ]);
-        $category = \App\Models\RestaurantCategory::create([
-            'name' => 'Japanese',
-        ]);
-        $restaurant = new \App\Models\Restaurant([
-            'name' => 'Heisei Japanese Restaurant',
-            'order_minimum' => '25',
-            'delivery_fee' => '3.99',
-            'rating' => '4.9',
-        ]);
-        $restaurant->address_id = $address->id;
-        $restaurant->save();
-        $restaurant->restaurantCategories()->attach($category->id);
+        ])->save();
+        $restaurant->restaurantCategories()->detach();
+        $restaurant->restaurantCategories()->attach(
+            \App\Models\RestaurantCategory::where('name', 'Asian')->first()->id
+        );
+        $restaurant->restaurantCategories()->attach(
+            \App\Models\RestaurantCategory::where('name', 'Japanese')->first()->id
+        );
     }
 }

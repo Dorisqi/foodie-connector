@@ -70,7 +70,7 @@ class RestaurantController extends ApiController
         $orderMinimumFilter = $this->numericFilter($request, 'filter_order_minimum');
         $ratingFilter = $this->numericFilter($request, 'filter_rating');
 
-        $query = Restaurant::with('address', 'restaurantCategories');
+        $query = Restaurant::with('restaurantCategories');
         $query = $this->filterQuery($query, $deliveryFeeFilter, 'delivery_fee');
         $query = $this->filterQuery($query, $orderMinimumFilter, 'order_minimum');
         $query = $this->filterQuery($query, $ratingFilter, 'rating');
@@ -119,8 +119,8 @@ class RestaurantController extends ApiController
             $distance = $this->distance(
                 $coordinate['lat'],
                 $coordinate['lng'],
-                $restaurant->address->lat,
-                $restaurant->address->lng,
+                $restaurant->lat,
+                $restaurant->lng,
                 'M'
             );
             if ($distance > 5) {

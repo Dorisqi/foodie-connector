@@ -1915,29 +1915,29 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         {
             "id": 2,
+            "name": "Asian"
+        },
+        {
+            "id": 3,
             "name": "Japanese"
         }
     ],
     "restaurants": [
         {
             "id": 1,
-            "name": "HotBox Pizza",
+            "name": "ColdBox Pizza",
             "order_minimum": "10",
             "delivery_fee": "2.99",
             "rating": "4.8",
-            "address": {
-                "id": 1,
-                "name": "HotBox Pizza",
-                "phone": "765567765",
-                "line_1": "135 S Chauncey Ave",
-                "line_2": null,
-                "city": "West Lafayette",
-                "state": " IN",
-                "zip_code": "47906",
-                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-                "lat": "40.423593",
-                "lng": "-86.9080874"
-            },
+            "phone": "765567765",
+            "address_line_1": "135 S Chauncey Ave",
+            "address_line_2": null,
+            "city": "West Lafayette",
+            "state": " IN",
+            "zip_code": "47906",
+            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+            "lat": "40.423593",
+            "lng": "-86.9080874",
             "categories": [
                 "Pizza"
             ],
@@ -1951,7 +1951,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Successful operation.
 
-**URI**: /api/v1/restaurants?address_id=3&filter_categories=1_2&order_by_desc=rating
+**URI**: /api/v1/restaurants?address_id=1&filter_categories=1_2&order_by_desc=rating
 
 **Request Header:**
 ```
@@ -1968,30 +1968,31 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         {
             "id": 2,
+            "name": "Asian"
+        },
+        {
+            "id": 3,
             "name": "Japanese"
         }
     ],
     "restaurants": [
         {
             "id": 2,
-            "name": "Heisei Japanese Restaurant",
+            "name": "Seihei Japanese Restaurant",
             "order_minimum": "25",
             "delivery_fee": "3.99",
             "rating": "4.9",
-            "address": {
-                "id": 2,
-                "name": "Heisei Japanese Restaurant",
-                "phone": "765432234",
-                "line_1": "907 Sagamore Pkwy W",
-                "line_2": null,
-                "city": "West Lafayette",
-                "state": "IN",
-                "zip_code": "47906",
-                "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-                "lat": "40.4519488",
-                "lng": "-86.9195979"
-            },
+            "phone": "765432234",
+            "address_line_1": "907 Sagamore Pkwy W",
+            "address_line_2": null,
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
+            "lat": "40.4519488",
+            "lng": "-86.9195979",
             "categories": [
+                "Asian",
                 "Japanese"
             ],
             "distance": 2.1,
@@ -1999,23 +2000,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         {
             "id": 1,
-            "name": "HotBox Pizza",
+            "name": "ColdBox Pizza",
             "order_minimum": "10",
             "delivery_fee": "2.99",
             "rating": "4.8",
-            "address": {
-                "id": 1,
-                "name": "HotBox Pizza",
-                "phone": "765567765",
-                "line_1": "135 S Chauncey Ave",
-                "line_2": null,
-                "city": "West Lafayette",
-                "state": " IN",
-                "zip_code": "47906",
-                "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-                "lat": "40.423593",
-                "lng": "-86.9080874"
-            },
+            "phone": "765567765",
+            "address_line_1": "135 S Chauncey Ave",
+            "address_line_2": null,
+            "city": "West Lafayette",
+            "state": " IN",
+            "zip_code": "47906",
+            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
+            "lat": "40.423593",
+            "lng": "-86.9080874",
             "categories": [
                 "Pizza"
             ],

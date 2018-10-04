@@ -17,7 +17,7 @@ class CreateRestaurantRestaurantCategoryTable extends Migration
             $table->unsignedInteger('restaurant_id');
             $table->unsignedInteger('restaurant_category_id');
 
-            $table->primary('restaurant_id', 'restaurant_category_id');
+            $table->primary(['restaurant_id', 'restaurant_category_id'], 'id');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateRestaurantRestaurantCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('restaurant_restaurant_categorie');
+        Schema::dropIfExists('restaurant_restaurant_category');
     }
 }

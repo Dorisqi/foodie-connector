@@ -32,5 +32,9 @@ class PermissionsTableSeeder extends Seeder
         Permission::generateFor('users');
 
         Permission::generateFor('settings');
+
+        Permission::generateFor('restaurants');
+
+        Permission::generateFor('restaurant_categories');
     }
 }

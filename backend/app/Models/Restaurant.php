@@ -9,17 +9,24 @@ class Restaurant extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'order_minimum', 'delivery_fee', 'rating'
+        'name',
+        'order_minimum',
+        'delivery_fee',
+        'rating',
+        'phone',
+        'address_line_1',
+        'address_line_2',
+        'city',
+        'state',
+        'zip_code',
+        'place_id',
+        'lat',
+        'lng',
     ];
 
     protected $hidden = [
         'address_id',
     ];
-
-    public function address()
-    {
-        return $this->belongsTo('App\Models\Address');
-    }
 
     public function restaurantCategories()
     {
@@ -29,7 +36,6 @@ class Restaurant extends Model
     public function toArray()
     {
         $data = parent::toArray();
-        $data['address'] = $this->address->toArray();
         $categories = $this->restaurantCategories;
         unset($data['restaurant_categories']);
         $data['categories'] = [];
