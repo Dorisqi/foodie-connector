@@ -17,6 +17,8 @@ import Button from '../../material-kit/components/CustomButtons/Button';
 import AddingAddress from './AddingAddress';
 import axios from 'axios';
 import apiList from '../../apiList';
+import EditAddress from './EditAddress';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   root: {
@@ -35,7 +37,7 @@ const styles = theme => ({
 });
 
 const id = 0;
-function createData(id,name,full_address,zip_code,is_default) {
+function createData(id,name,full_address,zip_code,is_default,) {
   id += 1;
   return {id,name,full_address,zip_code,is_default};
 }
@@ -183,6 +185,13 @@ class AddressTable extends React.Component {
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.full_address}</TableCell>
                 <TableCell>{row.zip_code}</TableCell>
+                <EditAddress phone={this.state.address[row.id-1].phone}
+                  line_1={this.state.address[row.id-1].line_1}
+                  line_2={this.state.address[row.id-1].line_2}
+                    city={this.state.address[row.id-1].city}
+                    state={this.state.address[row.id-1].state}
+                    zip_code={this.state.address[row.id-1].zip_code}
+                  ></EditAddress>
 
               </TableRow>
             ))}

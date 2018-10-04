@@ -101,10 +101,6 @@ class PwReset extends React.Component {
     // alert(this.state.email);
   }
 
-  handlesendCode(event) {
-
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -117,6 +113,7 @@ class PwReset extends React.Component {
               alt="login"
               src="https://cdn1.iconfinder.com/data/icons/navigation-elements/512/user-login-man-human-body-mobile-person-512.png"
               className={classes.avatar, classes.bigAvatar}
+
             />
 
             <Tooltip
