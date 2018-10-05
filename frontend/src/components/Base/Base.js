@@ -109,10 +109,10 @@ class Base extends React.Component {
   };
   handleLogout(event){
     Auth.deauthenticateUser();
-    if(!Auth.isUserAuthenticated){
+    if(Auth.isUserAuthenticated){
       window.location.href = "/login";
     }else{
-      alert("fail log out");
+      window.location.href = "/login";
     }
 
 
@@ -177,7 +177,7 @@ class Base extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="default">
           <Toolbar>
 
             <Typography className={classes.title} variant="title" color="inherit" noWrap>

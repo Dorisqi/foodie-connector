@@ -5,9 +5,16 @@ import RestaurantList from '../../components/RestaurantList/RestaurantList';
 import RestaurantFilter from '../../components/RestaurantFilter/RestaurantFilter';
 import apiList from '../../apiList';
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';
+import AddressSearchBar from '../../components/RestaurantFilter/AddressSearchBar';
 
+const styles = theme =>({
+  paper: {
+    marginTop: theme.spacing.unit *1,
+    display: 'flex',
+    flexDirection: 'column',
 
-const styles = ({
+  },
 
 });
 /*
@@ -103,15 +110,21 @@ class RestaurantListPage extends React.Component {
     const { changedList, tags } = this.state;
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <RestaurantFilter
-          onSubmit={this.handleSubmit}
-          onFilterChange={this.handleFilterChange}
-          onSortChange={this.handleSortChange}
-          tags={tags}
-        />
-        <RestaurantList restaurantList={changedList} />
-      </div>
+
+
+
+        <div className={classes.paper}>
+        <AddressSearchBar></AddressSearchBar>
+          <RestaurantFilter
+            onSubmit={this.handleSubmit}
+            onFilterChange={this.handleFilterChange}
+            onSortChange={this.handleSortChange}
+            tags={tags}
+          />
+
+          <RestaurantList restaurantList={changedList} />
+        </div>
+
     );
   }
 }
