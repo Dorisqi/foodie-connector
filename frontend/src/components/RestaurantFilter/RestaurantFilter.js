@@ -2,7 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TagsFilter from './TagsFilter';
 import SortOrder from './SortOrder';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
 import AddressSearchBar from './AddressSearchBar';
+import NameSearchBar from './NameSearchBar';
+import Card from '@material-ui/core/Card';
+
+
+const styles = theme => ({
+    card:{
+      maxWidth: 800,
+      Height:50
+    }
+});
+
 
 class RestaurantFilter extends React.Component {
   constructor(props) {
@@ -10,6 +23,7 @@ class RestaurantFilter extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
   handleFilterChange(selectedTags) {
@@ -27,14 +41,21 @@ class RestaurantFilter extends React.Component {
     onSubmit(place_id);
   }
 
+  handleNameChange(name) {
+    const { handleNameChange } = this.props;
+    handleNameChange(name);
+  }
   render() {
-    const { tags } = this.props;
+    const { tags,classes } = this.props;
+
     return (
-      <div>
-        <AddressSearchBar onSubmit={this.handleSubmit} />
+
+      <Card className={classes.card}>
+        <NameSearchBar handleNameChange={this.handleNameChange} />
         <TagsFilter onFilterChange={this.handleFilterChange} tags={tags}/>
         <SortOrder onSortChange={this.handleSortChange} />
-      </div>
+
+      </Card>
     );
   }
 }
@@ -45,4 +66,4 @@ RestaurantFilter.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default RestaurantFilter;
+export default withStyles(styles)(RestaurantFilter);
