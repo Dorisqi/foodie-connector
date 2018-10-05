@@ -15,6 +15,8 @@ import CardHeader from '../../material-kit/components/Card/CardHeader';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import EntercodeModal from './EntercodeModal';
 
+import axios from 'axios';
+import apiList from '../../apiList';
 
 const styles = theme => ({
   layout: {
@@ -65,44 +67,75 @@ class PwReset extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       email: '',
       newpw: '',
       newpw2: '',
-
+      code: '',
+      sendCodeColor: '',
     };
-    const isEnabled = 1;
-    const changecolor = '';
-
 
     this.handleChange1 = this.handleChange1.bind(this);
-    this.handleConfirm = this.handleConfirm.bind(this);
+    this.handleSubmitEmail = this.handleSubmitEmail.bind(this);
+    this.handleCodeChange = this.handleCodeChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
-  handleConfirm(event) {
-    const match = this.state.newpw === this.state.newpw2;
-    match ? alert('matched') : alert('please match new password!');
+  handleCodeChange(code) {
+    this.setState({
+      code: code
+    })
+  }
+  handleEmailChange(event) {
+    const { value } = event.target;
+    this.setState(() => ({
+      email: value,
+      sendCodeColor: value.includes('@')? 'primary': 'default',
+    }));
+  }
+  handleSubmitEmail() {
+    const { email } = this.state;
+    axios.post(apiList.resetPasswordEmail, {
+      email: email
+    }).then(res => {
+      alert('code sent successfully');
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   handleChange1(event) {
-    event.preventDefault();
     const { value } = event.target;
-    this.setState(() => {
-      this.state.isEnabled = value > 0;
-      if (value == 0) {
-        this.state.changecolor = '';
-      } else {
-        this.state.changecolor = 'primary';
-      }
-      return { email: value };
+    this.setState({
+      newpw: value
     });
+  }
 
+  handleChange2(event) {
+    const { value } = event.target;
+    this.setState({
+      newpw2: value
+    });
+  }
 
-    // alert(this.state.email);
+  handleSubmit(event) {
+    const { email, newpw, newpw2, code } = this.state;
+    if (newpw === newpw2) {
+      axios.post(apiList.resetPassword, {
+        email: email,
+        token: code,
+        password: newpw
+      }).then(res => {
+
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }
 
   render() {
     const { classes } = this.props;
+    const { email, sendCodeColor } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -134,19 +167,24 @@ class PwReset extends React.Component {
             </Tooltip>
             <form className={classes.form}>
               <FormControl className={classes.emailform} marginRight="dense" required>
-                <InputLabel htmlFor="password">Enter emial for verify code</InputLabel>
+                <InputLabel htmlFor="password">Enter email </InputLabel>
                 <Input
                   id="emailtem"
                   name="emailtem"
                   autoComplete="emailtem"
-                  onChange={this.handleChange1}
+                  onChange={this.handleEmailChange}
                   autoFocus
                 />
               </FormControl>
 
               <FormControl className={classes.buttonform} margin="normal">
 
-                <EntercodeModal isEnabled={this.state.isEnabled} color={this.state.changecolor}></EntercodeModal>
+                <EntercodeModal
+                  handleCodeChange={this.handleCodeChange}
+                  handleSubmitEmail={this.handleSubmitEmail}
+                  isEnabled={email !== null && email.includes('@')}
+                  color={sendCodeColor}>
+                </EntercodeModal>
               </FormControl>
 
               <FormControl margin="normal" required fullWidth>
@@ -155,8 +193,8 @@ class PwReset extends React.Component {
                   name="newpw"
                   type="password"
                   id="newpassword"
-
                   autoComplete="newpassword"
+                  onChange={this.handleChange1}
                 />
 
               </FormControl>
@@ -168,6 +206,7 @@ class PwReset extends React.Component {
                   type="password"
                   id="newpassword2"
                   autoComplete="newpassword2"
+                  onChange={this.handleChange2}
                 />
               </FormControl>
               <Button
@@ -176,7 +215,7 @@ class PwReset extends React.Component {
                 variant="raised"
                 color="primary"
                 className={classes.submit}
-                onClick={this.handleConfirm}
+                onClick={this.handleSubmit}
               >
                 Confirm Changes
               </Button>

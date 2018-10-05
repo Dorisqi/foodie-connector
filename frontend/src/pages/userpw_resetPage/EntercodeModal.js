@@ -26,11 +26,19 @@ class EntercodeModal extends React.Component{
     this.state = {
       modal: false
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    const { value } = event.target;
+    const { handleCodeChange } = this.props;
+    handleCodeChange(value);
   }
   handleClickOpen(modal) {
     var x = [];
     x[modal] = true;
     this.setState(x);
+    const { handleSubmitEmail } = this.props;
+    handleSubmitEmail();
   }
   handleClose(modal) {
     var x = [];
@@ -44,7 +52,7 @@ class EntercodeModal extends React.Component{
     this.setState(x);
   }
   render(){
-    const { classes, isEnabled,changecolor } = this.props;
+    const { classes, isEnabled, color } = this.props;
     return (
       <div>
         <Button
@@ -79,15 +87,16 @@ class EntercodeModal extends React.Component{
             <h4 className={classes.modalTitle}>Enter 8-digit Code:</h4>
           </DialogTitle>
           <DialogContent>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="code">8-digit code from email</InputLabel>
-            <Input
-              name="Code"
-              type="text"
-              id="Code"
-              autoComplete="Code"
-            />
-          </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="code">8-digit code from email</InputLabel>
+              <Input
+                name="Code"
+                type="text"
+                id="Code"
+                autoComplete="Code"
+                onChange={this.handleChange}
+              />
+            </FormControl>
           </DialogContent>
           <DialogActions
             className={classes.modalFooter +" " +classes.modalFooterCenter}>
