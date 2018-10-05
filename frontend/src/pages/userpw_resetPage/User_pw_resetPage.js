@@ -1,0 +1,234 @@
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+
+
+// core components
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Tooltip from '@material-ui/core/Tooltip';
+import CardHeader from '../../material-kit/components/Card/CardHeader';
+import Button from '../../material-kit/components/CustomButtons/Button';
+import EntercodeModal from './EntercodeModal';
+
+import axios from 'axios';
+import apiList from '../../apiList';
+
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  buttonform: {
+    wideth: '100%',
+    marginLeft: theme.spacing.unit * 5,
+  },
+  emailform: {
+    wideth: '100%',
+
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
+
+
+class PwReset extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      newpw: '',
+      newpw2: '',
+      code: '',
+      sendCodeColor: '',
+    };
+
+    this.handleChange1 = this.handleChange1.bind(this);
+    this.handleSubmitEmail = this.handleSubmitEmail.bind(this);
+    this.handleCodeChange = this.handleCodeChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+  }
+
+  handleCodeChange(code) {
+    this.setState({
+      code: code
+    })
+  }
+  handleEmailChange(event) {
+    const { value } = event.target;
+    this.setState(() => ({
+      email: value,
+      sendCodeColor: value.includes('@')? 'primary': 'default',
+    }));
+  }
+  handleSubmitEmail() {
+    const { email } = this.state;
+    axios.post(apiList.resetPasswordEmail, {
+      email: email
+    }).then(res => {
+      alert('code sent successfully');
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  handleChange1(event) {
+    const { value } = event.target;
+    this.setState({
+      newpw: value
+    });
+  }
+
+  handleChange2(event) {
+    const { value } = event.target;
+    this.setState({
+      newpw2: value
+    });
+  }
+
+  handleSubmit(event) {
+    const { email, newpw, newpw2, code } = this.state;
+    if (newpw === newpw2) {
+      axios.post(apiList.resetPassword, {
+        email: email,
+        token: code,
+        password: newpw
+      }).then(res => {
+
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { email, sendCodeColor } = this.state;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <CardHeader style={{ textAlign: 'center' }} color="warning">Resetting My Password</CardHeader>
+            <Avatar
+              alt="login"
+              src="https://cdn1.iconfinder.com/data/icons/navigation-elements/512/user-login-man-human-body-mobile-person-512.png"
+              className={classes.avatar, classes.bigAvatar}
+
+            />
+
+            <Tooltip
+              id="tooltip-right"
+              title="Please include at least 1 Capital letter,1 digit!!"
+              placement="bottom"
+              classes={{ tooltip: classes.tooltip }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+              </svg>
+            </Tooltip>
+            <form className={classes.form}>
+              <FormControl className={classes.emailform} marginRight="dense" required>
+                <InputLabel htmlFor="password">Enter email </InputLabel>
+                <Input
+                  id="emailtem"
+                  name="emailtem"
+                  autoComplete="emailtem"
+                  onChange={this.handleEmailChange}
+                  autoFocus
+                />
+              </FormControl>
+
+              <FormControl className={classes.buttonform} margin="normal">
+
+                <EntercodeModal
+                  handleCodeChange={this.handleCodeChange}
+                  handleSubmitEmail={this.handleSubmitEmail}
+                  isEnabled={email !== null && email.includes('@')}
+                  color={sendCodeColor}>
+                </EntercodeModal>
+              </FormControl>
+
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Enter New Password</InputLabel>
+                <Input
+                  name="newpw"
+                  type="password"
+                  id="newpassword"
+                  autoComplete="newpassword"
+                  onChange={this.handleChange1}
+                />
+
+              </FormControl>
+
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Enter New Password again</InputLabel>
+                <Input
+                  name="newpw2"
+                  type="password"
+                  id="newpassword2"
+                  autoComplete="newpassword2"
+                  onChange={this.handleChange2}
+                />
+              </FormControl>
+              <Button
+                type="submit"
+                fullWidth
+                variant="raised"
+                color="primary"
+                className={classes.submit}
+                onClick={this.handleSubmit}
+              >
+                Confirm Changes
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </React.Fragment>
+    );
+  }
+}
+
+PwReset.propTypes = {
+  classes: PropTypes.element.isRequired,
+};
+
+export default withStyles(styles)(PwReset);
