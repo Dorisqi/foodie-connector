@@ -15,7 +15,7 @@ class ListRestaurantTest extends ApiTestCase
      */
     public function testListRestaurant()
     {
-        Artisan::call('db:seed', ['--class' => 'RestaurantsTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'RestaurantsSeeder']);
         $this->assertFailed(null, 401);
         $this->login();
         $address = factory(Address::class)->create();

@@ -52,6 +52,30 @@ class DataTypesTableSeeder extends Seeder
                 'description'           => '',
             ])->save();
         }
+
+        $dataType = $this->dataType('slug', 'restaurants');
+        $dataType->fill([
+            'name' => 'restaurants',
+            'display_name_singular' => 'Restaurant',
+            'display_name_plural' => 'Restaurants',
+            'icon' => 'voyager-shop',
+            'model_name' => 'App\\Models\\Restaurant',
+            'controller' => '',
+            'generate_permissions' => 1,
+            'description' => '',
+        ])->save();
+
+        $dataType = $this->dataType('slug', 'restaurant-categories');
+        $dataType->fill([
+            'name' => 'restaurant_categories',
+            'display_name_singular' => 'Restaurant Category',
+            'display_name_plural' => 'Restaurant Categories',
+            'icon' => 'voyager-categories',
+            'model_name' => 'App\\Models\\RestaurantCategory',
+            'controller' => '',
+            'generate_permissions' => 1,
+            'description' => '',
+        ])->save();
     }
 
     /**

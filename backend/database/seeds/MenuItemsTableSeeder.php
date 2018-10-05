@@ -173,5 +173,29 @@ class MenuItemsTableSeeder extends Seeder
                 'order'      => 14,
             ])->save();
         }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
+            'title' => 'Restaurants',
+            'url' => '',
+            'route' => 'voyager.restaurants.index',
+        ]);
+        $menuItem->fill([
+            'target' => '_self',
+            'icon_class' => 'voyager-shop',
+            'order' => 15,
+        ]);
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
+            'title' => 'Restaurant Categories',
+            'url' => '',
+            'route' => 'voyager.restaurant-categories.index',
+        ]);
+        $menuItem->fill([
+            'target' => '_self',
+            'icon_class' => 'voyager-categories',
+            'order' => 16,
+        ]);
     }
 }
