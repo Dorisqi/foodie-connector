@@ -16,6 +16,11 @@ import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
+//get location:
+import compose from '../../../node_modules/recompose/compose';
+import Geocode from 'react-geocode';
+import { geolocated } from 'react-geolocated';
+
 
 function Transition(props) {
   return <Slide direction="down" {...props} />;
@@ -81,6 +86,8 @@ constructor(props){
     zip_code: "",
     place_id: "ChIJO_0IEK_iEogR4GrIyYopzz8",
     is_default: false,
+    isClick: true,
+    address:"",
   };
 
   this.handleConfirm = this.handleConfirm.bind(this);
@@ -91,7 +98,41 @@ constructor(props){
   this.handleCountry = this.handleCountry.bind(this);
   this.handleZipcode = this.handleZipcode.bind(this);
   this.handlePhone = this.handlePhone.bind(this);
+  this.handlegetLocation = this.handlegetLocation.bind(this);
 }
+
+  handlegetLocation() {
+      Geocode.setApiKey('AIzaSyByyQbkhN7phUklrozYqk6QWw28lDU_dMg');
+      Geocode.enableDebug();
+      //console.log(typeof this.props.coords.latitude);
+      Geocode.fromLatLng(this.props.coords.latitude, this.props.coords.longitude).then(
+        (response) => {
+
+          const address = response.results[0].formatted_address;
+          const Line_1 = response.results[0].address_components[0].long_name+' '
+                          +response.results[0].address_components[1].long_name;
+          console.log(Line_1);
+          const City = response.results[0].address_components[2].long_name;
+          console.log(City);
+          const State = response.results[0].address_components[5].long_name;
+          const zipcode = response.results[0].address_components[7].long_name;
+          const placeid = response.results[0].place_id;
+          console.log("ssdfsfsd");
+          this.setState({ address: address });
+
+          this.setState({line_1: Line_1, city: City, state: State, zip_code: zipcode, place_id: placeid });
+          //console.log(address);
+        },
+        (error) => {
+          //console.error(error);
+          this.setState({ error: error });
+        },
+      );
+      this.setState(state => ({
+        isClick: !this.state.isClick,
+      }));
+    }
+
 
   componentDidMount() {
       this.forceUpdate();
@@ -152,7 +193,8 @@ constructor(props){
       state: state,
       zip_code: zip_code,
       place_id: place_id,
-      is_default: is_default
+      is_default: is_default,
+
     }).then(res => {
       console.log(res);
       handleAddAddress(res.data);
@@ -165,6 +207,8 @@ constructor(props){
     render(){
       const{classes} = this.props;
       return(
+
+
         <div>
           <Button
             color="primary"
@@ -189,36 +233,48 @@ constructor(props){
               id="modal-slide-description"
               className={classes.modalBody}
             >
+            {!this.props.isGeolocationAvailable
+             ? <div>Your browser does not support Geolocation</div>
+             : !this.props.isGeolocationEnabled
+               ? <div>Geolocation is not enabled</div>
+               : this.props.coords
+               ? (
+                 <Button className={classes.Button}
+                         onClick={this.handlegetLocation}
+                           color="info"
+                           variant="contained">
+                 {this.state.isClick ? 'Get Current Location' : this.state.address}
+                 </Button>
 
-          <Button className={classes.button}
-           color="info">
-           User Current Location
-           </Button>
-
+               )
+               :<div>Getting the location data&hellip; </div>}
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
             required
             id="outlined-dense"
             label="Street Address"
+            value={this.state.line_1}
             className={classNames(classes.textField, classes.dense)}
             margin="dense"
             fullWidth
             variant="outlined"
-            onChange={this.line_1}
+            onChange={this.state.line_1}
             />
             <TextField
               required
               id="outlined-dense"
               label="Apt #"
+              value={this.state.line_2}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
-              onChange={this.line_2}
+              onChange={this.state.line_2}
             />
             <TextField
               required
               id="outlined-dense"
               label="City"
+              value={this.state.city}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -250,6 +306,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Zipcode"
+              value={this.state.zip_code}
               className={classNames(classes.textField, classes.adjustinput)}
               margin="dense"
               variant="outlined"
@@ -269,6 +326,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Phone Number"
+              value={this.state.phone}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -308,7 +366,19 @@ constructor(props){
 }
 
 AddingAddress.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.element.isRequired,
+  coords: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
-export default withStyles(styles)(AddingAddress);
+export default compose(
+  withStyles(styles),
+  geolocated({
+    positionOptions: {
+      enableHighAccuracy: false,
+    },
+    userDecisionTimeout: 5000,
+  }),
+)(AddingAddress);

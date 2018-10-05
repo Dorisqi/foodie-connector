@@ -1,6 +1,6 @@
 import React from 'react';
 import { geolocated } from 'react-geolocated';
-import Button from '@material-ui/core/Button';
+import Button from '../../material-kit/components/CustomButtons/Button';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -17,6 +17,10 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    button: {
+      marginLeft: theme.spacing.unit*2,
+      marginRight: theme.spacing.unit*2,
+    }
   },
 });
 
@@ -54,12 +58,12 @@ class CurrentGeoLocation extends React.Component {
         ? <div>Geolocation is not enabled</div>
         : this.props.coords
           ? (
-            <Button
+            <Button className={classes.Button}
               onClick={this.handleClick}
               color="default"
               variant="contained"
-              size="small"
-              className={classes.button}
+
+
             >
               {this.state.isClick ? 'Current Address' : this.state.address}
             </Button>
