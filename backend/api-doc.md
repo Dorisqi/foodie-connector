@@ -1938,7 +1938,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
             "lat": "40.423593",
             "lng": "-86.9080874",
-            "image": null,
+            "image": "mock\/photo-1534308983496-4fabb1a015ee.jpg",
             "categories": [
                 "Pizza"
             ],
@@ -1992,7 +1992,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
             "lat": "40.4519488",
             "lng": "-86.9195979",
-            "image": null,
+            "image": "mock\/photo-1534422298391-e4f8c172dddb.jpg",
             "categories": [
                 "Asian",
                 "Japanese"
@@ -2015,7 +2015,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
             "lat": "40.423593",
             "lng": "-86.9080874",
-            "image": null,
+            "image": "mock\/photo-1534308983496-4fabb1a015ee.jpg",
             "categories": [
                 "Pizza"
             ],
