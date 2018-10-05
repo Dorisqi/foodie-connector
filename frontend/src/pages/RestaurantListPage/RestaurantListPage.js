@@ -5,6 +5,8 @@ import RestaurantList from '../../components/RestaurantList/RestaurantList';
 import RestaurantFilter from '../../components/RestaurantFilter/RestaurantFilter';
 import apiList from '../../apiList';
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';
+import AddressSearchBar from '../../components/RestaurantFilter/AddressSearchBar';
 
 const tags = [
   {
@@ -69,7 +71,13 @@ const mockRestaurantList = [
   }
 ];
 
-const styles = ({
+const styles = theme =>({
+  paper: {
+    marginTop: theme.spacing.unit *1,
+    display: 'flex',
+    flexDirection: 'column',
+
+  },
 
 });
 /*
@@ -178,16 +186,20 @@ class RestaurantListPage extends React.Component {
     const { nameMatchList, tags } = this.state;
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <RestaurantFilter
-          handleNameChange={this.handleNameChange}
-          onSubmit={this.handleSubmit}
-          onFilterChange={this.handleFilterChange}
-          onSortChange={this.handleSortChange}
-          tags={tags}
-        />
-        <RestaurantList restaurantList={nameMatchList} />
-      </div>
+
+        <div className={classes.paper}>
+        <AddressSearchBar></AddressSearchBar>
+          <RestaurantFilter
+            onSubmit={this.handleSubmit}
+            onFilterChange={this.handleFilterChange}
+            onSortChange={this.handleSortChange}
+            handleNameChange={this.handleNameChange}
+            tags={tags}
+          />
+
+          <RestaurantList restaurantList={nameMatchList} />
+        </div>
+
     );
   }
 }

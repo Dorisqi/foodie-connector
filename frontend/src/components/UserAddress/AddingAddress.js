@@ -111,13 +111,11 @@ constructor(props){
           const address = response.results[0].formatted_address;
           const Line_1 = response.results[0].address_components[0].long_name+' '
                           +response.results[0].address_components[1].long_name;
-          console.log(Line_1);
           const City = response.results[0].address_components[2].long_name;
-          console.log(City);
           const State = response.results[0].address_components[5].long_name;
           const zipcode = response.results[0].address_components[7].long_name;
           const placeid = response.results[0].place_id;
-          console.log("ssdfsfsd");
+
           this.setState({ address: address });
 
           this.setState({line_1: Line_1, city: City, state: State, zip_code: zipcode, place_id: placeid });
@@ -211,7 +209,7 @@ constructor(props){
 
         <div>
           <Button
-            color="primary"
+            color="info"
             round
             onClick={() => this.handleClickOpen('modal')}
           >

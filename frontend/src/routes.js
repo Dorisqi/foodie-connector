@@ -28,11 +28,11 @@ const routes = {
       path: '/restaurantlist',
       getComponent: (location, callback) => {
         callback(null, RestaurantListPage);
-        // if (Auth.isUserAuthenticated()) {
-        //   callback(null, RestaurantListPage);
-        // } else {
-        //   callback(null, Login_regPage);
-        // }
+      /*  if (Auth.isUserAuthenticated()) {
+          callback(null, RestaurantListPage);
+        } else {
+          callback(null, Login_regPage);
+        }*/
       }
     },
     {
@@ -48,11 +48,12 @@ const routes = {
     {
       path: '/userprofile',
       getComponent: (location, callback) => {
-        if (Auth.isUserAuthenticated()) {
+        callback(null, UserprofilePage);
+    /*    if (Auth.isUserAuthenticated()) {
           callback(null, UserprofilePage);
         } else {
           callback(null, Login_regPage);
-        }
+        }*/
       }
     },
   ],
