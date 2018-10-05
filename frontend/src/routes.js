@@ -5,30 +5,55 @@ import AddressLists from './components/UserAddress/AddressLists';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';
 import AddingAddress from './components/UserAddress/AddingAddress';
 import Login_regPage from './pages/login_regPage/Login_regPage';
-
+import Auth from './Auth/Auth';
 const routes = {
   component: Base,
   childRoutes: [
     {
-      path: '/restaurantlist',
-      component: RestaurantListPage,
+      path: '/login',
+      component: Login_regPage,
     },
     {
       path: '/reset_password',
       component: UserpwresetPage,
     },
     {
-      path: '/userprofile',
-      component: UserprofilePage,
+      path: '/logout',
+      onEnter: (nextState, replace) => {
+        Auth.deauthenticateUser();
+        replace('/login');
+      }
+    },
+    {
+      path: '/restaurantlist',
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()) {
+          callback(null, RestaurantListPage);
+        } else {
+          callback(null, Login_regPage);
+        }
+      }
     },
     {
       path: '/addaddress',
-      component: AddingAddress,
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()) {
+          callback(null, AddingAddress);
+        } else {
+          callback(null, Login_regPage);
+        }
+      }
     },
     {
-      path: '/login',
-      component: Login_regPage,
-    }
+      path: '/userprofile',
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()) {
+          callback(null, UserprofilePage);
+        } else {
+          callback(null, Login_regPage);
+        }
+      }
+    },
   ],
 };
 
