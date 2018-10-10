@@ -26,6 +26,7 @@ class RestaurantsTableSeeder extends Seeder
             'place_id' => 'ChIJ6SGX2a7iEogRPb45KHbDAUI',
             'lat' => '40.423593',
             'lng' => '-86.9080874',
+            'image' => 'mock/photo-1534308983496-4fabb1a015ee.jpg',
         ])->save();
         $restaurant->restaurantCategories()->detach();
         $restaurant->restaurantCategories()->attach(
@@ -46,6 +47,7 @@ class RestaurantsTableSeeder extends Seeder
             'place_id' => 'ChIJKyr9T2r9EogRMUn4njQf-H8',
             'lat' => '40.4519488',
             'lng' => '-86.9195979',
+            'image' => 'mock/photo-1534422298391-e4f8c172dddb.jpg',
         ])->save();
         $restaurant->restaurantCategories()->detach();
         $restaurant->restaurantCategories()->attach(

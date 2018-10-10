@@ -541,6 +541,18 @@ class DataRowsTableSeeder extends Seeder
             'delete' => 1,
             'order' => 14,
         ])->save();
+        $dataRow = $this->dataRow($restaurantDataType, 'image');
+        $dataRow->fill([
+            'type' => 'image',
+            'display_name' => 'Image',
+            'required' => 0,
+            'browse' => 0,
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'delete' => 1,
+            'order' => 15,
+        ])->save();
         $dataRow = $this->dataRow($restaurantDataType, 'restaurant_belongstomany_restaurant_category_relationship');
         $dataRow->fill([
             'type' => 'relationship',
@@ -551,7 +563,7 @@ class DataRowsTableSeeder extends Seeder
             'edit' => 1,
             'add' => 1,
             'delete' => 1,
-            'order' => 15,
+            'order' => 16,
             'details' => json_encode([
                 'model' => 'App\\Models\\RestaurantCategory',
                 'table' => 'restaurant_categories',
