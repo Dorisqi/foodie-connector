@@ -6,6 +6,8 @@ cd backend
 cp .env.release .env.deploy
 echo "APP_KEY=${[TYPE]_APP_KEY}" >> .env.deploy
 echo "APP_URL=${[TYPE]_APP_URL}" >> .env.deploy
+echo "DB_CONNECTION=${[TYPE]_DB_CONNECTION}" >> .env.deploy
+echo "DB_HOST=${[TYPE]_DB_HOST}" >> .env.deploy
 echo "DB_DATABASE=${[TYPE]_DB_DATABASE}" >> .env.deploy
 echo "DB_USERNAME=${[TYPE]_DB_USERNAME}" >> .env.deploy
 echo "DB_PASSWORD=${[TYPE]_DB_PASSWORD}" >> .env.deploy
