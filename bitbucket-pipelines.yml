@@ -61,8 +61,8 @@ pipelines:
         caches:
         - docker
         script:
-        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
-        - sed -e "s/\[TYPE\]/${TYPE}/g" build.sh | bash
+        - export TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
+        - ./build.sh
     - step:
         name: Deploy docker to the server
         script:

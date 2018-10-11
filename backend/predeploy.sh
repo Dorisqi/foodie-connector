@@ -5,4 +5,4 @@ set -e
 chown -R www-data storage
 composer install --optimize-autoloader --no-dev
 php artisan storage:link
-php artisan optimize --env=deploy
+php artisan optimize
