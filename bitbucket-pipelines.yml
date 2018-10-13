@@ -41,34 +41,7 @@ pipelines:
         - docker build -t ${IMAGE_NAME}:test-php .
         - ../docker-login.sh
         - docker push ${IMAGE_NAME}:test-php
-    release/ci/docker-deploy-base:
-    - step:
-        name: Build base docker for deployment
-        services:
-        - docker
-        caches:
-        - docker
-        script:
-        - cd docker/deploy-base
-        - docker build -t ${IMAGE_NAME}:deploy-base .
-        - ../docker-login.sh
-        - docker push ${IMAGE_NAME}:deploy-base
-    release/app/*:
-    - step:
-        name: Build docker for deployment
-        services:
-        - docker
-        caches:
-        - docker
-        script:
-        - export TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
-        - ./build.sh
-    - step:
-        name: Deploy docker to the server
-        script:
-        - TYPE=$(echo $BITBUCKET_BRANCH | sed -e "s/release\/app\/\(.*\)/\U\1/g")
-        - sed -e "s/\[TYPE\]/${TYPE}/g" deploy.sh | bash
-
+    
 definitions:
   caches:
     frontend-node-modules: frontend/node_modules
