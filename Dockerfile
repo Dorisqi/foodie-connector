@@ -8,5 +8,7 @@ COPY backend /app/backend
 
 RUN cd /app/backend && ./predeploy.sh
 
+ARG COMMIT_SHA
+
 # Set version id
-RUN echo "${BUILD_ID}" > /app/backend/public/version
+RUN echo "${COMMIT_SHA}" > /app/backend/public/version
