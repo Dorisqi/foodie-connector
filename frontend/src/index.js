@@ -11,7 +11,7 @@ import Auth from './Auth/Auth';
 
 Geocode.setApiKey(apiKeys.googleMapAPIKey);
 Geocode.enableDebug();
-axios.defaults.baseURL = 'https://testing.foodie-connector.delivery';
+axios.defaults.baseURL = 'https://test.foodie-connector.delivery';
 axios.defaults.headers.common['Authorization'] = Auth.getToken();
 
 ReactDOM.render(
