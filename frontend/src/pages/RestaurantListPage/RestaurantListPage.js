@@ -7,69 +7,9 @@ import apiList from '../../apiList';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import AddressSearchBar from '../../components/RestaurantFilter/AddressSearchBar';
+import Geocode from 'react-geocode';
 
-const tags = [
-  {
-      "id": 1,
-      "name": "Pizza"
-  },
-  {
-      "id": 2,
-      "name": "Japanese"
-  }
-]
-const mockRestaurantList = [
-  {
-      "id": 2,
-      "name": "Heisei Japanese Restaurant",
-      "order_minimum": "25",
-      "delivery_fee": "3.99",
-      "rating": "4.9",
-      "address": {
-          "id": 2,
-          "name": "Heisei Japanese Restaurant",
-          "phone": "765432234",
-          "line_1": "907 Sagamore Pkwy W",
-          "line_2": null,
-          "city": "West Lafayette",
-          "state": "IN",
-          "zip_code": "47906",
-          "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-          "lat": "40.4519488",
-          "lng": "-86.9195979"
-      },
-      "categories": [
-          "Japanese"
-      ],
-      "distance": 2.1,
-      "estimated_delivery_time": 26
-  },
-  {
-      "id": 1,
-      "name": "HotBox Pizza",
-      "order_minimum": "10",
-      "delivery_fee": "2.99",
-      "rating": "4.8",
-      "address": {
-          "id": 1,
-          "name": "HotBox Pizza",
-          "phone": "765567765",
-          "line_1": "135 S Chauncey Ave",
-          "line_2": null,
-          "city": "West Lafayette",
-          "state": " IN",
-          "zip_code": "47906",
-          "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-          "lat": "40.423593",
-          "lng": "-86.9080874"
-      },
-      "categories": [
-          "Pizza"
-      ],
-      "distance": 0.1,
-      "estimated_delivery_time": 20
-  }
-];
+const DEFAULT_ADDRESS = 'Purdue Memorial Union';
 
 const styles = theme =>({
   paper: {
@@ -80,37 +20,12 @@ const styles = theme =>({
   },
 
 });
-/*
-{
-            "id": 2,
-            "name": "Heisei Japanese Restaurant",
-            "order_minimum": "25",
-            "delivery_fee": "3.99",
-            "rating": "4.9",
-            "address": {
-                "id": 2,
-                "name": "Heisei Japanese Restaurant",
-                "phone": "765432234",
-                "line_1": "907 Sagamore Pkwy W",
-                "line_2": null,
-                "city": "West Lafayette",
-                "state": "IN",
-                "zip_code": "47906",
-                "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-                "lat": "40.4519488",
-                "lng": "-86.9195979"
-            },
-            "categories": [
-                "Japanese"
-            ],
-            "distance": 2.1,
-            "estimated_delivery_time": 26
-        }
-*/
+
 class RestaurantListPage extends React.Component {
   constructor() {
     super();
     this.state = {
+      place_id: '',
       tags: [],
       originalList: [],
       changedList: [],
@@ -127,20 +42,21 @@ class RestaurantListPage extends React.Component {
   }
 
   loadList() {
-    //TODO load restaurants nearby
-    this.setState({
-      tags: tags.map(t => t.name),
-      originalList: mockRestaurantList,
-      changedList: mockRestaurantList,
-      nameMatchList: mockRestaurantList,
-    });
+    Geocode.fromAddress(DEFAULT_ADDRESS)
+    .then(
+      res => {
+        this.handleSubmit(res.results[0].place_id);
+      }
+    , err => {
+        console.log(err)
+      }
+    )
   }
 
   handleNameChange(name) {
     const { changedList } = this.state;
-    console.log(name);
     this.setState({
-      nameMatchList: changedList.filter(item => item.name.toLowerCase().indexOf(name) != -1)
+      nameMatchList: changedList.filter(item => item.name.toLowerCase().indexOf(name.toLowerCase()) != -1)
     })
   }
 
@@ -152,11 +68,12 @@ class RestaurantListPage extends React.Component {
     })
     .then(res => {
       if (res.data) {
+        console.log(res.data);
         this.setState({
           tags: res.data.categories.map(t => t.name),
           originalList: res.data.restaurants.slice(),
           changedList: res.data.restaurants.slice(),
-          mockRestaurantList: res.data.restaurants.slice(),
+          nameMatchList: res.data.restaurants.slice(),
         });
       }
       else {
@@ -186,11 +103,9 @@ class RestaurantListPage extends React.Component {
     const { nameMatchList, tags } = this.state;
     const { classes } = this.props;
     return (
-
         <div className={classes.paper}>
-        <AddressSearchBar></AddressSearchBar>
+        <AddressSearchBar onSubmit={this.handleSubmit}></AddressSearchBar>
           <RestaurantFilter
-            onSubmit={this.handleSubmit}
             onFilterChange={this.handleFilterChange}
             onSortChange={this.handleSortChange}
             handleNameChange={this.handleNameChange}
