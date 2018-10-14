@@ -45,7 +45,29 @@ class RestaurantListPage extends React.Component {
     Geocode.fromAddress(DEFAULT_ADDRESS)
     .then(
       res => {
-        this.handleSubmit(res.results[0].place_id);
+        const { place_id } = res.results[0];
+        axios.get(apiList.restaurants, {
+          params: { place_id: place_id }
+        })
+        .then(res2 => {
+          if (res2.data) {
+            console.log(res2.data);
+            console.log(place_id);
+            this.setState({
+              place_id: place_id,
+              tags: res2.data.categories.slice(),
+              originalList: res2.data.restaurants.slice(),
+              changedList: res2.data.restaurants.slice(),
+              nameMatchList: res2.data.restaurants.slice(),
+            });
+          }
+          else {
+            console.log(res2);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
       }
     , err => {
         console.log(err)
@@ -60,17 +82,20 @@ class RestaurantListPage extends React.Component {
     })
   }
 
-  handleSubmit(place_id) {
+  handleSubmit(place_id, tag_ids='') {
+    const params = {
+      place_id: place_id,
+    }
+    if (tag_ids && tag_ids.length > 0) {
+      params['filter_categories'] = tag_ids;
+    }
     axios.get(apiList.restaurants, {
-      params: {
-        place_id: place_id
-      }
+      params: params
     })
     .then(res => {
       if (res.data) {
         console.log(res.data);
         this.setState({
-          tags: res.data.categories.map(t => t.name),
           originalList: res.data.restaurants.slice(),
           changedList: res.data.restaurants.slice(),
           nameMatchList: res.data.restaurants.slice(),
@@ -86,10 +111,27 @@ class RestaurantListPage extends React.Component {
   }
 
   handleFilterChange(selectedTags) {
-    const { originalList } = this.state;
-    this.setState({
-      changedList: originalList.filter(item => item.categories.some(t => selectedTags.includes(t))),
-    });
+    if (selectedTags.length === 0) {
+      this.setState({
+        originalList: [],
+        changedList: [],
+        nameMatchList: [],
+      })
+      return;
+    }
+
+    const { place_id } = this.state;
+    var tag_ids = '';
+
+    for (var i = 0; i < selectedTags.length; i++) {
+      if (selectedTags[i].name !== 'All') {
+        tag_ids += '_'+selectedTags[i].id;
+      }
+    }
+    if (tag_ids !== '') {
+      tag_ids = tag_ids.slice(1, tag_ids.length);
+    }
+    this.handleSubmit(place_id, tag_ids);
   }
 
   handleSortChange(sortOrder) {
