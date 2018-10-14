@@ -1,5 +1,4 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/foodie-connector-1538617250499/release:$COMMIT_SHA', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/foodie-connector-1538617250499/release:$COMMIT_SHA']
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/release:$COMMIT_SHA', '-t', 'gcr.io/${PROJECT_ID}/release:latest', '.']
+images: ['gcr.io/${PROJECT_ID}/release:$COMMIT_SHA', 'gcr.io/${PROJECT_ID}/release:latest']
