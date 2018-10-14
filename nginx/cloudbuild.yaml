@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-builders/kubectl'
+  entrypoint: 'bash'
+  args: ['nginx/deploy.sh']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CONTAINER_CLUSTER}'
+  - 'SERVER_ENDPOINT=${_SERVER_ENDPOINT}'
