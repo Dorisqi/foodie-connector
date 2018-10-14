@@ -44,7 +44,5 @@ COPY backend /app/backend
 RUN cp /app/backend/.env.release /app/backend/.env
 RUN cd /app/backend && ./predeploy.sh
 
-ARG COMMIT_SHA
-
 # Set version id
-RUN echo "${COMMIT_SHA}" > /app/backend/public/version
+RUN echo $VERSION > /app/backend/public/version
