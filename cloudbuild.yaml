@@ -2,9 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['pull', 'gcr.io/${PROJECT_ID}/release:latest']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/release:${BUILD_ID}', '-t', 'gcr.io/${PROJECT_ID}/release:latest', '--cache-from', 'gcr.io/${PROJECT_ID}/release:latest', '--build-arg', 'VERSION=$(VERSION)', '.']
-  env:
-  - 'VERSION=commit_${COMMIT_SHA}_build_${BUILD_ID}'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/release:${BUILD_ID}', '-t', 'gcr.io/${PROJECT_ID}/release:latest', '--cache-from', 'gcr.io/${PROJECT_ID}/release:latest', '--build-arg', 'COMMIT_SHA=${COMMIT_SHA}', '--build-arg', 'BUILD_ID=${BUILD_ID}', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/${PROJECT_ID}/release:${BUILD_ID}']
 - name: 'gcr.io/cloud-builders/kubectl'

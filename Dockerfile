@@ -15,7 +15,7 @@ RUN apt-get install -y nginx
 RUN apt-get install -y php7.2-fpm
 
 # Install PHP extensions
-RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-mysql php7.2-curl
+RUN apt-get install -y php7.2-mbstring php7.2-xml php7.2-json php7.2-zip php7.2-dev php7.2-mysql php7.2-curl php7.2-gd
 
 # Setup directory for PHP sock
 RUN mkdir /run/php && chown www-data /run/php
@@ -45,4 +45,4 @@ RUN cp /app/backend/.env.release /app/backend/.env
 RUN cd /app/backend && ./predeploy.sh
 
 # Set version id
-RUN echo $VERSION > /app/backend/public/version
+RUN echo "commit: ${COMMIT_SHA}\nbuild: ${BUILD_ID}\nbuild time: $(env TZ=UTC date)" > /app/backend/public/version
