@@ -2153,7 +2153,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424039",
             "lng": "-86.907576",
-            "image": "\/storage\/restaurants\/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
             "categories": [
                 "Bakeries",
                 "Coffee & Tea",
@@ -2176,7 +2176,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42403",
             "lng": "-86.90717",
-            "image": "\/storage\/restaurants\/1-QS7y6KMCoSNnPuzgJqEw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/1-QS7y6KMCoSNnPuzgJqEw.jpg",
             "categories": [
                 "Seafood",
                 "Sushi Bars",
@@ -2199,7 +2199,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.423854014363",
             "lng": "-86.909017829785",
-            "image": "\/storage\/restaurants\/5Po65ETa-YvsWwg68Ab9nA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/5Po65ETa-YvsWwg68Ab9nA.jpg",
             "categories": [
                 "Dive Bars"
             ],
@@ -2220,7 +2220,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4241149",
             "lng": "-86.9087786",
-            "image": "\/storage\/restaurants\/NgmdxVwt7IvsbXSZ4Tadkg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/NgmdxVwt7IvsbXSZ4Tadkg.jpg",
             "categories": [
                 "Pizza"
             ],
@@ -2241,7 +2241,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424522399902",
             "lng": "-86.908325195312",
-            "image": "\/storage\/restaurants\/M8P96GmGImU0KOrFMfVCKw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/M8P96GmGImU0KOrFMfVCKw.jpg",
             "categories": [
                 "Mediterranean",
                 "Middle Eastern"
@@ -2263,7 +2263,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42456",
             "lng": "-86.90777",
-            "image": "\/storage\/restaurants\/T6-x-7k6BxCYA_8T0MpUOg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/T6-x-7k6BxCYA_8T0MpUOg.jpg",
             "categories": [
                 "Greek",
                 "Mediterranean"
@@ -2285,7 +2285,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.423670709159",
             "lng": "-86.90716185",
-            "image": "\/storage\/restaurants\/zlftv8fqh0KnEmmCuX6azw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/zlftv8fqh0KnEmmCuX6azw.jpg",
             "categories": [
                 "Fast Food",
                 "Mexican"
@@ -2307,7 +2307,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4242",
             "lng": "-86.90778",
-            "image": "\/storage\/restaurants\/7mNfoXkVmgcWsbSITtEDUQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/7mNfoXkVmgcWsbSITtEDUQ.jpg",
             "categories": [
                 "Coffee & Tea",
                 "Creperies",
@@ -2330,7 +2330,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.423205132952",
             "lng": "-86.908012206781",
-            "image": "\/storage\/restaurants\/ttORlHK9Aev-jrVFzLggyw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/ttORlHK9Aev-jrVFzLggyw.jpg",
             "categories": [
                 "Burgers",
                 "Fast Food"
@@ -2352,7 +2352,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.422859",
             "lng": "-86.90538",
-            "image": "\/storage\/restaurants\/7sPL919oMVV4TWDn_HKEdg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/7sPL919oMVV4TWDn_HKEdg.jpg",
             "categories": [
                 "Breakfast & Brunch",
                 "Burgers",
@@ -2375,7 +2375,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424388195458",
             "lng": "-86.906837378734",
-            "image": "\/storage\/restaurants\/LJVs2XUH48BvHNJyguukGQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/LJVs2XUH48BvHNJyguukGQ.jpg",
             "categories": [
                 "Mexican"
             ],
@@ -2396,7 +2396,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424545",
             "lng": "-86.906794",
-            "image": "\/storage\/restaurants\/Wz45FiO9MxLb3Jj3QFjA9Q.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/Wz45FiO9MxLb3Jj3QFjA9Q.jpg",
             "categories": [
                 "Ice Cream & Frozen Yogurt",
                 "Juice Bars & Smoothies"
@@ -2418,7 +2418,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424506575002",
             "lng": "-86.906853573893",
-            "image": "\/storage\/restaurants\/sT76TjIALrtPtUb07_k1AA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/sT76TjIALrtPtUb07_k1AA.jpg",
             "categories": [
                 "Japanese",
                 "Sushi Bars"
@@ -2440,7 +2440,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.421747",
             "lng": "-86.905077",
-            "image": "\/storage\/restaurants\/1PpYgStNoZntVFV9BKD02Q.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/1PpYgStNoZntVFV9BKD02Q.jpg",
             "categories": [
                 "Bars"
             ],
@@ -2461,7 +2461,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.421745",
             "lng": "-86.905075",
-            "image": "\/storage\/restaurants\/YuJmfmz5Bryp-zP6NXCXlg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/YuJmfmz5Bryp-zP6NXCXlg.jpg",
             "categories": [
                 "Vietnamese"
             ],
@@ -2482,7 +2482,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.421023",
             "lng": "-86.904402",
-            "image": "\/storage\/restaurants\/146mAI3-FwN1jCYSKDabnQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/146mAI3-FwN1jCYSKDabnQ.jpg",
             "categories": [
                 "Indian"
             ],
@@ -2503,7 +2503,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4223404",
             "lng": "-86.9028702",
-            "image": "\/storage\/restaurants\/zr5sfcJouPYW8eSXIp_aVg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/zr5sfcJouPYW8eSXIp_aVg.jpg",
             "categories": [
                 "Pizza"
             ],
@@ -2524,7 +2524,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.421688",
             "lng": "-86.904133",
-            "image": "\/storage\/restaurants\/tYSF_-rM1qRGvWvCZiY5Vw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/tYSF_-rM1qRGvWvCZiY5Vw.jpg",
             "categories": [
                 "Desserts",
                 "Ice Cream & Frozen Yogurt"
@@ -2546,7 +2546,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42303",
             "lng": "-86.90322",
-            "image": "\/storage\/restaurants\/wp5tEemRSdZZIp8Vk-IFBw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/wp5tEemRSdZZIp8Vk-IFBw.jpg",
             "categories": [
                 "Fish & Chips",
                 "Irish Pub"
@@ -2568,7 +2568,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4229",
             "lng": "-86.9042599",
-            "image": "\/storage\/restaurants\/cMyehK0bOrWXWsgBG6770A.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/cMyehK0bOrWXWsgBG6770A.jpg",
             "categories": [
                 "Breakfast & Brunch",
                 "Coffee & Tea",
@@ -2591,7 +2591,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4210848",
             "lng": "-86.9016988",
-            "image": "\/storage\/restaurants\/Hic-M5Y3YZ-7I_Q5KawaNQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/Hic-M5Y3YZ-7I_Q5KawaNQ.jpg",
             "categories": [
                 "Bubble Tea",
                 "Desserts"
@@ -2613,7 +2613,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.43012",
             "lng": "-86.91225",
-            "image": "\/storage\/restaurants\/OvMh6A0-eDqg0sddFe39lw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/OvMh6A0-eDqg0sddFe39lw.jpg",
             "categories": [
                 "American (Traditional)",
                 "Breakfast & Brunch",
@@ -2636,7 +2636,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.421027",
             "lng": "-86.900228",
-            "image": "\/storage\/restaurants\/h6YJ8ULFYSjVPbe5V9eFuw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/h6YJ8ULFYSjVPbe5V9eFuw.jpg",
             "categories": [
                 "Beer Bar",
                 "Burgers",
@@ -2659,7 +2659,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4315049",
             "lng": "-86.9135999",
-            "image": "\/storage\/restaurants\/2G2uk661RVbLx1f5gK4mcw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/2G2uk661RVbLx1f5gK4mcw.jpg",
             "categories": [
                 "Korean",
                 "Sushi Bars"
@@ -2681,7 +2681,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.418800354004",
             "lng": "-86.894599914551",
-            "image": "\/storage\/restaurants\/0nXqQjJjBFDwQ8Ebfv4CQg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/0nXqQjJjBFDwQ8Ebfv4CQg.jpg",
             "categories": [
                 "American (Traditional)",
                 "Pubs"
@@ -2703,7 +2703,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.419565",
             "lng": "-86.894992",
-            "image": "\/storage\/restaurants\/I-bI1nvzM9fyIpdXA-I7YQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/I-bI1nvzM9fyIpdXA-I7YQ.jpg",
             "categories": [
                 "Bagels",
                 "Cafes",
@@ -2726,7 +2726,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.419305385432",
             "lng": "-86.895227697582",
-            "image": "\/storage\/restaurants\/JQPvIx1aJVu_ZNoZ5Uqsbg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/JQPvIx1aJVu_ZNoZ5Uqsbg.jpg",
             "categories": [
                 "American (New)",
                 "Bars"
@@ -2748,7 +2748,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.419377",
             "lng": "-86.894735",
-            "image": "\/storage\/restaurants\/TvIxodalwg5K9KE-Thg0TA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/TvIxodalwg5K9KE-Thg0TA.jpg",
             "categories": [
                 "Pubs"
             ],
@@ -2769,7 +2769,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.41939",
             "lng": "-86.89386",
-            "image": "\/storage\/restaurants\/UkHcGDxoCqo2GLcRnU7Q3A.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/UkHcGDxoCqo2GLcRnU7Q3A.jpg",
             "categories": [
                 "Italian",
                 "Seafood"
@@ -2791,7 +2791,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.419255304729",
             "lng": "-86.892314516008",
-            "image": "\/storage\/restaurants\/92snDChM7lpwMqZ1pHKKMA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/92snDChM7lpwMqZ1pHKKMA.jpg",
             "categories": [
                 "Wine Bars"
             ],
@@ -2812,7 +2812,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.41906",
             "lng": "-86.8916799",
-            "image": "\/storage\/restaurants\/_UxTQIGh45sCp_LDYfVMsg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/_UxTQIGh45sCp_LDYfVMsg.jpg",
             "categories": [
                 "American (New)",
                 "French"
@@ -2834,7 +2834,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.41861",
             "lng": "-86.89169",
-            "image": "\/storage\/restaurants\/JCDLTlbIKDTnhFXouiDGhA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/JCDLTlbIKDTnhFXouiDGhA.jpg",
             "categories": [
                 "Cocktail Bars",
                 "Music Venues"
@@ -2856,7 +2856,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.41907",
             "lng": "-86.8908",
-            "image": "\/storage\/restaurants\/f08XlrGq3Ggi71ZOFTETOw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/f08XlrGq3Ggi71ZOFTETOw.jpg",
             "categories": [
                 "Ramen"
             ],
@@ -2877,7 +2877,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.4109824",
             "lng": "-86.8987342",
-            "image": "\/storage\/restaurants\/ZwmTthamhtd3HCBhL-Q6rw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/ZwmTthamhtd3HCBhL-Q6rw.jpg",
             "categories": [
                 "Breakfast & Brunch",
                 "Cafes",
@@ -2900,7 +2900,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.41942",
             "lng": "-86.89103",
-            "image": "\/storage\/restaurants\/XnnZqdYaHuq5lEqpQBFcuA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/XnnZqdYaHuq5lEqpQBFcuA.jpg",
             "categories": [
                 "American (New)",
                 "Bars",
@@ -3171,7 +3171,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.4132874",
             "lng": "-86.8928751",
-            "image": "\/storage\/restaurants\/Nwchshm4OBa05IJRRXzzuA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/Nwchshm4OBa05IJRRXzzuA.jpg",
             "categories": [
                 "Bakeries"
             ],
@@ -3192,7 +3192,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.401518",
             "lng": "-86.858009",
-            "image": "\/storage\/restaurants\/_4f10yrgvDHGOqvmHd91iA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/_4f10yrgvDHGOqvmHd91iA.jpg",
             "categories": [
                 "Asian Fusion",
                 "Sushi Bars"
@@ -3214,7 +3214,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424388195458",
             "lng": "-86.906837378734",
-            "image": "\/storage\/restaurants\/LJVs2XUH48BvHNJyguukGQ.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/LJVs2XUH48BvHNJyguukGQ.jpg",
             "categories": [
                 "Mexican"
             ],
@@ -3235,7 +3235,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.425948",
             "lng": "-86.929325",
-            "image": "\/storage\/restaurants\/QeNV8bBdjaARhxP1qjfGDA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/QeNV8bBdjaARhxP1qjfGDA.jpg",
             "categories": [
                 "Japanese",
                 "Korean",
@@ -3258,7 +3258,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.43012",
             "lng": "-86.91225",
-            "image": "\/storage\/restaurants\/OvMh6A0-eDqg0sddFe39lw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/OvMh6A0-eDqg0sddFe39lw.jpg",
             "categories": [
                 "American (Traditional)",
                 "Breakfast & Brunch",
@@ -3281,7 +3281,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.45267",
             "lng": "-86.9126",
-            "image": "\/storage\/restaurants\/M_SG-qaDXMtuSruJW0r0Rg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/M_SG-qaDXMtuSruJW0r0Rg.jpg",
             "categories": [
                 "Burgers",
                 "Hot Dogs"
@@ -3303,7 +3303,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.39878",
             "lng": "-86.8539",
-            "image": "\/storage\/restaurants\/96NAzrXrJvZY03JTXG1Hog.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/96NAzrXrJvZY03JTXG1Hog.jpg",
             "categories": [
                 "Irish",
                 "Music Venues",
@@ -3326,7 +3326,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.4113",
             "lng": "-86.85691",
-            "image": "\/storage\/restaurants\/lFcEnVTo16Gi-hlfdvAATg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/lFcEnVTo16Gi-hlfdvAATg.jpg",
             "categories": [
                 "Burgers",
                 "Hot Dogs",
@@ -3349,7 +3349,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.413587",
             "lng": "-86.857385",
-            "image": "\/storage\/restaurants\/PtumNwRcJHivPfx4e8K56g.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/PtumNwRcJHivPfx4e8K56g.jpg",
             "categories": [
                 "Mexican"
             ],
@@ -3370,7 +3370,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4241149",
             "lng": "-86.9087786",
-            "image": "\/storage\/restaurants\/NgmdxVwt7IvsbXSZ4Tadkg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/NgmdxVwt7IvsbXSZ4Tadkg.jpg",
             "categories": [
                 "Pizza"
             ],
@@ -3391,7 +3391,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424545",
             "lng": "-86.906794",
-            "image": "\/storage\/restaurants\/Wz45FiO9MxLb3Jj3QFjA9Q.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/Wz45FiO9MxLb3Jj3QFjA9Q.jpg",
             "categories": [
                 "Ice Cream & Frozen Yogurt",
                 "Juice Bars & Smoothies"
@@ -3413,7 +3413,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42456",
             "lng": "-86.90777",
-            "image": "\/storage\/restaurants\/T6-x-7k6BxCYA_8T0MpUOg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/T6-x-7k6BxCYA_8T0MpUOg.jpg",
             "categories": [
                 "Greek",
                 "Mediterranean"
@@ -3435,7 +3435,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42403",
             "lng": "-86.90717",
-            "image": "\/storage\/restaurants\/1-QS7y6KMCoSNnPuzgJqEw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/1-QS7y6KMCoSNnPuzgJqEw.jpg",
             "categories": [
                 "Seafood",
                 "Sushi Bars",
@@ -3458,7 +3458,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.423670709159",
             "lng": "-86.90716185",
-            "image": "\/storage\/restaurants\/zlftv8fqh0KnEmmCuX6azw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/zlftv8fqh0KnEmmCuX6azw.jpg",
             "categories": [
                 "Fast Food",
                 "Mexican"
@@ -3480,7 +3480,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424039",
             "lng": "-86.907576",
-            "image": "\/storage\/restaurants\/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
             "categories": [
                 "Bakeries",
                 "Coffee & Tea",
@@ -3503,7 +3503,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.4533893",
             "lng": "-86.9194215",
-            "image": "\/storage\/restaurants\/D9s2-SEYmpkmvX6B2_Qqmg.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/D9s2-SEYmpkmvX6B2_Qqmg.jpg",
             "categories": [
                 "American (Traditional)",
                 "Breakfast & Brunch",
@@ -3526,7 +3526,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.45365",
             "lng": "-86.9203",
-            "image": "\/storage\/restaurants\/GQ1k97OA3kKUe4nHBoay1A.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/GQ1k97OA3kKUe4nHBoay1A.jpg",
             "categories": [
                 "American (Traditional)"
             ],
@@ -3547,7 +3547,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.453925990876",
             "lng": "-86.917603011314",
-            "image": "\/storage\/restaurants\/AsuRGwQeAgOhW1-f4DydqA.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/AsuRGwQeAgOhW1-f4DydqA.jpg",
             "categories": [
                 "Ramen",
                 "Sushi Bars"
@@ -3569,7 +3569,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424522399902",
             "lng": "-86.908325195312",
-            "image": "\/storage\/restaurants\/M8P96GmGImU0KOrFMfVCKw.jpg",
+            "image": "https:\/\/storage.googleapis.com\/foodie-connector-local\/restaurants\/M8P96GmGImU0KOrFMfVCKw.jpg",
             "categories": [
                 "Mediterranean",
                 "Middle Eastern"

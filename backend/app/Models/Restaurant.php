@@ -38,7 +38,7 @@ class Restaurant extends Model
     public function toArray()
     {
         $data = parent::toArray();
-        $data['image'] = Storage::url($this->image);
+        $data['image'] = Storage::disk(config('voyager.storage.disk'))->url($this->image);
         $categories = $this->restaurantCategories;
         unset($data['restaurant_categories']);
         $data['categories'] = [];
