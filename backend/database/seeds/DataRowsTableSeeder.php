@@ -385,6 +385,18 @@ class DataRowsTableSeeder extends Seeder
             'delete' => 0,
             'order' => 1,
         ])->save();
+        $dataRow = $this->dataRow($restaurantDataType, 'yelp_id');
+        $dataRow->fill([
+            'type' => 'text',
+            'display_name' => 'Yelp ID',
+            'required' => 0,
+            'browse' => 0,
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'delete' => 1,
+            'order' => 12,
+        ])->save();
         $dataRow = $this->dataRow($restaurantDataType, 'name');
         $dataRow->fill([
             'type' => 'text',
@@ -504,18 +516,6 @@ class DataRowsTableSeeder extends Seeder
             'add' => 1,
             'delete' => 1,
             'order' => 11,
-        ])->save();
-        $dataRow = $this->dataRow($restaurantDataType, 'place_id');
-        $dataRow->fill([
-            'type' => 'text',
-            'display_name' => 'Place ID',
-            'required' => 1,
-            'browse' => 0,
-            'read' => 1,
-            'edit' => 1,
-            'add' => 1,
-            'delete' => 1,
-            'order' => 12,
         ])->save();
         $dataRow = $this->dataRow($restaurantDataType, 'lat');
         $dataRow->fill([

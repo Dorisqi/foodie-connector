@@ -10,6 +10,7 @@ class Restaurant extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'yelp_id',
         'name',
         'order_minimum',
         'delivery_fee',
@@ -26,7 +27,7 @@ class Restaurant extends Model
     ];
 
     protected $hidden = [
-        'address_id',
+        'yelp_id',
     ];
 
     public function restaurantCategories()

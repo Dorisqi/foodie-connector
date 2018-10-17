@@ -21,27 +21,32 @@ class ListRestaurantTest extends ApiTestCase
         $address = factory(Address::class)->create();
         $response = $this->assertSucceed([
             'address_id' => $address->id,
-            'filter_categories' => '1_2',
+            'filter_delivery_fee' => '2_3',
             'order_by_desc' => 'rating',
         ]);
-        $this->assertCount(2, $response->json('restaurants'));
-        $this->assertLessThan(
-            $response->json('restaurants')[0]['rating'],
-            $response->json('restaurants')[1]['rating']
-        );
+        $restaurants = $response->json('restaurants');
+        for ($i = 0; $i < count($restaurants); $i++) {
+            $this->assertLessThanOrEqual(3, $restaurants[$i]['delivery_fee']);
+            $this->assertGreaterThanOrEqual(2, $restaurants[$i]['delivery_fee']);
+            if ($i > 0) {
+                $this->assertLessThanOrEqual($restaurants[$i - 1]['rating'], $restaurants[$i]['rating']);
+            }
+        }
         $response = $this->assertSucceed([
             'place_id' => $address->place_id,
             'filter_distance' => '_1',
         ]);
-        $this->assertCount(1, $response->json('restaurants'));
+        $restaurants = $response->json('restaurants');
+        for ($i = 0; $i < count($restaurants); $i++) {
+            $this->assertLessThanOrEqual(1, $restaurants[$i]['distance']);
+        }
         $response = $this->assertSucceed([
-            'place_id' => 'ChIJA2p5p_9Qa4gRfOq5QPadjtY',
+            'place_id' => 'ChIJP5iLHkCuEmsRwMwyFmh9AQU',
         ], false);
         $this->assertCount(0, $response->json('restaurants'));
         $response = $this->assertSucceed([
             'address_id' => $address->id,
-            'filter_order_minimum' => '15_',
-            'filter_delivery_fee' => '_3',
+            'filter_categories' => '0',
         ], false);
         $this->assertCount(0, $response->json('restaurants'));
         $this->assertFailed(null, 422);

@@ -1,0 +1,2103 @@
+{
+    "businesses": [
+        {
+            "id": "YJLz8WSjSqs1NvP5cx-eew",
+            "alias": "east-end-grill-lafayette-3",
+            "name": "East End Grill",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/cNm7pETDV2s4cOwLe-m64Q/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/east-end-grill-lafayette-3?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 179,
+            "categories": [
+                {
+                    "alias": "newamerican",
+                    "title": "American (New)"
+                },
+                {
+                    "alias": "bars",
+                    "title": "Bars"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4191950747806,
+                "longitude": -86.885525652601
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "1016 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1016 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17656074600",
+            "display_phone": "(765) 607-4600",
+            "distance": 2303.7822321075423
+        },
+        {
+            "id": "_4f10yrgvDHGOqvmHd91iA",
+            "alias": "sushi-don-lafayette",
+            "name": "Sushi Don",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/mVXG0-TFh0haPydsyunAzg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/sushi-don-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 216,
+            "categories": [
+                {
+                    "alias": "sushi",
+                    "title": "Sushi Bars"
+                },
+                {
+                    "alias": "asianfusion",
+                    "title": "Asian Fusion"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.401518,
+                "longitude": -86.858009
+            },
+            "transactions": [
+                "delivery",
+                "pickup"
+            ],
+            "price": "$$",
+            "location": {
+                "address1": "3338 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3338 Main St",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654476655",
+            "display_phone": "(765) 447-6655",
+            "distance": 1514.6867785263917
+        },
+        {
+            "id": "rgQGVnhkxsHGURJaU5r_HA",
+            "alias": "d-and-r-bbq-and-catering-lafayette",
+            "name": "D&R BBQ & Catering",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/C7O4O48Ey3OBI6omGMXJOg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/d-and-r-bbq-and-catering-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 86,
+            "categories": [
+                {
+                    "alias": "catering",
+                    "title": "Caterers"
+                },
+                {
+                    "alias": "bbq",
+                    "title": "Barbeque"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41945,
+                "longitude": -86.83844
+            },
+            "transactions": [
+                "delivery"
+            ],
+            "price": "$$",
+            "location": {
+                "address1": "135 N Creasy Ln",
+                "address2": null,
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "135 N Creasy Ln",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654494000",
+            "display_phone": "(765) 449-4000",
+            "distance": 3863.199453999197
+        },
+        {
+            "id": "iT581VVVGgpik06KplZOuQ",
+            "alias": "south-street-smoke-house-lafayette",
+            "name": "South Street Smoke House",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/5dwU5HrFCHS7Rk0Pw7U-ug/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/south-street-smoke-house-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 176,
+            "categories": [
+                {
+                    "alias": "bbq",
+                    "title": "Barbeque"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.41727,
+                "longitude": -86.85963
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "3305 S St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3305 S St",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654460559",
+            "display_phone": "(765) 446-0559",
+            "distance": 2369.6406530537524
+        },
+        {
+            "id": "wp5tEemRSdZZIp8Vk-IFBw",
+            "alias": "nine-irish-brothers-west-lafayette-2",
+            "name": "Nine Irish Brothers",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/8lac5eNSOP57sqtRS7PH6Q/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/nine-irish-brothers-west-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 294,
+            "categories": [
+                {
+                    "alias": "fishnchips",
+                    "title": "Fish & Chips"
+                },
+                {
+                    "alias": "irish_pubs",
+                    "title": "Irish Pub"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.42303,
+                "longitude": -86.90322
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "119 Howard Ave",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "119 Howard Ave",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17657464782",
+            "display_phone": "(765) 746-4782",
+            "distance": 3461.36101238106
+        },
+        {
+            "id": "9SM1f1eonfYHykLmDMSChA",
+            "alias": "sixth-street-dive-lafayette",
+            "name": "Sixth Street Dive",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/tylY8wgpfOdKgxkg1qCzIA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/sixth-street-dive-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 63,
+            "categories": [
+                {
+                    "alias": "tex-mex",
+                    "title": "Tex-Mex"
+                },
+                {
+                    "alias": "divebars",
+                    "title": "Dive Bars"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.42552,
+                "longitude": -86.89037
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "827 N 6th St",
+                "address2": "",
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "827 N 6th St",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17657717105",
+            "display_phone": "(765) 771-7105",
+            "distance": 3115.179986235854
+        },
+        {
+            "id": "bBmaqxoA5mHBHwnOsZq1PA",
+            "alias": "mountain-jacks-lafayette",
+            "name": "Mountain Jack's",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/byapq0_PQDaubrjL3980Hg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/mountain-jacks-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 131,
+            "categories": [
+                {
+                    "alias": "steak",
+                    "title": "Steakhouses"
+                },
+                {
+                    "alias": "seafood",
+                    "title": "Seafood"
+                },
+                {
+                    "alias": "tradamerican",
+                    "title": "American (Traditional)"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4169399,
+                "longitude": -86.82732
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "4211 State Rd 26 E",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "4211 State Rd 26 E",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654481521",
+            "display_phone": "(765) 448-1521",
+            "distance": 4527.315831212554
+        },
+        {
+            "id": "_UxTQIGh45sCp_LDYfVMsg",
+            "alias": "bistro-501-lafayette",
+            "name": "Bistro 501",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/4bj4G3s7bLahwfIBAau3og/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/bistro-501-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 119,
+            "categories": [
+                {
+                    "alias": "french",
+                    "title": "French"
+                },
+                {
+                    "alias": "newamerican",
+                    "title": "American (New)"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.41906,
+                "longitude": -86.8916799
+            },
+            "transactions": [],
+            "price": "$$$",
+            "location": {
+                "address1": "501 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "501 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654234501",
+            "display_phone": "(765) 423-4501",
+            "distance": 2520.2967088438304
+        },
+        {
+            "id": "18XOri-AszmAz5PQGTCT9w",
+            "alias": "java-joz-coffee-lafayette-2",
+            "name": "Java Jo'z Coffee",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/kMMAzs66p1H_Q2n-gWFqxg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/java-joz-coffee-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 30,
+            "categories": [
+                {
+                    "alias": "coffee",
+                    "title": "Coffee & Tea"
+                }
+            ],
+            "rating": 5,
+            "coordinates": {
+                "latitude": 40.3988342285156,
+                "longitude": -86.8374938964844
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "1221 S Creasy Ln",
+                "address2": null,
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1221 S Creasy Ln",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17652697226",
+            "display_phone": "(765) 269-7226",
+            "distance": 3242.1880308038717
+        },
+        {
+            "id": "UkHcGDxoCqo2GLcRnU7Q3A",
+            "alias": "la-scala-italian-restaurant-lafayette",
+            "name": "La Scala Italian Restaurant",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/67TsQraa2Jn9tgMNH-zdQg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/la-scala-italian-restaurant-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 187,
+            "categories": [
+                {
+                    "alias": "italian",
+                    "title": "Italian"
+                },
+                {
+                    "alias": "seafood",
+                    "title": "Seafood"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.41939,
+                "longitude": -86.89386
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "312 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "312 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654208171",
+            "display_phone": "(765) 420-8171",
+            "distance": 2662.8272922354827
+        },
+        {
+            "id": "7mNfoXkVmgcWsbSITtEDUQ",
+            "alias": "greyhouse-coffee-and-supply-west-lafayette-2",
+            "name": "Greyhouse Coffee & Supply",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/7l2Ay6CSU-5RbWtoLKU23w/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/greyhouse-coffee-and-supply-west-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 209,
+            "categories": [
+                {
+                    "alias": "coffee",
+                    "title": "Coffee & Tea"
+                },
+                {
+                    "alias": "donuts",
+                    "title": "Donuts"
+                },
+                {
+                    "alias": "creperies",
+                    "title": "Creperies"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4242,
+                "longitude": -86.90778
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "100 Northwestern Ave",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "100 Northwestern Ave",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17657435316",
+            "display_phone": "(765) 743-5316",
+            "distance": 3829.8805270198577
+        },
+        {
+            "id": "qUxNOxRpwTdHAEePjj2J-w",
+            "alias": "dt-kirbys-lafayette-2",
+            "name": "DT Kirby's",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/AYZeOs9N8_KKnDzpNr9qhA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/dt-kirbys-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 148,
+            "categories": [
+                {
+                    "alias": "divebars",
+                    "title": "Dive Bars"
+                },
+                {
+                    "alias": "burgers",
+                    "title": "Burgers"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4193969,
+                "longitude": -86.889276
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "644 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "644 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654296666",
+            "display_phone": "(765) 429-6666",
+            "distance": 2455.6437553920396
+        },
+        {
+            "id": "Drk9iubgonVcb17fjEL4tw",
+            "alias": "d-and-r-market-lafayette-2",
+            "name": "D&R Market",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/LWjqkgJRNTW49RrjF8yDBQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/d-and-r-market-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 44,
+            "categories": [
+                {
+                    "alias": "grocery",
+                    "title": "Grocery"
+                },
+                {
+                    "alias": "gourmet",
+                    "title": "Specialty Food"
+                },
+                {
+                    "alias": "bbq",
+                    "title": "Barbeque"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41942,
+                "longitude": -86.83802
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "105 N Creasy Ln",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "105 N Creasy Ln",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654486196",
+            "display_phone": "(765) 448-6196",
+            "distance": 3859.908704807595
+        },
+        {
+            "id": "t6XoqWJRgVU8dqxxjESklw",
+            "alias": "mexican-bakery-mama-ines-lafayette",
+            "name": "Mexican Bakery Mama Ines",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/YW5G4kYTqP_YhLUz8Hxb6A/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/mexican-bakery-mama-ines-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 44,
+            "categories": [
+                {
+                    "alias": "bakeries",
+                    "title": "Bakeries"
+                },
+                {
+                    "alias": "juicebars",
+                    "title": "Juice Bars & Smoothies"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.422649,
+                "longitude": -86.859157
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "518 Sagamore Pkwy N",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "518 Sagamore Pkwy N",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654462629",
+            "display_phone": "(765) 446-2629",
+            "distance": 2898.292409698814
+        },
+        {
+            "id": "TvIxodalwg5K9KE-Thg0TA",
+            "alias": "the-black-sparrow-lafayette",
+            "name": "The Black Sparrow",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/FCw4qoCDDFRw327143paGQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/the-black-sparrow-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 147,
+            "categories": [
+                {
+                    "alias": "pubs",
+                    "title": "Pubs"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.419377,
+                "longitude": -86.894735
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "223 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "223 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654290405",
+            "display_phone": "(765) 429-0405",
+            "distance": 2700.3353343984577
+        },
+        {
+            "id": "JQPvIx1aJVu_ZNoZ5Uqsbg",
+            "alias": "red-seven-bar-and-grill-lafayette-2",
+            "name": "Red Seven Bar & Grill",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/GkqCl3cxTRa7GOwtKvQP8Q/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/red-seven-bar-and-grill-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 130,
+            "categories": [
+                {
+                    "alias": "newamerican",
+                    "title": "American (New)"
+                },
+                {
+                    "alias": "bars",
+                    "title": "Bars"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.419305385432,
+                "longitude": -86.895227697582
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "200 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "200 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17657427337",
+            "display_phone": "(765) 742-7337",
+            "distance": 2719.0186359102904
+        },
+        {
+            "id": "I-bI1nvzM9fyIpdXA-I7YQ",
+            "alias": "star-city-coffee-and-ale-house-lafayette",
+            "name": "Star City Coffee & Ale House",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/yPlWrelcpecxRnIGHHJ3uA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/star-city-coffee-and-ale-house-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 60,
+            "categories": [
+                {
+                    "alias": "desserts",
+                    "title": "Desserts"
+                },
+                {
+                    "alias": "bagels",
+                    "title": "Bagels"
+                },
+                {
+                    "alias": "cafes",
+                    "title": "Cafes"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.419565,
+                "longitude": -86.894992
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "210 Main St",
+                "address2": null,
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "210 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654207099",
+            "display_phone": "(765) 420-7099",
+            "distance": 2730.086184259501
+        },
+        {
+            "id": "PJD5FVhRStYMfA9AhsyInw",
+            "alias": "lafayette-brewing-co-lafayette",
+            "name": "Lafayette Brewing Co",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/QI8i1fe4MIl90wh2j4H4hA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/lafayette-brewing-co-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 176,
+            "categories": [
+                {
+                    "alias": "breweries",
+                    "title": "Breweries"
+                },
+                {
+                    "alias": "tradamerican",
+                    "title": "American (Traditional)"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.4194,
+                "longitude": -86.88996
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "622 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "622 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17657422591",
+            "display_phone": "(765) 742-2591",
+            "distance": 2486.2885429789508
+        },
+        {
+            "id": "RDpS0pv3HJATM_0Xb8qKAw",
+            "alias": "taco-ríco-lafayette-2",
+            "name": "Taco Ríco",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/Vaf6aTpZ_hj0TgOE5KVuZw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/taco-r%C3%ADco-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 106,
+            "categories": [
+                {
+                    "alias": "mexican",
+                    "title": "Mexican"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.43032,
+                "longitude": -86.85723
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "1325 Sagamore Pkwy N",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1325 Sagamore Pkwy N",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654469798",
+            "display_phone": "(765) 446-9798",
+            "distance": 3740.960985745691
+        },
+        {
+            "id": "7sPL919oMVV4TWDn_HKEdg",
+            "alias": "triple-xxx-restaurant-west-lafayette",
+            "name": "Triple XXX Restaurant",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/X55h3ORFSei-p0EVPV6Pbw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/triple-xxx-restaurant-west-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 395,
+            "categories": [
+                {
+                    "alias": "diners",
+                    "title": "Diners"
+                },
+                {
+                    "alias": "burgers",
+                    "title": "Burgers"
+                },
+                {
+                    "alias": "breakfast_brunch",
+                    "title": "Breakfast & Brunch"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.422859,
+                "longitude": -86.90538
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "2 N Salisbury St",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "2 N Salisbury St",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17657435373",
+            "display_phone": "(765) 743-5373",
+            "distance": 3571.7499245561016
+        },
+        {
+            "id": "lZ2Tc8CQkf0xRupdex8Vew",
+            "alias": "fuel-lafayette-2",
+            "name": "Fuel",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/5YaYWAKXoyz5iqtfRsQEBw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/fuel-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 44,
+            "categories": [
+                {
+                    "alias": "coffee",
+                    "title": "Coffee & Tea"
+                },
+                {
+                    "alias": "salad",
+                    "title": "Salad"
+                },
+                {
+                    "alias": "breakfast_brunch",
+                    "title": "Breakfast & Brunch"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41903,
+                "longitude": -86.88564
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "1005 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1005 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+18337553835",
+            "display_phone": "(833) 755-3835",
+            "distance": 2282.2270365614995
+        },
+        {
+            "id": "7cv2leiAcS5tUumVSm_KyA",
+            "alias": "arnis-lafayette",
+            "name": "Arni's",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/lBKq4Zy3yPfza-BHOnBlTw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/arnis-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 81,
+            "categories": [
+                {
+                    "alias": "pizza",
+                    "title": "Pizza"
+                },
+                {
+                    "alias": "sandwiches",
+                    "title": "Sandwiches"
+                },
+                {
+                    "alias": "salad",
+                    "title": "Salad"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.43056,
+                "longitude": -86.87176
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "2200 Elmwood Ave",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "2200 Elmwood Ave",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654471108",
+            "display_phone": "(765) 447-1108",
+            "distance": 3491.4886831467593
+        },
+        {
+            "id": "Hic-M5Y3YZ-7I_Q5KawaNQ",
+            "alias": "latea-bubble-tea-lounge-west-lafayette",
+            "name": "Latea Bubble Tea Lounge",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/mXZG7T7XFXUe7nFT2LjoUA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/latea-bubble-tea-lounge-west-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 144,
+            "categories": [
+                {
+                    "alias": "bubbletea",
+                    "title": "Bubble Tea"
+                },
+                {
+                    "alias": "desserts",
+                    "title": "Desserts"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4210848,
+                "longitude": -86.9016988
+            },
+            "transactions": [
+                "delivery"
+            ],
+            "price": "$",
+            "location": {
+                "address1": "358 E State St",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "358 E State St",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17655869398",
+            "display_phone": "(765) 586-9398",
+            "distance": 3223.9647016263075
+        },
+        {
+            "id": "VT5xvbZNU-TF9_HFk6bnRQ",
+            "alias": "merlins-beard-lafayette",
+            "name": "Merlin's Beard",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/52LbnV-V-HOteea-u_gFrQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/merlins-beard-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 23,
+            "categories": [
+                {
+                    "alias": "tabletopgames",
+                    "title": "Tabletop Games"
+                },
+                {
+                    "alias": "sandwiches",
+                    "title": "Sandwiches"
+                },
+                {
+                    "alias": "beverage_stores",
+                    "title": "Beverage Store"
+                }
+            ],
+            "rating": 5,
+            "coordinates": {
+                "latitude": 40.418959976855,
+                "longitude": -86.885659955442
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "1001 Main St",
+                "address2": "",
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1001 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17657144441",
+            "display_phone": "(765) 714-4441",
+            "distance": 2283.5490610929846
+        },
+        {
+            "id": "ZwmTthamhtd3HCBhL-Q6rw",
+            "alias": "sacred-grounds-lafayette",
+            "name": "Sacred Grounds",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/N0IkPR9PX81OoY7DnKO5Rw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/sacred-grounds-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 26,
+            "categories": [
+                {
+                    "alias": "breakfast_brunch",
+                    "title": "Breakfast & Brunch"
+                },
+                {
+                    "alias": "musicvenues",
+                    "title": "Music Venues"
+                },
+                {
+                    "alias": "cafes",
+                    "title": "Cafes"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4109824,
+                "longitude": -86.8987342
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "724 Wabash Ave",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "724 Wabash Ave",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654298452",
+            "display_phone": "(765) 429-8452",
+            "distance": 2305.159521766237
+        },
+        {
+            "id": "YeHiMtFgcCkAB89cPqvesA",
+            "alias": "great-harvest-bread-co-lafayette",
+            "name": "Great Harvest Bread Co",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/CmgyQAjn3M3T6t4usUBqRA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/great-harvest-bread-co-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 30,
+            "categories": [
+                {
+                    "alias": "bakeries",
+                    "title": "Bakeries"
+                },
+                {
+                    "alias": "catering",
+                    "title": "Caterers"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41022,
+                "longitude": -86.87921
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "1500 Kossuth St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1500 Kossuth St",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17657427323",
+            "display_phone": "(765) 742-7323",
+            "distance": 1186.7978369258099
+        },
+        {
+            "id": "96NAzrXrJvZY03JTXG1Hog",
+            "alias": "nine-irish-brothers-lafayette-lafayette-2",
+            "name": "Nine Irish Brothers - Lafayette",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/Ti-KXDqm7oyOL0neqaetDw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/nine-irish-brothers-lafayette-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 81,
+            "categories": [
+                {
+                    "alias": "irish",
+                    "title": "Irish"
+                },
+                {
+                    "alias": "pubs",
+                    "title": "Pubs"
+                },
+                {
+                    "alias": "musicvenues",
+                    "title": "Music Venues"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.39878,
+                "longitude": -86.8539
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "3520 St Rd 38 E",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3520 St Rd 38 E",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654470999",
+            "display_phone": "(765) 447-0999",
+            "distance": 1854.3808955306981
+        },
+        {
+            "id": "dHgwhkMVKezTII0Hkz8TAg",
+            "alias": "sharmas-kitchen-lafayette",
+            "name": "Sharma's Kitchen",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/SfZpjhg_cxn7ANXeTbcbLA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/sharmas-kitchen-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 89,
+            "categories": [
+                {
+                    "alias": "indpak",
+                    "title": "Indian"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.4309,
+                "longitude": -86.85723
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "1403 Sagamore Pkwy N",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1403 Sagamore Pkwy N",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17657694455",
+            "display_phone": "(765) 769-4455",
+            "distance": 3797.3642467295344
+        },
+        {
+            "id": "lFcEnVTo16Gi-hlfdvAATg",
+            "alias": "dog-n-suds-lafayette-3",
+            "name": "Dog N Suds",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/tg0y51GLpsXYW7A7JYAs6Q/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/dog-n-suds-lafayette-3?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 53,
+            "categories": [
+                {
+                    "alias": "burgers",
+                    "title": "Burgers"
+                },
+                {
+                    "alias": "hotdog",
+                    "title": "Hot Dogs"
+                },
+                {
+                    "alias": "sandwiches",
+                    "title": "Sandwiches"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4113,
+                "longitude": -86.85691
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "601 Sagamore Pkwy S",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "601 Sagamore Pkwy S",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654475457",
+            "display_phone": "(765) 447-5457",
+            "distance": 2014.5884290340878
+        },
+        {
+            "id": "f08XlrGq3Ggi71ZOFTETOw",
+            "alias": "yatagarasu-lafayette-2",
+            "name": "Yatagarasu",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/Q6IaHaQZlOo7zr-S_obAQw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/yatagarasu-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 60,
+            "categories": [
+                {
+                    "alias": "ramen",
+                    "title": "Ramen"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.41907,
+                "longitude": -86.8908
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "533 Main St",
+                "address2": "",
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "533 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17656072979",
+            "display_phone": "(765) 607-2979",
+            "distance": 2481.229370824089
+        },
+        {
+            "id": "mTKpOgtPbc5gN3_1jYwNVQ",
+            "alias": "chick-fil-a-lafayette",
+            "name": "Chick-fil-A",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/JV0CAnucTHQ3oKKrYxo2tw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/chick-fil-a-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 58,
+            "categories": [
+                {
+                    "alias": "hotdogs",
+                    "title": "Fast Food"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.418267,
+                "longitude": -86.835524
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "3836 South St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3836 South St",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654462053",
+            "display_phone": "(765) 446-2053",
+            "distance": 3974.698542377743
+        },
+        {
+            "id": "Lr8JBVx3SWvpBG7NcfdyoQ",
+            "alias": "akropolis-lafayette",
+            "name": "Akropolis",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/ZYU7IiDbqLPbrNpb1jD9XA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/akropolis-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 74,
+            "categories": [
+                {
+                    "alias": "greek",
+                    "title": "Greek"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.4173693,
+                "longitude": -86.8594405
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "3311 South St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3311 South St",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654470001",
+            "display_phone": "(765) 447-0001",
+            "distance": 2387.9209088478074
+        },
+        {
+            "id": "b9c16q5_QWt2L4I0oLOULg",
+            "alias": "azzip-pizza-lafayette",
+            "name": "Azzip Pizza",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/JA036YU3uYGa02KoXkXCIQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/azzip-pizza-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 31,
+            "categories": [
+                {
+                    "alias": "pizza",
+                    "title": "Pizza"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4163245525043,
+                "longitude": -86.8520264177396
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "105 Farabee Dr S",
+                "address2": "Ste B",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "105 Farabee Dr S",
+                    "Ste B",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17652699788",
+            "display_phone": "(765) 269-9788",
+            "distance": 2754.7347693252586
+        },
+        {
+            "id": "sT76TjIALrtPtUb07_k1AA",
+            "alias": "maru-japanese-sushi-restaurant-west-lafayette",
+            "name": "Maru Japanese Sushi Restaurant",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/-0zL9Ce3nuzYU2fPDCpPSA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/maru-japanese-sushi-restaurant-west-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 185,
+            "categories": [
+                {
+                    "alias": "sushi",
+                    "title": "Sushi Bars"
+                },
+                {
+                    "alias": "japanese",
+                    "title": "Japanese"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4245065750024,
+                "longitude": -86.9068535738926
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "102 N Chauncey Ave",
+                "address2": "Ste D",
+                "address3": null,
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "102 N Chauncey Ave",
+                    "Ste D",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17657432646",
+            "display_phone": "(765) 743-2646",
+            "distance": 3800.240776872744
+        },
+        {
+            "id": "zooKMktj7l_Y-OMIT077zQ",
+            "alias": "copper-moon-coffee-lafayette-2",
+            "name": "Copper Moon Coffee",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/cgeGLJvsW_yip6ynNvyjzg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/copper-moon-coffee-lafayette-2?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 34,
+            "categories": [
+                {
+                    "alias": "coffee",
+                    "title": "Coffee & Tea"
+                },
+                {
+                    "alias": "cafes",
+                    "title": "Cafes"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41659,
+                "longitude": -86.81564
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "4729 Meijer Ct",
+                "address2": "Unit 102",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "4729 Meijer Ct",
+                    "Unit 102",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17652508903",
+            "display_phone": "(765) 250-8903",
+            "distance": 5420.229429697732
+        },
+        {
+            "id": "92snDChM7lpwMqZ1pHKKMA",
+            "alias": "cellar-422-wine-bar-lafayette",
+            "name": "Cellar 422 Wine Bar",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/oHtUDR8iV2mmQsvOpN3tRg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/cellar-422-wine-bar-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 32,
+            "categories": [
+                {
+                    "alias": "wine_bars",
+                    "title": "Wine Bars"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4192553047295,
+                "longitude": -86.8923145160079
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "422 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "422 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17657466754",
+            "display_phone": "(765) 746-6754",
+            "distance": 2572.328360952413
+        },
+        {
+            "id": "TtYiZXbp22Ae3ajZxb0pmg",
+            "alias": "south-side-diner-lafayette",
+            "name": "South Side Diner",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/GxEUTD_AQVOgiYT3PdyYgQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/south-side-diner-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 45,
+            "categories": [
+                {
+                    "alias": "tradamerican",
+                    "title": "American (Traditional)"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.36754,
+                "longitude": -86.87072
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "2108 Veterans Memorial Pkwy S",
+                "address2": "Ste C",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47909",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "2108 Veterans Memorial Pkwy S",
+                    "Ste C",
+                    "Lafayette, IN 47909"
+                ]
+            },
+            "phone": "+17658380176",
+            "display_phone": "(765) 838-0176",
+            "distance": 3612.8930747564987
+        },
+        {
+            "id": "JCDLTlbIKDTnhFXouiDGhA",
+            "alias": "knickerbocker-saloon-lafayette",
+            "name": "Knickerbocker Saloon",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/vl21oexR_pAG85DE3hr0hw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/knickerbocker-saloon-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 31,
+            "categories": [
+                {
+                    "alias": "musicvenues",
+                    "title": "Music Venues"
+                },
+                {
+                    "alias": "cocktailbars",
+                    "title": "Cocktail Bars"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41861,
+                "longitude": -86.89169
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "113 N 5th St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "113 N 5th St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654232234",
+            "display_phone": "(765) 423-2234",
+            "distance": 2499.2363883209505
+        },
+        {
+            "id": "5Po65ETa-YvsWwg68Ab9nA",
+            "alias": "harrys-chocolate-shop-west-lafayette",
+            "name": "Harry's Chocolate Shop",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/TY3s3ZuWa1i9Kz_uczapWA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/harrys-chocolate-shop-west-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 121,
+            "categories": [
+                {
+                    "alias": "divebars",
+                    "title": "Dive Bars"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4238540143633,
+                "longitude": -86.9090178297849
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "329 W State St",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "329 W State St",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17657431467",
+            "display_phone": "(765) 743-1467",
+            "distance": 3879.123767205168
+        },
+        {
+            "id": "cMyehK0bOrWXWsgBG6770A",
+            "alias": "town-and-gown-bistro-west-lafayette",
+            "name": "Town & Gown Bistro",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/qEmRaZ6c1Kly68BBW29yVg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/town-and-gown-bistro-west-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 132,
+            "categories": [
+                {
+                    "alias": "breakfast_brunch",
+                    "title": "Breakfast & Brunch"
+                },
+                {
+                    "alias": "desserts",
+                    "title": "Desserts"
+                },
+                {
+                    "alias": "coffee",
+                    "title": "Coffee & Tea"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.4229,
+                "longitude": -86.9042599
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "119 N River Rd",
+                "address2": "",
+                "address3": "",
+                "city": "West Lafayette",
+                "zip_code": "47906",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "119 N River Rd",
+                    "West Lafayette, IN 47906"
+                ]
+            },
+            "phone": "+17652503425",
+            "display_phone": "(765) 250-3425",
+            "distance": 3511.392272913353
+        },
+        {
+            "id": "0nXqQjJjBFDwQ8Ebfv4CQg",
+            "alias": "chumleys-lafayette",
+            "name": "Chumley's",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/RoZPckzwSQhc69Nf9P9Arw/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/chumleys-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 109,
+            "categories": [
+                {
+                    "alias": "pubs",
+                    "title": "Pubs"
+                },
+                {
+                    "alias": "tradamerican",
+                    "title": "American (Traditional)"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.4188003540039,
+                "longitude": -86.8945999145508
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "122 N 3rd St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "122 N 3rd St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654209372",
+            "display_phone": "(765) 420-9372",
+            "distance": 2647.820182496303
+        },
+        {
+            "id": "XnnZqdYaHuq5lEqpQBFcuA",
+            "alias": "folie-lafayette",
+            "name": "Folie",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/b_bpnUpGG6nP_cZJn5Yk1g/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/folie-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 27,
+            "categories": [
+                {
+                    "alias": "newamerican",
+                    "title": "American (New)"
+                },
+                {
+                    "alias": "french",
+                    "title": "French"
+                },
+                {
+                    "alias": "bars",
+                    "title": "Bars"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41942,
+                "longitude": -86.89103
+            },
+            "transactions": [],
+            "price": "$$$",
+            "location": {
+                "address1": "526 Main St",
+                "address2": "",
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "526 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17656074900",
+            "display_phone": "(765) 607-4900",
+            "distance": 2527.0048689255323
+        },
+        {
+            "id": "Nwchshm4OBa05IJRRXzzuA",
+            "alias": "smittybread-bakery-lafayette",
+            "name": "Smittybread Bakery",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/OE1IPYCNRk54Cm9-kNncsA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/smittybread-bakery-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 12,
+            "categories": [
+                {
+                    "alias": "bakeries",
+                    "title": "Bakeries"
+                }
+            ],
+            "rating": 5,
+            "coordinates": {
+                "latitude": 40.4132874,
+                "longitude": -86.8928751
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "415 S 4th St",
+                "address2": null,
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "415 S 4th St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17654911634",
+            "display_phone": "(765) 491-1634",
+            "distance": 2087.7431356766037
+        },
+        {
+            "id": "P7mUcOwUiLeCUN70n4wFQA",
+            "alias": "corelife-eatery-lafayette",
+            "name": "CoreLife Eatery",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/ENBs1qEfoodE4lsEqnriRA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/corelife-eatery-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 29,
+            "categories": [
+                {
+                    "alias": "ramen",
+                    "title": "Ramen"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.4163245525043,
+                "longitude": -86.8520264177396
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "105 Farabee Dr S",
+                "address2": "Ste 100",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "105 Farabee Dr S",
+                    "Ste 100",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17652504145",
+            "display_phone": "(765) 250-4145",
+            "distance": 2754.7347693252586
+        },
+        {
+            "id": "PtumNwRcJHivPfx4e8K56g",
+            "alias": "lindo-mexico-lafayette",
+            "name": "Lindo Mexico",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/_Qao0GH6Cr34yPE2tog3zQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/lindo-mexico-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 51,
+            "categories": [
+                {
+                    "alias": "mexican",
+                    "title": "Mexican"
+                }
+            ],
+            "rating": 4,
+            "coordinates": {
+                "latitude": 40.413587,
+                "longitude": -86.857385
+            },
+            "transactions": [
+                "delivery"
+            ],
+            "price": "$",
+            "location": {
+                "address1": "405 Sagamore Pkwy S",
+                "address2": "Ste A1",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47905",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "405 Sagamore Pkwy S",
+                    "Ste A1",
+                    "Lafayette, IN 47905"
+                ]
+            },
+            "phone": "+17654470383",
+            "display_phone": "(765) 447-0383",
+            "distance": 2180.018768527329
+        },
+        {
+            "id": "Qs9CJcoo35eNfV4NsaBu1Q",
+            "alias": "the-pink-walrus-lafayette",
+            "name": "The Pink Walrus",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/h04ILBBwRVXQsEGLndsvQg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/the-pink-walrus-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 26,
+            "categories": [
+                {
+                    "alias": "icecream",
+                    "title": "Ice Cream & Frozen Yogurt"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.3666734335037,
+                "longitude": -86.862284093171
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "3575 Promenade Pkwy",
+                "address2": "Ste 100",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47909",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "3575 Promenade Pkwy",
+                    "Ste 100",
+                    "Lafayette, IN 47909"
+                ]
+            },
+            "phone": "+17652503272",
+            "display_phone": "(765) 250-3272",
+            "distance": 3862.3304313927933
+        },
+        {
+            "id": "d5-gmx9PW5a9mR1O-eH04g",
+            "alias": "something-blue-bakery-lafayette",
+            "name": "Something Blue Bakery",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/m9rRwtQiQsyZqK-9iQyFug/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/something-blue-bakery-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 22,
+            "categories": [
+                {
+                    "alias": "bakeries",
+                    "title": "Bakeries"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.41923,
+                "longitude": -86.88609
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "918 Main St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47901",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "918 Main St",
+                    "Lafayette, IN 47901"
+                ]
+            },
+            "phone": "+17655886212",
+            "display_phone": "(765) 588-6212",
+            "distance": 2335.388173465687
+        },
+        {
+            "id": "5RAmtmQqunQWz8FHMAZQjQ",
+            "alias": "taqueria-el-maguey-lafayette",
+            "name": "Taqueria El Maguey",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/lPn4-naq8dc-9GEH1ZZ-yA/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/taqueria-el-maguey-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 54,
+            "categories": [
+                {
+                    "alias": "mexican",
+                    "title": "Mexican"
+                }
+            ],
+            "rating": 3.5,
+            "coordinates": {
+                "latitude": 40.3951,
+                "longitude": -86.86517
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "2711 Teal Rd",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "2711 Teal Rd",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17654490160",
+            "display_phone": "(765) 449-0160",
+            "distance": 1036.3835798696336
+        },
+        {
+            "id": "lWfz_0gxs6IsNRmuNku1GA",
+            "alias": "budges-drive-in-lafayette",
+            "name": "Budges Drive In",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/COvVIZJf3eoXxSbGlmmGbg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/budges-drive-in-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 18,
+            "categories": [
+                {
+                    "alias": "icecream",
+                    "title": "Ice Cream & Frozen Yogurt"
+                },
+                {
+                    "alias": "burgers",
+                    "title": "Burgers"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.428114,
+                "longitude": -86.882377
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "1102 N 14th St",
+                "address2": "",
+                "address3": "",
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "1102 N 14th St",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17657421500",
+            "display_phone": "(765) 742-1500",
+            "distance": 3191.632772473639
+        },
+        {
+            "id": "UWkkR0WR7-btML8eKcsp7Q",
+            "alias": "el-torito-restaurant-lafayette",
+            "name": "El Torito Restaurant",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/-oz25itHEPQxslauG-pj8Q/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/el-torito-restaurant-lafayette?adjust_creative=Xqn7Hdrv8VjwWjDD8MeQLQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=Xqn7Hdrv8VjwWjDD8MeQLQ",
+            "review_count": 19,
+            "categories": [
+                {
+                    "alias": "mexican",
+                    "title": "Mexican"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.421044,
+                "longitude": -86.860972
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "404 N Earl Ave",
+                "address2": "",
+                "address3": null,
+                "city": "Lafayette",
+                "zip_code": "47904",
+                "country": "US",
+                "state": "IN",
+                "display_address": [
+                    "404 N Earl Ave",
+                    "Lafayette, IN 47904"
+                ]
+            },
+            "phone": "+17656071996",
+            "display_phone": "(765) 607-1996",
+            "distance": 2668.1216701796257
+        }
+    ],
+    "total": 509,
+    "region": {
+        "center": {
+            "longitude": -86.87576293945312,
+            "latitude": 40.39985613224728
+        }
+    }
+}
