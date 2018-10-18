@@ -155,6 +155,34 @@ abstract class ApiTestCase extends TestCase
     }
 
     /**
+     * Set response in the document
+     *
+     * @param mixed $response
+     * @return void
+     */
+    protected function setDocumentResponse($response)
+    {
+        $this->requests[count($this->requests) - 1]['response'] = $response;
+    }
+
+    /**
+     * Limit the array length for response body in document
+     *
+     * @param array $original
+     * @param int $length
+     * @return array
+     */
+    protected function limitArrayLength(array $original, int $length)
+    {
+        if (count($original) <= $length) {
+            return $original;
+        }
+        $limited = array_slice($original, 0, $length);
+        array_push($limited, '...');
+        return $limited;
+    }
+
+    /**
      * Make request
      *
      * @param array|null $data

@@ -4,6 +4,7 @@ namespace Tests\Feature\Restaurant;
 
 use App\Models\Address;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Tests\ApiTestCase;
 
 class ListRestaurantTest extends ApiTestCase
@@ -24,6 +25,10 @@ class ListRestaurantTest extends ApiTestCase
             'filter_delivery_fee' => '2_3',
             'order_by_desc' => 'rating',
         ]);
+        $this->setDocumentResponse([
+            'categories' => $this->limitArrayLength($response->json('categories'), 2),
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 2),
+        ]);
         $restaurants = $response->json('restaurants');
         for ($i = 0; $i < count($restaurants); $i++) {
             $this->assertLessThanOrEqual(3, $restaurants[$i]['delivery_fee']);
@@ -36,6 +41,11 @@ class ListRestaurantTest extends ApiTestCase
             'place_id' => $address->place_id,
             'filter_distance' => '_1',
         ]);
+        $this->setDocumentResponse([
+            'categories' => $this->limitArrayLength($response->json('categories'), 2),
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 2),
+        ]);
+        Log::debug($response->json('restaurants')[0]);
         $restaurants = $response->json('restaurants');
         for ($i = 0; $i < count($restaurants); $i++) {
             $this->assertLessThanOrEqual(1, $restaurants[$i]['distance']);
