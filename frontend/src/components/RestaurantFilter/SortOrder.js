@@ -19,13 +19,6 @@ const styles = ({
   },
 });
 
-function Sorts(sortBy) {
-  if (sortBy === 'rating') {
-    return (o1, o2) => (o2[sortBy] - o1[sortBy]);
-  }
-
-  return (o1, o2) => (o1[sortBy] - o2[sortBy]);
-}
 
 class SortOrder extends React.Component {
   constructor() {
@@ -40,11 +33,7 @@ class SortOrder extends React.Component {
     const { value } = event.target;
     const { onSortChange } = this.props;
     this.setState(() => {
-      if (value === 'default') {
-        onSortChange(Sorts('id'));
-      } else {
-        onSortChange(Sorts(value));
-      }
+      onSortChange(value);
       return { order: value };
     });
   }

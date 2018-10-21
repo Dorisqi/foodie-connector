@@ -16,18 +16,9 @@ class TagsFilter extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.tags !== this.props.tags) {
-  //     this.setState({
-  //       tags: ['All', ...nextProps.tags],
-  //       selectedTags: ['All', ...nextProps.tags],
-  //     })
-  //   }
-  // }
   componentWillReceiveProps(nextProps) {
     if (this.state.tags.length === 1) {
       const { tags } = nextProps;
-      console.log(tags);
       this.setState({
         tags: [{id: 0, name: 'All'}].concat(tags),
         selectedTags: ['All'].concat(tags.map(t => t.name))

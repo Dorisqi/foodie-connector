@@ -19,15 +19,7 @@ class NameSearchBar extends React.Component {
     this.state = {
       name: '',
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleSubmit(event) {
-    const { name } = this.state;
-    const { onSubmit } = this.props;
-    const { handleNameSubmit } = this.props;
-    handleNameSubmit(name);
   }
 
   handleChange(event) {

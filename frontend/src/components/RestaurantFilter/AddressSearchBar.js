@@ -40,7 +40,6 @@ class AddressSearchBar extends React.Component {
       place_id:'',
       isClick: true,
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlegetLocation = this.handlegetLocation.bind(this);
   }
@@ -65,23 +64,10 @@ class AddressSearchBar extends React.Component {
       }));
     }
 
-  handleSubmit(event) {
-    const { address } = this.state;
-    const { onSubmit } = this.props;
-    Geocode.fromAddress(address)
-    .then(
-      res => {
-        onSubmit(res.results[0].place_id);
-      }
-    , err => {
-        console.log(err)
-      }
-    )
-    event.preventDefault();
-  }
-
   handleChange(event) {
-    this.setState({ address: event.target.value });
+    const { value } = event.target;
+    const { handleAddressChange } = this.props;
+    handleAddressChange(value);
   }
 
   render() {
@@ -89,45 +75,40 @@ class AddressSearchBar extends React.Component {
     const { address } = this.state;
     return (
       <Card className={classes.card}>
-      <form onSubmit={this.handleSubmit}>
-      <FormControl className={classes.form} marginRight="dense" required>
-      {!this.props.isGeolocationAvailable
-       ? <div>Your browser does not support Geolocation</div>
-       : !this.props.isGeolocationEnabled
-         ? <div>Geolocation is not enabled</div>
-         : this.props.coords
-         ? (
-           <Button className={classes.button}
-                   onClick={this.handlegetLocation}
-                     color="info"
-                     variant="contained" fullWidth={false}>
-           {this.state.isClick ? 'Use Current Location' : this.state.address}
-           </Button>
-
-         )
-         :<div>Getting the location data&hellip; </div>}
-           </FormControl>
-          <FormControl className={classes.form} marginRight="dense" required>
-            <TextField
-              id="standard-with-placeholder"
-              label="Address"
-              placeholder="Address"
-              value={this.state.address}
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange}
-            />
-         </FormControl>
         <FormControl className={classes.form} marginRight="dense" required>
-          <Input type="submit" value="Get Restaurant!"/>
-        </FormControl>
-      </form>
+        {!this.props.isGeolocationAvailable
+         ? <div>Your browser does not support Geolocation</div>
+         : !this.props.isGeolocationEnabled
+           ? <div>Geolocation is not enabled</div>
+           : this.props.coords
+           ? (
+             <Button className={classes.button}
+                     onClick={this.handlegetLocation}
+                       color="info"
+                       variant="contained" fullWidth={false}>
+             {this.state.isClick ? 'Use Current Location' : this.state.address}
+             </Button>
+
+           )
+           :<div>Getting the location data&hellip; </div>}
+             </FormControl>
+            <FormControl className={classes.form} marginRight="dense" required>
+              <TextField
+                id="standard-with-placeholder"
+                label="Address"
+                placeholder="Address"
+                className={classes.textField}
+                margin="normal"
+                onChange={this.handleChange}
+              />
+           </FormControl>
       </Card>
     );
   }
 }
 AddressSearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  handleAddressChange: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
 };
 export default compose (withStyles(styles),geolocated({

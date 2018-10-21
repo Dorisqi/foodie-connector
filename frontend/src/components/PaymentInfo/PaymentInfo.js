@@ -91,6 +91,7 @@ class PaymentInfo extends React.Component {
   }
 
   postPaymentInfo(body) {
+    console.log(body);
     axios.post(apiList.card, body)
     .then(res => {
       this.setState(state => {
