@@ -64,6 +64,11 @@ class ApiUser extends Authenticatable
         return $this->hasOne('App\Models\Card', 'id', 'default_card_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'creator_id');
+    }
+
     public function getIsEmailVerifiedAttribute()
     {
         return !is_null($this->email_verified_at);
@@ -72,7 +77,9 @@ class ApiUser extends Authenticatable
     public function toArray()
     {
         $data = parent::toArray();
-        $data['is_email_verified'] = $this->is_email_verified;
+        if (!is_null($this->email)) {
+            $data['is_email_verified'] = $this->is_email_verified;
+        }
         return $data;
     }
 
