@@ -60,12 +60,12 @@ class ProfileTabs extends React.Component {
   };
 
   handleChange = (event, value) => {
-    console.log(value);
+  //  console.log(value);
     this.setState({ value });
   };
 
   handleChangeIndex = index => {
-    console.log('change', index);
+    //console.log('change', index);
     this.setState({ value: index });
   };
 
