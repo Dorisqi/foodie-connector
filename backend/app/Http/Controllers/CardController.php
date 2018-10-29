@@ -136,21 +136,18 @@ class CardController extends ApiController
         try {
             DB::beginTransaction();
 
-            if (!App::environment('testing')) {
-                $customer = Customer::retrieve($this->user()->stripe_id);
-                $source = $customer->sources->retrieve($card->stripe_id);
-                if ($request->has('expiration_month')) {
-                    $source->exp_month = $request->input('expiration_month');
-                }
-                if ($request->has('expiration_year')) {
-                    $source->exp_year = $request->input('expiration_year');
-                }
-                if ($request->has('zip_code')) {
-                    $source->address_zip = $request->input('zip_code');
-                }
-                $source->save();
-                // TODO: Improve testing
+            $customer = Customer::retrieve($this->user()->stripe_id);
+            $source = $customer->sources->retrieve($card->stripe_id);
+            if ($request->has('expiration_month')) {
+                $source->exp_month = $request->input('expiration_month');
             }
+            if ($request->has('expiration_year')) {
+                $source->exp_year = $request->input('expiration_year');
+            }
+            if ($request->has('zip_code')) {
+                $source->address_zip = $request->input('zip_code');
+            }
+            $source->save();
 
             if ($request->has('expiration_month')) {
                 $card->expiration_month = $request->input('expiration_month');
@@ -208,11 +205,8 @@ class CardController extends ApiController
                 }
             }
 
-            if (!App::environment('testing')) {
-                $customer = Customer::retrieve($user->stripe_id);
-                $customer->sources->retrieve($card->stripe_id)->delete();
-                // TODO: Improve sources testing
-            }
+            $customer = Customer::retrieve($user->stripe_id);
+            $customer->sources->retrieve($card->stripe_id)->delete();
 
             $card->delete();
 

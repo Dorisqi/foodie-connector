@@ -24,7 +24,7 @@ class Maps
     protected static function request(string $method, string $uri, array $query = [])
     {
         $client = new Client([
-            'base_uri' => 'https://maps.googleapis.com/maps/api/',
+            'base_uri' => config('services.google_maps.base_uri'),
         ]);
         $query['key'] = config('services.google_maps.secret');
         try {

@@ -4,10 +4,12 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redis;
 use Stripe\ApiRequestor;
 use Stripe\HttpClient\CurlClient;
 use Stripe\Stripe;
+use Symfony\Component\Process\Process;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -31,6 +33,12 @@ abstract class TestCase extends BaseTestCase
     /** @var object HTTP client mocker */
     protected $clientMock;
 
+    /** @var object process for Stripe server */
+    protected $stripeProcess;
+
+    /** @var object process for Google Maps server */
+    protected $googleMapsProcess;
+
     /**
      * Setup the test environment.
      *
@@ -43,6 +51,11 @@ abstract class TestCase extends BaseTestCase
         $this->runDatabaseMigrations();
 
         // Stripe mocking
+        $STRIPE_MOCK_PORT = env('STRIPE_MOCK_PORT');
+        $this->stripeProcess =
+            new Process("php -S localhost:${STRIPE_MOCK_PORT} tests/Services/Stripe/server.php");
+        $this->stripeProcess->start();
+
         // Save original values so that we can restore them after running tests
         $this->origApiBase = Stripe::$apiBase;
         $this->origApiKey = Stripe::getApiKey();
@@ -51,17 +64,23 @@ abstract class TestCase extends BaseTestCase
         $this->origAccountId = Stripe::getAccountId();
 
         // Set up host and credentials for stripe-mock
-        Stripe::$apiBase = "http://localhost:" . env('STRIPE_MOCK_PORT');
-        Stripe::setApiKey("sk_test_123");
-        Stripe::setClientId("ca_123");
-        Stripe::setApiVersion(null);
-        Stripe::setAccountId(null);
+        Stripe::$apiBase = "http://localhost:${STRIPE_MOCK_PORT}";
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Set up the HTTP client mocker
-        // $this->clientMock = $this->getMock('\Stripe\HttpClient\ClientInterface');
+        // Set up google maps mocking
+        $GOOGLE_MAPS_MOCK_PORT = env('GOOGLE_MAPS_MOCK_PORT');
+        $this->googleMapsProcess =
+            new Process("php -S localhost:${GOOGLE_MAPS_MOCK_PORT} tests/services/GoogleMaps/server.php");
+        $this->googleMapsProcess->start();
+        Config::set('services.google_maps.base_uri', "http://localhost:${GOOGLE_MAPS_MOCK_PORT}");
+    }
 
-        // By default, use the real HTTP client
-        ApiRequestor::setHttpClient(CurlClient::instance());
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->stripeProcess->stop();
+        $this->googleMapsProcess->stop();
     }
 
     /**
