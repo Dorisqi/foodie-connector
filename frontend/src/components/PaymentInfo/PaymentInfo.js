@@ -18,6 +18,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Button from '../../material-kit/components/CustomButtons/Button';
 import CardInfo from './CardInfo';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+import { Elements, StripeProvider } from 'react-stripe-elements';
+import { CardExpiryElement } from 'react-stripe-elements';
+import Input from '@material-ui/core/Input';
+
 import classNames from 'classnames';
 
 
@@ -42,26 +50,62 @@ const styles = theme => ({
   },
 
 });
-const id = 0;
-function createData(id, nickname,brand,last_four,expiration) {
-  id += 1;
-  return { id, nickname,brand,last_four,expiration};
+
+// const id = 0;
+// function createData(id, nickname,brand,last_four,expiration, is_default) {
+//   id += 1;
+//   return { id, nickname,brand,last_four,expiration, is_default};
+// }
+
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
 }
 
+const createOptions = (fontSize, padding) => {
+  return {
+    style: {
+      base: {
+        fontSize,
+        color: '#424770',
+        letterSpacing: '0.025em',
+        fontFamily: 'Source Code Pro, monospace',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+        padding,
+      },
+      invalid: {
+        color: '#9e2146',
+      },
+    },
+  };
+};
 
-
-
+function getEditCard(card) {
+  return {
+    id: card.id,
+    nickname: card.nickname,
+    expiration_month: card.expiration_month,
+    expiration_year: card.expiration_year,
+    zip_code: '',
+    is_default: card.is_default,
+    brand: card.brand,
+    last_four: card.last_four
+  }
+}
 
 class PaymentInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
+      editCards: [],
       selectedEnabled: 1,
     }
     this.postPaymentInfo = this.postPaymentInfo.bind(this);
-    this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
-
+    this.handleCardonChange = this.handleCardonChange.bind(this);
+    this.handleEditSubmit = this.handleEditSubmit.bind(this);
+    this.handleEditCheck = this.handleEditCheck.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +114,13 @@ class PaymentInfo extends React.Component {
 
   loadPaymentInfo() {
     axios.get(apiList.card)
-    .then(res => this.setState({ cards: res.data }))
+    .then(res => {
+      console.log(res.data.map(a => getEditCard(a)));
+      this.setState({
+        cards: res.data,
+        editCards: res.data.map(a => getEditCard(a))
+      });
+    })
     .catch(err => {
       const { response } = err;
       if (response && response.status === 401) {
@@ -82,22 +132,54 @@ class PaymentInfo extends React.Component {
     });
   }
 
-  handleChangeEnabled(event) {
-    const { value, checked } = event.target;
-    this.setState(() => {
-      this.state.selectedEnabled = value;
-      return { selectedEnabled: value };
-    });
+  handleCardonChange = (id, filed) => event => {
+    const { value } = event.target;
+    this.setState((state) => {
+      editCards: state.editCards.map(c => {
+        if (c.id != id) {
+          return c;
+        }
+        c[filed] = value;
+        return c;
+      })
+    })
   }
-
+  handleEditCheck = id => event => {
+    const { checked } = event.target;
+    this.setState((state) => {
+      editCards: state.editCards.map(c => {
+        if (c.id != id) {
+          return c;
+        }
+        c.is_default = checked;
+        return c;
+      })
+    })
+  }
+  handleEditSubmit = id => event => {
+    const editCard  = this.state.editCards.filter(c => c.id == id)[0];
+    const body = {
+      nickname: editCard.nickname,
+      expiration_month: Number(editCard.expiration_month),
+      expiration_year: Number(editCard.expiration_year),
+      zip_code: Number(editCard.zip_code),
+      is_default: editCard.is_default
+    }
+    console.log(id+": "+body);
+    axios.put(apiList.card+'/'+id, body)
+    .then(res => {
+      console.log("loadPaymentInfo");
+      this.loadPaymentInfo();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    event.preventDefault();
+  }
   postPaymentInfo(body) {
-    console.log(body);
     axios.post(apiList.card, body)
     .then(res => {
-      this.setState(state => {
-        console.log([...state.cards, res.data]);
-        return { cards: [...state.cards, res.data] }
-      })
+      this.loadPaymentInfo();
     }).catch(err => {
       const { response } = err;
       if (response) {
@@ -117,22 +199,26 @@ class PaymentInfo extends React.Component {
     });
   }
 
+  handleClickOpen(modal) {
+    const x = [];
+    x[modal] = true;
+    this.setState(x);
+  }
+  handleClose(modal) {
+    const x = [];
+    x[modal] = false;
+    this.setState(x);
+  }
+
+
   render() {
 
     const { classes } = this.props;
-    const rows = [];
-    for (let i = 0; i < this.state.cards.length; i++){
-        const expiration = this.state.cards[i].expiration_month+'/'+this.state.cards[i].expiration_year;
-            rows.push(
-                createData(i,this.state.cards[i].nickname,this.state.cards[i].brand,this.state.cards[i].last_four,
-                          expiration)
-            );
-        }
+    const { editCards } = this.state;
     const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal,
     );
-
 
     return (
 
@@ -152,15 +238,14 @@ class PaymentInfo extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
+            {editCards.map(row => (
               <TableRow key={row.id}>
                 <TableCell>
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
                         <Radio
-                          checked={this.state.selectedEnabled == row.id}
-                          onChange={this.handleChangeEnabled}
+                          checked={row.is_default}
                           value={row.id}
                           name="radio button enabled"
                           aria-label="A"
@@ -182,12 +267,86 @@ class PaymentInfo extends React.Component {
                       }}
                       label=""
                     />
+                    <div>
+                      <Button
+                        color="info"
+                        round
+                        onClick={() => this.handleClickOpen('modal')}
+                      >
+                      Edit
+                      </Button>
+                      <Dialog
+                        classes={{
+                          root: classes.center,
+                          paper: classes.modal,
+                        }}
+                        open={this.state.modal}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={() => this.handleClose('modal')}
+                        aria-labelledby="modal-slide-title"
+                        aria-describedby="modal-slide-description"
+                      >
+                        <DialogContent
+                          id="modal-slide-description"
+                          className={classes.modalBody}
+                        >
+
+
+                        </DialogContent>
+                        <form onSubmit={this.handleEditSubmit(row.id)}>
+                          <label>
+                            Nickname
+                            <input name="name" type="text"
+                                   onChange={this.handleCardonChange(row.id, 'nickname')} required />
+                          </label>
+                          <label>
+                            Expiration month
+                            <input name="month" type="number" min="1" max="12"
+                                   onChange={this.handleCardonChange(row.id, 'expiration_month')} required />
+                          </label>
+                          <label>
+                            Expiration year
+                            <input name="year" type="number" min="2018"
+                                   onChange={this.handleCardonChange(row.id, 'expiration_year')} required />
+                          </label>
+                          <label>
+                            Zip code
+                            <input name="zip_code" type="number"
+                                   onChange={this.handleCardonChange(row.id, 'zip_code')} required />
+                          </label>
+                          <label>
+                            <Checkbox
+                              onChange={this.handleEditCheck(row.id)}
+                              color="primary"
+                            />
+                            <label>
+                              set to default
+                            </label>
+                          </label>
+                          <br/>
+                          <br/>
+                          <Input type="submit" value="Submit" />
+                        </form>
+                        <DialogActions
+                          className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
+                        >
+
+
+                          <Button
+                            onClick={() => this.handleClose('modal')}
+                            color="rose">
+                          close
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </div>
                   </div>
                 </TableCell>
                 <TableCell>{row.nickname}</TableCell>
                 <TableCell>{row.brand}</TableCell>
                 <TableCell>{row.last_four}</TableCell>
-                <TableCell>{row.expiration}</TableCell>
+                <TableCell>{row.expiration_month+'/'+row.expiration_year}</TableCell>
 
 
               </TableRow>
