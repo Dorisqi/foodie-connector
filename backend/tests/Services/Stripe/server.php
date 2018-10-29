@@ -5,19 +5,6 @@ if ($_SERVER['HTTP_AUTHORIZATION'] !== 'Bearer sk_test_gagC9svT5sqFffncVUpzhEQo'
     exit;
 }
 
-function badRequest() {
-    header("HTTP/1.1 400 Bad Request");
-    echo "
-{
-    \"error\": {
-        \"message\": \"Bad request\",
-        \"type\": \"invalid_request_error\"
-    }
-}
-    ";
-    exit;
-}
-
 $customerId = 'cus_Ds7X6iyihxJ5x3hHII';
 $cardToken = 'tok_1DG9dQAv8osFAEU4RjLkEWvA';
 $cardId = 'card_1DG9dQAv8osFAEU4IeXI2xtg';
@@ -107,7 +94,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === '/v1/to
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === "/v1/customers/${customerId}/sources") {
     if ($_POST['source'] !== $cardToken) {
-        badRequest();
+        header("HTTP/1.1 400 Bad Request");
+        echo "
+{
+    \"error\": {
+        \"message\": \"Bad request\",
+        \"type\": \"invalid_request_error\"
+    }
+}
+    ";
+        exit;
     }
     echo "
 {

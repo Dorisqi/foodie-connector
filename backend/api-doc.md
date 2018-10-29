@@ -1532,7 +1532,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "nickname": "Test Visa",
-    "token": "tok_L0l2TZ715VLoMA",
+    "token": "tok_1DG9dQAv8osFAEU4RjLkEWvA",
     "is_default": false
 }
 ```
@@ -1934,7 +1934,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.424039",
             "lng": "-86.907576",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
             "categories": [
                 "Bakeries",
                 "Coffee & Tea",
@@ -1957,7 +1957,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47906",
             "lat": "40.42403",
             "lng": "-86.90717",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/1-QS7y6KMCoSNnPuzgJqEw.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/1-QS7y6KMCoSNnPuzgJqEw.jpg",
             "categories": [
                 "Seafood",
                 "Sushi Bars",
@@ -2010,7 +2010,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47901",
             "lat": "40.4132874",
             "lng": "-86.8928751",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/Nwchshm4OBa05IJRRXzzuA.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/Nwchshm4OBa05IJRRXzzuA.jpg",
             "categories": [
                 "Bakeries"
             ],
@@ -2031,7 +2031,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "zip_code": "47905",
             "lat": "40.401518",
             "lng": "-86.858009",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/_4f10yrgvDHGOqvmHd91iA.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/_4f10yrgvDHGOqvmHd91iA.jpg",
             "categories": [
                 "Asian Fusion",
                 "Sushi Bars"
