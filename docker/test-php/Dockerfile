@@ -1,5 +1,8 @@
 FROM php:7.2-alpine
 
+# Install PHP GD
+RUN apk add --no-cache libpng libpng-dev && docker-php-ext-install gd && apk del libpng-dev
+
 # Install Redis
 RUN apk add --no-cache redis
 
