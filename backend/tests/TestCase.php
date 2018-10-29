@@ -54,7 +54,7 @@ abstract class TestCase extends BaseTestCase
     public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
-        
+
         self::$stripeProcess->stop();
         self::$googleMapsProcess->stop();
     }
