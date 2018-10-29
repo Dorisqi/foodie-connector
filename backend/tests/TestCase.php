@@ -6,14 +6,18 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redis;
-use Stripe\ApiRequestor;
-use Stripe\HttpClient\CurlClient;
 use Stripe\Stripe;
 use Symfony\Component\Process\Process;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    /** @var object stripe mock process */
+    protected static $stripeProcess;
+
+    /** @var object google maps mock process */
+    protected static $googleMapsProcess;
 
     /** @var string original API base URL */
     protected $origApiBase;
@@ -33,11 +37,27 @@ abstract class TestCase extends BaseTestCase
     /** @var object HTTP client mocker */
     protected $clientMock;
 
-    /** @var object process for Stripe server */
-    protected $stripeProcess;
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
 
-    /** @var object process for Google Maps server */
-    protected $googleMapsProcess;
+        $stripePort = env('STRIPE_MOCK_PORT');
+        self::$stripeProcess =
+            new Process("php -S localhost:${stripePort} tests/Services/Stripe/server.php");
+        self::$stripeProcess->start();
+        $googleMapsPort = env('GOOGLE_MAPS_MOCK_PORT');
+        self::$googleMapsProcess =
+            new Process("php -S localhost:${googleMapsPort} tests/Services/GoogleMaps/server.php");
+        self::$googleMapsProcess->start();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+        
+        self::$stripeProcess->stop();
+        self::$googleMapsProcess->stop();
+    }
 
     /**
      * Setup the test environment.
@@ -52,35 +72,22 @@ abstract class TestCase extends BaseTestCase
 
         // Stripe mocking
         $STRIPE_MOCK_PORT = env('STRIPE_MOCK_PORT');
-        $this->stripeProcess =
-            new Process("php -S localhost:${STRIPE_MOCK_PORT} tests/Services/Stripe/server.php");
-        $this->stripeProcess->start();
-
-        // Save original values so that we can restore them after running tests
         $this->origApiBase = Stripe::$apiBase;
         $this->origApiKey = Stripe::getApiKey();
         $this->origClientId = Stripe::getClientId();
         $this->origApiVersion = Stripe::getApiVersion();
         $this->origAccountId = Stripe::getAccountId();
-
-        // Set up host and credentials for stripe-mock
         Stripe::$apiBase = "http://localhost:${STRIPE_MOCK_PORT}";
         Stripe::setApiKey(config('services.stripe.secret'));
 
         // Set up google maps mocking
         $GOOGLE_MAPS_MOCK_PORT = env('GOOGLE_MAPS_MOCK_PORT');
-        $this->googleMapsProcess =
-            new Process("php -S localhost:${GOOGLE_MAPS_MOCK_PORT} tests/services/GoogleMaps/server.php");
-        $this->googleMapsProcess->start();
         Config::set('services.google_maps.base_uri', "http://localhost:${GOOGLE_MAPS_MOCK_PORT}");
     }
 
     protected function tearDown()
     {
         parent::tearDown();
-
-        $this->stripeProcess->stop();
-        $this->googleMapsProcess->stop();
     }
 
     /**
