@@ -114,6 +114,9 @@ class GenerateRestaurantData extends Command
         $categories = [];
         $restaurants = [];
         foreach ($listData['results'] as $restaurantData) {
+            if ($restaurantData['name'] === 'Taco Bell') {
+                continue;
+            }
             $id = $restaurantData['restaurant_id'];
             $this->info($id
                 . ' - '
@@ -178,6 +181,7 @@ class GenerateRestaurantData extends Command
             foreach ($restaurantDetail['restaurant']['menu_category_list'] as $menuCategory) {
                 $category = [
                     'name' => $menuCategory['name'],
+                    'order' => $menuCategory['sequence'],
                     'items' => [],
                 ];
                 foreach ($menuCategory['menu_item_list'] as $menuItem) {
@@ -187,6 +191,7 @@ class GenerateRestaurantData extends Command
                         'price' => $this->priceToDecimal($menuItem['price']['amount']),
                         'minimum_price' => $this->priceToDecimal($menuItem['minimum_price_variation']['amount']),
                         'maximum_price' => $this->priceToDecimal($menuItem['maximum_price_variation']['amount']),
+                        'order' => $menuItem['sequence'],
                         'optionGroups' => [],
                     ];
                     foreach ($menuItem['choice_category_list'] as $choiceCategory) {
@@ -198,7 +203,7 @@ class GenerateRestaurantData extends Command
                                 'options' => [],
                             ];
                             foreach ($choiceCategory['choice_option_list'] as $choiceOption) {
-                                array_push($optionGroup, [
+                                array_push($optionGroup['options'], [
                                     'name' => $choiceOption['description'],
                                     'price' => $this->priceToDecimal($choiceOption['price']['amount']),
                                     'order' => $choiceOption['sequence'],

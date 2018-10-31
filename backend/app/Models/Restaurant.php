@@ -10,8 +10,8 @@ class Restaurant extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'yelp_id',
         'name',
+        'image',
         'order_minimum',
         'delivery_fee',
         'rating',
@@ -21,18 +21,28 @@ class Restaurant extends Model
         'city',
         'state',
         'zip_code',
-        'place_id',
         'lat',
         'lng',
     ];
 
-    protected $hidden = [
-        'yelp_id',
-    ];
-
     public function restaurantCategories()
     {
-        return $this->belongsToMany('App\Models\RestaurantCategory', 'restaurant_restaurant_category');
+        return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category');
+    }
+
+    public function operationTimes()
+    {
+        return $this->hasMany(OperationTime::class);
+    }
+
+    public function productCategories()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    public function productOptionGroups()
+    {
+        return $this->hasMany(ProductOptionGroup::class);
     }
 
     public function toArray()
