@@ -107,6 +107,7 @@ class OrderController extends ApiController
      */
     public function qrCode($id)
     {
+        // TODO: Cache
         $order = Order::find($id);
         if (is_null($order)) {
             throw ApiException::resourceNotFound();

@@ -30,6 +30,9 @@ Route::prefix('v1')->group(function () {
         Route::resource('cards', 'CardController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+        Route::resource('restaurants', 'RestaurantController')->only([
+            'index', 'show',
+        ]);
         Route::resource('orders', 'OrderController')->only([
             'store', 'show',
         ]);
@@ -41,7 +44,5 @@ Route::prefix('v1')->group(function () {
             Route::put('password', 'ProfileController@changePassword');
             Route::put('email', 'ProfileController@updateEmail');
         });
-
-        Route::get('restaurants', 'RestaurantController@index');
     });
 });

@@ -111,7 +111,7 @@ class RestaurantsTableSeeder extends Seeder
                     $product->productCategory()->associate($productCategory);
                     $product->save();
                     foreach ($item['optionGroups'] as $optionGroup) {
-                        $product->optionGroups()->attach(
+                        $product->productOptionGroups()->attach(
                             $productOptionGroupIds[$optionGroup['grubhub_id']],
                             [
                                 'order' => $optionGroup['order'],

@@ -17,8 +17,9 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class);
     }
 
-    public function optionGroups()
+    public function productOptionGroups()
     {
-        return $this->belongsToMany(ProductOptionGroup::class, 'product_option_product_option_group');
+        return $this->belongsToMany(ProductOptionGroup::class, 'product_option_product_option_group')
+            ->withPivot('order');
     }
 }
