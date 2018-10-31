@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\Order;
 
-use App\Facades\Time;
 use App\Http\Controllers\OrderController;
 use App\Models\Address;
 use App\Models\Restaurant;
-use Carbon\Carbon;
 use Tests\ApiTestCase;
 
 class CreateOrderTest extends ApiTestCase
@@ -24,23 +22,21 @@ class CreateOrderTest extends ApiTestCase
         $this->login();
         $address = factory(Address::class)->create();
         $restaurant = factory(Restaurant::class)->create();
-        $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
-        $property->setAccessible(true);
-        $property->setValue(Carbon::parse('2018-10-27 15:00:01')->timestamp);
+        $this->mockCurrentTime('2018-10-27 15:00:01');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
             'join_limit' => 600,
             'address_id' => $address->id,
             'is_public' => true,
         ]);
-        $property->setValue(Carbon::parse('2018-10-27 11:50:00')->timestamp);
+        $this->mockCurrentTime('2018-10-27 11:50:00');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
             'join_limit' => 7200,
             'address_id' => $address->id,
             'is_public' => false,
         ], false);
-        $property->setValue(Carbon::parse('2018-10-28 12:00:00')->timestamp);
+        $this->mockCurrentTime('2018-10-28 12:00:00');
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,
             'join_limit' => 7200,

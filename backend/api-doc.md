@@ -1936,7 +1936,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "Category 1",
                 "Category 2"
             ],
-            "is_open": false,
+            "is_open": true,
             "distance": 0,
             "estimated_delivery_time": 20
         },
@@ -1985,7 +1985,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "Category 1",
                 "Category 2"
             ],
-            "is_open": false,
+            "is_open": true,
             "distance": 0,
             "estimated_delivery_time": 20
         },
@@ -2139,7 +2139,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "Category 1",
         "Category 2"
     ],
-    "is_open": false
+    "is_open": true
 }
 ```
 #### **Status Code: 401**
@@ -2220,7 +2220,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "79562A",
+    "id": "D47470",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2265,8 +2265,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/79562A",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/79562A"
+    "share_link": "http://localhost:8000/orders/D47470",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/D47470"
 }
 ```
 #### **Status Code: 401**
@@ -2402,7 +2402,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "Category 1",
             "Category 2"
         ],
-        "is_open": false
+        "is_open": true
     },
     "creator": {
         "id": 1,
@@ -2473,7 +2473,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 17:45:25",
+    "close_at": "2018-10-31 18:06:58",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",

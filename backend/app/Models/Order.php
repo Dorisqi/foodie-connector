@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Facades\Time;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -42,6 +44,11 @@ class Order extends Model
     public function getJoinableAttribute()
     {
         if (!is_null($this->close_at)) {
+            return false;
+        }
+        if (Time::currentTime()->greaterThan(
+            Carbon::createFromTimestamp($this->join_before)
+        )) {
             return false;
         }
         return true;

@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Facades\Time;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Config;
@@ -113,5 +115,20 @@ abstract class TestCase extends BaseTestCase
     protected function seedRestaurantData()
     {
         Artisan::call('db:seed', ['--class' => 'RestaurantsTestSeeder']);
+    }
+
+    /**
+     * Mock current time
+     *
+     * @param string $time
+     * @return void
+     *
+     * @throws \ReflectionException
+     */
+    protected function mockCurrentTime(string $time)
+    {
+        $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
+        $property->setAccessible(true);
+        $property->setValue(Carbon::parse($time)->timestamp);
     }
 }
