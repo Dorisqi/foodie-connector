@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use App\Facades\Address;
+use App\Facades\Time;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Restaurant;
@@ -41,17 +42,20 @@ class OrderController extends ApiController
 
             $restaurant = Restaurant::find($request->input('restaurant_id'));
 
-            $address = $this->user()->addresses()->find($restaurant->input('address_id'));
+            $address = $this->user()->addresses()->find($request->input('address_id'));
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
-            if (!$restaurant->deliverable($address)) {
+            if (!$restaurant->deliverable([
+                'lat' => $address->lat,
+                'lng' => $address->lng,
+            ])) {
                 throw ApiException::validationFailedErrors([
                     'address_id' => 'The address associated with the address_id must be deliverable by the restaurant.',
                 ]);
             }
 
-            $createAt = Carbon::now();
+            $createAt = Time::currentTime();
             $joinBefore = $createAt->copy()->addSeconds((int)$request->input('join_limit'));
             if (!$restaurant->isOpenAt($joinBefore->copy()->addMinute(10))) {
                 throw ApiException::validationFailedErrors([

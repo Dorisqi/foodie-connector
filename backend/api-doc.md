@@ -1977,7 +1977,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "Italian",
                 "Pizza"
             ],
-            "is_open": false,
+            "is_open": true,
             "distance": 0.1,
             "estimated_delivery_time": 20
         },
@@ -2364,7 +2364,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "Latin American",
         "Mexican"
     ],
-    "is_open": false
+    "is_open": true
 }
 ```
 #### **Status Code: 401**
@@ -2394,6 +2394,175 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+
+## **order**
+
+Everything about order
+
+### **POST - /api/v1/orders**
+
+Create a new order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | required | integer | exists:restaurants,id |
+| join_limit | required | integer | between:600,7200 |
+| is_public | required | boolean |  |
+| address_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 600,
+    "address_id": 1,
+    "is_public": true
+}
+```
+
+**Response Body:**
+```
+{
+    "create_at": "2018-10-27 15:00:01",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "id": "9377DE",
+    "restaurant_id": 1,
+    "creator_id": 1,
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "phone": "7653500000",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906-5123",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "restaurant": {
+        "id": 1,
+        "name": "El Chicano",
+        "image": "https://storage.googleapis.com/your-bucket/vxfka0dbg3m7czjlfl2n.jpg",
+        "order_minimum": "9.99",
+        "delivery_fee": "2.99",
+        "rating": "3.7936120868984",
+        "address_line_1": "6 N Earl Ave",
+        "address_line_2": "",
+        "city": "Lafayette",
+        "state": "IN",
+        "zip_code": "47904",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7654484206",
+        "operation_times": [
+            {
+                "day_of_week": "6",
+                "start_time": "12:00:00",
+                "end_time": "2:00:00"
+            }
+        ],
+        "categories": [
+            "Latin American",
+            "Mexican"
+        ],
+        "is_open": true
+    },
+    "creator": {
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "id": 1,
+        "is_email_verified": false
+    },
+    "share_link": "http://localhost:8000/orders/9377DE"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 7200,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "join_limit": "The restaurant must be open for at least 10 minutes after the join limit."
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 600,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": "The address associated with the address_id must be deliverable by the restaurant."
+    }
 }
 ```
 

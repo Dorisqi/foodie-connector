@@ -32,13 +32,13 @@ class OperationTime extends Model
      */
     public function contains(Carbon $time)
     {
-        if ($time->dayOfWeek !== $this->day_of_week && $time->dayOfWeek !== ($this->day_of_week + 1) % 7) {
+        if ($time->dayOfWeek != $this->day_of_week && $time->dayOfWeek != ($this->day_of_week + 1) % 7) {
             return false;
         }
         $timeOnly = Carbon::createFromTime($time->hour, $time->minute, $time->second);
         $startTime = Carbon::parse($this->start_time);
         $endTime = Carbon::parse($this->end_time);
-        if ($time->dayOfWeek === $this->day_of_week) {
+        if ($time->dayOfWeek == $this->day_of_week) {
             if ($timeOnly->lessThan($startTime)) {
                 return false;
             }
