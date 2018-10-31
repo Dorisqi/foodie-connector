@@ -24,7 +24,7 @@ class CreateOperationTimesTable extends Migration
                 ->references('id')
                 ->on('restaurants')
                 ->onDelete('cascade');
-            $table->index(['restaurant_id', 'day_of_week', 'start_time'], 'order');
+            $table->index(['restaurant_id', 'day_of_week', 'start_time'], 'operation_times_order');
         });
     }
 

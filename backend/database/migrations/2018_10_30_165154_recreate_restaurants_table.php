@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\App;
 
 class RecreateRestaurantsTable extends Migration
 {
@@ -14,7 +15,9 @@ class RecreateRestaurantsTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign(['restaurant_id']);
+            if (!App::environment('testing')) {
+                $table->dropForeign(['restaurant_id']); // SQLite doesn't support dropping foreign keys
+            }
         });
         Schema::dropIfExists('restaurants');
         Schema::create('restaurants', function (Blueprint $table) {

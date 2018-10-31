@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\App;
 
 class CreateOrdersTable extends Migration
 {
@@ -23,7 +24,10 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_public');
             \App\Facades\Address::migrate($table);
 
-            $table->foreign('restaurant_id')->references('id')->on('restaurants');
+            if (!App::environment('testing')) {
+                // SQLite doesn't support dropping foreign keys
+                $table->foreign('restaurant_id')->references('id')->on('restaurants');
+            }
             $table->foreign('creator_id')->references('id')->on('api_users');
         });
     }

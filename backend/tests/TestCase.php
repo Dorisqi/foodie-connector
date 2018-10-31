@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redis;
 use Stripe\Stripe;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Artisan;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -102,13 +103,15 @@ abstract class TestCase extends BaseTestCase
         $this->artisan('migrate:fresh');
 
         $this->app[Kernel::class]->setArtisan(null);
+    }
 
-        // Strip mocking
-        // Restore original values
-        Stripe::$apiBase = $this->origApiBase;
-        Stripe::setApiKey($this->origApiKey);
-        Stripe::setClientId($this->origClientId);
-        Stripe::setApiVersion($this->origApiVersion);
-        Stripe::setAccountId($this->origAccountId);
+    /**
+     * Seed restaurant data
+     *
+     * @return void
+     */
+    protected function seedRestaurantData()
+    {
+        Artisan::call('db:seed', ['--class' => 'RestaurantsTestSeeder']);
     }
 }

@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
                 ->references('id')
                 ->on('product_categories')
                 ->onDelete('cascade');
-            $table->index(['product_category_id', 'order'], 'order');
+            $table->index(['product_category_id', 'order'], 'products_order');
         });
     }
 

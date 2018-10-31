@@ -27,7 +27,10 @@ class CreateProductOptionProductOptionGroupTable extends Migration
                 ->references('id')
                 ->on('product_option_groups')
                 ->onDelete('cascade');
-            $table->index(['product_id', 'product_option_group_id', 'order'], 'order');
+            $table->index(
+                ['product_id', 'product_option_group_id', 'order'],
+                'product_option_product_option_group_order'
+            );
         });
     }
 

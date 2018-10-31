@@ -16,7 +16,7 @@ class ListRestaurantTest extends ApiTestCase
      */
     public function testListRestaurant()
     {
-        Artisan::call('db:seed', ['--class' => 'RestaurantsSeeder']);
+        $this->seedRestaurantData();
         $this->assertFailed(null, 401);
         $this->login();
         $address = factory(Address::class)->create();
@@ -27,7 +27,7 @@ class ListRestaurantTest extends ApiTestCase
         ]);
         $this->setDocumentResponse([
             'categories' => $this->limitArrayLength($response->json('categories'), 2),
-            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 2),
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
         $restaurants = $response->json('restaurants');
         for ($i = 0; $i < count($restaurants); $i++) {
@@ -43,7 +43,7 @@ class ListRestaurantTest extends ApiTestCase
         ]);
         $this->setDocumentResponse([
             'categories' => $this->limitArrayLength($response->json('categories'), 2),
-            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 2),
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
         Log::debug($response->json('restaurants')[0]);
         $restaurants = $response->json('restaurants');
@@ -93,6 +93,7 @@ class ListRestaurantTest extends ApiTestCase
             'filter_delivery_fee' => 'string|pattern:[min]_[max]',
             'filter_order_minimum' => 'string|pattern:[min]_[max]',
             'filter_rating' => 'string|pattern:[min]_[max]',
+            'filter_is_open' => 'boolean',
             'order_by' => 'string',
             'order_by_desc' => 'string',
         ];

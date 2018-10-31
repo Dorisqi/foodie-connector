@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 
 class RestaurantsTableSeeder extends Seeder
 {
+    public $isTest = false;
+
     /**
      * Run the database seeds.
      *
@@ -21,7 +23,12 @@ class RestaurantsTableSeeder extends Seeder
         foreach ($categories as $category) {
             $categoryIds[$category['name']] = $category['id'];
         }
+        $restaurantCount = 0;
         foreach ($restaurantsData as $restaurantData) {
+            if ($this->isTest && $restaurantCount >= 5) {
+                break;
+            }
+            $restaurantCount++;
             $this->command->info('Seeding restaurant ' . $restaurantData['name']);
             $restaurant = new \App\Models\Restaurant(
                 array_only($restaurantData, array_merge([
@@ -44,7 +51,11 @@ class RestaurantsTableSeeder extends Seeder
             }
 
             foreach ($restaurantData['available_hours'] as $available_hour) {
-                $operationTime = new \App\Models\OperationTime($available_hour);
+                $operationTime = new \App\Models\OperationTime([
+                    'day_of_week' => $available_hour['day_of_week'] % 7,
+                    'start_time' => $available_hour['start_time'],
+                    'end_time' => $available_hour['end_time'],
+                ]);
                 $operationTime->restaurant()->associate($restaurant);
                 $operationTime->save();
             }
@@ -76,6 +87,7 @@ class RestaurantsTableSeeder extends Seeder
                 }
             }
 
+            $productCount = 0;
             foreach ($menuData['categories'] as $category) {
                 $productCategory = new \App\Models\ProductCategory([
                     'name' => $category['name'],
@@ -84,6 +96,10 @@ class RestaurantsTableSeeder extends Seeder
                 $productCategory->restaurant()->associate($restaurant);
                 $productCategory->save();
                 foreach ($category['items'] as $item) {
+                    if ($this->isTest && $productCount >= 5) {
+                        break 2;
+                    }
+                    $productCount++;
                     $product = new \App\Models\Product([
                         'name' => $item['name'],
                         'description' => $item['description'],
