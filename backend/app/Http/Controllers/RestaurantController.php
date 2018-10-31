@@ -119,7 +119,7 @@ class RestaurantController extends ApiController
                 continue;
             }
             $distance = GeoLocation::distance($coordinate, $restaurant);
-            if ($distance > 5) {
+            if (!$restaurant->deliverable($coordinate)) {
                 continue;
             }
             if (!$this->filterAccepted($distanceFilter, $distance)) {

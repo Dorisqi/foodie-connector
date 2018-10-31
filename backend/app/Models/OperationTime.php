@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Facades\Time;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class OperationTime extends Model
@@ -27,29 +27,29 @@ class OperationTime extends Model
     /**
      * Return whether the current timestamp is in the operation time
      *
+     * @param \Carbon\Carbon $time
      * @return bool
      */
-    public function contains()
+    public function contains(Carbon $time)
     {
-        $currentDayOfWeek = Time::currentDayOfWeek();
-        $currentTime = Time::currentTime();
-        if ($currentDayOfWeek !== $this->day_of_week && $currentDayOfWeek !== ($this->day_of_week + 1) % 7) {
+        if ($time->dayOfWeek !== $this->day_of_week && $time->dayOfWeek !== ($this->day_of_week + 1) % 7) {
             return false;
         }
-        $startTime = Time::parseTime($this->start_time);
-        $endTime = Time::parseTime($this->end_time);
-        if ($currentDayOfWeek === $this->day_of_week) {
-            if (Time::isBefore($currentTime, $startTime)) {
+        $timeOnly = Carbon::createFromTime($time->hour, $time->minute, $time->second);
+        $startTime = Carbon::parse($this->start_time);
+        $endTime = Carbon::parse($this->end_time);
+        if ($time->dayOfWeek === $this->day_of_week) {
+            if ($timeOnly->lessThan($startTime)) {
                 return false;
             }
-            if (Time::isBefore($startTime, $endTime) && Time::isBefore($endTime, $currentTime)) {
+            if ($startTime->lessThan($endTime) && $endTime->lessThan($timeOnly)) {
                 return false;
             }
         } else { // current time is next day
-            if (Time::isBefore($startTime, $endTime)) {
+            if ($startTime->lessThan($endTime)) {
                 return false;
             }
-            if (Time::isBefore($endTime, $currentTime)) {
+            if ($endTime->lessThan($timeOnly)) {
                 return false;
             }
         }

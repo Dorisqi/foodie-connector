@@ -1939,45 +1939,45 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "operation_times": [
                 {
                     "day_of_week": "0",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "1",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "2",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "3",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "4",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "5",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 },
                 {
                     "day_of_week": "6",
-                    "start_time": "15:00",
-                    "end_time": "03:00"
+                    "start_time": "12:00:00",
+                    "end_time": "00:00:00"
                 }
             ],
             "categories": [
                 "Italian",
                 "Pizza"
             ],
-            "is_open": true,
+            "is_open": false,
             "distance": 0.1,
             "estimated_delivery_time": 20
         },
@@ -2029,63 +2029,63 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "operation_times": [
                 {
                     "day_of_week": "1",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "1",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 },
                 {
                     "day_of_week": "2",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "2",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 },
                 {
                     "day_of_week": "3",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "3",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 },
                 {
                     "day_of_week": "4",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "4",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 },
                 {
                     "day_of_week": "5",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "5",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 },
                 {
                     "day_of_week": "6",
-                    "start_time": "15:00",
-                    "end_time": "19:00"
+                    "start_time": "12:00:00",
+                    "end_time": "16:00:00"
                 },
                 {
                     "day_of_week": "6",
-                    "start_time": "20:30",
-                    "end_time": "01:00"
+                    "start_time": "17:30:00",
+                    "end_time": "22:00:00"
                 }
             ],
             "categories": [
@@ -2182,38 +2182,38 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "operation_times": [
         {
             "day_of_week": "0",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         },
         {
             "day_of_week": "1",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         },
         {
             "day_of_week": "2",
-            "start_time": "15:00",
-            "end_time": "18:00"
+            "start_time": "12:00:00",
+            "end_time": "15:00:00"
         },
         {
             "day_of_week": "3",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         },
         {
             "day_of_week": "4",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         },
         {
             "day_of_week": "5",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         },
         {
             "day_of_week": "6",
-            "start_time": "15:00",
-            "end_time": "23:30"
+            "start_time": "12:00:00",
+            "end_time": "20:30:00"
         }
     ],
     "product_categories": [

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Facades\GeoLocation;
 use App\Facades\Time;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,15 +53,44 @@ class Restaurant extends Model
     public function getIsOpenAttribute()
     {
         if (is_null($this->localIsOpen)) {
-            $this->localIsOpen = false;
-            foreach ($this->operationTimes as $operationTime) {
-                if ($operationTime->contains()) {
-                    $this->localIsOpen = true;
-                    break;
-                }
-            }
+            $this->localIsOpen = $this->isOpenAt();
         }
         return $this->localIsOpen;
+    }
+
+    /**
+     * Return if the given address is deliverable
+     *
+     * @param array $address
+     * @return bool
+     */
+    public function deliverable(array $address)
+    {
+        return GeoLocation::distance([
+            'lat' => $this->lat,
+            'lng' => $this->lng,
+        ], $address) <= 5;
+    }
+
+    /**
+     * Return if the restaurant is open at the given time
+     *
+     * @param \Carbon\Carbon|null $time [optional]
+     * @return bool
+     */
+    public function isOpenAt($time = null)
+    {
+        if (is_null($time)) {
+            $time = Time::currentTime();
+        }
+        $result = false;
+        foreach ($this->operationTimes as $operationTime) {
+            if ($operationTime->contains($time)) {
+                $result = true;
+                break;
+            }
+        }
+        return $result;
     }
 
     public function toArray()

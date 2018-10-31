@@ -29,8 +29,6 @@ class OrderController extends ApiController
     {
         $this->validateInput($request);
 
-        // TODO: Check restaurant operation time
-
         try {
             DB::beginTransaction();
             $id = null;
@@ -42,10 +40,24 @@ class OrderController extends ApiController
             }
 
             $restaurant = Restaurant::find($request->input('restaurant_id'));
-            // TODO: Check address in delivery zone
+
+            $address = $this->user()->addresses()->find($restaurant->input('address_id'));
+            if (is_null($address)) {
+                throw ApiException::invalidAddressId();
+            }
+            if (!$restaurant->deliverable($address)) {
+                throw ApiException::validationFailedErrors([
+                    'address_id' => 'The address associated with the address_id must be deliverable by the restaurant.',
+                ]);
+            }
 
             $createAt = Carbon::now();
             $joinBefore = $createAt->copy()->addSeconds((int)$request->input('join_limit'));
+            if (!$restaurant->isOpenAt($joinBefore->copy()->addMinute(10))) {
+                throw ApiException::validationFailedErrors([
+                    'join_limit' => 'The restaurant must be open for at least 10 minutes after the join limit.'
+                ]);
+            }
             $order = new Order([
                 'create_at' => $createAt->toDateTimeString(),
                 'join_before' => $joinBefore->toDateTimeString(),
@@ -144,17 +156,9 @@ class OrderController extends ApiController
     {
         return array_merge([
             'restaurant_id' => 'required|integer|exists:restaurants,id',
-            'join_limit' => 'required|integer|between:600,38880000',
+            'join_limit' => 'required|integer|between:600,7200', // 10minutes - 2hours
             'is_public' => 'required|boolean',
-            'address_id' => [
-                'required',
-                'integer',
-                Rule::exists('addresses', 'id')->where(
-                    function ($query) {
-                        $query->where('api_user_id', Auth::guard('api')->user()->id);
-                    }
-                ),
-            ],
+            'address_id' => 'required|integer',
         ]);
     }
 }

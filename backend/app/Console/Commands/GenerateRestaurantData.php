@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class GenerateRestaurantData extends Command
@@ -167,8 +168,8 @@ class GenerateRestaurantData extends Command
                     $times = explode('-', $time_range);
                     array_push($restaurant['available_hours'], [
                         'day_of_week' => $available_hour['day_of_week'],
-                        'start_time' => $times[0],
-                        'end_time' => $times[1],
+                        'start_time' => Carbon::parse($times[0])->subHours(3)->toTimeString(),
+                        'end_time' => Carbon::parse($times[1])->subHours(3)->toTimeString(),
                     ]);
                 }
             }
