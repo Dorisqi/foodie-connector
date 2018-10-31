@@ -1,48 +1,49 @@
 <?php
 
-namespace Tests\Feature\Restaurant;
+namespace Tests\Feature\Order;
 
-use App\Models\Restaurant;
+use App\Models\Order;
 use Tests\ApiTestCase;
 use Tests\UriWithId;
 
-class ShowRestaurantTest extends ApiTestCase
+class ShowOrderTest extends ApiTestCase
 {
     use UriWithId;
 
     /**
-     * Test showing restaurant
+     * Test showing order
      *
      * @return void
      */
-    public function testShowRestaurant()
+    public function testShowOrder()
     {
         $this->assertFailed(null, 401);
         $this->login();
+        $this->id = 'A00000';
         $this->assertFailed(null, 404);
-        $restaurant = factory(Restaurant::class)->create();
-        $this->id = $restaurant->id;
+        $order = factory(Order::class)->create();
+        $this->id = $order->id;
         $this->assertSucceed(null);
     }
 
-    public function method()
+    protected function method()
     {
         return 'GET';
     }
 
     protected function uri()
     {
-        return '/restaurants/{id}';
+        return '/orders/{id}';
     }
 
     protected function summary()
     {
-        return 'Get the detail of a specific restaurant';
+        return 'Show the detail of a specific order';
     }
 
     protected function tag()
     {
-        return 'restaurant';
+        return 'order';
     }
 
     protected function rules()

@@ -21,4 +21,12 @@ class ProductOptionGroup extends Model
     {
         return $this->hasMany(ProductOption::class);
     }
+
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['order'] = $data['pivot']['order'];
+        unset($data['order']);
+        return $data;
+    }
 }

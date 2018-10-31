@@ -3,6 +3,7 @@
 namespace Tests\Feature\Restaurant;
 
 use App\Models\Address;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Tests\ApiTestCase;
@@ -16,17 +17,20 @@ class ListRestaurantTest extends ApiTestCase
      */
     public function testListRestaurant()
     {
-        $this->seedRestaurantData();
         $this->assertFailed(null, 401);
         $this->login();
         $address = factory(Address::class)->create();
+        for ($i = 0; $i < 3; $i++) {
+            factory(Restaurant::class)->create([
+                'delivery_fee' => $i + 1,
+            ]);
+        }
         $response = $this->assertSucceed([
             'address_id' => $address->id,
             'filter_delivery_fee' => '2_3',
             'order_by_desc' => 'rating',
         ]);
         $this->setDocumentResponse([
-            'categories' => $this->limitArrayLength($response->json('categories'), 2),
             'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
         $restaurants = $response->json('restaurants');
@@ -42,7 +46,6 @@ class ListRestaurantTest extends ApiTestCase
             'filter_distance' => '_1',
         ]);
         $this->setDocumentResponse([
-            'categories' => $this->limitArrayLength($response->json('categories'), 2),
             'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
         Log::debug($response->json('restaurants')[0]);

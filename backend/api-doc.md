@@ -1227,7 +1227,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Response Body:**
 ```
@@ -1322,7 +1322,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Response Body:**
 ```
@@ -1410,7 +1410,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/addresses/1
+**URI**: /api/v1/addresses/0
 
 **Response Body:**
 ```
@@ -1673,7 +1673,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/cards/1
+**URI**: /api/v1/cards/0
 
 **Response Body:**
 ```
@@ -1759,7 +1759,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/cards/1
+**URI**: /api/v1/cards/0
 
 **Response Body:**
 ```
@@ -1841,7 +1841,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/cards/1
+**URI**: /api/v1/cards/0
 
 **Response Body:**
 ```
@@ -1909,76 +1909,35 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "categories": [
-        {
-            "id": 1,
-            "name": "American"
-        },
-        {
-            "id": 2,
-            "name": "Asian"
-        },
-        "..."
-    ],
     "restaurants": [
         {
-            "id": 5,
-            "name": "Lotsa Stone Fired Pizza-West Lafayette",
-            "image": "https://storage.googleapis.com/your-bucket/ft7jg3hahokw8v8ftpje.jpg",
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/your-bucket/test.jpg",
             "order_minimum": "9.99",
-            "delivery_fee": "2.99",
-            "rating": "3.7738360568236",
-            "address_line_1": "316 W State St",
+            "delivery_fee": "1",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
             "address_line_2": "",
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.42406463",
-            "lng": "-86.90870667",
-            "phone": "7657614400",
+            "lat": "40.4227584",
+            "lng": "-86.9090892",
+            "phone": "7651111111",
             "operation_times": [
-                {
-                    "day_of_week": "0",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
-                {
-                    "day_of_week": "1",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
-                {
-                    "day_of_week": "2",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
-                {
-                    "day_of_week": "3",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
-                {
-                    "day_of_week": "4",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
-                {
-                    "day_of_week": "5",
-                    "start_time": "12:00:00",
-                    "end_time": "00:00:00"
-                },
                 {
                     "day_of_week": "6",
                     "start_time": "12:00:00",
-                    "end_time": "00:00:00"
+                    "end_time": "2:00:00"
                 }
             ],
             "categories": [
-                "Italian",
-                "Pizza"
+                "Category 1",
+                "Category 2"
             ],
-            "is_open": true,
-            "distance": 0.1,
+            "is_open": false,
+            "distance": 0,
             "estimated_delivery_time": 20
         },
         "..."
@@ -1999,103 +1958,36 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "categories": [
-        {
-            "id": 1,
-            "name": "American"
-        },
-        {
-            "id": 2,
-            "name": "Asian"
-        },
-        "..."
-    ],
     "restaurants": [
         {
             "id": 2,
-            "name": "Sushi Don",
-            "image": "https://storage.googleapis.com/your-bucket/xuvzhi0hvuoqkx8c96ot.jpg",
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/your-bucket/test.jpg",
             "order_minimum": "9.99",
-            "delivery_fee": "2.99",
-            "rating": "3.9098752112608",
-            "address_line_1": "3338 Main St",
+            "delivery_fee": "2",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
             "address_line_2": "",
-            "city": "Lafayette",
+            "city": "West Lafayette",
             "state": "IN",
-            "zip_code": "47905",
-            "lat": "40.40155029",
-            "lng": "-86.85816193",
-            "phone": "7654476655",
+            "zip_code": "47906",
+            "lat": "40.4227584",
+            "lng": "-86.9090892",
+            "phone": "7651111111",
             "operation_times": [
                 {
-                    "day_of_week": "1",
-                    "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "1",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
-                },
-                {
-                    "day_of_week": "2",
-                    "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "2",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
-                },
-                {
-                    "day_of_week": "3",
-                    "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "3",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
-                },
-                {
-                    "day_of_week": "4",
-                    "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "4",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
-                },
-                {
-                    "day_of_week": "5",
-                    "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "5",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
-                },
-                {
                     "day_of_week": "6",
                     "start_time": "12:00:00",
-                    "end_time": "16:00:00"
-                },
-                {
-                    "day_of_week": "6",
-                    "start_time": "17:30:00",
-                    "end_time": "22:00:00"
+                    "end_time": "2:00:00"
                 }
             ],
             "categories": [
-                "Asian",
-                "Japanese",
-                "Sushi"
+                "Category 1",
+                "Category 2"
             ],
             "is_open": false,
-            "distance": 4.9,
-            "estimated_delivery_time": 34
+            "distance": 0,
+            "estimated_delivery_time": 20
         },
         "..."
     ]
@@ -2166,79 +2058,49 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "id": 1,
-    "name": "El Chicano",
-    "image": "https://storage.googleapis.com/your-bucket/vxfka0dbg3m7czjlfl2n.jpg",
+    "name": "Test Restaurant",
+    "image": "https://storage.googleapis.com/your-bucket/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
-    "rating": "3.7936120868984",
-    "address_line_1": "6 N Earl Ave",
+    "rating": "3.5",
+    "address_line_1": "100 Pierce Street",
     "address_line_2": "",
-    "city": "Lafayette",
+    "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47904",
-    "lat": "40.41798019",
-    "lng": "-86.86122895",
-    "phone": "7654484206",
+    "zip_code": "47906",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "phone": "7651111111",
     "operation_times": [
-        {
-            "day_of_week": "0",
-            "start_time": "12:00:00",
-            "end_time": "20:30:00"
-        },
-        {
-            "day_of_week": "1",
-            "start_time": "12:00:00",
-            "end_time": "20:30:00"
-        },
-        {
-            "day_of_week": "2",
-            "start_time": "12:00:00",
-            "end_time": "15:00:00"
-        },
-        {
-            "day_of_week": "3",
-            "start_time": "12:00:00",
-            "end_time": "20:30:00"
-        },
-        {
-            "day_of_week": "4",
-            "start_time": "12:00:00",
-            "end_time": "20:30:00"
-        },
-        {
-            "day_of_week": "5",
-            "start_time": "12:00:00",
-            "end_time": "20:30:00"
-        },
         {
             "day_of_week": "6",
             "start_time": "12:00:00",
-            "end_time": "20:30:00"
+            "end_time": "2:00:00"
         }
     ],
     "product_categories": [
         {
             "id": 1,
-            "name": "Bebidas",
+            "name": "Test Category",
             "restaurant_id": "1",
             "order": "1",
             "products": [
                 {
                     "id": 1,
-                    "name": "Soda",
-                    "description": "",
+                    "name": "Test Product",
+                    "description": "This is a test product",
                     "product_category_id": "1",
-                    "price": "2.25",
-                    "min_price": "2.25",
-                    "max_price": "2.25",
+                    "price": "2.99",
+                    "min_price": "3.99",
+                    "max_price": "4.99",
                     "order": "1",
                     "product_option_groups": [
                         {
                             "id": 1,
-                            "name": "Choose a soda",
+                            "name": "Test Option Group",
                             "restaurant_id": "1",
                             "min_choice": "1",
-                            "max_choice": "1",
+                            "max_choice": "2",
                             "pivot": {
                                 "product_id": "1",
                                 "product_option_group_id": "1",
@@ -2247,131 +2109,44 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                             "product_options": [
                                 {
                                     "id": 1,
-                                    "name": "Coke",
+                                    "name": "Test Option 1",
                                     "product_option_group_id": "1",
-                                    "price": "0",
+                                    "price": "1",
                                     "order": "1"
                                 },
                                 {
                                     "id": 2,
-                                    "name": "Diet Coke",
+                                    "name": "Test Option 2",
                                     "product_option_group_id": "1",
-                                    "price": "0",
+                                    "price": "1",
                                     "order": "2"
                                 },
                                 {
                                     "id": 3,
-                                    "name": "Sprite",
+                                    "name": "Test Option 3",
                                     "product_option_group_id": "1",
-                                    "price": "0",
+                                    "price": "1",
                                     "order": "3"
                                 }
                             ]
                         }
                     ]
-                },
-                {
-                    "id": 2,
-                    "name": "Jarritos",
-                    "description": "",
-                    "product_category_id": "1",
-                    "price": "2",
-                    "min_price": "2",
-                    "max_price": "2",
-                    "order": "2",
-                    "product_option_groups": [
-                        {
-                            "id": 2,
-                            "name": "Choose a flavor",
-                            "restaurant_id": "1",
-                            "min_choice": "1",
-                            "max_choice": "1",
-                            "pivot": {
-                                "product_id": "2",
-                                "product_option_group_id": "2",
-                                "order": "1"
-                            },
-                            "product_options": [
-                                {
-                                    "id": 4,
-                                    "name": "Mandarin",
-                                    "product_option_group_id": "2",
-                                    "price": "0",
-                                    "order": "1"
-                                },
-                                {
-                                    "id": 5,
-                                    "name": "Lemon Lime",
-                                    "product_option_group_id": "2",
-                                    "price": "0",
-                                    "order": "2"
-                                },
-                                {
-                                    "id": 6,
-                                    "name": "Fruit Punch",
-                                    "product_option_group_id": "2",
-                                    "price": "0",
-                                    "order": "3"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": 3,
-                    "name": "Sweet Tea",
-                    "description": "",
-                    "product_category_id": "1",
-                    "price": "2.25",
-                    "min_price": "2.25",
-                    "max_price": "2.25",
-                    "order": "3",
-                    "product_option_groups": []
-                },
-                {
-                    "id": 4,
-                    "name": "Unsweetened Tea",
-                    "description": "",
-                    "product_category_id": "1",
-                    "price": "2.25",
-                    "min_price": "2.25",
-                    "max_price": "2.25",
-                    "order": "4",
-                    "product_option_groups": []
-                },
-                {
-                    "id": 5,
-                    "name": "Raspberry Tea",
-                    "description": "",
-                    "product_category_id": "1",
-                    "price": "2.25",
-                    "min_price": "2.25",
-                    "max_price": "2.25",
-                    "order": "5",
-                    "product_option_groups": []
                 }
             ]
-        },
-        {
-            "id": 2,
-            "name": "Aguas Frescas",
-            "restaurant_id": "1",
-            "order": "2",
-            "products": []
         }
     ],
     "categories": [
-        "Latin American",
-        "Mexican"
+        "Category 1",
+        "Category 2"
     ],
-    "is_open": true
+    "is_open": false
 }
 ```
 #### **Status Code: 401**
 
 This page requires authentication.
 
-**URI**: /api/v1/restaurants/1
+**URI**: /api/v1/restaurants/0
 
 **Response Body:**
 ```
@@ -2445,7 +2220,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "8EEF5A",
+    "id": "10B86C",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2478,7 +2253,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "end_time": "2:00:00"
             }
         ],
-        "categories": [],
+        "categories": [
+            "Category 1",
+            "Category 2"
+        ],
         "is_open": true
     },
     "creator": {
@@ -2487,7 +2265,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/8EEF5A"
+    "share_link": "http://localhost:8000/orders/10B86C"
 }
 ```
 #### **Status Code: 401**
@@ -2563,6 +2341,105 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **GET - /api/v1/orders/{id}**
+
+Show the detail of a specific order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/ABC123
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "ABC123",
+    "restaurant_id": "1",
+    "creator_id": "1",
+    "create_at": "1540666801",
+    "join_before": "1540667401",
+    "close_at": null,
+    "is_public": "1",
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "phone": "7650000000",
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+        "order_minimum": "9.99",
+        "delivery_fee": "2.99",
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7651111111",
+        "categories": [
+            "Category 1",
+            "Category 2"
+        ],
+        "is_open": false
+    },
+    "creator": {
+        "id": 1,
+        "name": "Test User"
+    },
+    "share_link": "http://localhost:8000/orders/ABC123"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders/0
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/A00000
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
 ### **DELETE - /api/v1/orders/{id}**
 
 Cancel and order
@@ -2594,7 +2471,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 16:27:42",
+    "close_at": "2018-10-31 17:10:03",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2611,7 +2488,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 This page requires authentication.
 
-**URI**: /api/v1/orders/A0000
+**URI**: /api/v1/orders/0
 
 **Response Body:**
 ```
@@ -2623,7 +2500,7 @@ This page requires authentication.
 
 Resource not found.
 
-**URI**: /api/v1/orders/A0000
+**URI**: /api/v1/orders/A00000
 
 **Request Header:**
 ```

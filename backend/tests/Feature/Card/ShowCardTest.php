@@ -4,13 +4,11 @@ namespace Tests\Feature\Card;
 
 use App\Models\Card;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class ShowCardTest extends ApiTestCase
 {
-    /**
-     * Card id
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test showing card
@@ -38,13 +36,6 @@ class ShowCardTest extends ApiTestCase
     protected function uri()
     {
         return '/cards/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

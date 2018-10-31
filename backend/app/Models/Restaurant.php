@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Facades\GeoLocation;
 use App\Facades\Time;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 

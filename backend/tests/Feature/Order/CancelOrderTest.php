@@ -4,22 +4,22 @@ namespace Tests\Feature\Order;
 
 use App\Models\Order;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class CancelOrderTest extends ApiTestCase
 {
-    protected $id = 'A0000';
+    use UriWithId;
 
     /**
      * Test canceling orders
      *
      * @return void
-     *
-     * @throws \ReflectionException
      */
     public function testCancelOrder()
     {
         $this->assertFailed(null, 401);
         $this->login();
+        $this->id = 'A00000';
         $this->assertFailed(null, 404);
         $order = factory(Order::class)->create();
         $this->id = $order->id;
@@ -35,13 +35,6 @@ class CancelOrderTest extends ApiTestCase
     protected function uri()
     {
         return '/orders/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

@@ -6,15 +6,11 @@ use App\Http\Controllers\AddressController;
 use App\Models\Address;
 use App\Models\ApiUser;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class UpdateAddressTest extends ApiTestCase
 {
-    /**
-     * Current address id
-     *
-     * @param int
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test updating address
@@ -65,13 +61,6 @@ class UpdateAddressTest extends ApiTestCase
     protected function uri()
     {
         return '/addresses/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

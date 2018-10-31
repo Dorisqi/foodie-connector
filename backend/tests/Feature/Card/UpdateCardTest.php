@@ -5,15 +5,11 @@ namespace Tests\Feature\Card;
 use App\Http\Controllers\CardController;
 use App\Models\Card;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class UpdateCardTest extends ApiTestCase
 {
-    /**
-     * Card id
-     *
-     * @var int
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test updating card
@@ -50,13 +46,6 @@ class UpdateCardTest extends ApiTestCase
     protected function uri()
     {
         return '/cards/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

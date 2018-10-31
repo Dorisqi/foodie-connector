@@ -24,11 +24,6 @@ class CreateOrderTest extends ApiTestCase
         $this->login();
         $address = factory(Address::class)->create();
         $restaurant = factory(Restaurant::class)->create();
-        $restaurant->operationTimes()->create([
-            'day_of_week' => 6,
-            'start_time' => '12:00:00',
-            'end_time' => '2:00:00',
-        ]);
         $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
         $property->setAccessible(true);
         $property->setValue(Carbon::parse('2018-10-27 15:00:01')->timestamp);
