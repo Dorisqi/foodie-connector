@@ -44,10 +44,8 @@ class OrderController extends ApiController
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
-            if (!$restaurant->deliverable([
-                'lat' => $address->lat,
-                'lng' => $address->lng,
-            ])) {
+            $restaurant->setAddress($address);
+            if (!$restaurant->is_deliverable) {
                 throw ApiException::validationFailedErrors([
                     'address_id' => 'The address associated with the address_id must be deliverable by the restaurant.',
                 ]);

@@ -29,17 +29,9 @@ class RestaurantController extends ApiController
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
-            $coordinate = [
-                'lat' => $address->lat,
-                'lng' => $address->lng,
-            ];
+            $coordinate = $address;
         } elseif (!is_null($request->query('place_id'))) {
-            $address = Maps::reverseGeoCodingByPlaceID($request->query('place_id'));
-            $location = $address[0]->{'geometry'}->{'location'};
-            $coordinate = [
-                'lat' => $location->{'lat'},
-                'lng' => $location->{'lng'},
-            ];
+            $coordinate = Maps::latLngByPlaceID($request->query('place_id'));
         } else {
             throw ApiException::validationFailedErrors([
                 'address_id' => [
@@ -118,21 +110,17 @@ class RestaurantController extends ApiController
             if ($filterOpenOnly && !$restaurant->is_open) {
                 continue;
             }
-            $distance = GeoLocation::distance($coordinate, $restaurant);
-            if (!$restaurant->deliverable($coordinate)) {
+            $restaurant->setAddress($coordinate);
+            if (!$restaurant->is_deliverable) {
                 continue;
             }
-            if (!$this->filterAccepted($distanceFilter, $distance)) {
+            if (!$this->filterAccepted($distanceFilter, $restaurant->distance)) {
                 continue;
             }
-            $estimatedDeliveryTime = (int)(20 + $distance * 3); // TODO: A better calculation of delivery time
-            if (!$this->filterAccepted($deliveryTimeFilter, $estimatedDeliveryTime)) {
+            if (!$this->filterAccepted($deliveryTimeFilter, $restaurant->estimated_delivery_time)) {
                 continue;
             }
-            $restaurantArray = $restaurant->toArray();
-            $restaurantArray['distance'] = round($distance, 1);
-            $restaurantArray['estimated_delivery_time'] = (int)(20 + $distance * 3);
-            array_push($availableRestaurants, $restaurantArray);
+            array_push($availableRestaurants, $restaurant->toArray());
         }
 
         if (is_null($orderBy)) {
@@ -156,11 +144,12 @@ class RestaurantController extends ApiController
      * Show a restaurant
      *
      * @param int $id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $restaurant = Restaurant::with([
             'restaurantCategories',
@@ -183,7 +172,14 @@ class RestaurantController extends ApiController
         if (is_null($restaurant)) {
             throw ApiException::resourceNotFound();
         }
-        // TODO: deliverable
+        $address_id = $request->query('address_id');
+        if (!is_null($address_id)) {
+            $address = $this->user()->addresses()->find($address_id);
+            if (is_null($address)) {
+                throw ApiException::invalidAddressId();
+            }
+            $restaurant->setAddress($address);
+        }
         return $this->response($restaurant);
     }
 

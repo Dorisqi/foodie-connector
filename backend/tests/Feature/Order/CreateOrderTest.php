@@ -42,15 +42,15 @@ class CreateOrderTest extends ApiTestCase
             'join_limit' => 7200,
             'address_id' => $address->id,
             'is_public' => false,
-        ], 422)->content();
-        $this->assertArrayHasKey('join_limit', json_decode($response, true)['data']);
+        ], 422);
+        $this->assertArrayHasKey('join_limit', $response->json('data'));
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,
             'join_limit' => 600,
             'address_id' => 0,
             'is_public' => false,
-        ], 422, false)->content();
-        $this->assertArrayHasKey('address_id', json_decode($response, true)['data']);
+        ], 422, false);
+        $this->assertArrayHasKey('address_id', $response->json('data'));
         $address->fill([
             'lat' => 0,
             'lng' => 0,
@@ -64,8 +64,8 @@ class CreateOrderTest extends ApiTestCase
             'join_limit' => 600,
             'address_id' => $address->id,
             'is_public' => false,
-        ], 422)->content();
-        $this->assertArrayHasKey('address_id', json_decode($response, true)['data']);
+        ], 422);
+        $this->assertArrayHasKey('address_id', $response->json('data'));
     }
 
     public function method()

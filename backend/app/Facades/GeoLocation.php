@@ -33,16 +33,26 @@ class GeoLocation
     /**
      * Return the distance (in KM) between two addresses
      *
-     * @param array $address1
-     * @param array $address2
+     * @param array|object $address1
+     * @param array|object $address2
      * @return float
      */
     public static function distance($address1, $address2)
     {
-        $lat1 = $address1['lat'];
-        $lon1 = $address1['lng'];
-        $lat2 = $address2['lat'];
-        $lon2 = $address2['lng'];
+        if (is_array($address1)) {
+            $lat1 = $address1['lat'];
+            $lon1 = $address1['lng'];
+        } else {
+            $lat1 = $address1->lat;
+            $lon1 = $address1->lng;
+        }
+        if (is_array($address2)) {
+            $lat2 = $address2['lat'];
+            $lon2 = $address2['lng'];
+        } else {
+            $lat2 = $address2->lat;
+            $lon2 = $address2->lng;
+        }
 
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2))

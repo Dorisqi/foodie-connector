@@ -1113,8 +1113,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "lat": 40.4227584,
+    "lng": -86.9090892,
     "id": 1,
     "user": {
         "id": 1,
@@ -1307,8 +1307,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906-5123",
     "place_id": "ChIJPbVda67iEogRTWzmvivderE",
-    "lat": "40.4248",
-    "lng": "-86.911",
+    "lat": 40.4248,
+    "lng": -86.911,
     "user": {
         "id": 1,
         "name": "Test User",
@@ -1938,7 +1938,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ],
             "is_open": true,
             "distance": 0,
-            "estimated_delivery_time": 20
+            "estimated_delivery_time": 20,
+            "is_deliverable": true
         },
         "..."
     ]
@@ -1987,7 +1988,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ],
             "is_open": true,
             "distance": 0,
-            "estimated_delivery_time": 20
+            "estimated_delivery_time": 20,
+            "is_deliverable": true
         },
         "..."
     ]
@@ -2139,7 +2141,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "Category 1",
         "Category 2"
     ],
-    "is_open": true
+    "is_open": true,
+    "distance": null,
+    "estimated_delivery_time": null,
+    "is_deliverable": null
 }
 ```
 #### **Status Code: 401**
@@ -2220,7 +2225,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "D47470",
+    "id": "C17154",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2257,7 +2262,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "Category 1",
             "Category 2"
         ],
-        "is_open": true
+        "is_open": true,
+        "distance": 0,
+        "estimated_delivery_time": 20,
+        "is_deliverable": true
     },
     "creator": {
         "name": "Test User",
@@ -2265,8 +2273,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/D47470",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/D47470"
+    "share_link": "http://localhost:8000/orders/C17154",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/C17154"
 }
 ```
 #### **Status Code: 401**
@@ -2402,7 +2410,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "Category 1",
             "Category 2"
         ],
-        "is_open": true
+        "is_open": true,
+        "distance": null,
+        "estimated_delivery_time": null,
+        "is_deliverable": null
     },
     "creator": {
         "id": 1,
@@ -2473,7 +2484,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 18:06:58",
+    "close_at": "2018-10-31 18:56:38",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",

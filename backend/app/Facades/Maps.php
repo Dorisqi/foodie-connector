@@ -34,7 +34,7 @@ class Maps
         } catch (GuzzleException $exception) {
             throw new MapsException($exception->getMessage(), $exception->getCode(), $exception);
         }
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
@@ -45,6 +45,7 @@ class Maps
      *
      * @throws \App\Exceptions\ApiException
      * @throws \App\Exceptions\MapsException
+     * @throws \Exception
      */
     public static function reverseGeoCodingByPlaceID(string $placeId)
     {
@@ -58,9 +59,28 @@ class Maps
             }
             throw $exception;
         }
-        if ($response->{'status'} !== 'OK') {
-            throw new MapsException($response->{'status'});
+        if ($response['status'] !== 'OK') {
+            throw new MapsException($response['status']);
         }
-        return $response->{'results'};
+        return $response['results'];
+    }
+
+    /**
+     * Get latitude and longitude from place ID
+     *
+     * @param string $placeId
+     * @return array
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \App\Exceptions\MapsException
+     * @throws \Exception
+     */
+    public static function latLngByPlaceID(string $placeId)
+    {
+        $geoCoding = self::reverseGeoCodingByPlaceID($placeId);
+        return [
+            'lat' => $geoCoding[0]['geometry']['location']['lat'],
+            'lng' => $geoCoding[0]['geometry']['location']['lng'],
+        ];
     }
 }

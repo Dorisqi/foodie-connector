@@ -38,11 +38,8 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
 
-            $addressFromGoogleMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
             $addressArray = $request->only($this->modelParams());
-            $location = $addressFromGoogleMaps[0]->{'geometry'}->{'location'};
-            $addressArray['lat'] = (string)$location->{'lat'};
-            $addressArray['lng'] = (string)$location->{'lng'};
+            $addressArray = array_merge($addressArray, Maps::latLngByPlaceID($request->input('place_id')));
             $address = new Address($addressArray);
             $user = $this->user();
             $user->addresses()->save($address);
@@ -101,10 +98,9 @@ class AddressController extends ApiController
 
             $addressArray = $request->only($this->modelParams());
             if ($request->has('place_id')) {
-                $addressFromMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
-                $location = $addressFromMaps[0]->{'geometry'}->{'location'};
-                $addressArray['lat'] = (string)$location->{'lat'};
-                $addressArray['lng'] = (string)$location->{'lng'};
+                $coordinates = Maps::latLngByPlaceID($request->input('place_id'));
+                $addressArray['lat'] = $coordinates['lat'];
+                $addressArray['lng'] = $coordinates['lng'];
             }
             $address->fill($addressArray);
             $address->save();

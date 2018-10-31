@@ -34,6 +34,7 @@ class ListRestaurantTest extends ApiTestCase
             'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
         $restaurants = $response->json('restaurants');
+        $this->assertCount(2, $restaurants);
         for ($i = 0; $i < count($restaurants); $i++) {
             $this->assertLessThanOrEqual(3, $restaurants[$i]['delivery_fee']);
             $this->assertGreaterThanOrEqual(2, $restaurants[$i]['delivery_fee']);
@@ -48,8 +49,8 @@ class ListRestaurantTest extends ApiTestCase
         $this->setDocumentResponse([
             'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
         ]);
-        Log::debug($response->json('restaurants')[0]);
         $restaurants = $response->json('restaurants');
+        $this->assertCount(3, $restaurants);
         for ($i = 0; $i < count($restaurants); $i++) {
             $this->assertLessThanOrEqual(1, $restaurants[$i]['distance']);
         }

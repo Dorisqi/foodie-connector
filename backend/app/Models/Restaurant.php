@@ -29,6 +29,27 @@ class Restaurant extends Model
 
     protected $localIsOpen = null;
 
+    protected $localDistance = null;
+
+    /**
+     * Address for calculating the is_deliverable attribute
+     *
+     * @var object|array|null
+     */
+    protected $address = null;
+
+    /**
+     * Set address
+     *
+     * @param object|array $address
+     * @return void
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        $this->localDistance = GeoLocation::distance($address, $this);
+    }
+
     public function restaurantCategories()
     {
         return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category');
@@ -57,18 +78,25 @@ class Restaurant extends Model
         return $this->localIsOpen;
     }
 
-    /**
-     * Return if the given address is deliverable
-     *
-     * @param array $address
-     * @return bool
-     */
-    public function deliverable(array $address)
+    public function getDistanceAttribute()
     {
-        return GeoLocation::distance([
-            'lat' => $this->lat,
-            'lng' => $this->lng,
-        ], $address) <= 5;
+        return $this->localDistance;
+    }
+
+    public function getEstimatedDeliveryTimeAttribute()
+    {
+        if (is_null($this->localDistance)) {
+            return null;
+        }
+        return (int)(20 + $this->localDistance * 3);
+    }
+
+    public function getIsDeliverableAttribute()
+    {
+        if (is_null($this->localDistance)) {
+            return null;
+        }
+        return $this->localDistance <= 5;
     }
 
     /**
@@ -100,6 +128,9 @@ class Restaurant extends Model
         unset($data['restaurant_categories']);
         $data['categories'] = [];
         $data['is_open'] = $this->is_open;
+        $data['distance'] = is_null($this->distance) ? null : round($this->distance, 1);
+        $data['estimated_delivery_time'] = $this->estimated_delivery_time;
+        $data['is_deliverable'] = $this->is_deliverable;
         foreach ($categories as $category) {
             array_push($data['categories'], $category->name);
         }
