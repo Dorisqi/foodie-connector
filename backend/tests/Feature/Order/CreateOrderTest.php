@@ -5,7 +5,6 @@ namespace Tests\Feature\Order;
 use App\Facades\Time;
 use App\Http\Controllers\OrderController;
 use App\Models\Address;
-use App\Models\OperationTime;
 use App\Models\Restaurant;
 use Carbon\Carbon;
 use Tests\ApiTestCase;
@@ -21,16 +20,10 @@ class CreateOrderTest extends ApiTestCase
      */
     public function testCreateOrder()
     {
-        $this->seedRestaurantData();
         $this->assertFailed(null, 401);
         $this->login();
         $address = factory(Address::class)->create();
-        $restaurant = Restaurant::first();
-        $restaurant->fill([
-            'lat' => $address->lat,
-            'lng' => $address->lng,
-        ])->save();
-        $restaurant->operationTimes()->delete();
+        $restaurant = factory(Restaurant::class)->create();
         $restaurant->operationTimes()->create([
             'day_of_week' => 6,
             'start_time' => '12:00:00',

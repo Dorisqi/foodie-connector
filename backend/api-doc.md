@@ -2445,7 +2445,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "9377DE",
+    "id": "8EEF5A",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2458,19 +2458,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lng": "-86.9090892",
     "restaurant": {
         "id": 1,
-        "name": "El Chicano",
-        "image": "https://storage.googleapis.com/your-bucket/vxfka0dbg3m7czjlfl2n.jpg",
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
-        "rating": "3.7936120868984",
-        "address_line_1": "6 N Earl Ave",
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
         "address_line_2": "",
-        "city": "Lafayette",
+        "city": "West Lafayette",
         "state": "IN",
-        "zip_code": "47904",
+        "zip_code": "47906",
         "lat": "40.4227584",
         "lng": "-86.9090892",
-        "phone": "7654484206",
+        "phone": "7651111111",
         "operation_times": [
             {
                 "day_of_week": "6",
@@ -2478,10 +2478,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "end_time": "2:00:00"
             }
         ],
-        "categories": [
-            "Latin American",
-            "Mexican"
-        ],
+        "categories": [],
         "is_open": true
     },
     "creator": {
@@ -2490,7 +2487,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/9377DE"
+    "share_link": "http://localhost:8000/orders/8EEF5A"
 }
 ```
 #### **Status Code: 401**
@@ -2562,6 +2559,100 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "address_id": "The address associated with the address_id must be deliverable by the restaurant."
+    }
+}
+```
+
+### **DELETE - /api/v1/orders/{id}**
+
+Cancel and order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/ABC123
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "ABC123",
+    "restaurant_id": "1",
+    "creator_id": "1",
+    "create_at": "1540666801",
+    "join_before": "1540667401",
+    "close_at": "2018-10-31 16:27:42",
+    "is_public": "1",
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "phone": "7650000000",
+    "share_link": "http://localhost:8000/orders/ABC123"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders/A0000
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/A0000
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/ABC123
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "id": "The order corresponding to the id is already canceled"
     }
 }
 ```
