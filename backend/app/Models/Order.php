@@ -39,10 +39,19 @@ class Order extends Model
         return url('orders/' . $this->id);
     }
 
+    public function getJoinableAttribute()
+    {
+        if (!is_null($this->close_at)) {
+            return false;
+        }
+        return true;
+    }
+
     public function toArray()
     {
         $data = parent::toArray();
         $data['share_link'] = $this->share_link;
+        $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         return $data;
     }
 }

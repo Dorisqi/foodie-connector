@@ -16,6 +16,13 @@ abstract class ApiTestCase extends TestCase
     protected const PREFIX = '/api/v1';
 
     /**
+     * The api is documented
+     *
+     * @var bool
+     */
+    protected $documented = true;
+
+    /**
      * API doc
      *
      * @var array
@@ -73,7 +80,7 @@ abstract class ApiTestCase extends TestCase
     {
         parent::setUp();
 
-        if (!is_null(env('GENERATE_API_DOC'))) {
+        if (!is_null(env('GENERATE_API_DOC')) && $this->documented) {
             $this->beforeApplicationDestroyed(function () {
                 DB::connection('sqlite_api_doc')
                     ->table('apis')
@@ -104,7 +111,7 @@ abstract class ApiTestCase extends TestCase
     {
         $response = $this->request($data);
         $response->assertStatus(200);
-        if ($documented) {
+        if ($documented && $this->documented) {
             $this->insertRequest($data, $response, $documentedRequest);
         }
         return $response;
@@ -122,7 +129,7 @@ abstract class ApiTestCase extends TestCase
     {
         $response = $this->request($data);
         $response->assertStatus($code);
-        if ($documented) {
+        if ($documented && $this->documented) {
             $this->insertRequest($data, $response);
         }
         return $response;

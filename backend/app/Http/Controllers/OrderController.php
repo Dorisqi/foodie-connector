@@ -6,13 +6,11 @@ use App\Exceptions\ApiException;
 use App\Facades\Address;
 use App\Facades\Time;
 use App\Models\Order;
-use App\Models\Product;
 use App\Models\Restaurant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends ApiController
@@ -143,17 +141,25 @@ class OrderController extends ApiController
      *
      * @param string $id
      * @return \Illuminate\Http\Response
-     *
-     * @throws \App\Exceptions\ApiException
      */
     public function qrCode($id)
     {
         // TODO: Cache
         $order = Order::find($id);
-        if (is_null($order)) {
-            throw ApiException::resourceNotFound();
+        if (is_null($order) || !$order->joinable) {
+            throw abort(404);
         }
-        return QrCode::size(150)->generate($order->share_link);
+        $cacheKey = 'order_qr_code_cache:' . $order->id;
+        $qrCode = Cache::get($cacheKey);
+        if (is_null($qrCode)) {
+            $qrCode = QrCode::size(150)->generate($order->share_link);
+            Cache::put(
+                $cacheKey,
+                $qrCode,
+                60
+            );
+        }
+        return $qrCode;
     }
 
     public static function rules()

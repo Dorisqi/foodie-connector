@@ -2220,7 +2220,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "10B86C",
+    "id": "79562A",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2265,7 +2265,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/10B86C"
+    "share_link": "http://localhost:8000/orders/79562A",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/79562A"
 }
 ```
 #### **Status Code: 401**
@@ -2407,7 +2408,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test User"
     },
-    "share_link": "http://localhost:8000/orders/ABC123"
+    "share_link": "http://localhost:8000/orders/ABC123",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/ABC123"
 }
 ```
 #### **Status Code: 401**
@@ -2471,7 +2473,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 17:10:03",
+    "close_at": "2018-10-31 17:45:25",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2481,7 +2483,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7650000000",
-    "share_link": "http://localhost:8000/orders/ABC123"
+    "share_link": "http://localhost:8000/orders/ABC123",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/ABC123"
 }
 ```
 #### **Status Code: 401**

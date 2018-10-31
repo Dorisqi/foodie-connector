@@ -36,7 +36,6 @@ Route::prefix('v1')->group(function () {
         Route::resource('orders', 'OrderController')->only([
             'store', 'show', 'destroy',
         ]);
-        Route::get('orders/qr-code/{id}', 'OrderController@qrCode');
 
         Route::prefix('profile')->group(function () {
             Route::get('', 'ProfileController@show');
