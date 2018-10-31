@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ApiException;
 use App\Facades\Address;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Restaurant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -94,6 +95,30 @@ class OrderController extends ApiController
         if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
+        return $this->response($order);
+    }
+
+    /**
+     * Cancel an order
+     *
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function destroy($id)
+    {
+        $order = $this->user()->orders()->find($id);
+        if (is_null($order)) {
+            throw ApiException::resourceNotFound();
+        }
+        if (!is_null($order->close_at)) {
+            throw ApiException::validationFailedErrors([
+                'id' => 'The order corresponding to the id is already canceled',
+            ]);
+        }
+        $order->close_at = (Carbon::now())->toDateTimeString();
+        $order->save();
         return $this->response($order);
     }
 

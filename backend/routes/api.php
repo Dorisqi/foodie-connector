@@ -34,7 +34,7 @@ Route::prefix('v1')->group(function () {
             'index', 'show',
         ]);
         Route::resource('orders', 'OrderController')->only([
-            'store', 'show',
+            'store', 'show', 'destroy',
         ]);
         Route::get('orders/qr-code/{id}', 'OrderController@qrCode');
 
