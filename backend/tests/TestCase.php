@@ -66,12 +66,16 @@ abstract class TestCase extends BaseTestCase
      * Setup the test environment.
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     protected function setUp()
     {
         parent::setUp();
 
         $this->runDatabaseMigrations();
+
+        $this->mockCurrentTime('2018-10-27 15:00:01');
 
         // Stripe mocking
         $STRIPE_MOCK_PORT = env('STRIPE_MOCK_PORT');

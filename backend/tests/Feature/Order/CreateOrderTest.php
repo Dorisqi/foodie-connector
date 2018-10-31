@@ -22,7 +22,6 @@ class CreateOrderTest extends ApiTestCase
         $this->login();
         $address = factory(Address::class)->create();
         $restaurant = factory(Restaurant::class)->create();
-        $this->mockCurrentTime('2018-10-27 15:00:01');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
             'join_limit' => 600,

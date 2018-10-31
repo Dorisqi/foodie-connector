@@ -2043,13 +2043,16 @@ Required
 
 #### **Params**
 
-No param
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| with_menu | optional | boolean |  |
+| address_id | optional | integer |  |
 
 #### **Status Code: 200**
 
 Successful operation.
 
-**URI**: /api/v1/restaurants/1
+**URI**: /api/v1/restaurants/1?with_menu=true
 
 **Request Header:**
 ```
@@ -2147,6 +2150,51 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_deliverable": null
 }
 ```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants/1?address_id=1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "Test Restaurant",
+    "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+    "order_minimum": "9.99",
+    "delivery_fee": "2.99",
+    "rating": "3.5",
+    "address_line_1": "100 Pierce Street",
+    "address_line_2": "",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "phone": "7651111111",
+    "operation_times": [
+        {
+            "day_of_week": "6",
+            "start_time": "12:00:00",
+            "end_time": "2:00:00"
+        }
+    ],
+    "categories": [
+        "Category 1",
+        "Category 2"
+    ],
+    "is_open": true,
+    "distance": 0,
+    "estimated_delivery_time": 20,
+    "is_deliverable": true
+}
+```
 #### **Status Code: 401**
 
 This page requires authentication.
@@ -2174,6 +2222,28 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/restaurants/1?address_id=0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "The address_id is invalid"
+        ]
+    }
 }
 ```
 
@@ -2225,7 +2295,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "C17154",
+    "id": "9B151C",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2273,8 +2343,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/C17154",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/C17154"
+    "share_link": "http://localhost:8000/orders/9B151C",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/9B151C"
 }
 ```
 #### **Status Code: 401**
@@ -2484,7 +2554,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 18:56:38",
+    "close_at": "2018-10-31 19:08:04",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
