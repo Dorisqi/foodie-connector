@@ -2139,3 +2139,261 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **GET - /api/v1/restaurants/{id}**
+
+Get the detail of a specific restaurant
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants/1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "El Chicano",
+    "image": "https://storage.googleapis.com/your-bucket/vxfka0dbg3m7czjlfl2n.jpg",
+    "order_minimum": "9.99",
+    "delivery_fee": "2.99",
+    "rating": "3.7936120868984",
+    "address_line_1": "6 N Earl Ave",
+    "address_line_2": "",
+    "city": "Lafayette",
+    "state": "IN",
+    "zip_code": "47904",
+    "lat": "40.41798019",
+    "lng": "-86.86122895",
+    "phone": "7654484206",
+    "operation_times": [
+        {
+            "day_of_week": "0",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        },
+        {
+            "day_of_week": "1",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        },
+        {
+            "day_of_week": "2",
+            "start_time": "15:00",
+            "end_time": "18:00"
+        },
+        {
+            "day_of_week": "3",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        },
+        {
+            "day_of_week": "4",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        },
+        {
+            "day_of_week": "5",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        },
+        {
+            "day_of_week": "6",
+            "start_time": "15:00",
+            "end_time": "23:30"
+        }
+    ],
+    "product_categories": [
+        {
+            "id": 1,
+            "name": "Bebidas",
+            "restaurant_id": "1",
+            "order": "1",
+            "products": [
+                {
+                    "id": 1,
+                    "name": "Soda",
+                    "description": "",
+                    "product_category_id": "1",
+                    "price": "2.25",
+                    "min_price": "2.25",
+                    "max_price": "2.25",
+                    "order": "1",
+                    "product_option_groups": [
+                        {
+                            "id": 1,
+                            "name": "Choose a soda",
+                            "restaurant_id": "1",
+                            "min_choice": "1",
+                            "max_choice": "1",
+                            "pivot": {
+                                "product_id": "1",
+                                "product_option_group_id": "1",
+                                "order": "1"
+                            },
+                            "product_options": [
+                                {
+                                    "id": 1,
+                                    "name": "Coke",
+                                    "product_option_group_id": "1",
+                                    "price": "0",
+                                    "order": "1"
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "Diet Coke",
+                                    "product_option_group_id": "1",
+                                    "price": "0",
+                                    "order": "2"
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "Sprite",
+                                    "product_option_group_id": "1",
+                                    "price": "0",
+                                    "order": "3"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Jarritos",
+                    "description": "",
+                    "product_category_id": "1",
+                    "price": "2",
+                    "min_price": "2",
+                    "max_price": "2",
+                    "order": "2",
+                    "product_option_groups": [
+                        {
+                            "id": 2,
+                            "name": "Choose a flavor",
+                            "restaurant_id": "1",
+                            "min_choice": "1",
+                            "max_choice": "1",
+                            "pivot": {
+                                "product_id": "2",
+                                "product_option_group_id": "2",
+                                "order": "1"
+                            },
+                            "product_options": [
+                                {
+                                    "id": 4,
+                                    "name": "Mandarin",
+                                    "product_option_group_id": "2",
+                                    "price": "0",
+                                    "order": "1"
+                                },
+                                {
+                                    "id": 5,
+                                    "name": "Lemon Lime",
+                                    "product_option_group_id": "2",
+                                    "price": "0",
+                                    "order": "2"
+                                },
+                                {
+                                    "id": 6,
+                                    "name": "Fruit Punch",
+                                    "product_option_group_id": "2",
+                                    "price": "0",
+                                    "order": "3"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Sweet Tea",
+                    "description": "",
+                    "product_category_id": "1",
+                    "price": "2.25",
+                    "min_price": "2.25",
+                    "max_price": "2.25",
+                    "order": "3",
+                    "product_option_groups": []
+                },
+                {
+                    "id": 4,
+                    "name": "Unsweetened Tea",
+                    "description": "",
+                    "product_category_id": "1",
+                    "price": "2.25",
+                    "min_price": "2.25",
+                    "max_price": "2.25",
+                    "order": "4",
+                    "product_option_groups": []
+                },
+                {
+                    "id": 5,
+                    "name": "Raspberry Tea",
+                    "description": "",
+                    "product_category_id": "1",
+                    "price": "2.25",
+                    "min_price": "2.25",
+                    "max_price": "2.25",
+                    "order": "5",
+                    "product_option_groups": []
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Aguas Frescas",
+            "restaurant_id": "1",
+            "order": "2",
+            "products": []
+        }
+    ],
+    "categories": [
+        "Latin American",
+        "Mexican"
+    ],
+    "is_open": false
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/restaurants/1
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/restaurants/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+

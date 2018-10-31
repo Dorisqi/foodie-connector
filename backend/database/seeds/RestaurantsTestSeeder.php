@@ -13,6 +13,7 @@ class RestaurantsTestSeeder extends Seeder
     {
         $this->call(RestaurantCategoriesTableSeeder::class);
         $restaurantsTableSeeder = $this->resolve(RestaurantsTableSeeder::class);
+        $restaurantsTableSeeder->isTest = true;
         $restaurantsTableSeeder->__invoke();
     }
 }
