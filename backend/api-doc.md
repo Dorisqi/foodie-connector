@@ -1891,6 +1891,7 @@ Required
 | filter_delivery_fee | optional | string | pattern:[min]_[max] |
 | filter_order_minimum | optional | string | pattern:[min]_[max] |
 | filter_rating | optional | string | pattern:[min]_[max] |
+| filter_is_open | optional | boolean |  |
 | order_by | optional | string |  |
 | order_by_desc | optional | string |  |
 
@@ -1911,58 +1912,72 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "categories": [
         {
             "id": 1,
-            "name": "American (New)"
+            "name": "American"
         },
         {
             "id": 2,
-            "name": "American (Traditional)"
+            "name": "Asian"
         },
         "..."
     ],
     "restaurants": [
         {
-            "id": 78,
-            "name": "Vienna Espresso Bar & Bakery",
-            "order_minimum": "15",
+            "id": 5,
+            "name": "Lotsa Stone Fired Pizza-West Lafayette",
+            "image": "https://storage.googleapis.com/your-bucket/ft7jg3hahokw8v8ftpje.jpg",
+            "order_minimum": "9.99",
             "delivery_fee": "2.99",
-            "rating": "4",
-            "phone": "+17657434446",
-            "address_line_1": "208 S St",
+            "rating": "3.7738360568236",
+            "address_line_1": "316 W State St",
             "address_line_2": "",
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.424039",
-            "lng": "-86.907576",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/PzLQ2U8uvPCQVwDkxOzNIw.jpg",
-            "categories": [
-                "Bakeries",
-                "Coffee & Tea",
-                "Sandwiches"
+            "lat": "40.42406463",
+            "lng": "-86.90870667",
+            "phone": "7657614400",
+            "operation_times": [
+                {
+                    "day_of_week": "0",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "1",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "2",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "3",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "4",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "5",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                },
+                {
+                    "day_of_week": "6",
+                    "start_time": "15:00",
+                    "end_time": "03:00"
+                }
             ],
-            "distance": 0.1,
-            "estimated_delivery_time": 20
-        },
-        {
-            "id": 69,
-            "name": "Maj\u00e9 Sushi - West Lafayette",
-            "order_minimum": "20",
-            "delivery_fee": "2.99",
-            "rating": "4",
-            "phone": "+17657437777",
-            "address_line_1": "204 South St",
-            "address_line_2": "",
-            "city": "West Lafayette",
-            "state": "IN",
-            "zip_code": "47906",
-            "lat": "40.42403",
-            "lng": "-86.90717",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/1-QS7y6KMCoSNnPuzgJqEw.jpg",
             "categories": [
-                "Seafood",
-                "Sushi Bars",
-                "Wraps"
+                "Italian",
+                "Pizza"
             ],
+            "is_open": true,
             "distance": 0.1,
             "estimated_delivery_time": 20
         },
@@ -1987,57 +2002,100 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "categories": [
         {
             "id": 1,
-            "name": "American (New)"
+            "name": "American"
         },
         {
             "id": 2,
-            "name": "American (Traditional)"
+            "name": "Asian"
         },
         "..."
     ],
     "restaurants": [
         {
-            "id": 43,
-            "name": "Smittybread Bakery",
-            "order_minimum": "15",
-            "delivery_fee": "2.99",
-            "rating": "5",
-            "phone": "+17654911634",
-            "address_line_1": "415 S 4th St",
-            "address_line_2": null,
-            "city": "Lafayette",
-            "state": "IN",
-            "zip_code": "47901",
-            "lat": "40.4132874",
-            "lng": "-86.8928751",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/Nwchshm4OBa05IJRRXzzuA.jpg",
-            "categories": [
-                "Bakeries"
-            ],
-            "distance": 1.1,
-            "estimated_delivery_time": 23
-        },
-        {
             "id": 2,
             "name": "Sushi Don",
-            "order_minimum": "20",
-            "delivery_fee": "2.49",
-            "rating": "4.5",
-            "phone": "+17654476655",
+            "image": "https://storage.googleapis.com/your-bucket/xuvzhi0hvuoqkx8c96ot.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "2.99",
+            "rating": "3.9098752112608",
             "address_line_1": "3338 Main St",
             "address_line_2": "",
             "city": "Lafayette",
             "state": "IN",
             "zip_code": "47905",
-            "lat": "40.401518",
-            "lng": "-86.858009",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/_4f10yrgvDHGOqvmHd91iA.jpg",
-            "categories": [
-                "Asian Fusion",
-                "Sushi Bars"
+            "lat": "40.40155029",
+            "lng": "-86.85816193",
+            "phone": "7654476655",
+            "operation_times": [
+                {
+                    "day_of_week": "1",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "1",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                },
+                {
+                    "day_of_week": "2",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "2",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                },
+                {
+                    "day_of_week": "3",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "3",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                },
+                {
+                    "day_of_week": "4",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "4",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                },
+                {
+                    "day_of_week": "5",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "5",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                },
+                {
+                    "day_of_week": "6",
+                    "start_time": "15:00",
+                    "end_time": "19:00"
+                },
+                {
+                    "day_of_week": "6",
+                    "start_time": "20:30",
+                    "end_time": "01:00"
+                }
             ],
-            "distance": 3.1,
-            "estimated_delivery_time": 29
+            "categories": [
+                "Asian",
+                "Japanese",
+                "Sushi"
+            ],
+            "is_open": false,
+            "distance": 4.9,
+            "estimated_delivery_time": 34
         },
         "..."
     ]
