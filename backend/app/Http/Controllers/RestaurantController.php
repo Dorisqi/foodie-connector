@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Facades\GeoLocation;
 use App\Facades\Maps;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
@@ -70,7 +71,7 @@ class RestaurantController extends ApiController
         $orderMinimumFilter = $this->numericFilter($request, 'filter_order_minimum');
         $ratingFilter = $this->numericFilter($request, 'filter_rating');
 
-        $query = Restaurant::with('restaurantCategories');
+        $query = Restaurant::with(['restaurantCategories', 'operationTimes']);
         $query = $this->filterQuery($query, $deliveryFeeFilter, 'delivery_fee');
         $query = $this->filterQuery($query, $orderMinimumFilter, 'order_minimum');
         $query = $this->filterQuery($query, $ratingFilter, 'rating');
@@ -91,12 +92,6 @@ class RestaurantController extends ApiController
                 case 'delivery_fee':
                 case 'order_minimum':
                 case 'rating':
-                    if ($isDesc) {
-                        $query = $query->orderByDesc($orderBy);
-                    } else {
-                        $query = $query->orderBy($orderBy);
-                    }
-                    break;
                 case 'distance':
                 case 'estimated_delivery_time':
                     break;
@@ -113,16 +108,12 @@ class RestaurantController extends ApiController
 
         $restaurants = $query->get();
         $availableRestaurants = [];
+        $filterOpenOnly = $request->input('filter_open_only') === 'true';
         foreach ($restaurants as $restaurant) {
-            // TODO: operation hours
-            // TODO: change to polygon
-            $distance = $this->distance(
-                $coordinate['lat'],
-                $coordinate['lng'],
-                $restaurant->lat,
-                $restaurant->lng,
-                'M'
-            );
+            if ($filterOpenOnly && !$restaurant->is_open) {
+                continue;
+            }
+            $distance = GeoLocation::distance($coordinate, $restaurant);
             if ($distance > 5) {
                 continue;
             }
@@ -139,19 +130,14 @@ class RestaurantController extends ApiController
             array_push($availableRestaurants, $restaurantArray);
         }
 
-        if (is_null($orderBy) || $orderBy === 'distance') {
-            usort($availableRestaurants, function ($a, $b) use ($isDesc) {
-                return $isDesc
-                    ? $b['distance'] <=> $a['distance']
-                    : $a['distance'] <=> $b['distance'];
-            });
-        } elseif ($orderBy === 'estimated_delivery_time') {
-            usort($availableRestaurants, function ($a, $b) use ($isDesc) {
-                return $isDesc
-                    ? $b['estimated_delivery_time'] <=> $a['estimated_delivery_time']
-                    : $a['estimated_delivery_time'] <=> $b['estimated_delivery_time'];
-            });
+        if (is_null($orderBy)) {
+            $orderBy = 'distance';
         }
+        usort($availableRestaurants, function ($a, $b) use ($orderBy, $isDesc) {
+            return $isDesc
+                ? $b[$orderBy] <=> $a[$orderBy]
+                : $a[$orderBy] <=> $b[$orderBy];
+        });
 
         $categories = RestaurantCategory::all();
 
@@ -232,52 +218,5 @@ class RestaurantController extends ApiController
             $query = $query->where($param, '<=', $filter['max']);
         }
         return $query;
-    }
-
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::                                                                         :*/
-    /*::  This routine calculates the distance between two points (given the     :*/
-    /*::  lat/lng of those points). It is being used to calculate     :*/
-    /*::  the distance between two locations using GeoDataSource(TM) Products    :*/
-    /*::                                                                         :*/
-    /*::  Definitions:                                                           :*/
-    /*::    South lats are negative, east lngs are positive           :*/
-    /*::                                                                         :*/
-    /*::  Passed to function:                                                    :*/
-    /*::    lat1, lon1 = lat and lng of point 1 (in decimal degrees)  :*/
-    /*::    lat2, lon2 = lat and lng of point 2 (in decimal degrees)  :*/
-    /*::    unit = the unit you desire for results                               :*/
-    /*::           where: 'M' is statute miles (default)                         :*/
-    /*::                  'K' is kilometers                                      :*/
-    /*::                  'N' is nautical miles                                  :*/
-    /*::  Worldwide cities and other features databases with lat lng  :*/
-    /*::  are available at https://www.geodatasource.com                         :*/
-    /*::                                                                         :*/
-    /*::  For enquiries, please contact sales@geodatasource.com                  :*/
-    /*::                                                                         :*/
-    /*::  Official Web site: https://www.geodatasource.com                       :*/
-    /*::                                                                         :*/
-    /*::         GeoDataSource.com (C) All Rights Reserved 2017                  :*/
-    /*::                                                                         :*/
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    protected function distance($lat1, $lon1, $lat2, $lon2, $unit)
-    {
-
-        $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2))
-            +  cos(deg2rad($lat1)) * cos(deg2rad($lat2))
-            * cos(deg2rad($theta));
-        $dist = acos($dist);
-        $dist = rad2deg($dist);
-        $miles = $dist * 60 * 1.1515;
-        $unit = strtoupper($unit);
-
-        if ($unit == "K") {
-            return ($miles * 1.609344);
-        } elseif ($unit == "N") {
-            return ($miles * 0.8684);
-        } else {
-            return $miles;
-        }
     }
 }
