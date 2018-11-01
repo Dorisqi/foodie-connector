@@ -2276,12 +2276,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "0E206FD5BB48157C8234",
-    "restaurant_id": "1",
-    "creator_id": "1",
-    "create_at": "2018-10-27 15:00:01",
+    "id": "96EF1ADBB60E217A7DB1",
     "join_before": "2018-10-27 15:10:01",
-    "close_at": null,
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2321,9 +2317,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "id": 1,
-            "order_id": "0E206FD5BB48157C8234",
-            "api_user_id": "1",
             "is_ready": "0",
             "phone": "7653500000",
             "user": {
@@ -2332,9 +2325,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             }
         }
     ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
     "is_joinable": true,
-    "share_link": "http://localhost:8000/orders/0E206FD5BB48157C8234",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/0E206FD5BB48157C8234"
+    "share_link": "http://localhost:8000/orders/96EF1ADBB60E217A7DB1",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/96EF1ADBB60E217A7DB1"
 }
 ```
 #### **Status Code: 401**
@@ -2437,11 +2436,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "id": "HFEJ32RAFW58ER29R8SW",
-    "restaurant_id": "1",
-    "creator_id": "1",
-    "create_at": "1540666801",
-    "join_before": "1540667401",
-    "close_at": null,
+    "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2481,15 +2476,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "id": 1,
-            "order_id": "HFEJ32RAFW58ER29R8SW",
-            "api_user_id": "1",
             "is_ready": "0",
             "phone": "7650000000",
             "user": {
                 "id": 1,
                 "name": "Test User"
             }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
         }
     ],
     "is_joinable": true,
@@ -2554,11 +2552,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "id": "HFEJ32RAFW58ER29R8SW",
-    "restaurant_id": "1",
-    "creator_id": "1",
-    "create_at": "1540666801",
-    "join_before": "1540667401",
-    "close_at": "2018-10-31 23:14:18",
+    "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2598,15 +2592,22 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "id": 1,
-            "order_id": "HFEJ32RAFW58ER29R8SW",
-            "api_user_id": "1",
             "is_ready": "0",
             "phone": "7650000000",
             "user": {
                 "id": 1,
                 "name": "Test User"
             }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        },
+        {
+            "status": "closed",
+            "time": "2018-10-27 15:00:01"
         }
     ],
     "is_joinable": false,

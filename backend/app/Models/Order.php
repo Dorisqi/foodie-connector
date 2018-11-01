@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Facades\Time;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -13,7 +14,6 @@ class Order extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'create_at',
         'join_before',
         'is_public',
         'address_line_1',
@@ -24,6 +24,10 @@ class Order extends Model
         'lat',
         'lng',
         'phone',
+    ];
+
+    protected $hidden = [
+        'restaurant_id', 'creator_id',
     ];
 
     public function restaurant()
@@ -41,6 +45,11 @@ class Order extends Model
         return $this->hasMany(OrderMember::class);
     }
 
+    public function orderStatuses()
+    {
+        return $this->hasMany(OrderStatus::class);
+    }
+
     public function getShareLinkAttribute()
     {
         return url('orders/' . $this->id);
@@ -48,9 +57,6 @@ class Order extends Model
 
     public function getIsJoinableAttribute()
     {
-        if (!is_null($this->close_at)) {
-            return false;
-        }
         if (Time::currentTime()->greaterThan(
             is_numeric($this->join_before)
                 ? Carbon::createFromTimestamp($this->join_before)
@@ -58,7 +64,25 @@ class Order extends Model
         )) {
             return false;
         }
+        foreach ($this->orderStatuses as $orderStatus) {
+            if ($orderStatus->status > OrderStatus::CREATED) {
+                return false;
+            }
+        }
         return true;
+    }
+
+    public function getIsVisibleAttribute()
+    {
+        if ($this->is_joinable) {
+            return true;
+        }
+        foreach ($this->orderMembers as $orderMember) {
+            if ($orderMember->user->id === Auth::guard('api')->user()->id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function toArray()

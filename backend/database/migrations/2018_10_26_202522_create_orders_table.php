@@ -18,9 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('id')->unique();
             $table->unsignedInteger('restaurant_id');
             $table->unsignedInteger('creator_id');
-            $table->timestamp('create_at');
             $table->timestamp('join_before');
-            $table->timestamp('close_at')->nullable();
             $table->boolean('is_public');
             \App\Facades\Address::migrate($table);
 

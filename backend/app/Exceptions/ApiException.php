@@ -133,6 +133,12 @@ class ApiException extends Exception
         ]);
     }
 
+    /* Order */
+    public static function notOrderCreator()
+    {
+        return new ApiException('This operation can only be done by the order creator.', 403);
+    }
+
     /**
      * Headers
      *

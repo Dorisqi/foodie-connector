@@ -7,8 +7,8 @@ use App\Facades\Address;
 use App\Facades\Time;
 use App\Models\Order;
 use App\Models\OrderMember;
+use App\Models\OrderStatus;
 use App\Models\Restaurant;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -60,7 +60,6 @@ class OrderController extends ApiController
                 ]);
             }
             $order = new Order([
-                'create_at' => $createAt->toDateTimeString(),
                 'join_before' => $joinBefore->toDateTimeString(),
                 'is_public' => $request['is_public'],
             ]);
@@ -84,9 +83,15 @@ class OrderController extends ApiController
                 'phone' => $order->phone,
             ]);
             $orderMember->user()->associate($this->user());
-            $order->orderMembers()->save($orderMember);
+            $orderMember->order()->associate($order);
+            $orderMember->save();
 
-            $order->push();
+            $orderStatus = new OrderStatus([
+                'status' => OrderStatus::CREATED,
+                'time' => $createAt,
+            ]);
+            $orderStatus->order()->associate($order);
+            $orderStatus->save();
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -108,7 +113,7 @@ class OrderController extends ApiController
     public function show($id)
     {
         $order = $this->getOrder($id);
-        if (is_null($order)) {
+        if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
         return $this->response($order);
@@ -125,17 +130,27 @@ class OrderController extends ApiController
     public function destroy($id)
     {
         $order = $this->getOrder($id);
-        if (is_null($order)) {
+        if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
-        if (!is_null($order->close_at)) {
-            throw ApiException::validationFailedErrors([
-                'id' => 'The order corresponding to the id is already canceled',
-            ]);
+        if ($order->creator_id != $this->user()->id) {
+            throw ApiException::notOrderCreator();
         }
-        $order->close_at = (Carbon::now())->toDateTimeString();
-        $order->save();
-        return $this->response($order);
+        foreach ($order->orderStatuses as $orderStatus) {
+            if ($orderStatus->status > OrderStatus::CREATED) {
+                throw ApiException::validationFailedErrors([
+                    'id' => 'The order corresponding to the id is already canceled',
+                ]);
+            }
+        }
+        $orderStatus = new OrderStatus([
+            'status' => OrderStatus::CLOSED,
+            'time' => Time::currentTime(),
+        ]);
+        $orderStatus->order()->associate($order);
+        $orderStatus->save();
+
+        return $this->response($this->getOrder($id));
     }
 
     /**
@@ -176,11 +191,10 @@ class OrderController extends ApiController
             'creator:id,name',
             'orderMembers',
             'orderMembers.user:id,name',
-        ])
-            ->whereHas('orderMembers.user', function ($query) {
-                $query->where('id', $this->user()->id);
-            })
-            ->find($id);
+            'orderStatuses' => function ($query) {
+                $query->orderBy('time');
+            },
+        ])->find($id);
     }
 
     public static function rules()

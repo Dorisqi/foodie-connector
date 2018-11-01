@@ -12,6 +12,10 @@ class OrderMember extends Model
         'is_ready', 'phone',
     ];
 
+    protected $hidden = [
+        'id', 'order_id', 'api_user_id',
+    ];
+
     public function user()
     {
         return $this->belongsTo(ApiUser::class, 'api_user_id');

@@ -25,12 +25,6 @@ class ShowOrderTest extends ApiTestCase
         $order = factory(Order::class)->create();
         $this->id = $order->id;
         $this->assertSucceed(null);
-        $this->login(
-            factory(ApiUser::class)->create([
-                'email' => 'another@foodie-connector.delivery',
-            ])
-        );
-        $this->assertFailed(null, 404, false);
     }
 
     protected function method()

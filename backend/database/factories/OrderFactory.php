@@ -4,8 +4,7 @@ $factory->define(\App\Models\Order::class, function () {
     $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
         'id' => 'HFEJ32RAFW58ER29R8SW',
-        'create_at' => $currentTime->timestamp,
-        'join_before' => $currentTime->copy()->addMinutes(10)->timestamp,
+        'join_before' => $currentTime->copy()->addMinutes(10),
         'is_public' => true,
         'address_line_1' => '134 Pierce Street',
         'address_line_2' => 'Apt XXX',
@@ -33,5 +32,12 @@ $factory->afterCreating(
         $orderMember->user()->associate(\Illuminate\Support\Facades\Auth::guard('api')->user());
         $orderMember->order()->associate($order);
         $orderMember->save();
+
+        $orderStatus = new \App\Models\OrderStatus([
+            'status' => \App\Models\OrderStatus::CREATED,
+            'time' => \App\Facades\Time::currentTime(),
+        ]);
+        $orderStatus->order()->associate($order);
+        $orderStatus->save();
     }
 );
