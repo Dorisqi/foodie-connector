@@ -1913,7 +1913,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "1",
             "rating": "3.5",
@@ -1963,7 +1963,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 2,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+            "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "2",
             "rating": "3.5",
@@ -2064,7 +2064,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+    "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2150,7 +2150,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+    "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2276,7 +2276,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "96EF1ADBB60E217A7DB1",
+    "id": "565C6042EE4504C9492E",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2290,7 +2290,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2332,8 +2332,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         }
     ],
     "is_joinable": true,
-    "share_link": "http://localhost:8000/orders/96EF1ADBB60E217A7DB1",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/96EF1ADBB60E217A7DB1"
+    "share_link": "http://localhost:8000/orders/565C6042EE4504C9492E",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/565C6042EE4504C9492E"
 }
 ```
 #### **Status Code: 401**
@@ -2449,7 +2449,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2565,7 +2565,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
