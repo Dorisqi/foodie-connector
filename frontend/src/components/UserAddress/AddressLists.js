@@ -63,11 +63,12 @@ class AddressTable extends React.Component {
     };
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
     this.handleAddAddress = this.handleAddAddress.bind(this);
+    this.deleteaddress = this.deleteaddress.bind(this);
   }
 
   componentDidMount() {
     console.log('load addresses');
-    alert('load address');
+    //alert('load address');
     this.loadAddresses();
   }
 
@@ -77,14 +78,25 @@ class AddressTable extends React.Component {
       return { address: [...state.address, address] }
     })
   }
-  deleteaddress(event){
+  deleteaddress(value){
     //const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
     //const { value, checked } = event.target;
-    alert('delete:' +event)
+    //alert('delete:' +event)
+    //const { value, checked } = event.target;
     axios.delete(apiList.addressDetail, {
-      id: this.state.address[event].id
+      id: this.state.address[value].id,
+      name: this.state.address[value].name,
+      phone: this.state.address[value].phone,
+      line_1: this.state.address[value].line_1,
+      line_2: this.state.address[value].line_2,
+      city: this.state.address[value].city,
+      state: this.state.address[value].state,
+      zip_code: this.state.address[value].zip_code,
+      place_id: this.state.address[value].place_id,
+      is_default: this.state.address[value].is_default,
     }).then(res => {
       console.log(res);
+      this.state.address.splice(value, 1);
       //handleAddAddress(res);
 
     }).catch(err => {
@@ -109,7 +121,7 @@ class AddressTable extends React.Component {
   handleChangeEnabled(event) {
     const { value, checked } = event.target;
     if(checked == 0){
-      alert('value' + value);
+    //  alert('value' + value);
       this.setState(() => {
         this.state.selectedEnabled = value;
         return { selectedEnabled: value };
@@ -142,7 +154,7 @@ class AddressTable extends React.Component {
         }
       })
     }
-    alert('value' + value);
+    //alert('value' + value);
     this.setState(() => {
       this.state.selectedEnabled = value;
       return { selectedEnabled: value };
@@ -181,7 +193,7 @@ class AddressTable extends React.Component {
   render() {
     const { classes } = this.props;
     const rows = [];
-      alert (this.state.address.length);
+      //alert (this.state.address.length);
     for (let i = 0; i < this.state.address.length; i++){
 
       const addr = this.state.address[i].line_2+','+
@@ -225,7 +237,6 @@ class AddressTable extends React.Component {
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
-
                         <Radio
                           checked={this.state.selectedEnabled==address.index || address.is_default == true}
                           onChange={this.handleChangeEnabled}
@@ -256,12 +267,14 @@ class AddressTable extends React.Component {
                 <TableCell padding = 'none'>{address.line_1+', '+address.line_2+', '+address.city+', '+address.state}</TableCell>
                 <TableCell padding = 'dense'>{address.zip_code}</TableCell>
                 <TableCell padding = 'dense'>
-                <EditAddress phone={address.phone}
+                <EditAddress name={address.name} phone={address.phone}
                   line_1={address.line_1}
                   line_2={address.line_2}
                   city={address.city}
                   state={address.state}
-                  zip_code={address.zip_code}>
+                  place_id={address.place_id}
+                  zip_code={address.zip_code}
+                  is_default={address.is_default}>
                 </EditAddress>
                 </TableCell>
                 <TableCell padding = 'dense'>

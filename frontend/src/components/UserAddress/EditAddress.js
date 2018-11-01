@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import States from '../../Statesfile';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import Button from '../../material-kit/components/CustomButtons/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 import Dialog from '@material-ui/core/Dialog';
@@ -81,11 +81,11 @@ const styles = theme => ({
 });
 
 
-class AddingAddress extends React.Component{
+class EditAddress extends React.Component{
 constructor(props){
   super(props);
   this.state = {
-
+    id:"",
     name: "username",
     phone: "",
     line_1: "",
@@ -93,7 +93,7 @@ constructor(props){
     city: "",
     state: "",
     zip_code: "",
-    place_id: "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    place_id: "",
     is_default: false,
   };
 
@@ -155,7 +155,9 @@ constructor(props){
     x[modal] = true;
     this.setState(x);
     alert(name+phone+line_1+line_2+city+state+zip_code);
-    axios.post(apiList.addressDetail, {
+
+    axios.put(apiList.addressDetail, {
+
       name: name,
       phone: phone,
       line_1: line_1,
@@ -165,13 +167,23 @@ constructor(props){
       zip_code: zip_code,
       place_id: place_id,
       is_default: is_default,
-      flag:0
+
     }).then(res => {
       console.log(res);
-      handleAddAddress(res);
+    //  handleAddAddress(res);
 
     }).catch(err => {
       console.log(err);
+      const { response } = err;
+      if (response && response.status === 401) {
+        alert('authentification required');
+      }
+      else if (response && response.status === 422) {
+        alert('Validaiton failed');
+      }
+      else {
+        alert('other erro');
+      }
 
     })
 
@@ -204,11 +216,6 @@ constructor(props){
               id="modal-slide-description"
               className={classes.modalBody}
             >
-
-          <Button className={classes.button}
-           color="info">
-           User Current Location
-           </Button>
 
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
@@ -327,8 +334,8 @@ constructor(props){
 
 }
 
-AddingAddress.propTypes = {
+EditAddress.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddingAddress);
+export default withStyles(styles)(EditAddress);
