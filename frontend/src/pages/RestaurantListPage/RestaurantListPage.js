@@ -212,7 +212,7 @@ class RestaurantListPage extends React.Component {
   }
 
   render() {
-    const { changedList, tags } = this.state;
+    const { nameMatchList, tags } = this.state;
     const { classes } = this.props;
     return (
         <div className={classes.paper}>
@@ -225,7 +225,7 @@ class RestaurantListPage extends React.Component {
             handleOtherFilter={this.handleOtherFilter}
           />
 
-          <RestaurantList restaurantList={changedList} />
+          <RestaurantList restaurantList={nameMatchList} />
         </div>
 
     );
