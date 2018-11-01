@@ -5,6 +5,7 @@ import AddressLists from './components/UserAddress/AddressLists';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';
 import AddingAddress from './components/UserAddress/AddingAddress';
 import Login_regPage from './pages/login_regPage/Login_regPage';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
 import Auth from './Auth/Auth';
 const routes = {
   component: Base,
@@ -56,6 +57,10 @@ const routes = {
         }
       }
     },
+    {
+      path: '/checkout',
+      component: CheckoutPage,
+    }
   ],
 };
 
