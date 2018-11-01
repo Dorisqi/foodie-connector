@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Tooltip from '@material-ui/core/Tooltip';
+import CustomLinearProgress from "components/CustomLinearProgress/CustomLinearProgress.jsx";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import {
   primaryColor,
@@ -102,11 +103,16 @@ constructor(props){
   super(props);
   this.state = {
     restaurantname: "",
+    restaurant_id: "",
+    delivery_address_id:"",
     orderid:"",
-    selectedStatus:"1",
+    selectedStatus:true,
     hours:"0",
-    minutes:"10",
-    orderlink:""
+    minutes:10,
+    calculated_time:600,
+    qr_code:"",
+    share_link:""
+
 
   };
 
@@ -138,8 +144,14 @@ constructor(props){
   }
 
   updateOrderStatus(event) {
+    const {value} = event.target;
 
-    this.setState({selectedStatus: event.target.value });
+    if (value === "1"){
+      this.setState({selectedStatus: true });
+    } else {
+      this.setState({selectedStatus: false });
+    }
+
 
   }
 
@@ -232,7 +244,7 @@ constructor(props){
                      <FormControlLabel
                        control={
                          <Radio
-                           checked={this.state.selectedStatus === "1"}
+                           checked={this.state.selectedStatus === true}
                            onChange={this.updateOrderStatus}
                            value="1"
                            name="public"
@@ -260,7 +272,7 @@ constructor(props){
                      <FormControlLabel
                        control={
                          <Radio
-                           checked={this.state.selectedStatus === "0"}
+                           checked={this.state.selectedStatus === false}
                            onChange={this.updateOrderStatus}
                            value="0"
                            color="primary"
@@ -333,7 +345,7 @@ constructor(props){
                           </Grid>
                           <Tooltip
                             id="tooltip-right"
-                            title="Time limitation value need to be between 10 mins and 2 hours"
+                            title="Total Join Time need to be between 10 mins and 2 hours!"
                             placement="top"
                             classes={{ tooltip: classes.tooltip }}
                           >
@@ -356,7 +368,13 @@ constructor(props){
                  Create
                </Button>
 
-
+              </div>
+              <div>
+              <CustomLinearProgress
+                variant="determinate"
+                color="primary"
+                value={0}
+              />
               </div>
           </DialogContent>
           <DialogActions
