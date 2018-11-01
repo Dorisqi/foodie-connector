@@ -75,6 +75,8 @@ abstract class ApiTestCase extends TestCase
      * Setup the test environment.
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     protected function setUp()
     {

@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Facades\Address;
 use App\Facades\Time;
 use App\Models\Order;
+use App\Models\OrderMember;
 use App\Models\Restaurant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,8 +78,15 @@ class OrderController extends ApiController
                 $order->fill($request->only(Address::addressFields()));
             }
 
-
             $order->save();
+
+            $orderMember = new OrderMember([
+                'phone' => $order->phone,
+            ]);
+            $orderMember->user()->associate($this->user());
+            $order->orderMembers()->save($orderMember);
+
+            $order->push();
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -86,7 +94,7 @@ class OrderController extends ApiController
             throw $exception;
         }
 
-        return $this->response($order);
+        return $this->response($this->getOrder($order->id));
     }
 
     /**
@@ -99,11 +107,7 @@ class OrderController extends ApiController
      */
     public function show($id)
     {
-        $order = $this
-            ->user()
-            ->orders()
-            ->with(['restaurant', 'creator:id,name'])
-            ->find($id);
+        $order = $this->getOrder($id);
         if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
@@ -120,7 +124,7 @@ class OrderController extends ApiController
      */
     public function destroy($id)
     {
-        $order = $this->user()->orders()->find($id);
+        $order = $this->getOrder($id);
         if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
@@ -142,9 +146,8 @@ class OrderController extends ApiController
      */
     public function qrCode($id)
     {
-        // TODO: Cache
         $order = Order::find($id);
-        if (is_null($order) || !$order->joinable) {
+        if (is_null($order) || !$order->is_joinable) {
             throw abort(404);
         }
         $cacheKey = 'order_qr_code_cache:' . $order->id;
@@ -158,6 +161,26 @@ class OrderController extends ApiController
             );
         }
         return $qrCode;
+    }
+
+    /**
+     * Query order from the database
+     *
+     * @param $id
+     * @return \App\Models\Order|null
+     */
+    protected function getOrder($id)
+    {
+        return Order::with([
+            'restaurant',
+            'creator:id,name',
+            'orderMembers',
+            'orderMembers.user:id,name',
+        ])
+            ->whereHas('orderMembers.user', function ($query) {
+                $query->where('id', $this->user()->id);
+            })
+            ->find($id);
     }
 
     public static function rules()

@@ -43,6 +43,7 @@ class RestaurantsTableSeeder extends Seeder
             $productOptionGroupIds = [];
             $productOptionGroups = [];
             $productOptionGroupIdCount = 0;
+            $productOptionIdCount = 0;
             foreach ($restaurantData['optionGroups'] as $key => $optionGroup) {
                 $productOptionGroup = [
                     'id' => $productOptionGroupIdCount++,
@@ -56,7 +57,6 @@ class RestaurantsTableSeeder extends Seeder
                 usort($optionGroup['options'], function ($a, $b) {
                     return $a['order'] <=> $b['order'];
                 });
-                $productOptionIdCount = 0;
                 foreach ($optionGroup['options'] as $option) {
                     $productOption = [
                         'id' => $productOptionIdCount++,
@@ -73,6 +73,7 @@ class RestaurantsTableSeeder extends Seeder
                 return $a['order'] <=> $b['order'];
             });
             $productCategoryIdCount = 0;
+            $productIdCount = 0;
             foreach ($restaurantData['product_categories'] as $category) {
                 $productCategory = [
                     'id' => $productCategoryIdCount++,
@@ -83,7 +84,6 @@ class RestaurantsTableSeeder extends Seeder
                 usort($category['items'], function ($a, $b) {
                     return $a['order'] <=> $b['order'];
                 });
-                $productIdCount = 0;
                 foreach ($category['items'] as $item) {
                     $product = array_merge([
                         'id' => $productIdCount++,

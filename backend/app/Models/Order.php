@@ -36,18 +36,25 @@ class Order extends Model
         return $this->belongsTo(ApiUser::class);
     }
 
+    public function orderMembers()
+    {
+        return $this->hasMany(OrderMember::class);
+    }
+
     public function getShareLinkAttribute()
     {
         return url('orders/' . $this->id);
     }
 
-    public function getJoinableAttribute()
+    public function getIsJoinableAttribute()
     {
         if (!is_null($this->close_at)) {
             return false;
         }
         if (Time::currentTime()->greaterThan(
-            Carbon::createFromTimestamp($this->join_before)
+            is_numeric($this->join_before)
+                ? Carbon::createFromTimestamp($this->join_before)
+                : Carbon::parse($this->join_before)
         )) {
             return false;
         }
@@ -57,6 +64,7 @@ class Order extends Model
     public function toArray()
     {
         $data = parent::toArray();
+        $data['is_joinable'] = $this->is_joinable;
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         return $data;

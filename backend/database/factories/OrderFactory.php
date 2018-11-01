@@ -1,8 +1,6 @@
 <?php
 
-use Faker\Generator as Faker;
-
-$factory->define(\App\Models\Order::class, function (Faker $faker) {
+$factory->define(\App\Models\Order::class, function () {
     $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
         'id' => 'HFEJ32RAFW58ER29R8SW',
@@ -25,3 +23,15 @@ $factory->define(\App\Models\Order::class, function (Faker $faker) {
         }
     ];
 });
+
+$factory->afterCreating(
+    \App\Models\Order::class,
+    function (\App\Models\Order $order) {
+        $orderMember = new \App\Models\OrderMember([
+            'phone' => $order->phone,
+        ]);
+        $orderMember->user()->associate(\Illuminate\Support\Facades\Auth::guard('api')->user());
+        $orderMember->order()->associate($order);
+        $orderMember->save();
+    }
+);

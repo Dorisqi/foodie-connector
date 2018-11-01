@@ -2276,20 +2276,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
+    "id": "0E206FD5BB48157C8234",
+    "restaurant_id": "1",
+    "creator_id": "1",
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": true,
-    "id": "8F27E468E19DC9C07CB0",
-    "restaurant_id": 1,
-    "creator_id": 1,
+    "close_at": null,
+    "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
-    "phone": "7653500000",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906-5123",
     "lat": "40.4227584",
     "lng": "-86.9090892",
+    "phone": "7653500000",
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
@@ -2305,30 +2306,35 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "lat": "40.4227584",
         "lng": "-86.9090892",
         "phone": "7651111111",
-        "operation_times": [
-            {
-                "day_of_week": "6",
-                "start_time": "12:00:00",
-                "end_time": "2:00:00"
-            }
-        ],
         "categories": [
             "Category 1",
             "Category 2"
         ],
         "is_open": true,
-        "distance": 0,
-        "estimated_delivery_time": 20,
-        "is_deliverable": true
+        "distance": null,
+        "estimated_delivery_time": null,
+        "is_deliverable": null
     },
     "creator": {
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
         "id": 1,
-        "is_email_verified": false
+        "name": "Test User"
     },
-    "share_link": "http://localhost:8000/orders/8F27E468E19DC9C07CB0",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/8F27E468E19DC9C07CB0"
+    "order_members": [
+        {
+            "id": 1,
+            "order_id": "0E206FD5BB48157C8234",
+            "api_user_id": "1",
+            "is_ready": "0",
+            "phone": "7653500000",
+            "user": {
+                "id": 1,
+                "name": "Test User"
+            }
+        }
+    ],
+    "is_joinable": true,
+    "share_link": "http://localhost:8000/orders/0E206FD5BB48157C8234",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/0E206FD5BB48157C8234"
 }
 ```
 #### **Status Code: 401**
@@ -2473,6 +2479,20 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test User"
     },
+    "order_members": [
+        {
+            "id": 1,
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "api_user_id": "1",
+            "is_ready": "0",
+            "phone": "7650000000",
+            "user": {
+                "id": 1,
+                "name": "Test User"
+            }
+        }
+    ],
+    "is_joinable": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
@@ -2538,7 +2558,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 22:10:42",
+    "close_at": "2018-10-31 23:14:18",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2548,6 +2568,48 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7650000000",
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/your-bucket/test.jpg",
+        "order_minimum": "9.99",
+        "delivery_fee": "2.99",
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7651111111",
+        "categories": [
+            "Category 1",
+            "Category 2"
+        ],
+        "is_open": true,
+        "distance": null,
+        "estimated_delivery_time": null,
+        "is_deliverable": null
+    },
+    "creator": {
+        "id": 1,
+        "name": "Test User"
+    },
+    "order_members": [
+        {
+            "id": 1,
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "api_user_id": "1",
+            "is_ready": "0",
+            "phone": "7650000000",
+            "user": {
+                "id": 1,
+                "name": "Test User"
+            }
+        }
+    ],
+    "is_joinable": false,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }

@@ -114,6 +114,7 @@ class GenerateRestaurantData extends Command
         $listData = json_decode(file_get_contents("${dataPath}/raw/restaurant-list.json"), true);
         $categories = [];
         $restaurants = [];
+        $alwaysOpen = true;
         foreach ($listData['results'] as $restaurantData) {
             $id = $restaurantData['restaurant_id'];
             $this->info($id
@@ -157,17 +158,28 @@ class GenerateRestaurantData extends Command
             );
 
             $restaurantDetail = json_decode(file_get_contents($filePath), true);
-            foreach ($restaurantDetail['restaurant_availability']['available_hours'] as $available_hour) {
-                foreach ($available_hour['time_ranges'] as $time_range) {
-                    if ($time_range === 'CLOSED') {
-                        continue;
-                    }
-                    $times = explode('-', $time_range);
+            if ($alwaysOpen) {
+                for ($w = 0; $w < 7; $w++) {
                     array_push($restaurant['available_hours'], [
-                        'day_of_week' => $available_hour['day_of_week'],
-                        'start_time' => Carbon::parse($times[0])->subHours(3)->toTimeString(),
-                        'end_time' => Carbon::parse($times[1])->subHours(3)->toTimeString(),
+                        'day_of_week' => $w,
+                        'start_time' => '00:00',
+                        'end_time' => '23:59',
                     ]);
+                }
+                $alwaysOpen = false;
+            } else {
+                foreach ($restaurantDetail['restaurant_availability']['available_hours'] as $available_hour) {
+                    foreach ($available_hour['time_ranges'] as $time_range) {
+                        if ($time_range === 'CLOSED') {
+                            continue;
+                        }
+                        $times = explode('-', $time_range);
+                        array_push($restaurant['available_hours'], [
+                            'day_of_week' => $available_hour['day_of_week'],
+                            'start_time' => Carbon::parse($times[0])->subHours(3)->toTimeString(),
+                            'end_time' => Carbon::parse($times[1])->subHours(3)->toTimeString(),
+                        ]);
+                    }
                 }
             }
 
