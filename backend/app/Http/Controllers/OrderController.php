@@ -32,7 +32,7 @@ class OrderController extends ApiController
             DB::beginTransaction();
             $id = null;
             while (true) {
-                $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+                $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
                 if (is_null(Order::find($id))) {
                     break;
                 }

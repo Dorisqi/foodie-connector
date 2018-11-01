@@ -70,9 +70,9 @@ class TranslationsTableSeeder extends Seeder
         if ($dtp->exists) {
             $this->trans('pt', $this->arr($_tpl, $dtp->id), 'Categoria');
         }
-        $dtp = DataType::where($_fld, 'Menu')->firstOrFail();
+        $dtp = DataType::where($_fld, 'RestaurantMenu')->firstOrFail();
         if ($dtp->exists) {
-            $this->trans('pt', $this->arr($_tpl, $dtp->id), 'Menu');
+            $this->trans('pt', $this->arr($_tpl, $dtp->id), 'RestaurantMenu');
         }
         $dtp = DataType::where($_fld, 'Role')->firstOrFail();
         if ($dtp->exists) {
@@ -192,7 +192,7 @@ class TranslationsTableSeeder extends Seeder
             $this->trans('pt', $this->arr($_tpl, $_item->id), 'Ferramentas');
         }
 
-        $_item = $this->findMenuItem('Menu Builder');
+        $_item = $this->findMenuItem('RestaurantMenu Builder');
         if ($_item->exists) {
             $this->trans('pt', $this->arr($_tpl, $_item->id), 'Menus');
         }

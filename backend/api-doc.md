@@ -2083,63 +2083,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "end_time": "2:00:00"
         }
     ],
-    "product_categories": [
-        {
-            "id": 1,
-            "name": "Test Category",
-            "restaurant_id": "1",
-            "order": "1",
-            "products": [
-                {
-                    "id": 1,
-                    "name": "Test Product",
-                    "description": "This is a test product",
-                    "product_category_id": "1",
-                    "price": "2.99",
-                    "min_price": "3.99",
-                    "max_price": "4.99",
-                    "order": "1",
-                    "product_option_groups": [
-                        {
-                            "id": 1,
-                            "name": "Test Option Group",
-                            "restaurant_id": "1",
-                            "min_choice": "1",
-                            "max_choice": "2",
-                            "pivot": {
-                                "product_id": "1",
-                                "product_option_group_id": "1",
-                                "order": "1"
-                            },
-                            "product_options": [
-                                {
-                                    "id": 1,
-                                    "name": "Test Option 1",
-                                    "product_option_group_id": "1",
-                                    "price": "1",
-                                    "order": "1"
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "Test Option 2",
-                                    "product_option_group_id": "1",
-                                    "price": "1",
-                                    "order": "2"
-                                },
-                                {
-                                    "id": 3,
-                                    "name": "Test Option 3",
-                                    "product_option_group_id": "1",
-                                    "price": "1",
-                                    "order": "3"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ],
     "categories": [
         "Category 1",
         "Category 2"
@@ -2147,7 +2090,48 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_open": true,
     "distance": null,
     "estimated_delivery_time": null,
-    "is_deliverable": null
+    "is_deliverable": null,
+    "product_categories": [
+        {
+            "id": 0,
+            "name": "Test Category",
+            "products": [
+                {
+                    "id": 0,
+                    "name": "Test Product",
+                    "description": "This is a test product",
+                    "price": 2.99,
+                    "min_price": 3.99,
+                    "max_price": 4.99,
+                    "product_option_groups": [
+                        {
+                            "id": 0,
+                            "name": "Test Option Group",
+                            "min_choice": 1,
+                            "max_choice": 2,
+                            "product_options": [
+                                {
+                                    "id": 0,
+                                    "name": "Test Option 1",
+                                    "price": 1
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "Test Option 2",
+                                    "price": 1
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "Test Option 3",
+                                    "price": 1
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
 ```
 #### **Status Code: 200**
@@ -2295,7 +2279,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "create_at": "2018-10-27 15:00:01",
     "join_before": "2018-10-27 15:10:01",
     "is_public": true,
-    "id": "9B151C",
+    "id": "8F27E468E19DC9C07CB0",
     "restaurant_id": 1,
     "creator_id": 1,
     "address_line_1": "134 Pierce Street",
@@ -2343,8 +2327,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "is_email_verified": false
     },
-    "share_link": "http://localhost:8000/orders/9B151C",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/9B151C"
+    "share_link": "http://localhost:8000/orders/8F27E468E19DC9C07CB0",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/8F27E468E19DC9C07CB0"
 }
 ```
 #### **Status Code: 401**
@@ -2436,7 +2420,7 @@ No param
 
 Successful operation.
 
-**URI**: /api/v1/orders/ABC123
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
 
 **Request Header:**
 ```
@@ -2446,7 +2430,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "ABC123",
+    "id": "HFEJ32RAFW58ER29R8SW",
     "restaurant_id": "1",
     "creator_id": "1",
     "create_at": "1540666801",
@@ -2489,8 +2473,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test User"
     },
-    "share_link": "http://localhost:8000/orders/ABC123",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/ABC123"
+    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 401**
@@ -2539,7 +2523,7 @@ No param
 
 Successful operation.
 
-**URI**: /api/v1/orders/ABC123
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
 
 **Request Header:**
 ```
@@ -2549,12 +2533,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "ABC123",
+    "id": "HFEJ32RAFW58ER29R8SW",
     "restaurant_id": "1",
     "creator_id": "1",
     "create_at": "1540666801",
     "join_before": "1540667401",
-    "close_at": "2018-10-31 19:08:04",
+    "close_at": "2018-10-31 22:10:42",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
@@ -2564,8 +2548,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7650000000",
-    "share_link": "http://localhost:8000/orders/ABC123",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/ABC123"
+    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 401**
@@ -2601,7 +2585,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Validation failed.
 
-**URI**: /api/v1/orders/ABC123
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
 
 **Request Header:**
 ```

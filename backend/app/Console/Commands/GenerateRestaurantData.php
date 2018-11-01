@@ -115,9 +115,6 @@ class GenerateRestaurantData extends Command
         $categories = [];
         $restaurants = [];
         foreach ($listData['results'] as $restaurantData) {
-            if ($restaurantData['name'] === 'Taco Bell') {
-                continue;
-            }
             $id = $restaurantData['restaurant_id'];
             $this->info($id
                 . ' - '
@@ -174,8 +171,6 @@ class GenerateRestaurantData extends Command
                 }
             }
 
-            array_push($restaurants, $restaurant);
-
             // Parse menu
             $menuCategories = [];
             $optionGroups = [];
@@ -190,8 +185,8 @@ class GenerateRestaurantData extends Command
                         'name' => $menuItem['name'],
                         'description' => $menuItem['description'],
                         'price' => $this->priceToDecimal($menuItem['price']['amount']),
-                        'minimum_price' => $this->priceToDecimal($menuItem['minimum_price_variation']['amount']),
-                        'maximum_price' => $this->priceToDecimal($menuItem['maximum_price_variation']['amount']),
+                        'min_price' => $this->priceToDecimal($menuItem['minimum_price_variation']['amount']),
+                        'max_price' => $this->priceToDecimal($menuItem['maximum_price_variation']['amount']),
                         'order' => $menuItem['sequence'],
                         'optionGroups' => [],
                     ];
@@ -222,11 +217,9 @@ class GenerateRestaurantData extends Command
                 array_push($menuCategories, $category);
             }
 
-            $menu = [
-                'categories' => $menuCategories,
-                'optionGroups' => $optionGroups,
-            ];
-            file_put_contents("${dataPath}/menu-${id}.json", json_encode($menu));
+            $restaurant['product_categories'] = $menuCategories;
+            $restaurant['optionGroups'] = $optionGroups;
+            array_push($restaurants, $restaurant);
 
             $this->download(
                 $restaurantData['media_image']['base_url'] . $imageFileName,

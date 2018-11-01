@@ -27,9 +27,26 @@ class Restaurant extends Model
         'lng',
     ];
 
+    public function restaurantCategories()
+    {
+        return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category');
+    }
+
+    public function operationTimes()
+    {
+        return $this->hasMany(OperationTime::class);
+    }
+
+    public function restaurantMenu()
+    {
+        return $this->hasOne(RestaurantMenu::class);
+    }
+
     protected $localIsOpen = null;
 
     protected $localDistance = null;
+
+    protected $localProductCategories = null;
 
     /**
      * Address for calculating the is_deliverable attribute
@@ -48,26 +65,6 @@ class Restaurant extends Model
     {
         $this->address = $address;
         $this->localDistance = GeoLocation::distance($address, $this);
-    }
-
-    public function restaurantCategories()
-    {
-        return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category');
-    }
-
-    public function operationTimes()
-    {
-        return $this->hasMany(OperationTime::class);
-    }
-
-    public function productCategories()
-    {
-        return $this->hasMany(ProductCategory::class);
-    }
-
-    public function productOptionGroups()
-    {
-        return $this->hasMany(ProductOptionGroup::class);
     }
 
     public function getIsOpenAttribute()
@@ -97,6 +94,29 @@ class Restaurant extends Model
             return null;
         }
         return $this->localDistance <= 5;
+    }
+
+    public function getProductCategoriesAttribute()
+    {
+        return $this->localProductCategories;
+    }
+
+    public function retrieveMenu()
+    {
+        $menu = $this->restaurantMenu()->first();
+        $menuData = json_decode($menu->menu, true);
+        $productCategories = $menuData['product_categories'];
+        $productOptionGroups = $menuData['product_option_groups'];
+        foreach ($productCategories as &$productCategory) {
+            foreach ($productCategory['products'] as &$product) {
+                $subOptionGroups = [];
+                foreach ($product['product_option_groups'] as $productOptionGroup) {
+                    array_push($subOptionGroups, $productOptionGroups[$productOptionGroup]);
+                }
+                $product['product_option_groups'] = $subOptionGroups;
+            }
+        }
+        $this->localProductCategories = $productCategories;
     }
 
     /**
@@ -134,6 +154,10 @@ class Restaurant extends Model
         foreach ($categories as $category) {
             array_push($data['categories'], $category->name);
         }
+        if (!is_null($this->product_categories)) {
+            $data['product_categories'] = $this->product_categories;
+        }
+
         return $data;
     }
 }

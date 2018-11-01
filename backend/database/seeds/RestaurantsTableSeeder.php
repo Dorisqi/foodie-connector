@@ -4,8 +4,6 @@ use Illuminate\Database\Seeder;
 
 class RestaurantsTableSeeder extends Seeder
 {
-    public $isTest = false;
-
     /**
      * Run the database seeds.
      *
@@ -23,12 +21,7 @@ class RestaurantsTableSeeder extends Seeder
         foreach ($categories as $category) {
             $categoryIds[$category['name']] = $category['id'];
         }
-        $restaurantCount = 0;
         foreach ($restaurantsData as $restaurantData) {
-            if ($this->isTest && $restaurantCount >= 5) {
-                break;
-            }
-            $restaurantCount++;
             $this->command->info('Seeding restaurant ' . $restaurantData['name']);
             $restaurant = new \App\Models\Restaurant(
                 array_only($restaurantData, array_merge([
@@ -44,7 +37,83 @@ class RestaurantsTableSeeder extends Seeder
             if ($restaurant['rating'] == 0) {
                 $restaurant['rating'] = null;
             }
+
             $restaurant->save();
+
+            $productOptionGroupIds = [];
+            $productOptionGroups = [];
+            $productOptionGroupIdCount = 0;
+            foreach ($restaurantData['optionGroups'] as $key => $optionGroup) {
+                $productOptionGroup = [
+                    'id' => $productOptionGroupIdCount++,
+                    'name' => $optionGroup['name'],
+                    'min_choice' => $optionGroup['min_choice'],
+                    'max_choice' => $optionGroup['max_choice'],
+                    'product_options' => [],
+                ];
+                $productOptionGroupIds[$key] = $productOptionGroup['id'];
+
+                usort($optionGroup['options'], function ($a, $b) {
+                    return $a['order'] <=> $b['order'];
+                });
+                $productOptionIdCount = 0;
+                foreach ($optionGroup['options'] as $option) {
+                    $productOption = [
+                        'id' => $productOptionIdCount++,
+                        'name' => $option['name'],
+                        'price' => $option['price'],
+                    ];
+                    array_push($productOptionGroup['product_options'], $productOption);
+                }
+                array_push($productOptionGroups, $productOptionGroup);
+            }
+
+            $productCategories = [];
+            usort($restaurantData['product_categories'], function ($a, $b) {
+                return $a['order'] <=> $b['order'];
+            });
+            $productCategoryIdCount = 0;
+            foreach ($restaurantData['product_categories'] as $category) {
+                $productCategory = [
+                    'id' => $productCategoryIdCount++,
+                    'name' => $category['name'],
+                    'products' => [],
+                ];
+
+                usort($category['items'], function ($a, $b) {
+                    return $a['order'] <=> $b['order'];
+                });
+                $productIdCount = 0;
+                foreach ($category['items'] as $item) {
+                    $product = array_merge([
+                        'id' => $productIdCount++,
+                    ], array_only($item, [
+                        'name', 'description', 'price', 'min_price', 'max_price',
+                    ]));
+
+                    $product['product_option_groups'] = [];
+                    usort($item['optionGroups'], function ($a, $b) {
+                        return $a['order'] <=> $b['order'];
+                    });
+                    foreach ($item['optionGroups'] as $optionGroup) {
+                        array_push(
+                            $product['product_option_groups'],
+                            $productOptionGroupIds[$optionGroup['grubhub_id']]
+                        );
+                    }
+
+                    array_push($productCategory['products'], $product);
+                }
+
+                array_push($productCategories, $productCategory);
+            }
+
+            $restaurant->restaurantMenu()->create([
+                'menu' => json_encode([
+                    'product_categories' => $productCategories,
+                    'product_option_groups' => $productOptionGroups,
+                ]),
+            ]);
 
             foreach ($restaurantData['categories'] as $category) {
                 $restaurant->restaurantCategories()->attach($categoryIds[$category]);
@@ -58,67 +127,6 @@ class RestaurantsTableSeeder extends Seeder
                 ]);
                 $operationTime->restaurant()->associate($restaurant);
                 $operationTime->save();
-            }
-
-            $grubhubId = $restaurantData['grubhub_id'];
-            $menuData = json_decode(
-                file_get_contents("${dataPath}/menu-${grubhubId}.json"),
-                true
-            );
-
-            $productOptionGroupIds = [];
-            foreach ($menuData['optionGroups'] as $key => $optionGroup) {
-                $productOptionGroup = new \App\Models\ProductOptionGroup([
-                    'name' => $optionGroup['name'],
-                    'min_choice' => $optionGroup['min_choice'],
-                    'max_choice' => $optionGroup['max_choice'],
-                ]);
-                $productOptionGroup->restaurant()->associate($restaurant);
-                $productOptionGroup->save();
-                $productOptionGroupIds[$key] = $productOptionGroup->id;
-                foreach ($optionGroup['options'] as $option) {
-                    $productOption = new \App\Models\ProductOption([
-                        'name' => $option['name'],
-                        'price' => $option['price'],
-                        'order' => $option['order'],
-                    ]);
-                    $productOption->productOptionGroup()->associate($productOptionGroup);
-                    $productOption->save();
-                }
-            }
-
-            $productCount = 0;
-            foreach ($menuData['categories'] as $category) {
-                $productCategory = new \App\Models\ProductCategory([
-                    'name' => $category['name'],
-                    'order' => $category['order'],
-                ]);
-                $productCategory->restaurant()->associate($restaurant);
-                $productCategory->save();
-                foreach ($category['items'] as $item) {
-                    if ($this->isTest && $productCount >= 5) {
-                        break 2;
-                    }
-                    $productCount++;
-                    $product = new \App\Models\Product([
-                        'name' => $item['name'],
-                        'description' => $item['description'],
-                        'price' => $item['price'],
-                        'min_price' => $item['minimum_price'],
-                        'max_price' => $item['maximum_price'],
-                        'order' => $item['order'],
-                    ]);
-                    $product->productCategory()->associate($productCategory);
-                    $product->save();
-                    foreach ($item['optionGroups'] as $optionGroup) {
-                        $product->productOptionGroups()->attach(
-                            $productOptionGroupIds[$optionGroup['grubhub_id']],
-                            [
-                                'order' => $optionGroup['order'],
-                            ]
-                        );
-                    }
-                }
             }
         }
     }

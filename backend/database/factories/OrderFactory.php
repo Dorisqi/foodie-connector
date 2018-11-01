@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(\App\Models\Order::class, function (Faker $faker) {
     $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
-        'id' => 'ABC123',
+        'id' => 'HFEJ32RAFW58ER29R8SW',
         'create_at' => $currentTime->timestamp,
         'join_before' => $currentTime->copy()->addMinutes(10)->timestamp,
         'is_public' => true,
