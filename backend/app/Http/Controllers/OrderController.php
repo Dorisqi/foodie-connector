@@ -50,7 +50,9 @@ class OrderController extends ApiController
             $restaurant->setAddress($address);
             if (!$restaurant->is_deliverable) {
                 throw ApiException::validationFailedErrors([
-                    'address_id' => 'The address associated with the address_id must be deliverable by the restaurant.',
+                    'address_id' => [
+                        'The address associated with the address_id must be deliverable by the restaurant.',
+                    ],
                 ]);
             }
 
@@ -58,7 +60,9 @@ class OrderController extends ApiController
             $joinBefore = $createAt->copy()->addSeconds((int)$request->input('join_limit'));
             if (!$restaurant->isOpenAt($joinBefore->copy()->addMinute(10))) {
                 throw ApiException::validationFailedErrors([
-                    'join_limit' => 'The restaurant must be open for at least 10 minutes after the join limit.'
+                    'join_limit' => [
+                        'The restaurant must be open for at least 10 minutes after the join limit.',
+                    ],
                 ]);
             }
             $order = new Order([
@@ -141,12 +145,51 @@ class OrderController extends ApiController
         foreach ($order->orderStatuses as $orderStatus) {
             if ($orderStatus->status > OrderStatus::CREATED) {
                 throw ApiException::validationFailedErrors([
-                    'id' => 'The order corresponding to the id is already canceled',
+                    'id' => [
+                        'The order corresponding to the id cannot be canceled',
+                    ],
                 ]);
             }
         }
         $orderStatus = new OrderStatus([
             'status' => OrderStatus::CLOSED,
+            'time' => Time::currentTime(),
+        ]);
+        $orderStatus->order()->associate($order);
+        $orderStatus->save();
+
+        return $this->response($this->getOrder($id));
+    }
+
+    /**
+     * Confirm an order
+     *
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function confirm($id)
+    {
+        $order = $this->getOrder($id);
+        if (is_null($order) || !$order->is_visible) {
+            throw ApiException::resourceNotFound();
+        }
+        if (!$order->is_creator) {
+            throw ApiException::notOrderCreator();
+        }
+        foreach ($order->orderStatuses as $orderStatus) {
+            if ($orderStatus->status > OrderStatus::CREATED) {
+                throw ApiException::validationFailedErrors([
+                    'id' => [
+                        'The order corresponding to the id cannot be confirmed',
+                    ],
+                ]);
+            }
+        }
+        // TODO: Check ready status
+        $orderStatus = new OrderStatus([
+            'status' => OrderStatus::CONFIRMED,
             'time' => Time::currentTime(),
         ]);
         $orderStatus->order()->associate($order);

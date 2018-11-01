@@ -144,7 +144,11 @@ class ApiException extends Exception
     }
     public static function orderNotJoinable()
     {
-        return new ApiException('This order is no longer joinable.', 422);
+        return self::validationFailedErrors([
+            'id' => [
+                'This order is no longer joinable.',
+            ],
+        ]);
     }
 
     /**

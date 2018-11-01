@@ -2276,7 +2276,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "936E71888666001F78CD",
+    "id": "A40385DF055ECBE9CE4A",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2334,8 +2334,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/936E71888666001F78CD",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/936E71888666001F78CD"
+    "share_link": "http://localhost:8000/orders/A40385DF055ECBE9CE4A",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/A40385DF055ECBE9CE4A"
 }
 ```
 #### **Status Code: 401**
@@ -2376,7 +2376,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "join_limit": "The restaurant must be open for at least 10 minutes after the join limit."
+        "join_limit": [
+            "The restaurant must be open for at least 10 minutes after the join limit."
+        ]
     }
 }
 ```
@@ -2406,7 +2408,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "address_id": "The address associated with the address_id must be deliverable by the restaurant."
+        "address_id": [
+            "The address associated with the address_id must be deliverable by the restaurant."
+        ]
     }
 }
 ```
@@ -2666,7 +2670,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "id": "The order corresponding to the id is already canceled"
+        "id": [
+            "The order corresponding to the id cannot be canceled"
+        ]
     }
 }
 ```
@@ -2762,7 +2768,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-This order is no longer joinable.
+Validation failed.
 
 **URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email
 
@@ -2781,7 +2787,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "This order is no longer joinable."
+    "message": "Validation failed.",
+    "data": {
+        "id": [
+            "This order is no longer joinable."
+        ]
+    }
 }
 ```
 
