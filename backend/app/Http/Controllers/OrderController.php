@@ -175,7 +175,8 @@ class OrderController extends ApiController
                 60
             );
         }
-        return $qrCode;
+        return response($qrCode)
+            ->header('Content-Type', 'image/svg+xml');
     }
 
     /**
