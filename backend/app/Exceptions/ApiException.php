@@ -138,6 +138,14 @@ class ApiException extends Exception
     {
         return new ApiException('This operation can only be done by the order creator.', 403);
     }
+    public static function notOrderMember()
+    {
+        return new ApiException('This operation can only be done by an order member.', 403);
+    }
+    public static function orderNotJoinable()
+    {
+        return new ApiException('This order is no longer joinable.', 422);
+    }
 
     /**
      * Headers

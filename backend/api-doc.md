@@ -2276,7 +2276,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "B05C6A7E04D82338E207",
+    "id": "936E71888666001F78CD",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2332,8 +2332,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         }
     ],
     "is_joinable": true,
-    "share_link": "http://localhost:8000/orders/B05C6A7E04D82338E207",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/B05C6A7E04D82338E207"
+    "is_creator": true,
+    "is_member": true,
+    "share_link": "http://localhost:8000/orders/936E71888666001F78CD",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/936E71888666001F78CD"
 }
 ```
 #### **Status Code: 401**
@@ -2491,6 +2493,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         }
     ],
     "is_joinable": true,
+    "is_creator": true,
+    "is_member": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
@@ -2611,6 +2615,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         }
     ],
     "is_joinable": false,
+    "is_creator": true,
+    "is_member": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
@@ -2662,6 +2668,120 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "data": {
         "id": "The order corresponding to the id is already canceled"
     }
+}
+```
+
+### **POST - /api/v1/orders/{id}/invitation-email**
+
+Send invitation email
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | required | email |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders/0/invitation-email
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/A00000/invitation-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/A00000/invitation-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email field is required."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+This order is no longer joinable.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order is no longer joinable."
 }
 ```
 

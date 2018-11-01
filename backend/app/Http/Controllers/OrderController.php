@@ -9,7 +9,9 @@ use App\Models\Order;
 use App\Models\OrderMember;
 use App\Models\OrderStatus;
 use App\Models\Restaurant;
+use App\Notifications\OrderInvitation;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -133,7 +135,7 @@ class OrderController extends ApiController
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
-        if ($order->creator_id != $this->user()->id) {
+        if (!$order->is_creator) {
             throw ApiException::notOrderCreator();
         }
         foreach ($order->orderStatuses as $orderStatus) {
@@ -161,7 +163,7 @@ class OrderController extends ApiController
      */
     public function qrCode($id)
     {
-        $order = Order::find($id);
+        $order = Order::with('orderStatuses')->find($id);
         if (is_null($order) || !$order->is_joinable) {
             throw abort(404);
         }
@@ -177,6 +179,34 @@ class OrderController extends ApiController
         }
         return response($qrCode)
             ->header('Content-Type', 'image/svg+xml');
+    }
+
+    /**
+     * Invite through email
+     *
+     * @param string $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function sendInvitationEmail($id, Request $request)
+    {
+        $this->validateInput($request, $this::sendInvitationEmailRules());
+        $order = $this->getOrder($id);
+        if (is_null($order) || !$order->is_visible) {
+            throw ApiException::resourceNotFound();
+        }
+        if (!$order->is_member) {
+            throw ApiException::notOrderMember();
+        }
+        if (!$order->is_joinable) {
+            throw ApiException::orderNotJoinable();
+        }
+        $receiver = new AnonymousNotifiable();
+        $receiver->route('mail', $request->input('email'));
+        $receiver->notify(new OrderInvitation($this->user()->name, $order->share_link));
+        return $this->response();
     }
 
     /**
@@ -200,11 +230,18 @@ class OrderController extends ApiController
 
     public static function rules()
     {
-        return array_merge([
+        return [
             'restaurant_id' => 'required|integer|exists:restaurants,id',
             'join_limit' => 'required|integer|between:600,7200', // 10minutes - 2hours
             'is_public' => 'required|boolean',
             'address_id' => 'required|integer',
-        ]);
+        ];
+    }
+
+    public static function sendInvitationEmailRules()
+    {
+        return [
+            'email' => 'required|email',
+        ];
     }
 }

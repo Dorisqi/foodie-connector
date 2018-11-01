@@ -55,6 +55,22 @@ class Order extends Model
         return url('orders/' . $this->id);
     }
 
+    public function getIsCreatorAttribute()
+    {
+        return $this->creator->id === Auth::guard('api')->user()->id;
+    }
+
+    public function getIsMemberAttribute()
+    {
+        $userId = Auth::guard('api')->user()->id;
+        foreach ($this->orderMembers as $orderMember) {
+            if ($orderMember->user->id === $userId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getIsJoinableAttribute()
     {
         if (Time::currentTime()->greaterThan(
@@ -74,13 +90,8 @@ class Order extends Model
 
     public function getIsVisibleAttribute()
     {
-        if ($this->is_joinable) {
+        if ($this->is_joinable || $this->is_member) {
             return true;
-        }
-        foreach ($this->orderMembers as $orderMember) {
-            if ($orderMember->user->id === Auth::guard('api')->user()->id) {
-                return true;
-            }
         }
         return false;
     }
@@ -89,6 +100,8 @@ class Order extends Model
     {
         $data = parent::toArray();
         $data['is_joinable'] = $this->is_joinable;
+        $data['is_creator'] = $this->is_creator;
+        $data['is_member'] = $this->is_member;
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         return $data;
