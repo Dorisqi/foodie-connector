@@ -2276,7 +2276,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "A40385DF055ECBE9CE4A",
+    "id": "DE0EB489EB09826EBBD5",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2334,8 +2334,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/A40385DF055ECBE9CE4A",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/A40385DF055ECBE9CE4A"
+    "share_link": "http://localhost:8000/orders/DE0EB489EB09826EBBD5",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/DE0EB489EB09826EBBD5"
 }
 ```
 #### **Status Code: 401**
@@ -2672,6 +2672,150 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "data": {
         "id": [
             "The order corresponding to the id cannot be canceled"
+        ]
+    }
+}
+```
+
+### **POST - /api/v1/orders/{id}/confirm**
+
+Confirm an order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": "1",
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "lat": "40.4227584",
+    "lng": "-86.9090892",
+    "phone": "7650000000",
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+        "order_minimum": "9.99",
+        "delivery_fee": "2.99",
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7651111111",
+        "categories": [
+            "Category 1",
+            "Category 2"
+        ],
+        "is_open": true,
+        "distance": null,
+        "estimated_delivery_time": null,
+        "is_deliverable": null
+    },
+    "creator": {
+        "id": 1,
+        "name": "Test User"
+    },
+    "order_members": [
+        {
+            "is_ready": "0",
+            "phone": "7650000000",
+            "user": {
+                "id": 1,
+                "name": "Test User"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        },
+        {
+            "status": "confirmed",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "is_joinable": false,
+    "is_creator": true,
+    "is_member": true,
+    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders/0/confirm
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/A00000/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "id": [
+            "The order corresponding to the id cannot be confirmed"
         ]
     }
 }
