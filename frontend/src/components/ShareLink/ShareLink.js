@@ -23,11 +23,13 @@ function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
 
+
+
 class ShareLink extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        share_link: '',
+        share_link: "URL",
         isClickable:false,
     };
       //hand all changes
@@ -47,7 +49,8 @@ class ShareLink extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes,share_link } = this.props;
+
     return (
         <main>
           <Button onClick={() => this.handleShareOpen('modal')}
@@ -77,6 +80,7 @@ class ShareLink extends React.Component {
                 <TextField
                   disabled
                   id="filled-disabled"
+                  value={share_link}
                   label="url"
                   defaultValue={this.state.share_link}
                   className={classes.textField}

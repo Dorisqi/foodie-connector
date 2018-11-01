@@ -20,6 +20,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Tooltip from '@material-ui/core/Tooltip';
 import CustomLinearProgress from "components/CustomLinearProgress/CustomLinearProgress.jsx";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+import ShareLink from "../ShareLink/ShareLink";
+import ShareViaQR from "../ShareViaQR/ShareViaQR";
+import ShareViaThird from "../ShareViaThird/ShareViaThird";
 import {
   primaryColor,
   dangerColor,
@@ -110,8 +113,8 @@ constructor(props){
     hours:"0",
     minutes:10,
     calculated_time:600,
-    qr_code:"",
-    share_link:""
+    qr_code:"http://localhost:8000/orders/qr-code/9B151C",
+    share_link:"http://localhost:8000/orders/9B151C"
 
 
   };
@@ -376,6 +379,12 @@ constructor(props){
                 value={0}
               />
               </div>
+              <div>
+                <ShareLink share_link={this.state.share_link}>
+                  </ShareLink>
+                <ShareViaQR qr_code_link = {this.state.qr_code}> </ShareViaQR>
+              </div>
+
           </DialogContent>
           <DialogActions
             className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
