@@ -29,10 +29,13 @@ class RestaurantDetailPage extends React.Component {
       cartItems: [],
       allInfo: {},
       restaurantInfo: {},
+      orderId:'',
+      creatorId:'',
     };
     this.loadALlInfo = this.loadALlInfo.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.updateCart = this.updateCart.bind(this);
+    this.updateCreatorId=this.updateCreatorId.bind(this);
   }
 
   componentWillMount() {
@@ -77,6 +80,10 @@ class RestaurantDetailPage extends React.Component {
     })
   }
 
+  updateCreatorId(id){
+    this.setState({orderId:id});
+  }
+
   addToCart(name) {
     // this.setState((state) => {
     //   const { cartItems } = state;
@@ -115,9 +122,10 @@ class RestaurantDetailPage extends React.Component {
           <Menu menu={menu} addToCart={this.addToCart}/>
           </Grid>
           <Grid item xs>
-          <CreateorderCard restaurant_id={this.state.id}>
+          <CreateorderCard updateCreatorId={this.updateCreatorId} restaurant_id={this.state.id}>
           </CreateorderCard>
           <Cart id={id} cartItems={cartItems} updateCart={this.updateCart}/>
+          
           </Grid>
         </Grid>
 

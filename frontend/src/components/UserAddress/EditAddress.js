@@ -105,6 +105,8 @@ constructor(props){
   this.handleCountry = this.handleCountry.bind(this);
   this.handleZipcode = this.handleZipcode.bind(this);
   this.handlePhone = this.handlePhone.bind(this);
+  this.handlename = this.handlename.bind(this);
+
 }
 
   componentDidMount() {
@@ -147,6 +149,10 @@ constructor(props){
   handlePhone (event) {
     this.setState({ phone: event.target.value });
   };
+  handlename (event) {
+    this.setState({ name: event.target.value });
+  };
+
 
   handleConfirm(modal,event){
     const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
@@ -156,7 +162,7 @@ constructor(props){
     this.setState(x);
     alert(name+phone+line_1+line_2+city+state+zip_code);
 
-    axios.put(apiList.addressDetail, {
+    axios.put(apiList.updateaddress,this.state.id, {
 
       name: name,
       phone: phone,
@@ -165,7 +171,6 @@ constructor(props){
       city: city,
       state: state,
       zip_code: zip_code,
-      place_id: place_id,
       is_default: is_default,
 
     }).then(res => {
@@ -190,7 +195,7 @@ constructor(props){
   }
 
   componentDidMount() {
-    this.setState({phone:this.props.phone,line_1:this.props.line_1,line_2:this.props.line_2
+    this.setState({id:this.props.id,phone:this.props.phone,line_1:this.props.line_1,line_2:this.props.line_2
                     ,city:this.props.city,state:this.props.state,zip_code:this.props.zip_code});
   }
 
@@ -220,6 +225,16 @@ constructor(props){
             >
 
           <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+            required
+            id="outlined-dense"
+            label="Name the address"
+            value={this.state.name}
+            className={classNames(classes.textField, classes.dense)}
+            margin="dense"
+            variant="outlined"
+            onChange={this.handlename}
+            />
             <TextField
             required
             id="outlined-dense"
@@ -302,7 +317,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Phone Number"
-              
+
               value={this.state.phone}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
