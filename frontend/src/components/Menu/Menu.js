@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -121,14 +120,32 @@ class Menu extends React.Component {
   }
 
   addToCart(productId) {
-    // const { addToCart } = this.props;
-    // addToCart(name);
-    // const { selected, addable } = this.state;
+    const { id, addToCart } = this.props;
     this.setState(state => {
       const { selected, addable } = this.state;
-      addable[productId] = false;
-      // const { selected } = this.state;
       const product = selected[productId];
+      const product_option_groups = [];
+      if (product.hasOptions) {
+        Object.keys(product).forEach(groupId => {
+          if (Number.isInteger(+groupId) && product[groupId].isInRange) {
+            product_option_groups.push({
+              "product_option_group_id": +groupId,
+              "product_options": Object.keys(product[groupId].options)
+                                        .filter(optionId => product[groupId].options[optionId])
+                                        .map(id => Number(id))
+            })
+          }
+        })
+      }
+      const cartBody = {
+        "product_id": productId,
+        "product_amount": product.count,
+        "product_option_groups": product_option_groups,
+      }
+      addToCart(cartBody);
+      // reset data
+      addable[productId] = false;
+
       console.log(`${productId} with count ${product.count} added to cart`);
       product.count = 0;
       if (product.hasOptions) {
@@ -173,7 +190,6 @@ class Menu extends React.Component {
     console.log(`${productId} ${optionsId} ${optionId}`);
     this.setState(state => {
       const { selected, addable } = state;
-      // const { selected } = state;
       const product = selected[productId];
       if (optionsId !== null && optionId !== null) {
         const optionGroups = product[optionsId];
@@ -210,8 +226,6 @@ class Menu extends React.Component {
           }
         });
       }
-      console.log(selected);
-      console.log(addable);
       return {
         selected: selected,
         addable: addable,
