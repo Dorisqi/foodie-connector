@@ -75,6 +75,7 @@ class PwReset extends React.Component {
     };
 
     this.handleChange1 = this.handleChange1.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
     this.handleSubmitEmail = this.handleSubmitEmail.bind(this);
     this.handleCodeChange = this.handleCodeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,6 +95,7 @@ class PwReset extends React.Component {
     }));
   }
   handleSubmitEmail() {
+
     const { email } = this.state;
     axios.post(apiList.resetPasswordEmail, {
       email: email
@@ -138,16 +140,36 @@ class PwReset extends React.Component {
   handleSubmit(event) {
     const { email, newpw, newpw2, code } = this.state;
     if (newpw === newpw2) {
+    //  alert(email+newpw+code);
       axios.post(apiList.resetPassword, {
         email: email,
         token: code,
         password: newpw
       }).then(res => {
-
+        alert("Password reset successfully!");
+        window.location.href="http://localhost:3000/login";
       }).catch(err => {
         console.log(err);
+        const { response } = err;
+        if (response && response.status === 401) {
+          alert('The password reset token is invalid or expired.');
+        }
+        else if (response && response.status === 404) {
+          alert('We can\'t find a user with that e-mail address');
+        }
+        else if (response && response.status === 422) {
+          alert('Validation failed.');
+        }
+        else if (response && response.status === 429) {
+          alert('Too many attempts');
+        }
+        else {
+          alert('other erro');
+        }
       })
     }
+
+    event.preventDefault();
   }
 
   render() {

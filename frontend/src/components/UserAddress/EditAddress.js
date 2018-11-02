@@ -182,7 +182,11 @@ constructor(props){
     //  handleAddAddress(res);
     this.setState({id:id,phone:phone,line_1:line_1,line_2:line_2
                     ,city:city,state:state,zip_code:zip_code});
+                    const x = [];
+                    x[modal] = false;
+                    this.setState(x);
     }).catch(err => {
+
       console.log(err);
       const { response } = err;
       if (response && response.status === 401) {
@@ -196,6 +200,7 @@ constructor(props){
       }
 
     })
+
 
   }
 
