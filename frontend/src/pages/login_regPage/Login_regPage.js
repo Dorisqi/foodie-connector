@@ -16,7 +16,8 @@ import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 import { browserHistory } from 'react-router';
 //import ShareLink from '../../components/ShareLink/ShareLink';
-//import ShareViaQR from '../../components/ShareViaQR/ShareViaQR';
+import ShareViaQR from '../../components/ShareViaQR/ShareViaQR';
+import ShareViaThird from '../../components/ShareViaThird/ShareViaThird';
 
 
 const styles = theme => ({
