@@ -162,8 +162,8 @@ class GenerateRestaurantData extends Command
                 for ($w = 0; $w < 7; $w++) {
                     array_push($restaurant['available_hours'], [
                         'day_of_week' => $w,
-                        'start_time' => '00:00',
-                        'end_time' => '23:59',
+                        'start_time' => '00:00:00',
+                        'end_time' => '23:59:59',
                     ]);
                 }
                 $alwaysOpen = false;
