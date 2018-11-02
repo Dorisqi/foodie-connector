@@ -53,6 +53,21 @@ class UpdateCartTest extends ApiTestCase
             ],
         ], false);
         $this->assertEquals(0, $response->json('subtotal'));
+        $this->assertFailed([
+            'restaurant_id' => $restaurant->id,
+            'cart' => [
+                [
+                    'product_id' => 0,
+                    'product_amount' => -1,
+                    'product_option_groups' => [
+                        [
+                            'product_option_group_id' => 0,
+                            'product_options' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ], 422);
     }
 
     protected function method()

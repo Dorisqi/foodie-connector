@@ -2235,6 +2235,83 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Everything about cart
 
+### **GET - /api/v1/cart**
+
+Get the current cart
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "restaurant_id": "1",
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "restaurant_id": null,
+    "cart": [],
+    "subtotal": 0
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cart
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
 ### **PUT - /api/v1/cart**
 
 Update the cart
@@ -2349,6 +2426,49 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 }
 ```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": -1,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": []
+                }
+            ]
+        }
+    ]
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "cart": [
+            "Invalid cart",
+            "",
+            "#0 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\app\\Http\\Controllers\\CartController.php(30): App\\Models\\Cart->calculateSummary(true, Array)\n#1 [internal function]: App\\Http\\Controllers\\CartController->update(Object(Illuminate\\Http\\Request))\n#2 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): call_user_func_array(Array, Array)\n#3 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('update', Array)\n#4 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(212): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\CartController), 'update')\n#5 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(169): Illuminate\\Routing\\Route->runController()\n#6 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(679): Illuminate\\Routing\\Route->run()\n#7 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(30): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#8 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\app\\Http\\Middleware\\Authenticate.php(44): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#9 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): App\\Http\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')\n#10 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#11 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(41): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#12 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#13 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#14 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(58): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#15 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 60, '1')\n#16 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#17 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(104): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#18 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(681): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#19 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(656): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))\n#20 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(622): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))\n#21 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(611): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))\n#22 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(176): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))\n#23 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(30): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))\n#24 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\fideloper\\proxy\\src\\TrustProxies.php(57): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#25 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#26 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#27 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(31): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#28 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#29 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#30 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(31): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#31 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#32 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#33 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#34 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#35 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#36 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode.php(62): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#37 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(151): Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode->handle(Object(Illuminate\\Http\\Request), Object(Closure))\n#38 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))\n#39 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(104): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))\n#40 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(151): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#41 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))\n#42 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php(345): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))\n#43 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php(317): Illuminate\\Foundation\\Testing\\TestCase->call('PUT', '/api/v1/cart', Array, Array, Array, Array, '{\"restaurant_id...')\n#44 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\tests\\ApiTestCase.php(208): Illuminate\\Foundation\\Testing\\TestCase->json('PUT', '/api/v1/cart', Array)\n#45 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\tests\\ApiTestCase.php(132): Tests\\ApiTestCase->request(Array)\n#46 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\tests\\Feature\\Cart\\UpdateCartTest.php(70): Tests\\ApiTestCase->assertFailed(Array, 422)\n#47 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(1150): Tests\\Feature\\Cart\\UpdateCartTest->testUpdateCart()\n#48 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(844): PHPUnit\\Framework\\TestCase->runTest()\n#49 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestResult.php(675): PHPUnit\\Framework\\TestCase->runBare()\n#50 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php(798): PHPUnit\\Framework\\TestResult->run(Object(Tests\\Feature\\Cart\\UpdateCartTest))\n#51 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php(750): PHPUnit\\Framework\\TestCase->run(Object(PHPUnit\\Framework\\TestResult))\n#52 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php(750): PHPUnit\\Framework\\TestSuite->run(Object(PHPUnit\\Framework\\TestResult))\n#53 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php(750): PHPUnit\\Framework\\TestSuite->run(Object(PHPUnit\\Framework\\TestResult))\n#54 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\TextUI\\TestRunner.php(622): PHPUnit\\Framework\\TestSuite->run(Object(PHPUnit\\Framework\\TestResult))\n#55 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(206): PHPUnit\\TextUI\\TestRunner->doRun(Object(PHPUnit\\Framework\\TestSuite), Array, true)\n#56 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\src\\TextUI\\Command.php(162): PHPUnit\\TextUI\\Command->run(Array, true)\n#57 C:\\Users\\sxn\\Projects\\foodie-connector\\backend\\vendor\\phpunit\\phpunit\\phpunit(61): PHPUnit\\TextUI\\Command::main()\n#58 {main}"
+        ]
+    }
+}
+```
 
 ## **order**
 
@@ -2395,7 +2515,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "72C6761BA655DCC46BBD",
+    "id": "1FF4A6E36CEB646A60CC",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2453,8 +2573,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/72C6761BA655DCC46BBD",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/72C6761BA655DCC46BBD"
+    "share_link": "http://localhost:8000/orders/1FF4A6E36CEB646A60CC",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/1FF4A6E36CEB646A60CC"
 }
 ```
 #### **Status Code: 401**
