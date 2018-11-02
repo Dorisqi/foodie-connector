@@ -6,7 +6,7 @@ import apiList from '../../apiList';
 import Menu from '../../components/Menu/Menu';
 import Cart from '../../components/Cart/Cart';
 import RestaurantInfo from '../../components/RestaurantInfo/RestaurantInfo';
-
+import CreateorderCard from '../../components/GrouporderInfo/CreateorderCard';
 class RestaurantDetailPage extends React.Component {
   constructor(props) {
     super(props);
@@ -93,10 +93,21 @@ class RestaurantDetailPage extends React.Component {
     return (
       <div>
         <Grid container spacing={16}>
+
           <RestaurantInfo id={id} restaurantInfo={restaurantInfo}/>
+
+
           <Menu menu={menu} addToCart={this.addToCart}/>
+
+
           <Cart id={id} cartItems={cartItems} updateCart={this.updateCart}/>
+
         </Grid>
+
+      
+
+      <CreateorderCard restaurant_id={this.state.id}>
+      </CreateorderCard>
       </div>
     )
   }

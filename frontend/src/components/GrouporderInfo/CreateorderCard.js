@@ -46,7 +46,7 @@ class CreateorderCard extends React.Component {
 
           <DeliveryaddrSelect></DeliveryaddrSelect>
 
-          <CreateorderButton delivery_address_id={this.state.address_id} restaurant_id={this.state.restaurant_id} >
+          <CreateorderButton delivery_address_id={this.state.address_id} restaurant_id={this.props.restaurant_id} >
           </CreateorderButton>
 
           </CardContent>
