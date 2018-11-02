@@ -23,6 +23,17 @@ function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
 
+
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    minWidth: 300,
+    maxHeight: 40,
+  },
+
+})
+
 class ShareViaQR extends React.Component {
   constructor(props) {
     super(props);
@@ -102,4 +113,4 @@ class ShareViaQR extends React.Component {
     );
   }
 }
-export default withStyles(modalStyle)(ShareViaQR);
+export default withStyles(styles)(ShareViaQR);
