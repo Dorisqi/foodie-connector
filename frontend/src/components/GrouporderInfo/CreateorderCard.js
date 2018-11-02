@@ -13,7 +13,7 @@ import DeliveryaddrSelect from './DeliveryaddrSelect';
 
 const styles = {
   card: {
-    minWidth:330,
+    minWidth:290,
     maxWidth: 350,
   },
   bullet: {
@@ -30,11 +30,20 @@ const styles = {
 };
 
 class CreateorderCard extends React.Component {
-  state = {
+constructor(props){
+  super(props);
+  this.state = {
     address_id: 10,
     restaurant_id:1,
 
   };
+
+  this.sendCreatorId = this.sendCreatorId.bind(this);
+}
+
+  sendCreatorId(creatorid){
+    this.props.updateCreatorId(creatorid);
+  }
 
 
   render(){
@@ -46,7 +55,7 @@ class CreateorderCard extends React.Component {
 
           <DeliveryaddrSelect></DeliveryaddrSelect>
 
-          <CreateorderButton delivery_address_id={this.state.address_id} restaurant_id={this.props.restaurant_id} >
+          <CreateorderButton liftCreatorId={this.sendCreatorId} delivery_address_id={this.state.address_id} restaurant_id={this.props.restaurant_id} >
           </CreateorderButton>
 
           </CardContent>

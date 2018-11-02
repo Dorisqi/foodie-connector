@@ -267,7 +267,7 @@ class AddressTable extends React.Component {
                 <TableCell padding = 'none'>{address.line_1+', '+address.line_2+', '+address.city+', '+address.state}</TableCell>
                 <TableCell padding = 'dense'>{address.zip_code}</TableCell>
                 <TableCell padding = 'dense'>
-                <EditAddress name={address.name} phone={address.phone}
+                <EditAddress id={address.id} name={address.name} phone={address.phone}
                   line_1={address.line_1}
                   line_2={address.line_2}
                   city={address.city}

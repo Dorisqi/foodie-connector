@@ -29,7 +29,7 @@ class RestaurantInfo extends React.Component {
   render() {
     const { restaurantInfo } = this.state;
     return (
-      <Grid item xs={12} md={3}>
+      <Grid item xs md={9}>
         <Paper elevation={5}>
           <Typography variant="h1" component="h1" align="center">
             {restaurantInfo.name}
@@ -40,7 +40,7 @@ class RestaurantInfo extends React.Component {
           <CardMedia
             component="img"
             alt={restaurantInfo.name}
-            height="140"
+            height="210"
             image={restaurantInfo.image}
           />
         </Paper>

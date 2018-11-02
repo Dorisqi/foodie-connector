@@ -18,6 +18,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     maxWidth: 752,
+    minWidth:100
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -31,43 +32,65 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartItems: props.cartItems,
+      id: props.id,
+      restaurantName: "",
+      cart: {
+        "restaurant_id": null,
+        "cart": [],
+        "subtotal": 0,
+      },
+      menu: []
     };
     this.deleteItem = this.deleteItem.bind(this);
 
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.cart.restaurant_id) {
+      const { menu } = nextProps;
+      const products = menu.map(p => p.products).flat();
+      const { restaurantName, cart } = this.state;
+      console.log(nextProps.cart);
       this.setState({
-        cartItems: nextProps.cartItems
+        id: nextProps.id,
+        restaurantName: restaurantName === "" && cart.cart.length === 0
+                        ? nextProps.restaurantName
+                        : restaurantName,
+        cart: nextProps.cart,
+        menu: products,
       })
+    }
   }
 
-  deleteItem(name) {
+  deleteItem(item, idx) {
     const { updateCart } = this.props;
-
-    this.setState((state) => {
-      const cartItems = state.cartItems.map(item => {
-        if (item.name != name) {
-          return item;
-        }
-        item.count--;
-        return item;
-      }).filter(item => item.count > 0);
-      updateCart(cartItems);
-      return { cartItems: cartItems };
-    })
+    const { cart } = this.state;
+    const cartItems = cart.cart;
+    if (item.product_amount === 1) {
+      cartItems.splice(idx, 1);
+    }
+    else {
+      item.product_amount--;
+    }
+    updateCart(cart);
   }
 
   render() {
     const { classes } = this.props;
-    const { cartItems } = this.state;
-    var totalCost = 0;
-    cartItems.forEach(item => totalCost += item.count*item.price);
-    totalCost = setTwoDecimal(totalCost);
-    const listItems = cartItems.map(item => {
-      const primary = item.name+" X "+item.count;
-      const secondary = setTwoDecimal(item.price*item.count);
+    const { id, cart, menu } = this.state;
+    var { subtotal } = cart;
+    const cartItems = cart.cart;
+    subtotal = setTwoDecimal(subtotal);
+    const listItems = cartItems.map((item, idx) => {
+      const product = menu.find(x => x.id === item.product_id);
+      const name = product.name;
+      const options = item.product_option_groups.map(group => {
+        const gid = group.product_option_group_id;
+        const product_option_group = product['product_option_groups'].find(x => x.id === gid);
+        return group.product_options.map(id => product_option_group['product_options'].find(x => x.id === id).name);
+      }).flat();
+      const primary = name+" X "+item.product_amount;
+      const secondary = options.join(", ")
       return (
         <ListItem>
           <ListItemText
@@ -75,7 +98,7 @@ class Cart extends React.Component {
             secondary={secondary}
           />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item.name)}>
+            <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item, idx)}>
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>
@@ -87,11 +110,18 @@ class Cart extends React.Component {
           <Typography variant="h1" component="h1" align="center" className={classes.title}>
             Cart
           </Typography>
-          <List>
-            {listItems}
-          </List>
+          {id == cart.restaurant_id
+            ? <List>
+              {listItems}
+              </List>
+            : <Typography variant="h4" component="h4" align="center" className={classes.title}>
+                There are items from <a href={`/restaurant/${cart.restaurant_id}`}>this restaurant</a>,
+                empty the cart before adding new item.
+              </Typography>
+          }
+
           <Typography variant="h5">
-            Total Cost: ${totalCost}
+            Total Cost: ${subtotal}
           </Typography>
       </Grid>
     )

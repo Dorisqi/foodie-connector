@@ -60,8 +60,20 @@ class ChangepwBox extends React.Component {
         new_password: newpw1,
       }).then(res => {
         console.log('success', res);
+        alert("password change success!")
       }).catch(err => {
         console.log(err);
+        const { response } = err;
+        if (response && response.status === 401) {
+          alert('authentification required or old pw does not match our record!');
+        }
+        else if (response && response.status === 422) {
+          alert('Validaiton failed');
+        }
+        else {
+          alert('other erro');
+        }
+
       })
       //alert("new password and old password shouldn't be the same");
     } else if (newpw1 !== newpw2) {

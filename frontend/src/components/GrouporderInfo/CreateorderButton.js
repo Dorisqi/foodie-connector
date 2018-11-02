@@ -113,8 +113,8 @@ constructor(props){
     hours:"0",
     minutes:10,
     calculated_time:600,
-    qr_code:"http://localhost:8000/orders/qr-code/9B151C",
-    share_link:"http://localhost:8000/orders/9B151C"
+    qr_code:"",
+    share_link:"No order to share"
 
 
   };
@@ -165,48 +165,62 @@ constructor(props){
     this.setState({minutes: event.target.value})
   }
 
-
+ calculatSec(){
+   const time = 60*this.state.minutes+3600*this.state.hours;
+   alert("time:" + time);
+   this.setState({calculated_time: time});
+ }
 
   handleCreateorder(modal){
-
-    //const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
-    //const { handleAddAddress } = this.props;
 
     const x = [];
     x[modal] = true;
     this.setState(x);
+    //this.calculatSec();
+    const time = 60*this.state.minutes+3600*this.state.hours;
+    alert("time:" + time);
+    this.setState({calculated_time: time});
+
+    if(time<600|| time>7200){
+      alert("Please enter the time limitation between 10 mins and 2 hours!");
+      this.setState({calculated_time: 600});
+    }else {
+      this.setState({calculated_time: time});
+      alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
+      axios.post(apiList.createorder, {
+        restaurant_id:this.state.restaurant_id,
+        join_limit:this.state.calculated_time,
+        address_id:this.state.delivery_address_id,
+        is_public:this.state.selectedStatus,
 
 
-    alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
-    axios.post(apiList.createorder, {
-      restaurant_id:this.state.restaurant_id,
-      join_limit:this.state.calculated_time,
-      address_id:this.state.delivery_address_id,
-      is_public:this.state.selectedStatus,
+      }).then(res => {
+        console.log(res.data);
+        this.setState({share_link:res.data.share_link,qr_code:res.data.qr_code_link});
+        alert("creatorid:"+res.data.creator.id);
+        this.props.liftCreatorId(res.data.creator.id);
+        //handleAddAddress(res.data);
+      }).catch(err => {
+        const { response } = err;
+        console.log(err.message);
+        if (response && response.status === 401) {
+          alert('authentification required');
+        }
+        else if (response && response.status === 422) {
+          alert('Validaiton failed');
+        }
+        else {
+          alert('other erro');
+        }
+      })
 
+    }
 
-    }).then(res => {
-      console.log(res.data);
-      this.setState({share_link:res.data.share_link,qr_code:res.data.qr_code_link});
-      //handleAddAddress(res.data);
-    }).catch(err => {
-      const { response } = err;
-      console.log(err);
-      if (response && response.status === 401) {
-        alert('authentification required');
-      }
-      else if (response && response.status === 422) {
-        alert('Validaiton failed');
-      }
-      else {
-        alert('other erro');
-      }
-    })
 
   }
 
     render(){
-      const{classes,} = this.props;
+      const{classes} = this.props;
       const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal
@@ -389,7 +403,7 @@ constructor(props){
 
                 <ShareLink share_link={this.state.share_link}></ShareLink>
                 <ShareViaQR qr_code_link = {this.state.qr_code}> </ShareViaQR>
-              
+
 
 
           </DialogContent>

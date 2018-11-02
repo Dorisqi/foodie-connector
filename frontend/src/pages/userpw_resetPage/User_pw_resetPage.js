@@ -101,6 +101,23 @@ class PwReset extends React.Component {
       alert('code sent successfully');
     }).catch(err => {
       console.log(err);
+        const { response } = err;
+        if (response && response.status === 403) {
+          alert('The email address has not been verified');
+        }
+        else if (response && response.status === 404) {
+          alert('We can\'t find a user with that e-mail address.');
+        }
+        else if (response && response.status === 422) {
+          alert('The email must be a valid email address.');
+        }
+        else if (response && response.status === 429) {
+          alert('Too many attempts');
+        }
+        else {
+          alert('other erro');
+        }
+
     })
   }
 
