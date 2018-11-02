@@ -32,7 +32,7 @@ class DeliveryaddrSelect extends React.Component {
     const {value} = event.target;
     this.setState({ [event.target.name]: event.target.value, });
     this.setState({ user_address_id: value});
-    alert("Delivery id" + value);
+    //alert("Delivery id" + value);
     this.props.liftaddressId(value);
 
   };

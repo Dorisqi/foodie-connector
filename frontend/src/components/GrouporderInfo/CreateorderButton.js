@@ -178,7 +178,7 @@ constructor(props){
     this.setState(x);
     //this.calculatSec();
     const time = 60*this.state.minutes+3600*this.state.hours;
-    alert("time:" + time);
+    //alert("time:" + time);
     this.setState({calculated_time: time});
 
     if(time<600|| time>7200){
@@ -186,8 +186,8 @@ constructor(props){
       this.setState({calculated_time: 600});
     }else {
       this.setState({calculated_time: time});
-      alert("delivery_address_id"  +this.props.delivery_address_id);
-      alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
+      //alert("delivery_address_id"  +this.props.delivery_address_id);
+      //alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
       axios.post(apiList.createorder, {
         restaurant_id:this.state.restaurant_id,
         join_limit:time,
@@ -198,7 +198,7 @@ constructor(props){
       }).then(res => {
         console.log(res.data);
         this.setState({share_link:res.data.share_link,qr_code:res.data.qr_code_link});
-        alert("creatorid:"+res.data.creator.id);
+        //alert("creatorid:"+res.data.creator.id);
         this.props.liftCreatorId(res.data.creator.id);
         //handleAddAddress(res.data);
       }).catch(err => {

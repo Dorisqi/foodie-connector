@@ -47,7 +47,7 @@ constructor(props){
   }
 
   sendAddressId(event){
-    alert("sendadd" + event);
+    //alert("sendadd" + event);
     this.setState({address_id:event});
   }
 
