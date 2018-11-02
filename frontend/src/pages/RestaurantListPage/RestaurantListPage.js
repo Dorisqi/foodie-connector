@@ -163,16 +163,6 @@ class RestaurantListPage extends React.Component {
   }
 
   handleFilterChange(selectedTags) {
-    if (selectedTags.length === 0) {
-      this.setState({
-        originalList: [],
-        changedList: [],
-        nameMatchList: [],
-      })
-      return;
-    }
-
-    const { place_id } = this.state;
     var tag_ids = '';
 
     for (var i = 0; i < selectedTags.length; i++) {
@@ -212,7 +202,7 @@ class RestaurantListPage extends React.Component {
   }
 
   render() {
-    const { changedList, tags } = this.state;
+    const { nameMatchList, tags } = this.state;
     const { classes } = this.props;
     return (
         <div className={classes.paper}>
@@ -225,7 +215,7 @@ class RestaurantListPage extends React.Component {
             handleOtherFilter={this.handleOtherFilter}
           />
 
-          <RestaurantList restaurantList={changedList} />
+          <RestaurantList restaurantList={nameMatchList} />
         </div>
 
     );

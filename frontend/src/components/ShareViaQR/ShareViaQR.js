@@ -8,6 +8,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 // @material-ui/icons
 
@@ -22,6 +26,21 @@ import apiList from '../../apiList';*/
 function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
+
+
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    minWidth: 300,
+    maxHeight: 40,
+  },
+  card: {
+    maxWidth: 345,
+    maxHeight: 345,
+  },
+
+})
 
 class ShareViaQR extends React.Component {
   constructor(props) {
@@ -47,7 +66,7 @@ class ShareViaQR extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, qr_code_link} = this.props;
     return (
         <main>
           <Button onClick={() => this.handleViaQR('modal')}
@@ -74,15 +93,10 @@ class ShareViaQR extends React.Component {
               className={classes.modalBody}
             >
               <FormControl margin="normal" required fullWidth>
-                <TextField
-                  disabled
-                  id="filled-disabled"
-                  label="url"
-                  defaultValue={this.state.qr_code_link}
-                  className={classes.textField}
-                  margin="normal"
-                  variant="filled"
-                />
+              <img
+                src={qr_code_link}
+                alt="new"
+              />
               </FormControl>
             </DialogContent>
             <DialogActions
@@ -101,4 +115,4 @@ class ShareViaQR extends React.Component {
     );
   }
 }
-export default withStyles(modalStyle)(ShareViaQR);
+export default withStyles(styles)(ShareViaQR);
