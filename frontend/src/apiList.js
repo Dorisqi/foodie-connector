@@ -18,7 +18,7 @@ const apiList = {
   restaurants: '/api/v1/restaurants',
   restaurant: (id) => ('/api/v1/restaurants/'+id),
   createorder:'/api/v1/orders',
-
+  cart: '/api/v1/cart',
 }
 
 export default apiList;

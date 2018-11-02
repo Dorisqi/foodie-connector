@@ -31,43 +31,63 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartItems: props.cartItems,
+      restaurantName: "",
+      cart: {
+        "restaurant_id": null,
+        "cart": [],
+        "subtotal": 0,
+      },
+      menu: []
     };
     this.deleteItem = this.deleteItem.bind(this);
 
   }
 
   componentWillReceiveProps(nextProps) {
+    if (Object.keys(nextProps.cart).length > 0) {
+      const { menu } = nextProps;
+      const products = menu.map(p => p.products).flat();
+      const { restaurantName, cart } = this.state;
+      console.log(nextProps.cart);
       this.setState({
-        cartItems: nextProps.cartItems
+        restaurantName: restaurantName === "" && cart.cart.length === 0
+                        ? nextProps.restaurantName
+                        : restaurantName,
+        cart: nextProps.cart,
+        menu: products,
       })
+    }
   }
 
-  deleteItem(name) {
+  deleteItem(item, idx) {
     const { updateCart } = this.props;
-
-    this.setState((state) => {
-      const cartItems = state.cartItems.map(item => {
-        if (item.name != name) {
-          return item;
-        }
-        item.count--;
-        return item;
-      }).filter(item => item.count > 0);
-      updateCart(cartItems);
-      return { cartItems: cartItems };
-    })
+    const { cart } = this.state;
+    const cartItems = cart.cart;
+    if (item.product_amount === 1) {
+      cartItems.splice(idx, 1);
+    }
+    else {
+      item.product_amount--;
+    }
+    updateCart(cart);
   }
 
   render() {
     const { classes } = this.props;
-    const { cartItems } = this.state;
-    var totalCost = 0;
-    cartItems.forEach(item => totalCost += item.count*item.price);
-    totalCost = setTwoDecimal(totalCost);
-    const listItems = cartItems.map(item => {
-      const primary = item.name+" X "+item.count;
-      const secondary = setTwoDecimal(item.price*item.count);
+    const { cart, menu } = this.state;
+    var { subtotal } = cart;
+    const cartItems = cart.cart;
+    subtotal = setTwoDecimal(subtotal);
+    const listItems = cartItems.map((item, idx) => {
+      const product = menu.find(x => x.id === item.product_id);
+      const name = product.name;
+      const options = item.product_option_groups.map(group => {
+        const gid = group.product_option_group_id;
+        const product_option_group = product['product_option_groups'].find(x => x.id === gid);
+        return group.product_options.map(id => product_option_group['product_options'].find(x => x.id === id).name);
+      }).flat();
+      const primary = name+" X "+item.product_amount;
+      const secondary = options.join(", ")
       return (
         <ListItem>
           <ListItemText
@@ -75,7 +95,7 @@ class Cart extends React.Component {
             secondary={secondary}
           />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item.name)}>
+            <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item, idx)}>
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>
@@ -91,7 +111,7 @@ class Cart extends React.Component {
             {listItems}
           </List>
           <Typography variant="h5">
-            Total Cost: ${totalCost}
+            Total Cost: ${subtotal}
           </Typography>
       </Grid>
     )
