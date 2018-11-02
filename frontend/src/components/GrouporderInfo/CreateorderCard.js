@@ -13,7 +13,7 @@ import DeliveryaddrSelect from './DeliveryaddrSelect';
 
 const styles = {
   card: {
-    minWidth:330,
+    minWidth:290,
     maxWidth: 350,
   },
   bullet: {

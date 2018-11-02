@@ -37,7 +37,7 @@ class DeliveryaddrSelect extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
-    alert(this.state.user_address_id);
+    //alert(this.state.user_address_id);
   };
 
   handleOpen = () => {

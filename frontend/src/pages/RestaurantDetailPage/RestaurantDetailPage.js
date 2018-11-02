@@ -2,11 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import apiList from '../../apiList';
 import Menu from '../../components/Menu/Menu';
 import Cart from '../../components/Cart/Cart';
 import RestaurantInfo from '../../components/RestaurantInfo/RestaurantInfo';
 import CreateorderCard from '../../components/GrouporderInfo/CreateorderCard';
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+});
+
+
 class RestaurantDetailPage extends React.Component {
   constructor(props) {
     super(props);
@@ -90,24 +103,27 @@ class RestaurantDetailPage extends React.Component {
 
   render() {
     const { id, restaurantInfo, menu, cartItems } = this.state;
+    const{classes} = this.props;
+
     return (
       <div>
-        <Grid container spacing={16}>
-
+        <Grid container  direction="row" justify="space-around">
+          <Grid item xs>
           <RestaurantInfo id={id} restaurantInfo={restaurantInfo}/>
-
-
+          </Grid>
+          <Grid item xs>
           <Menu menu={menu} addToCart={this.addToCart}/>
-
-
+          </Grid>
+          <Grid item xs>
+          <CreateorderCard restaurant_id={this.state.id}>
+          </CreateorderCard>
           <Cart id={id} cartItems={cartItems} updateCart={this.updateCart}/>
-
+          </Grid>
         </Grid>
 
-      
 
-      <CreateorderCard restaurant_id={this.state.id}>
-      </CreateorderCard>
+
+
       </div>
     )
   }
@@ -117,4 +133,4 @@ RestaurantDetailPage.propTypes = {
   params: PropTypes.shape({}).isRequired,
 };
 
-export default RestaurantDetailPage;
+export default  withStyles(styles)(RestaurantDetailPage);

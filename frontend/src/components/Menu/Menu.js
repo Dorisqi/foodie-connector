@@ -25,7 +25,8 @@ import apiList from '../../apiList';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+  width: '100%',
+  minWidth:350,
   },
   nested: {
       paddingLeft: theme.spacing.unit * 4,
