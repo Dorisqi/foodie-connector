@@ -369,6 +369,7 @@ constructor(props){
                <Button
                  onClick={() => this.handleCreateorder('modal')}
                  color="primary"
+
                >
                  Create
                </Button>
@@ -381,11 +382,15 @@ constructor(props){
                 value={0}
               />
               </div>
-              <div>
-                <ShareLink share_link={this.state.share_link}>
-                  </ShareLink>
+
+                <Grid container xs={12} sm={12} justify="space-evenly">
+                </Grid>
+
+
+                <ShareLink share_link={this.state.share_link}></ShareLink>
                 <ShareViaQR qr_code_link = {this.state.qr_code}> </ShareViaQR>
-              </div>
+              
+
 
           </DialogContent>
           <DialogActions
