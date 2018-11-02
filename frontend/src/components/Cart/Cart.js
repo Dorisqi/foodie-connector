@@ -46,7 +46,7 @@ class Cart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.cart.restaurant_id) {
+    if (nextProps.cart.hasOwnProperty('restaurant_id')) {
       const { menu } = nextProps;
       const products = menu.map(p => p.products).flat();
       const { restaurantName, cart } = this.state;
@@ -79,6 +79,7 @@ class Cart extends React.Component {
     const { classes } = this.props;
     const { id, cart, menu } = this.state;
     var { subtotal } = cart;
+
     const cartItems = cart.cart;
     subtotal = setTwoDecimal(subtotal);
     const listItems = cartItems.map((item, idx) => {
@@ -110,7 +111,7 @@ class Cart extends React.Component {
           <Typography variant="h1" component="h1" align="center" className={classes.title}>
             Cart
           </Typography>
-          {id == cart.restaurant_id
+          {id == cart.restaurant_id || cart.restaurant_id === null
             ? <List>
               {listItems}
               </List>
