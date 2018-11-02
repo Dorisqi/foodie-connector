@@ -162,9 +162,7 @@ constructor(props){
   handleConfirm(modal,event){
     const { id,name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
     const { handleAddAddress } = this.props;
-    const x = [];
-    x[modal] = true;
-    this.setState(x);
+
     alert(id+name+phone+line_1+line_2+city+state+zip_code);
 
     axios.put(`/api/v1/addresses/${id}`, {
@@ -184,7 +182,11 @@ constructor(props){
     alert("Address changed successfully!");
     this.setState({id:id,phone:phone,line_1:line_1,line_2:line_2
                     ,city:city,state:state,zip_code:zip_code});
+                    const x = [];
+                    x[modal] = false;
+                    this.setState(x);
     }).catch(err => {
+      
       console.log(err);
       const { response } = err;
       if (response && response.status === 401) {
@@ -198,6 +200,7 @@ constructor(props){
       }
 
     })
+
 
   }
 

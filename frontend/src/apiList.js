@@ -13,12 +13,14 @@ const apiList = {
   profilePassword: '/api/v1/profile/password',
   addresses: '/api/v1/addresses',
   addressDetail: '/api/v1/addresses/',
+  deleteaddress:(id)=>('/api/v1/addresses/'+id),
+  updateaddress: (id)=>('/api/v1/addresses/'+id),
   card: '/api/v1/cards',
   cardDetail: '/api/v1/cards/',
   restaurants: '/api/v1/restaurants',
   restaurant: (id) => ('/api/v1/restaurants/'+id),
   createorder:'/api/v1/orders',
-  cart: '/api/v1/cart',
+
 }
 
 export default apiList;
