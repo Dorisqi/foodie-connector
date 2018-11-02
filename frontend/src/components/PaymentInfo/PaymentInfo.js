@@ -101,6 +101,9 @@ class PaymentInfo extends React.Component {
         else if (response.status === 401) {
           alert("This page requires login to access");
         }
+        else if (response.status === 422) {
+          alert("Validation failed");
+        }
         else {
           console.log(err);
         }

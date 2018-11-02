@@ -144,9 +144,9 @@ constructor(props){
     handleEditSubmit(id,
       {
         nickname: nickname,
-        expiration_month: expiration_month,
-        expiration_year: expiration_year,
-        zip_code: zip_code,
+        expiration_month: Number(expiration_month),
+        expiration_year: Number(expiration_year),
+        zip_code: Number(zip_code),
         is_default: is_default,
       });
     this.setState({[modal]: false});
@@ -211,6 +211,7 @@ constructor(props){
             required
             id="outlined-dense"
             label="Expiration month"
+            type="number"
             value={expiration_month}
             className={classNames(classes.textField, classes.dense)}
             margin="dense"
@@ -221,6 +222,7 @@ constructor(props){
             required
             id="outlined-dense"
             label="Expiration year"
+            type="number"
             value={expiration_year}
             className={classNames(classes.textField, classes.dense)}
             margin="dense"

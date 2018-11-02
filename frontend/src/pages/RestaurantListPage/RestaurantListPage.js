@@ -16,9 +16,12 @@ const styles = theme =>({
     marginTop: theme.spacing.unit *1,
     display: 'flex',
     flexDirection: 'column',
-
   },
-
+  center: {
+    display: 'table',
+    marginTop: 0,
+    marginRight: 'auto',
+  }
 });
 
 class RestaurantListPage extends React.Component {
@@ -206,14 +209,16 @@ class RestaurantListPage extends React.Component {
     const { classes } = this.props;
     return (
         <div className={classes.paper}>
-        <AddressSearchBar handleAddressChange={this.handleAddressChange}></AddressSearchBar>
-          <RestaurantFilter
-            onFilterChange={this.handleFilterChange}
-            onSortChange={this.handleSortChange}
-            handleNameChange={this.handleNameChange}
-            tags={tags}
-            handleOtherFilter={this.handleOtherFilter}
-          />
+          <div className={classes.center}>
+            <AddressSearchBar handleAddressChange={this.handleAddressChange}></AddressSearchBar>
+            <RestaurantFilter
+              onFilterChange={this.handleFilterChange}
+              onSortChange={this.handleSortChange}
+              handleNameChange={this.handleNameChange}
+              tags={tags}
+              handleOtherFilter={this.handleOtherFilter}
+            />
+          </div>
 
           <RestaurantList restaurantList={nameMatchList} />
         </div>
