@@ -7,6 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import States from '../../Statesfile';
 import Paper from '@material-ui/core/Paper';
 import Button from '../../material-kit/components/CustomButtons/Button';
+import IconButton from '@material-ui/core/IconButton';
+
 import Dialog from '@material-ui/core/Dialog';
 
 import DialogContent from '@material-ui/core/DialogContent';
@@ -17,7 +19,7 @@ import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 import Avatar from '@material-ui/core/Avatar';
-import iconn from './edit.svg';
+//import iconn from './edit.svg';
 import Icon from '@material-ui/core/Icon';
 
 function Transition(props) {
@@ -33,9 +35,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit*2,
     marginRight: theme.spacing.unit*2,
   },
+
   button: {
-    marginLeft: theme.spacing.unit*2,
-    marginRight: theme.spacing.unit*2,
+    margin: theme.spacing.unit,
   },
   buttonright: {
     marginLeft: theme.spacing.unit*28,
@@ -79,11 +81,11 @@ const styles = theme => ({
 });
 
 
-class AddingAddress extends React.Component{
+class EditAddress extends React.Component{
 constructor(props){
   super(props);
   this.state = {
-
+    id:"",
     name: "username",
     phone: "",
     line_1: "",
@@ -91,13 +93,13 @@ constructor(props){
     city: "",
     state: "",
     zip_code: "",
-    place_id: "ChIJO_0IEK_iEogR4GrIyYopzz8",
+    place_id: "",
     is_default: false,
   };
 
   this.handleConfirm = this.handleConfirm.bind(this);
-  this.line_1 = this.line_1.bind(this);
-  this.line_2 = this.line_2.bind(this);
+  this.handleline_2 = this.handleline_2.bind(this);
+  this.handleline_1 = this.handleline_1.bind(this);
   this.handleCity = this.handleCity.bind(this);
   this.handleState = this.handleState.bind(this);
   this.handleCountry = this.handleCountry.bind(this);
@@ -120,11 +122,11 @@ constructor(props){
     this.setState(x);
   }
 
-  line_1 (event) {
+  handleline_1 (event) {
     this.setState({ line_1: event.target.value });
   };
 
-  line_2 (event) {
+  handleline_2 (event) {
     this.setState({ line_2: event.target.value });
   };
 
@@ -153,7 +155,9 @@ constructor(props){
     x[modal] = true;
     this.setState(x);
     alert(name+phone+line_1+line_2+city+state+zip_code);
-    axios.post(apiList.addressDetail, {
+
+    axios.put(apiList.addressDetail, {
+
       name: name,
       phone: phone,
       line_1: line_1,
@@ -163,13 +167,23 @@ constructor(props){
       zip_code: zip_code,
       place_id: place_id,
       is_default: is_default,
-      flag:0
+
     }).then(res => {
       console.log(res);
-      handleAddAddress(res);
+    //  handleAddAddress(res);
 
     }).catch(err => {
       console.log(err);
+      const { response } = err;
+      if (response && response.status === 401) {
+        alert('authentification required');
+      }
+      else if (response && response.status === 422) {
+        alert('Validaiton failed');
+      }
+      else {
+        alert('other erro');
+      }
 
     })
 
@@ -183,9 +197,9 @@ constructor(props){
       }
       return(
         <div>
-        <Button onClick={() => this.handleClickOpen('modal')}>
-        <Icon >edit</Icon>
-        </Button>
+        <IconButton variant="fab"  aria-label="Edit" className={classes.button} onClick={() => this.handleClickOpen('modal')}>
+        <Icon>edit_icon</Icon>
+        </IconButton>
           <Dialog
             classes={{
               root: classes.center,
@@ -203,38 +217,33 @@ constructor(props){
               className={classes.modalBody}
             >
 
-          <Button className={classes.button}
-           color="info">
-           User Current Location
-           </Button>
-
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
             required
             id="outlined-dense"
             label="Street Address"
-            value={line_1}
+            value={this.state.line_1}
             className={classNames(classes.textField, classes.dense)}
             margin="dense"
             fullWidth
             variant="outlined"
-            onChange={this.line_1}
+            onChange={this.handleline_1}
             />
             <TextField
               required
               id="outlined-dense"
               label="Apt #"
-              value={line_2}
+              value={this.state.line_2}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
-              onChange={this.line_2}
+              onChange={this.handleline_2}
             />
             <TextField
               required
               id="outlined-dense"
               label="City"
-              value={city}
+              value={this.state.city}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -266,7 +275,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Zipcode"
-              value={zip_code}
+              value={this.state.zip_code}
               className={classNames(classes.textField, classes.adjustinput)}
               margin="dense"
               variant="outlined"
@@ -286,7 +295,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Phone Number"
-              value={phone}
+              value={this.state.phone}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -325,8 +334,8 @@ constructor(props){
 
 }
 
-AddingAddress.propTypes = {
+EditAddress.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddingAddress);
+export default withStyles(styles)(EditAddress);

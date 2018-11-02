@@ -69,6 +69,10 @@ const routes = {
         }
       }
     },
+    {
+      path: '/checkout',
+      component: CheckoutPage,
+    }
   ],
 };
 

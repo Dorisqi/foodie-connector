@@ -15,6 +15,7 @@ import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 import { Redirect } from 'react-router';
 import PaymentInfo from '../../components/PaymentInfo/PaymentInfo';
+import CreateorderButton from '../../components/GrouporderInfo/CreateorderButton';
 
 function TabContainer({ children, dir }) {
   return (
@@ -60,12 +61,12 @@ class ProfileTabs extends React.Component {
   };
 
   handleChange = (event, value) => {
-    console.log(value);
+  //  console.log(value);
     this.setState({ value });
   };
 
   handleChangeIndex = index => {
-    console.log('change', index);
+    //console.log('change', index);
     this.setState({ value: index });
   };
 
@@ -111,6 +112,9 @@ class ProfileTabs extends React.Component {
           <div>
             <ChangepwBox>
             </ChangepwBox>
+
+            <CreateorderButton>
+            </CreateorderButton>
           </div>
           </TabContainer>
           <TabContainer dir={theme.direction}>

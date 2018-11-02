@@ -46,11 +46,23 @@ const styles = theme => ({
   },
   dense: {
     marginTop: 12,
-    marginRight: 10
+    marginRight: 10,
+    marginLeft:30
   },
-  adjustinput: {
+  rightcomp:{
+    marginRight: 10,
+    marginLeft: 85
+  },
+  leftcomp:{
     marginTop: 12,
-    marginLeft: theme.spacing.unit*6
+    marginRight: 10,
+    marginLeft:10
+  },
+  nametoright: {
+    marginLeft: 120
+  },
+  adjustzipcode: {
+    marginLeft: 120
   },
   menu: {
     width: 200,
@@ -77,7 +89,7 @@ class AddingAddress extends React.Component{
 constructor(props){
   super(props);
   this.state = {
-    name: "username",
+    name: "",
     phone: "",
     line_1: "",
     line_2: "",
@@ -91,8 +103,9 @@ constructor(props){
   };
 
   this.handleConfirm = this.handleConfirm.bind(this);
-  this.line_1 = this.line_1.bind(this);
-  this.line_2 = this.line_2.bind(this);
+  this.handlename = this.handlename.bind(this);
+  this.handleline_1 = this.handleline_1.bind(this);
+  this.handleline_2 = this.handleline_2.bind(this);
   this.handleCity = this.handleCity.bind(this);
   this.handleState = this.handleState.bind(this);
   this.handleCountry = this.handleCountry.bind(this);
@@ -113,7 +126,7 @@ constructor(props){
                           +response.results[0].address_components[1].long_name;
           const City = response.results[0].address_components[2].long_name;
           const State = response.results[0].address_components[5].long_name;
-          const zipcode = response.results[0].address_components[7].long_name;
+          const zipcode = response.results[0].address_components[7];
           const placeid = response.results[0].place_id;
 
           this.setState({ address: address });
@@ -147,11 +160,15 @@ constructor(props){
     this.setState(x);
   }
 
-  line_1 (event) {
+
+  handlename(event) {
+    this.setState({name: event.target.value})
+  }
+  handleline_1 (event) {
     this.setState({ line_1: event.target.value });
   };
 
-  line_2 (event) {
+  handleline_2 (event) {
     this.setState({ line_2: event.target.value });
   };
 
@@ -197,7 +214,17 @@ constructor(props){
       console.log(res);
       handleAddAddress(res.data);
     }).catch(err => {
+      const { response } = err;
       console.log(err);
+      if (response && response.status === 401) {
+        alert('authentification required');
+      }
+      else if (response && response.status === 422) {
+        alert('Validaiton failed');
+      }
+      else {
+        alert('other erro');
+      }
     })
 
   }
@@ -237,7 +264,7 @@ constructor(props){
                ? <div>Geolocation is not enabled</div>
                : this.props.coords
                ? (
-                 <Button className={classes.Button}
+                 <Button className={classes.Button,classes.leftcomp}
                          onClick={this.handlegetLocation}
                            color="info"
                            variant="contained">
@@ -246,34 +273,44 @@ constructor(props){
 
                )
                :<div>Getting the location data&hellip; </div>}
+               <TextField
+               required
+               id="outlined-dense"
+               label="Your Name"
+               value={this.state.name}
+               className={classNames(classes.textField, classes.leftcomp)}
+               margin="dense"
+               variant="outlined"
+               onChange={this.handlename}
+               />
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
             required
             id="outlined-dense"
             label="Street Address"
             value={this.state.line_1}
-            className={classNames(classes.textField, classes.dense)}
+            className={classNames(classes.textField, classes.leftcomp)}
             margin="dense"
             fullWidth
             variant="outlined"
-            onChange={this.state.line_1}
+            onChange={this.handleline_1}
             />
             <TextField
               required
               id="outlined-dense"
               label="Apt #"
               value={this.state.line_2}
-              className={classNames(classes.textField, classes.dense)}
+              className={classNames(classes.textField, classes.leftcomp)}
               margin="dense"
               variant="outlined"
-              onChange={this.state.line_2}
+              onChange={this.handleline_2}
             />
             <TextField
               required
               id="outlined-dense"
               label="City"
               value={this.state.city}
-              className={classNames(classes.textField, classes.dense)}
+              className={classNames(classes.textField, classes.rightcomp)}
               margin="dense"
               variant="outlined"
               onChange={this.handleCity}
@@ -282,7 +319,7 @@ constructor(props){
               id="selectStates"
               select
               label="state"
-              className={classes.textField}
+              className={classes.textField,classes.leftcomp}
               value={this.state.state}
               onChange={this.handleState('State')}
               SelectProps={{
@@ -305,7 +342,7 @@ constructor(props){
               id="outlined-dense"
               label="Zipcode"
               value={this.state.zip_code}
-              className={classNames(classes.textField, classes.adjustinput)}
+              className={classNames(classes.textField, classes.adjustzipcode)}
               margin="dense"
               variant="outlined"
               onChange={this.handleZipcode}
@@ -315,7 +352,7 @@ constructor(props){
               id="outlined-dense"
               label="US"
               disabled
-              className={classNames(classes.textField, classes.dense)}
+              className={classNames(classes.textField, classes.leftcomp)}
               margin="dense"
               variant="outlined"
               onChange={this.handleCountry}
@@ -325,7 +362,7 @@ constructor(props){
               id="outlined-dense"
               label="Phone Number"
               value={this.state.phone}
-              className={classNames(classes.textField, classes.dense)}
+              className={classNames(classes.textField, classes.rightcomp)}
               margin="dense"
               variant="outlined"
               onChange={this.handlePhone}
