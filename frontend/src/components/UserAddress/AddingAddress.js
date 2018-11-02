@@ -126,7 +126,7 @@ constructor(props){
                           +response.results[0].address_components[1].long_name;
           const City = response.results[0].address_components[2].long_name;
           const State = response.results[0].address_components[5].long_name;
-          const zipcode = response.results[0].address_components[7];
+          const zipcode = response.results[0].address_components[7].long_name;
           const placeid = response.results[0].place_id;
 
           this.setState({ address: address });

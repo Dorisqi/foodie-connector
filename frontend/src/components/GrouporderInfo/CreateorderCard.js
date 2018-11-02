@@ -33,16 +33,22 @@ class CreateorderCard extends React.Component {
 constructor(props){
   super(props);
   this.state = {
-    address_id: 10,
+    address_id: 0,
     restaurant_id:1,
 
   };
 
   this.sendCreatorId = this.sendCreatorId.bind(this);
+  this.sendAddressId = this.sendAddressId.bind(this);
 }
 
   sendCreatorId(creatorid){
     this.props.updateCreatorId(creatorid);
+  }
+
+  sendAddressId(event){
+    alert("sendadd" + event);
+    this.setState({address_id:event});
   }
 
 
@@ -53,7 +59,7 @@ constructor(props){
       <Card className={classes.card}>
         <CardContent>
 
-          <DeliveryaddrSelect></DeliveryaddrSelect>
+          <DeliveryaddrSelect liftaddressId={this.sendAddressId}></DeliveryaddrSelect>
 
           <CreateorderButton liftCreatorId={this.sendCreatorId} delivery_address_id={this.state.address_id} restaurant_id={this.props.restaurant_id} >
           </CreateorderButton>

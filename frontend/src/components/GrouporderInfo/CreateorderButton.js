@@ -186,11 +186,12 @@ constructor(props){
       this.setState({calculated_time: 600});
     }else {
       this.setState({calculated_time: time});
+      alert("delivery_address_id"  +this.props.delivery_address_id);
       alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
       axios.post(apiList.createorder, {
         restaurant_id:this.state.restaurant_id,
-        join_limit:this.state.calculated_time,
-        address_id:this.state.delivery_address_id,
+        join_limit:time,
+        address_id:this.props.delivery_address_id,
         is_public:this.state.selectedStatus,
 
 
