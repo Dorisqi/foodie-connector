@@ -287,7 +287,12 @@ class Menu extends React.Component {
                             return (
                               <div>
                                 <ListItem className={classes.nested}>
-                                  <ListItemText inset primary={name}/>
+                                  <ListItemText
+                                    inset
+                                    primary={name}
+                                    secondary={min_choice > 0
+                                                ? `select at least ${min_choice} choic${min_choice > 1? 'es': 'e'}`
+                                                : null}/>
                                 </ListItem>
                                 <Collapse in timeout="auto" unmountOnExit>
                                   <List component="div" disablePadding>
