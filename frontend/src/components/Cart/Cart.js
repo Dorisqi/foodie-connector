@@ -46,7 +46,7 @@ class Cart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.cart.restaurant_id) {
+    if (nextProps.cart.hasOwnProperty('restaurant_id')) {
       const { menu } = nextProps;
       const products = menu.map(p => p.products).flat();
       const { restaurantName, cart } = this.state;
@@ -79,40 +79,40 @@ class Cart extends React.Component {
     const { classes } = this.props;
     const { id, cart, menu } = this.state;
     var { subtotal } = cart;
+
     const cartItems = cart.cart;
     subtotal = setTwoDecimal(subtotal);
-    const listItems = cartItems.map((item, idx) => {
-      const product = menu.find(x => x.id === item.product_id);
-      const name = product.name;
-      const options = item.product_option_groups.map(group => {
-        const gid = group.product_option_group_id;
-        const product_option_group = product['product_option_groups'].find(x => x.id === gid);
-        return group.product_options.map(id => product_option_group['product_options'].find(x => x.id === id).name);
-      }).flat();
-      const primary = name+" X "+item.product_amount;
-      const secondary = options.join(", ")
-      return (
-        <ListItem>
-          <ListItemText
-            primary={primary}
-            secondary={secondary}
-          />
-          <ListItemSecondaryAction>
-            <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item, idx)}>
-              <DeleteIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-    )});
 
     return (
       <Grid item xs={12} md={3}>
           <Typography variant="h1" component="h1" align="center" className={classes.title}>
             Cart
           </Typography>
-          {id == cart.restaurant_id
+          {id == cart.restaurant_id || cart.restaurant_id === null
             ? <List>
-              {listItems}
+              {cartItems.map((item, idx) => {
+                const product = menu.find(x => x.id === item.product_id);
+                const name = product.name;
+                const options = item.product_option_groups.map(group => {
+                  const gid = group.product_option_group_id;
+                  const product_option_group = product['product_option_groups'].find(x => x.id === gid);
+                  return group.product_options.map(id => product_option_group['product_options'].find(x => x.id === id).name);
+                }).flat();
+                const primary = name+" X "+item.product_amount;
+                const secondary = options.join(", ")
+                return (
+                  <ListItem>
+                    <ListItemText
+                      primary={primary}
+                      secondary={secondary}
+                    />
+                    <ListItemSecondaryAction>
+                      <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item, idx)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+              )})}
               </List>
             : <Typography variant="h4" component="h4" align="center" className={classes.title}>
                 There are items from <a href={`/restaurant/${cart.restaurant_id}`}>this restaurant</a>,

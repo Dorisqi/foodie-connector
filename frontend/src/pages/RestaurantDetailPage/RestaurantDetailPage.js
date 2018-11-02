@@ -127,7 +127,9 @@ class RestaurantDetailPage extends React.Component {
 
   addToCart(cartItem) {
     const { id, cart } = this.state;
-    if (id != cart.restaurant_id) {
+    console.log(id);
+    console.log(cart);
+    if (id != cart.restaurant_id && cart.restaurant_id !== null) {
       alert(`There are items from another restaurant in chart. Empty it before adding new item`);
       return;
     }
@@ -147,15 +149,15 @@ class RestaurantDetailPage extends React.Component {
     return (
       <div>
         <Grid container  direction="row" justify="space-around">
-          <Grid item xs>
+          <Grid item xs={12} md={3}>
           <RestaurantInfo id={id} restaurantInfo={restaurantInfo}/>
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12} md={5}>
           <Menu menu={menu} addToCart={this.addToCart}/>
           </Grid>
 
-          <Grid item xs>
+          <Grid item xs={12} md={4}>
           <CreateorderCard updateCreatorId={this.updateCreatorId} restaurant_id={this.state.id}>
           </CreateorderCard>
           <Cart id={id} cart={cart} menu={menu} restaurantName={restaurantName} updateCart={this.updateCart}/>
