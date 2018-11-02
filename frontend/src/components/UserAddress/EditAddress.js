@@ -189,12 +189,14 @@ constructor(props){
 
   }
 
+  componentDidMount() {
+    this.setState({phone:this.props.phone,line_1:this.props.line_1,line_2:this.props.line_2
+                    ,city:this.props.city,state:this.props.state,zip_code:this.props.zip_code});
+  }
+
     render(){
-      const{classes,phone,line_1,line_2,city,state,zip_code} = this.props;
-      if(this.state.flag == 0){
-        this.state.state = state;
-        this.state.flag = 1;
-      }
+      const{classes} = this.props;
+
       return(
         <div>
         <IconButton variant="fab"  aria-label="Edit" className={classes.button} onClick={() => this.handleClickOpen('modal')}>
@@ -223,6 +225,7 @@ constructor(props){
             id="outlined-dense"
             label="Street Address"
             value={this.state.line_1}
+
             className={classNames(classes.textField, classes.dense)}
             margin="dense"
             fullWidth
@@ -234,6 +237,7 @@ constructor(props){
               id="outlined-dense"
               label="Apt #"
               value={this.state.line_2}
+
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -244,6 +248,7 @@ constructor(props){
               id="outlined-dense"
               label="City"
               value={this.state.city}
+
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
               variant="outlined"
@@ -255,6 +260,7 @@ constructor(props){
               label="state"
               className={classes.textField}
               value={this.state.state}
+
               onChange={this.handleState(this.state)}
               SelectProps={{
               native: true,
@@ -275,6 +281,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Zipcode"
+
               value={this.state.zip_code}
               className={classNames(classes.textField, classes.adjustinput)}
               margin="dense"
@@ -295,6 +302,7 @@ constructor(props){
               required
               id="outlined-dense"
               label="Phone Number"
+              
               value={this.state.phone}
               className={classNames(classes.textField, classes.dense)}
               margin="dense"
@@ -333,9 +341,14 @@ constructor(props){
 
 
 }
-
 EditAddress.propTypes = {
   classes: PropTypes.object.isRequired,
+  phone:PropTypes.string.isRequired,
+  line_1:PropTypes.string,
+  line_2:PropTypes.string,
+  city:PropTypes.string,
+  state:PropTypes.string,
+  zip_code:PropTypes.string,
 };
 
 export default withStyles(styles)(EditAddress);

@@ -23,13 +23,21 @@ function Transition(props) {
   return <Slide direction="down" {...props} />;
 }
 
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    minWidth: 300,
+    maxHeight: 40,
+  },
 
+})
 
 class ShareLink extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        share_link: "URL",
+        share_link:'',
         isClickable:false,
     };
       //hand all changes
@@ -105,4 +113,4 @@ class ShareLink extends React.Component {
     );
   }
 }
-export default withStyles(modalStyle)(ShareLink);
+export default withStyles(styles)(ShareLink);

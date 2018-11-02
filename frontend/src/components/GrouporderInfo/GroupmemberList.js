@@ -82,8 +82,8 @@ render(){
 
 
           rows.push(
-              createData(i,this.state.members[i].index,this.state.address[i].name,
-                          this.state.address[i].is_confirmed)
+              createData(i,this.state.members[i].index,this.state.member[i].name,
+                          this.state.member[i].is_confirmed)
 
           );
   }
@@ -96,12 +96,9 @@ render(){
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell/>
-            <TableCell>Name</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>Zip code</TableCell>
-            <TableCell>Edit</TableCell>
-            <TableCell>Delete</TableCell>
+
+            <TableCell>Mmber Name</TableCell>
+            <TableCell>Order Status</TableCell>
 
           </TableRow>
         </TableHead>

@@ -106,8 +106,8 @@ constructor(props){
   super(props);
   this.state = {
     restaurantname: "",
-    restaurant_id: "",
-    delivery_address_id:"",
+    restaurant_id: this.props.restaurant_id,
+    delivery_address_id:this.props.delivery_address_id,
     orderid:"",
     selectedStatus:true,
     hours:"0",
@@ -173,19 +173,21 @@ constructor(props){
     //const { handleAddAddress } = this.props;
 
     const x = [];
-    x[modal] = false;
+    x[modal] = true;
     this.setState(x);
 
 
+    alert(this.state.restaurant_id+':'+this.state.calculated_time+this.state.selectedStatus+this.state.delivery_address_id );
+    axios.post(apiList.createorder, {
+      restaurant_id:this.state.restaurant_id,
+      join_limit:this.state.calculated_time,
+      address_id:this.state.delivery_address_id,
+      is_public:this.state.selectedStatus,
 
-  /*axios.post(apiList.addressDetail, {
-      restaurantname:"",
-      selectedStatus:"1",
-      hours:this.state.hours,
-      minutes:this.state.minutes
 
     }).then(res => {
-      console.log(res);
+      console.log(res.data);
+      this.setState({share_link:res.data.share_link,qr_code:res.data.qr_code_link});
       //handleAddAddress(res.data);
     }).catch(err => {
       const { response } = err;
@@ -199,12 +201,12 @@ constructor(props){
       else {
         alert('other erro');
       }
-    })*/
+    })
 
   }
 
     render(){
-      const{classes} = this.props;
+      const{classes,} = this.props;
       const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal
@@ -367,6 +369,7 @@ constructor(props){
                <Button
                  onClick={() => this.handleCreateorder('modal')}
                  color="primary"
+
                >
                  Create
                </Button>
@@ -379,11 +382,15 @@ constructor(props){
                 value={0}
               />
               </div>
-              <div>
-                <ShareLink share_link={this.state.share_link}>
-                  </ShareLink>
+
+                <Grid container xs={12} sm={12} justify="space-evenly">
+                </Grid>
+
+
+                <ShareLink share_link={this.state.share_link}></ShareLink>
                 <ShareViaQR qr_code_link = {this.state.qr_code}> </ShareViaQR>
-              </div>
+              
+
 
           </DialogContent>
           <DialogActions
@@ -411,7 +418,8 @@ constructor(props){
 
 CreateorderButton.propTypes = {
   classes: PropTypes.element.isRequired,
-
+  restaurant_id:PropTypes.string,
+  delivery_address_id:PropTypes.string,
 };
 
 export default withStyles(styles)(CreateorderButton);
