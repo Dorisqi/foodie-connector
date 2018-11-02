@@ -25,7 +25,11 @@ class CartController extends ApiController
             $cart = new Cart();
             $cart->user()->associate($this->user()->id);
         }
-        $cart->restaurant()->associate($request->input('restaurant_id'));
+        if (is_null($request->input('restaurant_id'))) {
+            $cart->restaurant()->dissociate();
+        } else {
+            $cart->restaurant()->associate($request->input('restaurant_id'));
+        }
         try {
             $cart->calculateSummary(true, $request->input('cart'));
         } catch (\Exception $exception) {
@@ -69,8 +73,8 @@ class CartController extends ApiController
     public static function rules()
     {
         return [
-            'restaurant_id' => 'required|integer|exists:restaurants,id',
-            'cart' => 'required|array',
+            'restaurant_id' => 'integer|nullable|exists:restaurants,id',
+            'cart' => 'array|nullable',
         ];
     }
 }

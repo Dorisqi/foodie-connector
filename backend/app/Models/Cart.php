@@ -46,6 +46,12 @@ class Cart extends Model
             $cartData = json_decode($this->cart, true);
         }
         $restaurant = $this->restaurant()->with('restaurantMenu')->first();
+        if (is_null($restaurant)) {
+            $this->cart = '[]';
+            $this->localSubtotal = 0;
+            $this->save();
+            return;
+        }
         $menu = $restaurant->restaurantMenu->withoutCategories();
         $products = $menu['products'];
         $productOptionGroups = $menu['product_option_groups'];
@@ -108,6 +114,9 @@ class Cart extends Model
             array_push($cart, $cartItem);
         }
         $this->cart = json_encode($cart);
+        if (empty($cart)) {
+            $this->restaurant()->dissociate();
+        }
         if ($updated || $saveAfterCalculation) {
             $this->save();
         }

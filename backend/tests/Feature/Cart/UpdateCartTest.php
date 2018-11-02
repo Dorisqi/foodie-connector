@@ -68,6 +68,24 @@ class UpdateCartTest extends ApiTestCase
                 ],
             ],
         ], 422);
+        $response = $this->assertSucceed([
+            'restaurant_id' => null,
+            'cart' => [],
+        ]);
+        $response->assertJson([
+            'restaurant_id' => null,
+            'cart' => [],
+            'subtotal' => 0,
+        ]);
+        $response = $this->assertSucceed([
+            'restaurant_id' => $restaurant->id,
+            'cart' => [],
+        ], false);
+        $response->assertJson([
+            'restaurant_id' => null,
+            'cart' => [],
+            'subtotal' => 0,
+        ]);
     }
 
     protected function method()
