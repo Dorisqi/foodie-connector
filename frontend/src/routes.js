@@ -5,7 +5,9 @@ import AddressLists from './components/UserAddress/AddressLists';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';
 import AddingAddress from './components/UserAddress/AddingAddress';
 import Login_regPage from './pages/login_regPage/Login_regPage';
+import RestaurantDetailPage from './pages/RestaurantDetailPage/RestaurantDetailPage';
 import Auth from './Auth/Auth';
+
 const routes = {
   component: Base,
   childRoutes: [
@@ -30,6 +32,17 @@ const routes = {
         //callback(null, RestaurantListPage);
         if (Auth.isUserAuthenticated()) {
           callback(null, RestaurantListPage);
+        } else {
+          callback(null, Login_regPage);
+        }
+      }
+    },
+    {
+      path: '/restaurant/:id',
+      getComponent: (location, callback) => {
+        //callback(null, RestaurantListPage);
+        if (Auth.isUserAuthenticated()) {
+          callback(null, RestaurantDetailPage);
         } else {
           callback(null, Login_regPage);
         }

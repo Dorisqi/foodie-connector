@@ -163,16 +163,6 @@ class RestaurantListPage extends React.Component {
   }
 
   handleFilterChange(selectedTags) {
-    if (selectedTags.length === 0) {
-      this.setState({
-        originalList: [],
-        changedList: [],
-        nameMatchList: [],
-      })
-      return;
-    }
-
-    const { place_id } = this.state;
     var tag_ids = '';
 
     for (var i = 0; i < selectedTags.length; i++) {

@@ -55,12 +55,14 @@ const RestaurantCard = (props) => {
   return (
     <Card className={classes.card} component="div">
       <CardActionArea className={classes.actionArea}>
+      <a href={"/restaurant/"+item.id}>
         <CardMedia
           className={classes.resize}
           component="img"
           image={item.image}
           title={item.name}
         />
+        </a>
         <Typography gutterBottom>
           <h2 className={classes.restaurantName}>
             {item.name}

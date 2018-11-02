@@ -184,10 +184,10 @@ class PaymentInfo extends React.Component {
       const { response } = err;
       if (response) {
         if (response.status === 401) {
-          console.log('not authenticated')
+          alert('not authenticated')
         }
         else if (response.status === 422) {
-          console.log('invalid information')
+          alert('invalid information')
         }
         else {
           console.log(err);
