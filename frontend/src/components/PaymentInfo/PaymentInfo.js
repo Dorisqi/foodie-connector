@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import CardForm from './CardForm';
-import axios from 'axios';
-import Auth from '../../Auth/Auth';
-import apiList from '../../apiList';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,81 +14,38 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Button from '../../material-kit/components/CustomButtons/Button';
-import CardInfo from './CardInfo';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Dialog from '@material-ui/core/Dialog';
-import Slide from '@material-ui/core/Slide';
-import { Elements, StripeProvider } from 'react-stripe-elements';
-import { CardExpiryElement } from 'react-stripe-elements';
-import Input from '@material-ui/core/Input';
-
-import classNames from 'classnames';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CardForm from './CardForm';
+import axios from 'axios';
+import apiList from '../../apiList';
+import EditCard from './EditCard';
+import Avatar from '@material-ui/core/Avatar';
+import Icon from '@material-ui/core/Icon';
 
 
 const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
   root: {
-    width: '100%',
+    width: '90%',
     minHeight: 300,
     marginTop: theme.spacing.unit,
     overflowX: 'auto',
     margin: '10px auto 0 auto',
-    paddingLeft: theme.spacing.unit ,
+    paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 5,
   },
   table: {
-    minWidth: 900,
+    tableLayout: 'fixed',
   },
-
+  colWidth: {
+    width: '2rem'
+}
 });
 
-// const id = 0;
-// function createData(id, nickname,brand,last_four,expiration, is_default) {
-//   id += 1;
-//   return { id, nickname,brand,last_four,expiration, is_default};
-// }
-
-function Transition(props) {
-  return <Slide direction="down" {...props} />;
-}
-
-const createOptions = (fontSize, padding) => {
-  return {
-    style: {
-      base: {
-        fontSize,
-        color: '#424770',
-        letterSpacing: '0.025em',
-        fontFamily: 'Source Code Pro, monospace',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
-        padding,
-      },
-      invalid: {
-        color: '#9e2146',
-      },
-    },
-  };
-};
-
-function getEditCard(card) {
-  return {
-    id: card.id,
-    nickname: card.nickname,
-    expiration_month: card.expiration_month,
-    expiration_year: card.expiration_year,
-    zip_code: '',
-    is_default: card.is_default,
-    brand: card.brand,
-    last_four: card.last_four
-  }
+const index = 0;
+function createData(index,id,name,full_address,zip_code,is_default,) {
+  return {index:index,id: id,name:name,full_address:full_address,zip_code:zip_code,is_default:is_default};
 }
 
 class PaymentInfo extends React.Component {
@@ -99,32 +53,57 @@ class PaymentInfo extends React.Component {
     super(props);
     this.state = {
       cards: [],
-      editCards: [],
-      selectedEnabled: 1,
-    }
+    };
     this.postPaymentInfo = this.postPaymentInfo.bind(this);
-    this.handleCardonChange = this.handleCardonChange.bind(this);
+    this.loadPaymentInfo = this.loadPaymentInfo.bind(this);
+    this.handleDeleteCard = this.handleDeleteCard.bind(this);
+    this.handleChangeDefault = this.handleChangeDefault.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this);
-    this.handleEditCheck = this.handleEditCheck.bind(this);
   }
 
   componentDidMount() {
+    console.log('load paymentInfo');
+    //alert('load address');
     this.loadPaymentInfo();
   }
-
   loadPaymentInfo() {
-    axios.get(apiList.card)
-    .then(res => {
-      console.log(res.data.map(a => getEditCard(a)));
-      this.setState({
-        cards: res.data,
-        editCards: res.data.map(a => getEditCard(a))
+      axios.get(apiList.cards)
+      .then(res => {
+        //console.log(res.data.map(a => getEditCard(a)));
+        this.setState({
+          cards: res.data,
+          //editCards: res.data.map(a => getEditCard(a))
+        });
+      })
+      .catch(err => {
+        const { response } = err;
+        if (response && response.status === 401) {
+          console.log('not authenticated');
+        }
+        else {
+          console.log(err);
+        }
       });
+  }
+
+  handleEditSubmit(id, body) {
+    console.log(body);
+    axios.put(apiList.card(id), body)
+    .then(res => {
+      this.loadPaymentInfo();
     })
     .catch(err => {
       const { response } = err;
-      if (response && response.status === 401) {
-        console.log('not authenticated');
+      if (response) {
+        if (response.status === 404) {
+          alert(`This restaurant(${id}) does not exist.`);
+        }
+        else if (response.status === 401) {
+          alert("This page requires login to access");
+        }
+        else {
+          console.log(err);
+        }
       }
       else {
         console.log(err);
@@ -132,52 +111,8 @@ class PaymentInfo extends React.Component {
     });
   }
 
-  handleCardonChange = (id, filed) => event => {
-    const { value } = event.target;
-    this.setState((state) => {
-      editCards: state.editCards.map(c => {
-        if (c.id != id) {
-          return c;
-        }
-        c[filed] = value;
-        return c;
-      })
-    })
-  }
-  handleEditCheck = id => event => {
-    const { checked } = event.target;
-    this.setState((state) => {
-      editCards: state.editCards.map(c => {
-        if (c.id != id) {
-          return c;
-        }
-        c.is_default = checked;
-        return c;
-      })
-    })
-  }
-  handleEditSubmit = id => event => {
-    const editCard  = this.state.editCards.filter(c => c.id == id)[0];
-    const body = {
-      nickname: editCard.nickname,
-      expiration_month: Number(editCard.expiration_month),
-      expiration_year: Number(editCard.expiration_year),
-      zip_code: Number(editCard.zip_code),
-      is_default: editCard.is_default
-    }
-    console.log(id+": "+body);
-    axios.put(apiList.card+'/'+id, body)
-    .then(res => {
-      console.log("loadPaymentInfo");
-      this.loadPaymentInfo();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    event.preventDefault();
-  }
   postPaymentInfo(body) {
-    axios.post(apiList.card, body)
+    axios.post(apiList.cards, body)
     .then(res => {
       this.loadPaymentInfo();
     }).catch(err => {
@@ -199,30 +134,88 @@ class PaymentInfo extends React.Component {
     });
   }
 
-  handleClickOpen(modal) {
-    const x = [];
-    x[modal] = true;
-    this.setState(x);
-  }
-  handleClose(modal) {
-    const x = [];
-    x[modal] = false;
-    this.setState(x);
+  handleChangeDefault(event) {
+    const { value, checked } = event.target;
+    console.log(value);
+    console.log(checked);
+    axios.put(apiList.card(value), { is_default: true})
+    .then(res => {
+      this.setState(state => {
+        const { cards } = state;
+        cards.forEach(card => {
+          card.is_default = card.id == value;
+        });
+        return { cards: cards };
+      });
+    })
+    .catch(err => {
+      const { response } = err;
+      if (response) {
+        if (response.status === 401) {
+          alert("This page requires login to access");
+        }
+        else if (response.status === 404) {
+          alert(`Card with id(${value}) does not exist`);
+        }
+        else if (response.status === 422) {
+          alert("Validaiton fail");
+        }
+        else {
+          console.log(err);
+        }
+      }
+      else {
+        console.log(err);
+      }
+    });
   }
 
+  handleDeleteCard = id => {
+    console.log(id);
+    axios.delete(apiList.card(id))
+    .then(res => {
+      const card = this.state.cards.find(card => card.id == id);
+      if (card && card.is_default) {
+        console.log('load paymentInfo');
+        this.loadPaymentInfo();
+      }
+      else {
+        console.log('just delete');
+        this.setState(state => ({
+          cards: state.cards.filter(card => card.id != id)
+        }))
+      }
+    })
+    .catch(err => {
+      const { response } = err;
+      if (response) {
+        if (response.status === 401) {
+          alert("This page requires login to access");
+        }
+        else if (response.status === 404) {
+          alert(`Card with id(${id}) does not exist`);
+        }
+        else {
+          console.log(err);
+        }
+      }
+      else {
+        console.log(err);
+      }
+    });
+  }
 
   render() {
-
     const { classes } = this.props;
-    const { editCards } = this.state;
+    const { cards } = this.state;
+
     const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal,
     );
-
     return (
-
       <Paper className={classes.root}>
+        <CardForm postPaymentInfo={this.postPaymentInfo}/>
 
         <Table className={classes.table}>
           <TableHead>
@@ -230,23 +223,24 @@ class PaymentInfo extends React.Component {
               <TableCell />
               <TableCell>Nickname</TableCell>
               <TableCell>brand</TableCell>
-              <TableCell numeric>Last_fout digit</TableCell>
+              <TableCell>Last_fout digit</TableCell>
               <TableCell>Expiration</TableCell>
-
-              <CardForm postPaymentInfo={this.postPaymentInfo}/>
-
-            </TableRow>
-          </TableHead>
+              <TableCell>Zip code</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
+              </TableRow>
+            </TableHead>
           <TableBody>
-            {editCards.map(row => (
-              <TableRow key={row.id}>
-                <TableCell>
+            {cards.map(card => (
+              <TableRow key={card.id}>
+                <TableCell padding='Checkbox'>
                   <div className={wrapperDiv}>
                     <FormControlLabel
                       control={(
                         <Radio
-                          checked={row.is_default}
-                          value={row.id}
+                          checked={card.is_default}
+                          onChange={this.handleChangeDefault}
+                          value={card.id}
                           name="radio button enabled"
                           aria-label="A"
                           icon={(
@@ -261,107 +255,48 @@ class PaymentInfo extends React.Component {
                             checked: classes.radio,
                           }}
                         />
-)}
+                      )}
                       classes={{
                         label: classes.label,
                       }}
                       label=""
                     />
-                    <div>
-                      <Button
-                        color="info"
-                        round
-                        onClick={() => this.handleClickOpen('modal')}
-                      >
-                      Edit
-                      </Button>
-                      <Dialog
-                        classes={{
-                          root: classes.center,
-                          paper: classes.modal,
-                        }}
-                        open={this.state.modal}
-                        TransitionComponent={Transition}
-                        keepMounted
-                        onClose={() => this.handleClose('modal')}
-                        aria-labelledby="modal-slide-title"
-                        aria-describedby="modal-slide-description"
-                      >
-                        <DialogContent
-                          id="modal-slide-description"
-                          className={classes.modalBody}
-                        >
-
-
-                        </DialogContent>
-                        <form onSubmit={this.handleEditSubmit(row.id)}>
-                          <label>
-                            Nickname
-                            <input name="name" type="text"
-                                   onChange={this.handleCardonChange(row.id, 'nickname')} required />
-                          </label>
-                          <label>
-                            Expiration month
-                            <input name="month" type="number" min="1" max="12"
-                                   onChange={this.handleCardonChange(row.id, 'expiration_month')} required />
-                          </label>
-                          <label>
-                            Expiration year
-                            <input name="year" type="number" min="2018"
-                                   onChange={this.handleCardonChange(row.id, 'expiration_year')} required />
-                          </label>
-                          <label>
-                            Zip code
-                            <input name="zip_code" type="number"
-                                   onChange={this.handleCardonChange(row.id, 'zip_code')} required />
-                          </label>
-                          <label>
-                            <Checkbox
-                              onChange={this.handleEditCheck(row.id)}
-                              color="primary"
-                            />
-                            <label>
-                              set to default
-                            </label>
-                          </label>
-                          <br/>
-                          <br/>
-                          <Input type="submit" value="Submit" />
-                        </form>
-                        <DialogActions
-                          className={`${classes.modalFooter} ${classes.modalFooterCenter}`}
-                        >
-
-
-                          <Button
-                            onClick={() => this.handleClose('modal')}
-                            color="rose">
-                          close
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </div>
                   </div>
                 </TableCell>
-                <TableCell>{row.nickname}</TableCell>
-                <TableCell>{row.brand}</TableCell>
-                <TableCell>{row.last_four}</TableCell>
-                <TableCell>{row.expiration_month+'/'+row.expiration_year}</TableCell>
-
-
+                <TableCell padding='dense'>{card.nickname}</TableCell>
+                <TableCell padding = 'dense'>{card.brand}</TableCell>
+                <TableCell padding = 'dense'>{card.last_four}</TableCell>
+                <TableCell padding = 'dense'>{`${card.expiration_month}/${card.expiration_year}`}</TableCell>
+                <TableCell padding = 'dense'>{card.zip_code}</TableCell>
+                <TableCell padding = 'dense'>
+                  <EditCard
+                    id={card.id}
+                    nickname={card.nickname}
+                    expiration_month={card.expiration_month}
+                    expiration_year={card.expiration_year}
+                    zip_code={card.zip_code}
+                    handleEditSubmit={this.handleEditSubmit}
+                  />
+                </TableCell>
+                <TableCell padding = 'dense'>
+                  <IconButton size ='big' aria-label="Delete" onClick={() => this.handleDeleteCard(card.id)} >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </Paper>
-
-
     );
   }
 }
+//<AddingAddress handleAddAddress={this.handleAddAddress}/>
+
+
 
 PaymentInfo.propTypes = {
-  classes: PropTypes.shape({}).isRequired,
+  classes: PropTypes.element.isRequired,
 };
 
 export default withStyles(styles)(PaymentInfo);
