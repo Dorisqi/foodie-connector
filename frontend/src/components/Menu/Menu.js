@@ -102,7 +102,9 @@ class Menu extends React.Component {
           prev[p.id] = false;
         }
         else {
-          prev[p.id] = Object.keys(product).reduce((bool, groupId) => product[groupId].isInRange && bool, true);
+          prev[p.id] = Object.keys(product).reduce((bool, groupId) => Number.isInteger(+groupId)
+                                                                      ? product[groupId].isInRange && bool
+                                                                      : true, true);
         }
         return prev;
       }, {});
@@ -131,12 +133,14 @@ class Menu extends React.Component {
       product.count = 0;
       if (product.hasOptions) {
         Object.keys(product).forEach(groupId => {
-          const group = product[groupId];
-          group.count = 0;
-          group.isInRange = group.count >= group.min && group.count <= group.max;
-          Object.keys(group.options).forEach(optionId => {
-            group.options[optionId] = false;
-          })
+          if (Number.isInteger(+groupId)) {
+            const group = product[groupId];
+            group.count = 0;
+            group.isInRange = group.count >= group.min && group.count <= group.max;
+            Object.keys(group.options).forEach(optionId => {
+              group.options[optionId] = false;
+            })
+          }
         });
       }
       return {
@@ -190,9 +194,7 @@ class Menu extends React.Component {
           }
           optionGroups.options[optionId] = true;
         }
-
         optionGroups.isInRange = optionGroups.count >= optionGroups.min && optionGroups.count <= optionGroups.max;
-        // product.count = Object.keys(product).reduce((prev, id) => product[id].isInRange && prev, true)? 1: 0;
       }
       else {
         product.count++;
@@ -201,14 +203,15 @@ class Menu extends React.Component {
         addable[productId] = product.count > 0;
       }
       else {
-        addable[productId] = Object.keys(product).reduce((prev, id) => product[id].isInRange && prev, true);
-        if (addable[productId]) {
-          product.count = 1;
-        }
-        else {
-          product.count = 0;
-        }
+        addable[productId] = true;
+        Object.keys(product).forEach(id => {
+          if (Number.isInteger(+id)) {
+            addable[productId] = addable[productId] && product[id].isInRange;
+          }
+        });
       }
+      console.log(selected);
+      console.log(addable);
       return {
         selected: selected,
         addable: addable,
@@ -220,7 +223,7 @@ class Menu extends React.Component {
     const { value } = event.target;
     this.setState(state => {
       const { selected } = state;
-      selected[id].count = Math.round(value);
+      selected[id].count = value < 0? 0: Math.round(value);
       return { selected: selected };
     })
   }
@@ -314,7 +317,7 @@ class Menu extends React.Component {
                           }}
                         />
                       </ListItem>
-                      <ListItem button onClick={() => (selected[productId].count > 0
+                      <ListItem button onClick={() => (addable[productId] && selected[productId].count > 0
                                                         ? this.addToCart(productId)
                                                         : alert("missing options or not selected"))}>
                         <ListItemText primary="Add to cart" primaryTypographyProps={{align: "right"}}/>
