@@ -47,7 +47,7 @@ class ShareViaQR extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, qr_code_link} = this.props;
     return (
         <main>
           <Button onClick={() => this.handleViaQR('modal')}
@@ -77,6 +77,7 @@ class ShareViaQR extends React.Component {
                 <TextField
                   disabled
                   id="filled-disabled"
+                  value={qr_code_link}
                   label="url"
                   defaultValue={this.state.qr_code_link}
                   className={classes.textField}
