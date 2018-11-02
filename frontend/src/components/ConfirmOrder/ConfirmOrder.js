@@ -12,7 +12,7 @@ const styles = theme => ({
   },
 
 });
-class ConfirmOrde extends React.Component {
+class ConfirmOrder extends React.Component {
   constructor (props)
   {
     super(props);
@@ -83,4 +83,4 @@ ConfirmOrder.propTypes = {
   classes: PropTypes.object.isRequired,
   orderId: PropTypes.string,
 }
-export default withStyles(styles)(ConfirmOrde);
+export default withStyles(styles)(ConfirmOrder);

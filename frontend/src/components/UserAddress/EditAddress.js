@@ -110,7 +110,12 @@ constructor(props){
 }
 
   componentDidMount() {
-      this.forceUpdate();
+      //this.forceUpdate();
+  }
+
+  forceUpdate(){
+    this.setState({id:this.state.id,phone:this.state.phone,line_1:this.state.line_1,line_2:this.state.line_2
+                    ,city:this.state.city,state:this.state.state,zip_code:this.state.zip_code});
   }
   handleClickOpen(modal) {
     const x = [];
@@ -155,14 +160,14 @@ constructor(props){
 
 
   handleConfirm(modal,event){
-    const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
+    const { id,name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
     const { handleAddAddress } = this.props;
     const x = [];
     x[modal] = true;
     this.setState(x);
-    alert(name+phone+line_1+line_2+city+state+zip_code);
+    alert(id+name+phone+line_1+line_2+city+state+zip_code);
 
-    axios.put(apiList.updateaddress,this.state.id, {
+    axios.put(`/api/v1/addresses/${id}`, {
 
       name: name,
       phone: phone,
@@ -176,7 +181,9 @@ constructor(props){
     }).then(res => {
       console.log(res);
     //  handleAddAddress(res);
-
+    alert("Address changed successfully!");
+    this.setState({id:id,phone:phone,line_1:line_1,line_2:line_2
+                    ,city:city,state:state,zip_code:zip_code});
     }).catch(err => {
       console.log(err);
       const { response } = err;

@@ -8,6 +8,7 @@ import Menu from '../../components/Menu/Menu';
 import Cart from '../../components/Cart/Cart';
 import RestaurantInfo from '../../components/RestaurantInfo/RestaurantInfo';
 import CreateorderCard from '../../components/GrouporderInfo/CreateorderCard';
+import ConfirmOrder from '../../components/ConfirmOrder/ConfirmOrder';
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -120,7 +121,8 @@ class RestaurantDetailPage extends React.Component {
 
 
   updateCreatorId(id){
-    this.setState({orderId:id});
+    alert("updateCreatorId" + id);
+    this.setState({creatorId:id});
   }
 
 
@@ -158,9 +160,10 @@ class RestaurantDetailPage extends React.Component {
           </Grid>
 
           <Grid item xs={12} md={4}>
-          <CreateorderCard updateCreatorId={this.updateCreatorId} restaurant_id={this.state.id}>
+          <CreateorderCard updateCreatorid={this.updateCreatorId} restaurant_id={this.state.id}>
           </CreateorderCard>
           <Cart id={id} cart={cart} menu={menu} restaurantName={restaurantName} updateCart={this.updateCart}/>
+        
           </Grid>
         </Grid>
 

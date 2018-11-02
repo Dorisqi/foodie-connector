@@ -79,28 +79,39 @@ class AddressTable extends React.Component {
     })
   }
   deleteaddress(value){
-    //const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
-    //const { value, checked } = event.target;
+    const { name, phone, line_1, line_2, city, state, zip_code, place_id, is_default } = this.state;
+    //alert("indes" + this.state.address[value].id);
+   const id = this.state.address[value].id;
     //alert('delete:' +event)
     //const { value, checked } = event.target;
-    axios.delete(apiList.addressDetail, {
-      id: this.state.address[value].id,
-      name: this.state.address[value].name,
-      phone: this.state.address[value].phone,
-      line_1: this.state.address[value].line_1,
-      line_2: this.state.address[value].line_2,
-      city: this.state.address[value].city,
-      state: this.state.address[value].state,
-      zip_code: this.state.address[value].zip_code,
-      place_id: this.state.address[value].place_id,
-      is_default: this.state.address[value].is_default,
+    //alert("ididid:" + this.state.address[value].id)
+    axios.delete(`/api/v1/addresses/${id}`, {
+      name: name,
+      phone: phone,
+      line_1: line_1,
+      line_2: line_2,
+      city: city,
+      state: state,
+      zip_code: zip_code,
+      is_default: is_default,
     }).then(res => {
       console.log(res);
+      alert("delete successfully!");
       this.state.address.splice(value, 1);
       //handleAddAddress(res);
 
     }).catch(err => {
       console.log(err);
+      const { response } = err;
+      if (response && response.status === 401) {
+        alert('authentification required');
+      }
+      else if (response && response.status === 404) {
+        alert('Resource not found.');
+      }
+      else {
+        alert('other erro');
+      }
 
     })
   }

@@ -165,11 +165,7 @@ constructor(props){
     this.setState({minutes: event.target.value})
   }
 
- calculatSec(){
-   const time = 60*this.state.minutes+3600*this.state.hours;
-   alert("time:" + time);
-   this.setState({calculated_time: time});
- }
+
 
   handleCreateorder(modal){
 
@@ -198,6 +194,9 @@ constructor(props){
       }).then(res => {
         console.log(res.data);
         this.setState({share_link:res.data.share_link,qr_code:res.data.qr_code_link});
+
+        alert("Create Successful!");
+        const {creatid} =  res.data.creator.id;
         //alert("creatorid:"+res.data.creator.id);
         this.props.liftCreatorId(res.data.creator.id);
         //handleAddAddress(res.data);

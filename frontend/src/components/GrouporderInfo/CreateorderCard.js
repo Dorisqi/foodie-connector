@@ -44,6 +44,7 @@ constructor(props){
 
   sendCreatorId(creatorid){
     this.props.updateCreatorId(creatorid);
+    //alert("sendCreatorId()" + creatid);
   }
 
   sendAddressId(event){
