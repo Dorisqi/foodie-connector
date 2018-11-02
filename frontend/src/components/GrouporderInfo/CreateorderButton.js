@@ -206,7 +206,7 @@ constructor(props){
   }
 
     render(){
-      const{classes,} = this.props;
+      const{classes} = this.props;
       const wrapperDiv = classNames(
       classes.checkboxAndRadio,
       classes.checkboxAndRadioHorizontal
@@ -389,7 +389,7 @@ constructor(props){
 
                 <ShareLink share_link={this.state.share_link}></ShareLink>
                 <ShareViaQR qr_code_link = {this.state.qr_code}> </ShareViaQR>
-              
+
 
 
           </DialogContent>

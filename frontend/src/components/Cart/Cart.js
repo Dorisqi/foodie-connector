@@ -18,6 +18,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     maxWidth: 752,
+    minWidth:100
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -31,6 +32,7 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: props.id,
       restaurantName: "",
       cart: {
         "restaurant_id": null,
@@ -44,12 +46,13 @@ class Cart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.cart).length > 0) {
+    if (nextProps.cart.restaurant_id) {
       const { menu } = nextProps;
       const products = menu.map(p => p.products).flat();
       const { restaurantName, cart } = this.state;
       console.log(nextProps.cart);
       this.setState({
+        id: nextProps.id,
         restaurantName: restaurantName === "" && cart.cart.length === 0
                         ? nextProps.restaurantName
                         : restaurantName,
@@ -74,7 +77,7 @@ class Cart extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { cart, menu } = this.state;
+    const { id, cart, menu } = this.state;
     var { subtotal } = cart;
     const cartItems = cart.cart;
     subtotal = setTwoDecimal(subtotal);
@@ -107,9 +110,16 @@ class Cart extends React.Component {
           <Typography variant="h1" component="h1" align="center" className={classes.title}>
             Cart
           </Typography>
-          <List>
-            {listItems}
-          </List>
+          {id == cart.restaurant_id
+            ? <List>
+              {listItems}
+              </List>
+            : <Typography variant="h4" component="h4" align="center" className={classes.title}>
+                There are items from <a href={`/restaurant/${cart.restaurant_id}`}>this restaurant</a>,
+                empty the cart before adding new item.
+              </Typography>
+          }
+
           <Typography variant="h5">
             Total Cost: ${subtotal}
           </Typography>
