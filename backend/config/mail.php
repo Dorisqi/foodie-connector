@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'bot@foodie-connector.delivery'),
+        'name' => env('MAIL_FROM_NAME', 'Foodie Connector'),
     ],
 
     /*
@@ -119,5 +119,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];

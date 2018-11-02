@@ -30,9 +30,12 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'google_maps' => [
+        'secret' => env('GOOGLE_MAPS_SECRET'),
+        'base_uri' => 'https://maps.googleapis.com/maps/api/',
+    ],
 ];
