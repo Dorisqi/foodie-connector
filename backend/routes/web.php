@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /* Route::name('admin.')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('login');
@@ -28,8 +24,9 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/orders/qr-code/{id}', 'OrderController@qrCode')
+    ->name('order.qr_code')
+    ->middleware('throttle:30,1');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
+use App\Brokers\VerifyEmailBroker;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\ApiException;
+use App\Models\ApiUser;
+use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Stripe\Customer;
 
-class RegisterController extends Controller
+class RegisterController extends ApiController
 {
     /*
     |--------------------------------------------------------------------------
@@ -21,15 +27,6 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
     /**
      * Create a new controller instance.
      *
@@ -38,35 +35,74 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('stripe');
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Handle a registration request for the application.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
-    protected function validator(array $data)
+    public function register(Request $request)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($request->all(), $this::rules());
+        if ($validator->fails()) {
+            if (isset($validator->failed()['email']['Unique'])) {
+                throw ApiException::emailExists();
+            }
+            throw ApiException::validationFailed($validator);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user = ApiUser::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            $customer = Customer::create([
+                'description' => 'ApiUser-' . $user->id,
+            ]);
+            $user->stripe_id = $customer->id;
+            $user->save();
+
+            try {
+                VerifyEmailBroker::sendVerificationEmail($this->limiter(), $user);
+            } catch (\Exception $exception) {
+                Log::error($exception->getMessage(), $exception->getTrace());
+            }
+
+            $this->guard()->loginUsingId($user->getAuthIdentifier());
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return $this->response([
+            'api_token' => $this->guard()->token(),
+            'user' => $this->user(),
+        ]);
+    }
+
+    /**
+     * Get the validation rules
+     *
+     * @return array
+     */
+    public static function rules()
+    {
+        return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+            'email' => 'required|string|email|max:255|unique:api_users',
+            'password' => 'required|password',
+        ];
     }
 }
