@@ -64,6 +64,11 @@ class ApiUser extends Authenticatable
         return $this->hasOne('App\Models\Card', 'id', 'default_card_id');
     }
 
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class, 'creator_id');

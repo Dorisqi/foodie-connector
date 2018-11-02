@@ -151,17 +151,18 @@ class RestaurantController extends ApiController
      */
     public function show($id, Request $request)
     {
-        $restaurant = Restaurant::with([
+        $query = Restaurant::with([
             'restaurantCategories',
             'operationTimes' => function ($query) {
                 $query->orderBy('day_of_week')->orderBy('start_time');
             },
-        ])->find($id);
+        ]);
+        if ($request->query('with_menu') === 'true') {
+            $query = $query->with('restaurantMenu');
+        }
+        $restaurant = $query->find($id);
         if (is_null($restaurant)) {
             throw ApiException::resourceNotFound();
-        }
-        if ($request->query('with_menu') === 'true') {
-            $restaurant->retrieveMenu();
         }
         $address_id = $request->query('address_id');
         if (!is_null($address_id)) {

@@ -27,17 +27,23 @@ Route::prefix('v1')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+
         Route::resource('cards', 'CardController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+
         Route::resource('restaurants', 'RestaurantController')->only([
             'index', 'show',
         ]);
+
         Route::resource('orders', 'OrderController')->only([
             'store', 'show', 'destroy',
         ]);
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
         Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');
+
+        Route::put('cart', 'CartController@update');
+        Route::get('cart', 'CartController@show');
 
         Route::prefix('profile')->group(function () {
             Route::get('', 'ProfileController@show');

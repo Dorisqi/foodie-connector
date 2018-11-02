@@ -46,8 +46,6 @@ class Restaurant extends Model
 
     protected $localDistance = null;
 
-    protected $localProductCategories = null;
-
     /**
      * Address for calculating the is_deliverable attribute
      *
@@ -96,29 +94,6 @@ class Restaurant extends Model
         return $this->localDistance <= 5;
     }
 
-    public function getProductCategoriesAttribute()
-    {
-        return $this->localProductCategories;
-    }
-
-    public function retrieveMenu()
-    {
-        $menu = $this->restaurantMenu()->first();
-        $menuData = json_decode($menu->menu, true);
-        $productCategories = $menuData['product_categories'];
-        $productOptionGroups = $menuData['product_option_groups'];
-        foreach ($productCategories as &$productCategory) {
-            foreach ($productCategory['products'] as &$product) {
-                $subOptionGroups = [];
-                foreach ($product['product_option_groups'] as $productOptionGroup) {
-                    array_push($subOptionGroups, $productOptionGroups[$productOptionGroup]);
-                }
-                $product['product_option_groups'] = $subOptionGroups;
-            }
-        }
-        $this->localProductCategories = $productCategories;
-    }
-
     /**
      * Return if the restaurant is open at the given time
      *
@@ -154,8 +129,9 @@ class Restaurant extends Model
         foreach ($categories as $category) {
             array_push($data['categories'], $category->name);
         }
-        if (!is_null($this->product_categories)) {
-            $data['product_categories'] = $this->product_categories;
+        if (isset($data['restaurant_menu'])) {
+            $data['product_categories'] = $data['restaurant_menu'];
+            unset($data['restaurant_menu']);
         }
 
         return $data;
