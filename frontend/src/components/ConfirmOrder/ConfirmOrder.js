@@ -18,6 +18,7 @@ class ConfirmOrde extends React.Component {
     super(props);
     this.state = {
       creatorId: '',
+      orderId: this.props.orderId,
     };
     //handlechanges
     this.handleConfirmOrder = this.handleConfirmOrder.bind(this);
@@ -76,5 +77,10 @@ class ConfirmOrde extends React.Component {
 
     );
   }
+}
+
+ConfirmOrder.propTypes = {
+  classes: PropTypes.object.isRequired,
+  orderId: PropTypes.string,
 }
 export default withStyles(styles)(ConfirmOrde);
