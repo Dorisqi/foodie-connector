@@ -480,25 +480,6 @@ Successful operation.
     "Retry-After": 60
 }
 ```
-#### **Status Code: 403**
-
-The email address has not been verified
-
-**URI**: /api/v1/auth/reset-password-email
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The email address has not been verified"
-}
-```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.
@@ -2540,7 +2521,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "BBFDD3DD898B9EC262FE",
+    "id": "236ED21953FEBA843184",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2598,8 +2579,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/BBFDD3DD898B9EC262FE",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/BBFDD3DD898B9EC262FE"
+    "share_link": "http://localhost:8000/orders/236ED21953FEBA843184",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/236ED21953FEBA843184"
 }
 ```
 #### **Status Code: 401**
