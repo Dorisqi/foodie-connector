@@ -20,7 +20,7 @@ class CartController extends ApiController
     public function update(Request $request)
     {
         $this->validateInput($request);
-        $cart = $this->user()->cart;
+        $cart = $this->user()->cart()->first();
         if (is_null($cart)) {
             $cart = new Cart();
             $cart->user()->associate($this->user()->id);
@@ -55,7 +55,7 @@ class CartController extends ApiController
      */
     public function show()
     {
-        $cart = $this->user()->cart;
+        $cart = $this->user()->cart()->first();
         if (is_null($cart)) {
             return $this->response([
                 'restaurant_id' => null,

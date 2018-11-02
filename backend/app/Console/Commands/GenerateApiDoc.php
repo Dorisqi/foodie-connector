@@ -75,6 +75,10 @@ class GenerateApiDoc extends Command
                 'description' => 'Everything about restaurant',
                 'apis' => [],
             ],
+            'cart' => [
+                'description' => 'Everything about cart',
+                'apis' => [],
+            ],
             'order' => [
                 'description' => 'Everything about order',
                 'apis' => [],

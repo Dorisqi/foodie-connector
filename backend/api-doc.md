@@ -2231,6 +2231,125 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+## **cart**
+
+Everything about cart
+
+### **PUT - /api/v1/cart**
+
+Update the cart
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | required | integer | exists:restaurants,id |
+| cart | required | array |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+**Response Body:**
+```
+{
+    "restaurant_id": 1,
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98
+}
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/cart
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 0
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "restaurant_id": [
+            "The selected restaurant id is invalid."
+        ],
+        "cart": [
+            "The cart field is required."
+        ]
+    }
+}
+```
+
 ## **order**
 
 Everything about order
@@ -2276,7 +2395,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "B2B2DE3E9B589559E43B",
+    "id": "72C6761BA655DCC46BBD",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2334,8 +2453,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/B2B2DE3E9B589559E43B",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/B2B2DE3E9B589559E43B"
+    "share_link": "http://localhost:8000/orders/72C6761BA655DCC46BBD",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/72C6761BA655DCC46BBD"
 }
 ```
 #### **Status Code: 401**
