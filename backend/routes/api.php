@@ -13,6 +13,43 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('register', 'Auth\RegisterController@register');
+        Route::post('login', 'Auth\LoginController@login');
+        Route::post('reset-password-email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+        Route::post('reset-password', 'Auth\ResetPasswordController@reset');
+        Route::post('resend-verification-email', 'Auth\VerificationController@resendEmail');
+        Route::post('verify-email', 'Auth\VerificationController@verify');
+    });
+
+    Route::middleware('auth:api')->group(function () {
+        Route::resource('addresses', 'AddressController')->only([
+            'index', 'store', 'show', 'update', 'destroy'
+        ]);
+
+        Route::resource('cards', 'CardController')->only([
+            'index', 'store', 'show', 'update', 'destroy'
+        ]);
+
+        Route::resource('restaurants', 'RestaurantController')->only([
+            'index', 'show',
+        ]);
+
+        Route::resource('orders', 'OrderController')->only([
+            'store', 'show', 'destroy',
+        ]);
+        Route::post('orders/{id}/confirm', 'OrderController@confirm');
+        Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');
+
+        Route::put('cart', 'CartController@update');
+        Route::get('cart', 'CartController@show');
+
+        Route::prefix('profile')->group(function () {
+            Route::get('', 'ProfileController@show');
+            Route::put('', 'ProfileController@update');
+            Route::put('password', 'ProfileController@changePassword');
+            Route::put('email', 'ProfileController@updateEmail');
+        });
+    });
 });

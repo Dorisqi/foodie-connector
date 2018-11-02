@@ -3,25 +3,10 @@
 namespace App\Models\Admin;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends \TCG\Voyager\Models\User
 {
     use Notifiable;
-
-    /**
-     * The table associated with the model
-     *
-     * @var string
-     */
-    protected $table = 'admin_users';
-
-    /**
-     * The column name of the remember tokens
-     *
-     * @var string
-     */
-    protected $remember_column = '';
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +14,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $fillable = [
-        'email', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -38,6 +23,6 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password', 'remember_token',
     ];
 }
