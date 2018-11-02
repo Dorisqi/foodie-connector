@@ -15,8 +15,8 @@ import axios from 'axios';
 import Auth from '../../Auth/Auth';
 import apiList from '../../apiList';
 import { browserHistory } from 'react-router';
-import ShareLink from '../../components/ShareLink/ShareLink';
-import ShareViaQR from '../../components/ShareViaQR/ShareViaQR';
+//import ShareLink from '../../components/ShareLink/ShareLink';
+//import ShareViaQR from '../../components/ShareViaQR/ShareViaQR';
 
 
 const styles = theme => ({
@@ -208,8 +208,6 @@ class SimpleTabs extends React.Component {
     return (
       <main className={classes.layout}>
         <CurrentGeolocation/>
-        <ShareLink/>
-        <ShareViaQR/>
           <Tabs
           value={this.state.value}
           onChange={this.handleChange}
