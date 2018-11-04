@@ -101,7 +101,7 @@ Validation failed.
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/login
 
@@ -125,7 +125,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -172,27 +172,6 @@ Successful operation.
     }
 }
 ```
-#### **Status Code: 409**
-
-The email has already been taken.
-
-**URI**: /api/v1/auth/register
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery",
-    "password": "test123456",
-    "name": "Test User"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The email has already been taken."
-}
-```
 #### **Status Code: 422**
 
 Validation failed.
@@ -215,6 +194,32 @@ Validation failed.
     "data": {
         "password": [
             "The password must be a valid password."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/auth/register
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "test123456",
+    "name": "Test User"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email has already been taken."
         ]
     }
 }
@@ -282,7 +287,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/resend-verification-email
 
@@ -303,7 +308,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -416,7 +421,7 @@ Validation failed.
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -441,7 +446,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -525,7 +530,7 @@ Validation failed.
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/reset-password-email
 
@@ -548,7 +553,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -805,9 +810,9 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### **Status Code: 409**
+#### **Status Code: 422**
 
-The email has already been taken.
+Validation failed.
 
 **URI**: /api/v1/profile/email
 
@@ -826,7 +831,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "The email has already been taken."
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email has already been taken."
+        ]
+    }
 }
 ```
 #### **Status Code: 422**
@@ -2521,7 +2531,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "236ED21953FEBA843184",
+    "id": "E2DEA8614D101CC00BA0",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2579,8 +2589,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/236ED21953FEBA843184",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/236ED21953FEBA843184"
+    "share_link": "http://localhost:8000/orders/E2DEA8614D101CC00BA0",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/E2DEA8614D101CC00BA0"
 }
 ```
 #### **Status Code: 401**

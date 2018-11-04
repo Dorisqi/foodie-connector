@@ -56,7 +56,7 @@ class RegisterTest extends ApiTestCase
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
-        ], 409);
+        ], 422);
     }
 
     protected function method()

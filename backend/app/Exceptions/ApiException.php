@@ -26,10 +26,6 @@ class ApiException extends Exception
     }
 
     /* User and Authentication */
-    public static function emailExists()
-    {
-        return new ApiException('The email has already been taken.', 409);
-    }
     public static function loginFailed(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
@@ -71,7 +67,7 @@ class ApiException extends Exception
     public static function tooManyAttempts(int $rateLimit, int $retryAfter)
     {
         return new ApiException(
-            'Too many attempts',
+            'Too many attempts.',
             429,
             ApiThrottle::throttleHeaders($rateLimit, 0, $retryAfter)
         );

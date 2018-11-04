@@ -44,7 +44,7 @@ class UpdateEmailTest extends ApiTestCase
         ]);
         $this->assertFailed([
             'email' => 'exist@foodie-connector.delivery',
-        ], 409);
+        ], 422);
         $this->assertFailed([
             'email' => 'not_email',
         ], 422);
