@@ -6,6 +6,7 @@
     "@material-ui/core": "^3.1.1",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
+    "eslint-config-airbnb": "^17.1.0",
     "i": "^0.3.6",
     "immutability-helper": "^2.8.1",
     "prop-types": "^15.6.2",
@@ -21,9 +22,9 @@
   "scripts": {
     "start": "cross-env NODE_PATH=src/ react-scripts start",
     "build": "cross-env NODE_PATH=src/ react-scripts build",
-    "test": "cross-env NODE_PATH=src/ test --env=jsdom",
+    "test": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/components/Routes.js src/facades/**/*.js src/components/pages/**/*.js src/components/form/**/*.js src/App.js src/index.js src/setupTests.js src/__tests__/**/*.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

@@ -1,20 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from 'components/Header/Header';
 import Routes from 'components/Routes';
 
 class Root extends React.Component {
   render() {
-    const { pathname } = this.props.location;
+    const { location } = this.props;
 
     return (
       <div>
-        {pathname !== '/login' &&
-          <Header/>
+        {location.pathname !== '/login'
+          && <Header />
         }
-        <Routes/>
+        <Routes />
       </div>
-    )
+    );
   }
 }
+
+Root.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default Root;

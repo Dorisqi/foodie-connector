@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -55,6 +56,15 @@ class LoginRegisterPage extends React.Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.tab === 'login') {
+      this.handleLogin();
+    } else {
+      this.handleRegister();
+    }
+  };
+
   handleLogin() {
     this.setState({
       errors: [],
@@ -62,11 +72,11 @@ class LoginRegisterPage extends React.Component {
     Api.login({
       email: this.state.email,
       password: this.state.password,
-    }).then(res => {
+    }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
       // TODO: redirect
     }).catch(Form.handleErrors(this));
-  };
+  }
 
   handleRegister() {
     if (this.state.password !== this.state.confirmPassword) {
@@ -81,20 +91,11 @@ class LoginRegisterPage extends React.Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-    }).then(res => {
+    }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
       // TODO: redirect
     }).catch(Form.handleErrors(this));
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.tab === 'login') {
-      this.handleLogin();
-    } else {
-      this.handleRegister();
-    }
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -107,7 +108,8 @@ class LoginRegisterPage extends React.Component {
         <Typography
           variant="subtitle1"
           className={classes.subtitle}
-          color="textSecondary">
+          color="textSecondary"
+        >
           Log in to enjoy food with your neighbors and friends
         </Typography>
         <Tabs
@@ -115,45 +117,57 @@ class LoginRegisterPage extends React.Component {
           onChange={this.handleTabChange}
           textColor="primary"
           centered
-          className={classes.tabs}>
-          <Tab value="login" label="Log In"/>
-          <Tab value="register" label="Sign Up"/>
+          className={classes.tabs}
+        >
+          <Tab value="login" label="Log In" />
+          <Tab value="register" label="Sign Up" />
         </Tabs>
         <form onSubmit={this.handleSubmit}>
-          <FormErrorMessages errors={this.state.errors.form}/>
-          {this.state.tab === 'register' &&
+          <FormErrorMessages errors={this.state.errors.form} />
+          {this.state.tab === 'register'
+          && (
           <InputTextField
             parent={this}
             name="name"
-            label="Name"/>
+            label="Name"
+          />
+          )
           }
           <InputTextField
             parent={this}
             name="email"
             label="Email"
-            type="email"/>
+            type="email"
+          />
           <InputTextField
             parent={this}
             name="password"
             label="Password"
-            type="password"/>
-          {this.state.tab === 'register' &&
+            type="password"
+          />
+          {this.state.tab === 'register'
+          && (
           <InputTextField
             parent={this}
             name="confirmPassword"
             label="Confirm Password"
-            type="password"/>
+            type="password"
+          />
+          )
           }
-          {this.state.tab === 'login' &&
+          {this.state.tab === 'login'
+          && (
           <FormControl
             className={`${classes.margin} ${classes.forgetPasswordControl}`}
-            fullWidth>
+            fullWidth
+          >
             <Button color="primary" component={Link} to="/reset-password">
               Forgot your password?
             </Button>
           </FormControl>
+          )
           }
-          <FormControl className={[classes.margin, classes.submitButton].concat(' ')} fullWidth>
+          <FormControl className={[classes.margin, classes.submitButton].join(' ')} fullWidth>
             <Button type="submit" variant="contained" color="primary">
               {this.state.tab === 'login' ? 'Log In' : 'Sign Up'}
             </Button>
@@ -164,5 +178,8 @@ class LoginRegisterPage extends React.Component {
   }
 }
 
-export default withStyles(styles)(LoginRegisterPage);
+LoginRegisterPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
+export default withStyles(styles)(LoginRegisterPage);

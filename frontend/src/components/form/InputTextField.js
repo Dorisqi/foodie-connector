@@ -39,8 +39,9 @@ class InputTextField extends React.Component {
         error={parent.state.errors[name] !== undefined}
         helperText={parent.state.errors[name]}
         fullWidth={fullWidth}
-        required={required} />
-    )
+        required={required}
+      />
+    );
   }
 }
 
@@ -51,6 +52,7 @@ InputTextField.propTypes = {
   type: PropTypes.string,
   required: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(InputTextField);

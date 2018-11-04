@@ -18,6 +18,7 @@ const styles = theme => ({
 
 class FormErrorMessages extends React.Component {
   static defaultProps = {
+    errors: null,
     fullWidth: true,
   };
 
@@ -30,10 +31,12 @@ class FormErrorMessages extends React.Component {
 
     return (
       <FormControl
-        className={errors === undefined ? classes.hidden : classes.margin}
+        className={errors === null ? classes.hidden : classes.margin}
         fullWidth={fullWidth}
-        error>
-        {errors !== undefined && errors.map((error, index) => (
+        error
+      >
+        {errors !== null && errors.map((error, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <FormHelperText className={classes.formError} key={index} error>
             {error}
           </FormHelperText>
@@ -46,6 +49,7 @@ class FormErrorMessages extends React.Component {
 FormErrorMessages.propTypes = {
   errors: PropTypes.array,
   fullWidth: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(FormErrorMessages);

@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Storage from 'facades/Storage';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
     height: '100vh',
@@ -34,8 +35,13 @@ class AuthTemplate extends React.Component {
           {this.props.children}
         </div>
       </div>
-    )
+    );
   }
 }
+
+AuthTemplate.propTypes = {
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
+};
 
 export default withStyles(styles)(AuthTemplate);

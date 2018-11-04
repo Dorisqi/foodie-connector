@@ -15,7 +15,7 @@ class Api {
       baseURL: process.env.REACT_APP_API_BASE_URL,
     });
     if (requireAuth) {
-      instance.defaults.headers.common['Authorization'] = Auth.getToken();
+      instance.defaults.headers.common.Authorization = Auth.getToken();
     }
     return instance;
   }

@@ -1,20 +1,20 @@
 import update from 'immutability-helper';
 
 class Form {
-  static handleInputChange = (component, name) => event => {
-    let state = {
+  static handleInputChange = (component, name) => (event) => {
+    const state = {
       errors: update(component.state.errors, { $unset: [name] }),
     };
     state[name] = event.target.value;
     component.setState(state);
   };
 
-  static handleErrors = component => err => {
-    let response = err.response;
-    let errors = {};
+  static handleErrors = component => (err) => {
+    const response = err.response;
+    const errors = {};
     switch (response.status) {
-      case 401:
-        let errorMessage = [response.data.message];
+      case 401: {
+        const errorMessage = [response.data.message];
         if (response.headers['x-ratelimit-remaining'] !== undefined) {
           if (response.headers['x-ratelimit-remaining'] > 0) {
             errorMessage.push(`Your account will be blocked for 10 minutes if you failed to login for ${response.headers['x-ratelimit-remaining']} more times.`);
@@ -24,14 +24,14 @@ class Form {
         }
         errors.form = errorMessage;
         break;
-      case 422:
-        let errorData = response.data.data;
-        for (let field in errorData) {
-          if (errorData.hasOwnProperty(field)) {
-            errors[field] = errorData[field][0];
-          }
-        }
+      }
+      case 422: {
+        const errorData = response.data.data;
+        Object.entries(errorData).forEach((entry) => {
+          errors[entry[0]] = entry[1][0];
+        });
         break;
+      }
       case 429:
         errors.form = [
           response.data.message,
