@@ -2,7 +2,7 @@ import Auth from './Auth/Auth';
 
 
 const apiList = {
-  login: '/api/v1/auth/login',
+  login: '/auth/login',
   register: '/api/v1/auth/register',
   resendVerificationEmail: '/api/v1/auth/resend-verification-email',
   resetPassword: '/api/v1/auth/reset-password',

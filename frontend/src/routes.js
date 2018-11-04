@@ -1,22 +1,22 @@
-import Base from './components/Base/Base';
+import Root from './components/pages/Root';
 import RestaurantListPage from './pages/RestaurantListPage/RestaurantListPage';
 import UserpwresetPage from './pages/userpw_resetPage/User_pw_resetPage';
-import AddressLists from './components/UserAddress/AddressLists';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';
 import AddingAddress from './components/UserAddress/AddingAddress';
 import Login_regPage from './pages/login_regPage/Login_regPage';
+import LoginRegisterPage from './components/pages/auth/LoginRegisterPage';
 import RestaurantDetailPage from './pages/RestaurantDetailPage/RestaurantDetailPage';
 import Auth from './Auth/Auth';
 
 const routes = {
-  component: Base,
+  component: Root,
   childRoutes: [
     {
       path: '/login',
-      component: Login_regPage,
+      component: LoginRegisterPage,
     },
     {
-      path: '/reset_password',
+      path: '/reset-password',
       component: UserpwresetPage,
     },
     {
@@ -27,7 +27,7 @@ const routes = {
       }
     },
     {
-      path: '/restaurantlist',
+      path: '/restaurant-list',
       getComponent: (location, callback) => {
         //callback(null, RestaurantListPage);
         if (Auth.isUserAuthenticated()) {

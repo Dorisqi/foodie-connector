@@ -1,21 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { browserHistory, Router } from 'react-router';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Root from './components/pages/Root';
 import registerServiceWorker from './registerServiceWorker';
-import routes from './routes';
 import Geocode from 'react-geocode';
-import apiKeys from './apiKeys';
-import axios from 'axios';
-import Auth from './Auth/Auth';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
 
-Geocode.setApiKey(apiKeys.googleMapAPIKey);
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    primary: red,
+  }
+});
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 Geocode.enableDebug();
-axios.defaults.baseURL = 'https://test.foodie-connector.delivery';
-axios.defaults.headers.common['Authorization'] = Auth.getToken();
 
 ReactDOM.render(
-  <Router history={browserHistory} routes={routes} />,
+  <MuiThemeProvider theme={theme}>
+    <Router>
+      <Route component={Root} />
+    </Router>
+  </MuiThemeProvider>,
   document.getElementById('root'),
 );
 registerServiceWorker();
