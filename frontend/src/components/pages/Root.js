@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../Header/Header';
-import Routes from '../Routes';
+import Header from 'components/Header/Header';
+import Routes from 'components/Routes';
 
 class Root extends React.Component {
   render() {

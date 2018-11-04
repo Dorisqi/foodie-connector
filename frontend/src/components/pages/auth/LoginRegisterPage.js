@@ -6,12 +6,12 @@ import FormControl from '@material-ui/core/FormControl/FormControl';
 import Typography from '@material-ui/core/Typography/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Auth from '../../../facades/Auth';
-import Api from '../../../facades/Api';
-import Form from '../../../facades/Form';
+import Auth from 'facades/Auth';
+import Api from 'facades/Api';
+import Form from 'facades/Form';
+import InputTextField from 'components/form/InputTextField';
+import FormErrorMessages from 'components/form/FormErrorMessages';
 import AuthTemplate from './AuthTemplate';
-import InputTextField from '../../form/InputTextField';
-import FormErrorMessages from '../../form/FormErrorMessages';
 
 const styles = theme => ({
   title: {

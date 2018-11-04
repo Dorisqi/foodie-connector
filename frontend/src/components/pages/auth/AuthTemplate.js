@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Storage from '../../../facades/Storage';
+import Storage from 'facades/Storage';
 
 const styles = theme => ({
   root: {

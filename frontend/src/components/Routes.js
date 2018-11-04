@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import LoginRegisterPage from './pages/auth/LoginRegisterPage';
+import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
 
 class Routes extends React.Component {
   render() {
