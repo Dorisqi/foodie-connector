@@ -11,6 +11,7 @@ module.exports = {
       'devDependencies': [
         'src/setupTests.js',
         'src/__tests__/**/*.js',
+        'src/__mocks__/**/*.js',
       ],
     }],
     'react/prefer-stateless-function': ['off'],

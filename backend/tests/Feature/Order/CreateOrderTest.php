@@ -4,6 +4,7 @@ namespace Tests\Feature\Order;
 
 use App\Http\Controllers\OrderController;
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Tests\ApiTestCase;
 
@@ -28,6 +29,9 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => true,
         ]);
+        $order = Order::first();
+        $order->id = 'OLD'; // Update id to prevent conflict
+        $order->save();
         $this->mockCurrentTime('2018-10-27 11:50:00');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,

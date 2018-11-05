@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
+    public const TESTING_ID = 'HFEJ32RAFW58ER29R8SW';
+
     public $timestamps = false;
 
     public $incrementing = false;

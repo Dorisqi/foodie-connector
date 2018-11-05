@@ -27,7 +27,8 @@ pipelines:
         script:
         - cd frontend
         - yarn
-        - yarn run lint
+        - yarn lint
+        - yarn test
     release/ci/docker-test-php:
     - step:
         name: Build docker for PHP tests

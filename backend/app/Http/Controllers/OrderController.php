@@ -12,6 +12,7 @@ use App\Models\Restaurant;
 use App\Notifications\OrderInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -34,10 +35,14 @@ class OrderController extends ApiController
         try {
             DB::beginTransaction();
             $id = null;
-            while (true) {
-                $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
-                if (is_null(Order::find($id))) {
-                    break;
+            if (App::environment('testing')) {
+                $id = Order::TESTING_ID;
+            } else {
+                while (true) {
+                    $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
+                    if (is_null(Order::find($id))) {
+                        break;
+                    }
                 }
             }
 

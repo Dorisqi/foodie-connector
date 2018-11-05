@@ -2531,7 +2531,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "id": "E2DEA8614D101CC00BA0",
+    "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
     "address_line_1": "134 Pierce Street",
@@ -2589,8 +2589,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_joinable": true,
     "is_creator": true,
     "is_member": true,
-    "share_link": "http://localhost:8000/orders/E2DEA8614D101CC00BA0",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/E2DEA8614D101CC00BA0"
+    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 401**

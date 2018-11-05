@@ -3,7 +3,7 @@
 $factory->define(\App\Models\Order::class, function () {
     $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
-        'id' => 'HFEJ32RAFW58ER29R8SW',
+        'id' => \App\Models\Order::TESTING_ID,
         'join_before' => $currentTime->copy()->addMinutes(10),
         'is_public' => true,
         'address_line_1' => '134 Pierce Street',
