@@ -432,24 +432,6 @@
                 "header": null,
                 "request": {
                     "email": "user@foodie-connector.delivery",
-                    "password": "short",
-                    "name": "Test User"
-                },
-                "status_code": 422,
-                "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "password": [
-                            "The password must be a valid password."
-                        ]
-                    }
-                },
-                "response_header": null
-            },
-            {
-                "header": null,
-                "request": {
-                    "email": "user@foodie-connector.delivery",
                     "password": "test123456",
                     "name": "Test User"
                 },
@@ -468,8 +450,8 @@
             {
                 "header": null,
                 "request": {
-                    "email": "user@foodie-connector.delivery",
-                    "password": "test123456",
+                    "email": "exist@foodie-connector.delivery",
+                    "password": "short",
                     "name": "Test User"
                 },
                 "status_code": 422,
@@ -478,6 +460,9 @@
                     "data": {
                         "email": [
                             "The email has already been taken."
+                        ],
+                        "password": [
+                            "The password must have at least 6 characters and contains numbers and letters."
                         ]
                     }
                 },
@@ -1669,7 +1654,7 @@
                 },
                 "request": {
                     "old_password": "test123456",
-                    "new_password": "new_password"
+                    "new_password": "new123456"
                 },
                 "status_code": 200,
                 "response": null,
@@ -1688,7 +1673,7 @@
                     "message": "Validation failed.",
                     "data": {
                         "new_password": [
-                            "The new password must be a valid password."
+                            "The new password must have at least 6 characters and contains numbers and letters."
                         ]
                     }
                 },
@@ -1700,7 +1685,7 @@
                 },
                 "request": {
                     "old_password": "wrong",
-                    "new_password": "new_password"
+                    "new_password": "new123456"
                 },
                 "status_code": 401,
                 "response": {

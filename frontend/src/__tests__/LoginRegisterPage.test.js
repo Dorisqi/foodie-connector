@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Tab from '@material-ui/core/Tab';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import TextField from '@material-ui/core/TextField';
 import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
 import InputTextField from 'components/form/InputTextField';
@@ -38,7 +39,7 @@ describe('<LoginRegisterPage />', () => {
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
     wrapper.find('form').simulate('submit');
-    await ApiMock.waitForRequest();
+    await ApiMock.waitForResponse();
     wrapper.update();
     expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
     expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
@@ -53,9 +54,60 @@ describe('<LoginRegisterPage />', () => {
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), 'wrong');
     wrapper.find('form').simulate('submit');
-    await ApiMock.waitForRequest();
+    await ApiMock.waitForResponse();
     wrapper.update();
     expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(2);
     expect(Auth.getToken()).toEqual(null);
   });
+
+  it('register succeed', async () => {
+    const wrapper = mount(
+      <LoginRegisterPage />,
+      options.get(),
+    );
+    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
+    wrapper.update();
+    Test.fill(wrapper.find('input#name'), ApiMock.NAME);
+    Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
+    Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
+    Test.fill(wrapper.find('input#confirmPassword'), ApiMock.PASSWORD);
+    wrapper.find('form').simulate('submit');
+    await ApiMock.waitForResponse();
+    wrapper.update();
+    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
+    expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
+    // TODO: redirect after registered
+  });
+
+  it('register failed', async () => {
+    const wrapper = mount(
+      <LoginRegisterPage />,
+      options.get(),
+    );
+    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
+    wrapper.update();
+    Test.fill(wrapper.find('input#name'), ApiMock.NAME);
+    Test.fill(wrapper.find('input#email'), 'exist@foodie-connector.delivery');
+    Test.fill(wrapper.find('input#password'), 'short');
+    Test.fill(wrapper.find('input#confirmPassword'), 'wrong');
+    wrapper.find('form').simulate('submit');
+    wrapper.update();
+    Test.assertInputError(
+      wrapper.find(InputTextField).filter({ name: 'confirmPassword' }),
+      'The passwords do not match.',
+    );
+
+    Test.fill(wrapper.find('input#confirmPassword'), 'short');
+    wrapper.find('form').simulate('submit');
+    await ApiMock.waitForResponse();
+    wrapper.update();
+    Test.assertInputError(
+      wrapper.find(InputTextField).filter({ name: 'email' }),
+      'The email has already been taken.',
+    );
+    Test.assertInputError(
+      wrapper.find(InputTextField).filter({ name: 'password' }),
+      'The password must have at least 6 characters and contains numbers and letters.',
+    );
+  })
 });

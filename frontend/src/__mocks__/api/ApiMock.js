@@ -87,7 +87,7 @@ class ApiMock {
     }
   }
 
-  static waitForRequest() {
+  static waitForResponse() {
     return new Promise((resolve) => {
       if (!this.requesting) {
         resolve();
