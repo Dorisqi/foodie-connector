@@ -24,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Validator::extend('password', function ($attribute, $value) {
-            return strlen($value) >= 6; // TODO: password complexity check
+            return strlen($value) >= 6
+                && preg_match('/[0-9]/', $value)
+                && preg_match('/[a-zA-Z]/', $value);
         });
 
         Auth::extend('api', function ($app, $name, array $config) {

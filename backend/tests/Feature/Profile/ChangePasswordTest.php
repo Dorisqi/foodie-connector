@@ -11,7 +11,7 @@ class ChangePasswordTest extends ApiTestCase
     /**
      * New password
      */
-    protected const NEW_PASSWORD = 'new_password';
+    protected const NEW_PASSWORD = 'new123456';
 
     /**
      * Test changing password

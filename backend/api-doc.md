@@ -181,34 +181,8 @@ Validation failed.
 **Request Body:**
 ```
 {
-    "email": "user@foodie-connector.delivery",
+    "email": "exist@foodie-connector.delivery",
     "password": "short",
-    "name": "Test User"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "password": [
-            "The password must be a valid password."
-        ]
-    }
-}
-```
-#### **Status Code: 422**
-
-Validation failed.
-
-**URI**: /api/v1/auth/register
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery",
-    "password": "test123456",
     "name": "Test User"
 }
 ```
@@ -220,6 +194,9 @@ Validation failed.
     "data": {
         "email": [
             "The email has already been taken."
+        ],
+        "password": [
+            "The password must have at least 6 characters and contains numbers and letters."
         ]
     }
 }
@@ -899,7 +876,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "old_password": "test123456",
-    "new_password": "new_password"
+    "new_password": "new123456"
 }
 ```
 #### **Status Code: 401**
@@ -929,7 +906,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "old_password": "wrong",
-    "new_password": "new_password"
+    "new_password": "new123456"
 }
 ```
 
@@ -964,7 +941,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "new_password": [
-            "The new password must be a valid password."
+            "The new password must have at least 6 characters and contains numbers and letters."
         ]
     }
 }

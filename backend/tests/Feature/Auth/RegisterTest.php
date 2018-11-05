@@ -24,11 +24,6 @@ class RegisterTest extends ApiTestCase
     {
         Notification::fake();
         $user = $this->userFactory()->make();
-        $this->assertFailed([
-            'email' => $user->email,
-            'password' => 'short',
-            'name' => $user->name,
-        ], 422);
         $this->assertSucceed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
@@ -52,9 +47,14 @@ class RegisterTest extends ApiTestCase
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));
-        $this->assertFailed([
-            'email' => $user->email,
+        $this->assertSucceed([
+            'email' => 'exist@foodie-connector.delivery',
             'password' => ApiUser::testingPassword(),
+            'name' => $user->name,
+        ], false);
+        $this->assertFailed([
+            'email' => 'exist@foodie-connector.delivery',
+            'password' => 'short',
             'name' => $user->name,
         ], 422);
     }
