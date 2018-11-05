@@ -1,28 +1,30 @@
+import LocalStorage from './LocalStorage';
+
 class Auth {
   static authenticateUser(authentication, email) {
-    localStorage.setItem('authentication', authentication);
-    localStorage.setItem('email', email);
+    LocalStorage.setItem('authentication', authentication);
+    LocalStorage.setItem('email', email);
   }
 
   static isUserAuthenticated() {
-    return localStorage.getItem('authentication') !== null;
+    return LocalStorage.getItem('authentication') !== null;
   }
 
   static deauthenticateUser() {
-    localStorage.removeItem('authentication');
-    localStorage.removeItem('email');
+    LocalStorage.removeItem('authentication');
+    LocalStorage.removeItem('email');
   }
 
   static getToken() {
-    return localStorage.getItem('authentication');
+    return LocalStorage.getItem('authentication');
   }
 
   static getEmail() {
-    return localStorage.getItem('email');
+    return LocalStorage.getItem('email');
   }
 
   static setEmail(email) {
-    localStorage.setItem('email', email);
+    LocalStorage.setItem('email', email);
   }
 }
 

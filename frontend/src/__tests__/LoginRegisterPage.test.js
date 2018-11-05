@@ -8,6 +8,7 @@ import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import Test from 'facades/Test';
 import ApiMock from '__mocks__/api/ApiMock';
+import Auth from 'facades/Auth';
 
 describe('<LoginRegisterPage />', () => {
   const options = new ReactRouterEnzymeContext();
@@ -40,8 +41,8 @@ describe('<LoginRegisterPage />', () => {
     await ApiMock.waitForRequest();
     wrapper.update();
     expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
+    expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
     // TODO: redirect after login
-    // TODO: check localstorage
   });
 
   it('login failed', async () => {
@@ -55,5 +56,6 @@ describe('<LoginRegisterPage />', () => {
     await ApiMock.waitForRequest();
     wrapper.update();
     expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(2);
+    expect(Auth.getToken()).toEqual(null);
   });
 });
