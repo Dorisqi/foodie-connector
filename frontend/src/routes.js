@@ -1,4 +1,4 @@
-import Root from './components/pages/Root';
+import Root from './components/template/Root';
 import RestaurantListPage from './pages/RestaurantListPage/RestaurantListPage';
 import UserpwresetPage from './pages/userpw_resetPage/User_pw_resetPage';
 import UserprofilePage from './pages/userprofilePage/UserprofilePage';

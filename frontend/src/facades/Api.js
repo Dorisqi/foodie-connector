@@ -5,12 +5,24 @@ import Auth from './Auth';
 class Api {
   static isMocking = false;
 
+  /* --- Auth --- */
   static login(data) {
     return this.handleRequest(this.instance(false).post('/auth/login', data));
   }
-
   static register(data) {
     return this.handleRequest(this.instance(false).post('/auth/register', data));
+  }
+
+  /* --- Address --- */
+  static addressList() {
+    return this.handleRequest(this.instance().get('/addresses'));
+  }
+
+  /* --- Restaurant --- */
+  static restaurantList(data) {
+    return this.handleRequest(this.instance().get('/restaurants', {
+      params: data,
+    }));
   }
 
   static handleRequest(promise) {

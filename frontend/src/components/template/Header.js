@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 
 import Auth from "../../Auth/Auth";
@@ -21,49 +20,11 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    display: 'block',
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
+  rightSection: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
   },
 });
 
@@ -91,7 +52,7 @@ class Header extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { classes } = this.props;
+    const { wrapperClassName, classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 
     const renderMenu = (
@@ -108,13 +69,13 @@ class Header extends React.Component {
 
     return (
       <header className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar position="fixed">
+          <Toolbar className={wrapperClassName}>
             <Typography className={classes.title} variant="h5" color="inherit" noWrap>
               Foodie Connector
             </Typography>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
+            <div className={classes.rightSection}>
               {Auth.isUserAuthenticated() ? (
                 <IconButton
                   aria-owns={isMenuOpen ? 'material-appbar' : null}
@@ -137,7 +98,8 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  classes: PropTypes.element.isRequired,
+  classes: PropTypes.object.isRequired,
+  wrapperClassName: PropTypes.string,
 };
 
 export default withStyles(styles)(Header);
