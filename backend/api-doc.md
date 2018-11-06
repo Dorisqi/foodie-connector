@@ -1893,16 +1893,30 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.4227584",
             "lng": "-86.9090892",
             "phone": "7651111111",
+            "restaurant_categories": [
+                {
+                    "id": 1,
+                    "name": "Category 1",
+                    "pivot": {
+                        "restaurant_id": "1",
+                        "restaurant_category_id": "1"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Category 2",
+                    "pivot": {
+                        "restaurant_id": "1",
+                        "restaurant_category_id": "2"
+                    }
+                }
+            ],
             "operation_times": [
                 {
                     "day_of_week": "6",
                     "start_time": "12:00:00",
                     "end_time": "2:00:00"
                 }
-            ],
-            "categories": [
-                "Category 1",
-                "Category 2"
             ],
             "is_open": true,
             "distance": 0,
@@ -1943,16 +1957,30 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "lat": "40.4227584",
             "lng": "-86.9090892",
             "phone": "7651111111",
+            "restaurant_categories": [
+                {
+                    "id": 1,
+                    "name": "Category 1",
+                    "pivot": {
+                        "restaurant_id": "2",
+                        "restaurant_category_id": "1"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Category 2",
+                    "pivot": {
+                        "restaurant_id": "2",
+                        "restaurant_category_id": "2"
+                    }
+                }
+            ],
             "operation_times": [
                 {
                     "day_of_week": "6",
                     "start_time": "12:00:00",
                     "end_time": "2:00:00"
                 }
-            ],
-            "categories": [
-                "Category 1",
-                "Category 2"
             ],
             "is_open": true,
             "distance": 0,
@@ -2044,16 +2072,30 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7651111111",
+    "restaurant_categories": [
+        {
+            "id": 1,
+            "name": "Category 1",
+            "pivot": {
+                "restaurant_id": "1",
+                "restaurant_category_id": "1"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Category 2",
+            "pivot": {
+                "restaurant_id": "1",
+                "restaurant_category_id": "2"
+            }
+        }
+    ],
     "operation_times": [
         {
             "day_of_week": "6",
             "start_time": "12:00:00",
             "end_time": "2:00:00"
         }
-    ],
-    "categories": [
-        "Category 1",
-        "Category 2"
     ],
     "is_open": true,
     "distance": null,
@@ -2130,16 +2172,30 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7651111111",
+    "restaurant_categories": [
+        {
+            "id": 1,
+            "name": "Category 1",
+            "pivot": {
+                "restaurant_id": "1",
+                "restaurant_category_id": "1"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Category 2",
+            "pivot": {
+                "restaurant_id": "1",
+                "restaurant_category_id": "2"
+            }
+        }
+    ],
     "operation_times": [
         {
             "day_of_week": "6",
             "start_time": "12:00:00",
             "end_time": "2:00:00"
         }
-    ],
-    "categories": [
-        "Category 1",
-        "Category 2"
     ],
     "is_open": true,
     "distance": 0,
@@ -2534,10 +2590,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "lat": "40.4227584",
         "lng": "-86.9090892",
         "phone": "7651111111",
-        "categories": [
-            "Category 1",
-            "Category 2"
-        ],
         "is_open": true,
         "distance": null,
         "estimated_delivery_time": null,
@@ -2699,10 +2751,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "lat": "40.4227584",
         "lng": "-86.9090892",
         "phone": "7651111111",
-        "categories": [
-            "Category 1",
-            "Category 2"
-        ],
         "is_open": true,
         "distance": null,
         "estimated_delivery_time": null,
@@ -2817,10 +2865,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "lat": "40.4227584",
         "lng": "-86.9090892",
         "phone": "7651111111",
-        "categories": [
-            "Category 1",
-            "Category 2"
-        ],
         "is_open": true,
         "distance": null,
         "estimated_delivery_time": null,
@@ -2961,10 +3005,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "lat": "40.4227584",
         "lng": "-86.9090892",
         "phone": "7651111111",
-        "categories": [
-            "Category 1",
-            "Category 2"
-        ],
         "is_open": true,
         "distance": null,
         "estimated_delivery_time": null,
