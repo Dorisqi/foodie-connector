@@ -1,14 +1,18 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Routes from 'components/Routes';
 import Header from './Header';
 
 const styles = () => ({
   wrapper: {
+    boxSizing: 'border-box',
     marginLeft: 'auto',
     marginRight: 'auto',
     maxWidth: 1200,
+    paddingLeft: 20,
+    paddingRight: 20,
     width: '100%',
   },
   content: {
@@ -19,13 +23,17 @@ const styles = () => ({
 class Root extends React.Component {
   render() {
     const { classes, location } = this.props;
+    const withHeader = location.pathname !== '/login';
 
     return (
       <div>
-        {location.pathname !== '/login'
+        {withHeader
           && <Header wrapperClassName={classes.wrapper} />
         }
-        <div className={[classes.wrapper, classes.content].join(' ')}>
+        <div className={withHeader
+            ? classNames(classes.wrapper, classes.content)
+            : null
+          }>
           <Routes />
         </div>
       </div>

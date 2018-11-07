@@ -20,6 +20,8 @@ module.exports = {
     }],
     'react/destructuring-assignment': ['off'],
     'prefer-destructuring': ['off'],
+    'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+    'jsx-a11y/click-events-have-key-events': ['off'],
   },
   'env': {
     'jest': true,

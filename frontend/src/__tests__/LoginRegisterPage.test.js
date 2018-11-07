@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Tab from '@material-ui/core/Tab';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import TextField from '@material-ui/core/TextField';
 import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
 import InputTextField from 'components/form/InputTextField';
@@ -65,7 +64,7 @@ describe('<LoginRegisterPage />', () => {
       <LoginRegisterPage />,
       options.get(),
     );
-    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
+    wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
     wrapper.update();
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
@@ -84,7 +83,7 @@ describe('<LoginRegisterPage />', () => {
       <LoginRegisterPage />,
       options.get(),
     );
-    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
+    wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
     wrapper.update();
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), 'exist@foodie-connector.delivery');
@@ -109,5 +108,5 @@ describe('<LoginRegisterPage />', () => {
       wrapper.find(InputTextField).filter({ name: 'password' }),
       'The password must have at least 6 characters and contains numbers and letters.',
     );
-  })
+  });
 });

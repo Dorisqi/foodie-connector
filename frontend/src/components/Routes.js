@@ -5,7 +5,7 @@ import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
 
 const Routes = () => (
   <div>
-    <Route path="/" component={RestaurantListPage} />
+    <Route path="/" exact component={RestaurantListPage} />
     <Route path="/login" component={LoginRegisterPage} />
   </div>
 );
