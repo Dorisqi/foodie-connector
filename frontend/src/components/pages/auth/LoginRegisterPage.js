@@ -1,4 +1,5 @@
 import React from 'react';
+import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -74,7 +75,7 @@ class LoginRegisterPage extends React.Component {
       password: this.state.password,
     }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      // TODO: redirect
+      Auth.redirect(this.props.history, this.props.from);
     }).catch(Form.handleErrors(this));
   }
 
@@ -93,7 +94,7 @@ class LoginRegisterPage extends React.Component {
       password: this.state.password,
     }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      // TODO: redirect
+      Auth.redirect(this.props.history, this.props.from);
     }).catch(Form.handleErrors(this));
   }
 
@@ -178,8 +179,25 @@ class LoginRegisterPage extends React.Component {
   }
 }
 
-LoginRegisterPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+const urlProps = {
+  from: {
+    type: UrlQueryParamTypes.string,
+  },
 };
 
-export default withStyles(styles)(LoginRegisterPage);
+LoginRegisterPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+  from: PropTypes.string,
+};
+
+LoginRegisterPage.defaultProps = {
+  from: null,
+};
+
+export default withStyles(styles)(
+  addUrlProps({ urlProps })(LoginRegisterPage),
+);
