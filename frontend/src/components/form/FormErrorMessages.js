@@ -1,54 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText/FormHelperText';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  formError: {
-    fontSize: '1rem',
-  },
   margin: {
     margin: theme.spacing.unit,
-  },
-  hidden: {
-    display: 'none',
   },
 });
 
 class FormErrorMessages extends React.Component {
   static defaultProps = {
     errors: null,
-    fullWidth: true,
   };
 
   render() {
     const {
       errors,
       classes,
-      fullWidth,
     } = this.props;
 
-    return (
-      <FormControl
-        className={errors === null ? classes.hidden : classes.margin}
-        fullWidth={fullWidth}
-        error
-      >
+    return errors !== null && (
+      <div className={classes.margin}>
         {errors !== null && errors.map((error, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <FormHelperText className={classes.formError} key={index} error>
+          <Typography key={index} color="error" variant="body1" component="p">
             {error}
-          </FormHelperText>
+          </Typography>
         ))}
-      </FormControl>
+      </div>
     );
   }
 }
 
 FormErrorMessages.propTypes = {
   errors: PropTypes.array,
-  fullWidth: PropTypes.bool,
   classes: PropTypes.object.isRequired,
 };
 

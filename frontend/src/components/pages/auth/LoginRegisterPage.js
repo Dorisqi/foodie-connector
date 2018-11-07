@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import FormControl from '@material-ui/core/FormControl/FormControl';
 import Typography from '@material-ui/core/Typography/Typography';
 import Button from '@material-ui/core/Button';
+import orange from '@material-ui/core/colors/orange';
 import { Link } from 'react-router-dom';
 import Auth from 'facades/Auth';
 import Api from 'facades/Api';
@@ -24,6 +25,9 @@ const styles = theme => ({
   },
   tabs: {
     marginBottom: 20,
+  },
+  warningText: {
+    color: orange['500'],
   },
   margin: {
     margin: theme.spacing.unit,
@@ -99,7 +103,7 @@ class LoginRegisterPage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, from } = this.props;
 
     return (
       <AuthTemplate>
@@ -124,6 +128,13 @@ class LoginRegisterPage extends React.Component {
           <Tab value="register" label="Sign Up" />
         </Tabs>
         <form onSubmit={this.handleSubmit}>
+          {from !== null
+            && (
+            <Typography className={classes.warningText} variant="body1" component="p">
+              Please login or register.
+            </Typography>
+            )
+          }
           <FormErrorMessages errors={this.state.errors.form} />
           {this.state.tab === 'register'
           && (

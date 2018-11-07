@@ -187,7 +187,7 @@ class RestaurantListPage extends React.Component {
     this.setState({
       filterIsOpen: !filterIsOpen,
     });
-  }
+  };
 
   handleFilterChange = name => (type, value) => {
     const currentValue = this.state[name];
@@ -197,7 +197,7 @@ class RestaurantListPage extends React.Component {
       max: type === 'max' ? value : currentValue.max,
     };
     this.setState(newState);
-  }
+  };
 
   handleSortClick = name => (_) => {
     const { orderBy, orderByDesc } = this.state;
@@ -211,11 +211,11 @@ class RestaurantListPage extends React.Component {
         orderByDesc: name === 'rating',
       });
     }
-  }
+  };
 
   handleSearchChange = (e) => {
     this.updateSearch(e.target.value);
-  }
+  };
 
   loadList() {
     const { selectedAddress, currentLocation } = this.props;
