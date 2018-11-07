@@ -1,3 +1,7 @@
+/*-------------------------
+From https://github.com/express-labs/react-router-enzyme-context/blob/master/src/index.js
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Tab from '@material-ui/core/Tab';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import ReactRouterEnzymeContext from 'react-router-enzyme-context';
+import Typography from '@material-ui/core/Typography';
+import RouterContext from '__mocks__/router-context/RouterContext';
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
 import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
@@ -11,13 +11,18 @@ import ApiMock from '__mocks__/api/ApiMock';
 import Auth from 'facades/Auth';
 
 describe('<LoginRegisterPage />', () => {
-  const options = new ReactRouterEnzymeContext();
+  const mountElement = (routerContext, url = '/login') => {
+    routerContext.getHistory().replace(url);
+    const props = routerContext.props();
+    return mount(
+      <LoginRegisterPage location={props.location} history={props.history} />,
+      routerContext.get(),
+    );
+  };
 
   it('switch tabs', () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext);
     const tabs = wrapper.find(Tab);
     tabs.forEach((tab) => {
       expect(tab.prop('selected')).toEqual(tab.prop('value') === 'login');
@@ -31,39 +36,32 @@ describe('<LoginRegisterPage />', () => {
   });
 
   it('login succeed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext);
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
     expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
-    // TODO: redirect after login
+    expect(routerContext.getLocation().pathname).toEqual('/');
   });
 
   it('login failed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext);
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), 'wrong');
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(2);
+    expect(wrapper.find(FormErrorMessages).find(Typography)).toHaveLength(2);
     expect(Auth.getToken()).toEqual(null);
   });
 
   it('register succeed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext, '/login?from=/from');
     wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
     wrapper.update();
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
@@ -73,16 +71,13 @@ describe('<LoginRegisterPage />', () => {
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
     expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
-    // TODO: redirect after registered
+    expect(routerContext.getLocation().pathname).toEqual('/from');
   });
 
   it('register failed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext);
     wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
     wrapper.update();
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
