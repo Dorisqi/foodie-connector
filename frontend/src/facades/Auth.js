@@ -1,3 +1,5 @@
+import queryString from 'query-string';
+import lodash from 'lodash';
 import store from 'store';
 import { clearAddress } from 'actions/addressActions';
 import LocalStorage from './LocalStorage';
@@ -31,11 +33,12 @@ class Auth {
     LocalStorage.setItem('email', email);
   }
 
-  static redirect(history, from) {
-    if (from === null) {
+  static redirect(history, location) {
+    const queries = queryString.parse(location.search);
+    if (lodash.isNil(queries.from)) {
       history.push('/');
     } else {
-      history.replace(from);
+      history.replace(queries.from);
     }
   }
 }

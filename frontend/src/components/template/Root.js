@@ -28,7 +28,7 @@ class Root extends React.Component {
     return (
       <div>
         {withHeader
-          && <Header wrapperClassName={classes.wrapper} />
+          && <Header wrapperClassName={classes.wrapper} location={location}/>
         }
         <div className={withHeader
             ? classNames(classes.wrapper, classes.content)

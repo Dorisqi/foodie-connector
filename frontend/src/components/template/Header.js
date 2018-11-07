@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-import Auth from "../../Auth/Auth";
+import Auth from '../../Auth/Auth';
 
 const styles = theme => ({
   root: {
@@ -27,13 +28,6 @@ const styles = theme => ({
     display: 'flex',
   },
 });
-
-/*const Base = ({ children }) => (
-  <div>
-
-    {children}
-  </div>
-);*/
 
 class Header extends React.Component {
   constructor(props) {
@@ -52,7 +46,7 @@ class Header extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { wrapperClassName, classes } = this.props;
+    const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 
     const renderMenu = (
@@ -63,7 +57,18 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleProfileMenuClose}>
         <MenuItem>My Profile</MenuItem>
-        <MenuItem>Log Out</MenuItem>
+        {location.pathname !== '/logout' &&
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/logout',
+            search: queryString.stringify({ from: location.pathname }),
+          }}
+        >
+          Log Out
+        </MenuItem>
+        }
       </Menu>
     );
 
@@ -100,6 +105,9 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   wrapperClassName: PropTypes.string,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
 };
 
 export default withStyles(styles)(Header);

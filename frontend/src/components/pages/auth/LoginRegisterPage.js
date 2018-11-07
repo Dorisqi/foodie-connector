@@ -1,5 +1,4 @@
 import React from 'react';
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,6 +8,8 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Button from '@material-ui/core/Button';
 import orange from '@material-ui/core/colors/orange';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+import lodash from 'lodash';
 import Auth from 'facades/Auth';
 import Api from 'facades/Api';
 import Form from 'facades/Form';
@@ -79,7 +80,7 @@ class LoginRegisterPage extends React.Component {
       password: this.state.password,
     }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      Auth.redirect(this.props.history, this.props.from);
+      Auth.redirect(this.props.history, this.props.location);
     }).catch(Form.handleErrors(this));
   }
 
@@ -98,12 +99,14 @@ class LoginRegisterPage extends React.Component {
       password: this.state.password,
     }).then((res) => {
       Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      Auth.redirect(this.props.history, this.props.from);
+      Auth.redirect(this.props.history, this.props.location);
     }).catch(Form.handleErrors(this));
   }
 
   render() {
-    const { classes, from } = this.props;
+    const { classes, location } = this.props;
+    const queries = queryString.parse(location.search);
+    const showWarningText = !lodash.isNil(queries.from);
 
     return (
       <AuthTemplate>
@@ -128,7 +131,7 @@ class LoginRegisterPage extends React.Component {
           <Tab value="register" label="Sign Up" />
         </Tabs>
         <form onSubmit={this.handleSubmit}>
-          {from !== null
+          {showWarningText
             && (
             <Typography className={classes.warningText} variant="body1" component="p">
               Please login or register.
@@ -190,25 +193,15 @@ class LoginRegisterPage extends React.Component {
   }
 }
 
-const urlProps = {
-  from: {
-    type: UrlQueryParamTypes.string,
-  },
-};
-
 LoginRegisterPage.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
     replace: PropTypes.func.isRequired,
   }).isRequired,
-  from: PropTypes.string,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-LoginRegisterPage.defaultProps = {
-  from: null,
-};
-
-export default withStyles(styles)(
-  addUrlProps({ urlProps })(LoginRegisterPage),
-);
+export default withStyles(styles)(LoginRegisterPage);

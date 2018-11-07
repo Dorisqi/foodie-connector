@@ -13,6 +13,7 @@
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-geocode": "^0.1.2",
@@ -21,7 +22,6 @@
     "react-scripts": "^2.1.1",
     "react-stripe-elements": "^2.0.1",
     "react-swipeable-views": "^0.13.0",
-    "react-url-query": "^1.4.0",
     "redux": "^4.0.1"
   },
   "scripts": {
