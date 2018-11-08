@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Gumlet\ImageResize;
 
 class GenerateRestaurantData extends Command
 {
@@ -233,14 +234,23 @@ class GenerateRestaurantData extends Command
             $restaurant['optionGroups'] = $optionGroups;
             array_push($restaurants, $restaurant);
 
+            $imagePath = "${dataPath}/images/${imageFileName}";
             $this->download(
                 $restaurantData['media_image']['base_url'] . $imageFileName,
-                "${dataPath}/images/${imageFileName}",
+                $imagePath,
                 function () {
                     $this->info('Downloading Image');
                     return null;
                 }
             );
+
+            // resize image
+            $scaledImagePath = "${dataPath}/images-scaled/${imageFileName}";
+            if (!file_exists($scaledImagePath)) {
+                $image = new ImageResize($imagePath);
+                $image->resizeToWidth(400);
+                $image->save($scaledImagePath);
+            }
         }
 
         file_put_contents("${dataPath}/restaurants.json", json_encode($restaurants));
