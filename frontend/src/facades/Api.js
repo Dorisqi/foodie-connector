@@ -1,48 +1,46 @@
-import axios from 'axios';
-import ApiMock from '__mocks__/api/ApiMock';
 import Auth from './Auth';
 
 class Api {
-  static isMocking = false;
+  static axios = null;
 
   /* --- Auth --- */
   static login(data) {
-    return this.handleRequest(this.instance(false).post('/auth/login', data));
+    return this.instance(false).post('/auth/login', data);
   }
 
   static register(data) {
-    return this.handleRequest(this.instance(false).post('/auth/register', data));
+    return this.instance(false).post('/auth/register', data);
   }
 
   static resetPasswordEmail(data) {
-    return this.handleRequest(this.instance(false).post('/auth/reset-password-email', data));
+    return this.instance(false).post('/auth/reset-password-email', data);
   }
 
   static resetPassword(data) {
-    return this.handleRequest(this.instance(false).post('/auth/reset-password', data));
+    return this.instance(false).post('/auth/reset-password', data);
   }
 
   /* --- Address --- */
   static addressList() {
-    return this.handleRequest(this.instance().get('/addresses'));
+    return this.instance().get('/addresses');
   }
 
   /* --- Restaurant --- */
   static restaurantList(data) {
-    return this.handleRequest(this.instance().get('/restaurants', {
+    return this.instance().get('/restaurants', {
       params: data,
-    }));
+    });
   }
 
-  static handleRequest(promise) {
-    if (this.isMocking) {
-      return ApiMock.handleRequest(promise);
+  static initialize(axios) {
+    if (this.axios !== null) {
+      return;
     }
-    return promise;
+    Api.axios = axios;
   }
 
   static instance(requireAuth = true) {
-    const instance = axios.create({
+    const instance = Api.axios.create({
       baseURL: process.env.REACT_APP_API_BASE_URL,
     });
 
@@ -50,11 +48,6 @@ class Api {
       instance.defaults.headers.common.Authorization = Auth.getToken();
     }
     return instance;
-  }
-
-  static mocking() {
-    this.isMocking = true;
-    ApiMock.setup(axios);
   }
 }
 
