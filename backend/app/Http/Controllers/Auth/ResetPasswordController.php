@@ -112,7 +112,7 @@ class ResetPasswordController extends ApiController
         return [
             'token' => 'required|integer|digits:8',
             'email' => 'required|string|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|password',
         ];
     }
 }
