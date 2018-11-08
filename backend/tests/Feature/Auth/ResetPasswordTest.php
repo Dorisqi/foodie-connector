@@ -12,7 +12,7 @@ class ResetPasswordTest extends ApiTestCase
     /**
      * New password
      */
-    protected const NEW_PASSWORD = 'new_password';
+    protected const NEW_PASSWORD = 'new123456';
 
     /**
      * Test resetting password

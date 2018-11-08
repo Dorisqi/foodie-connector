@@ -6,14 +6,18 @@
     "@material-ui/core": "^3.1.1",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "eslint-config-airbnb": "^17.1.0",
+    "history": "^4.7.2",
     "i": "^0.3.6",
     "immutability-helper": "^2.8.1",
+    "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-geocode": "^0.1.2",
-    "react-geolocated": "^2.4.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
@@ -26,14 +30,13 @@
     "build": "cross-env NODE_PATH=src/ react-scripts build",
     "test": "cross-env NODE_PATH=src/ CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint src/components/Routes.js src/facades/**/*.js src/components/pages/**/*.js src/components/form/**/*.js src/App.js src/index.js src/setupTests.js src/__tests__/**/*.js src/__mocks__/**/*.js"
+    "lint": "eslint src/components/Routes.js src/facades/**/*.js src/components/pages/**/*.js src/components/form/**/*.js src/components/restaurant/**/*.js src/components/template/**/*.js src/App.js src/index.js src/setupTests.js src/__tests__/**/*.js src/__mocks__/**/*.js"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
-    "react-router-enzyme-context": "^1.2.0"
+    "enzyme-adapter-react-16": "^1.6.0"
   },
   "browserslist": [
     ">0.2%",

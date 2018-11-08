@@ -2,29 +2,46 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import NearMe from '@material-ui/icons/NearMe';
+import TextField from '@material-ui/core/TextField';
 import Geocode from 'react-geocode';
 import store from 'store';
-import { loadAddress, selectAddress, setCurrentLocation } from 'actions/addressActions';
+import {
+  loadAddress,
+  selectAddress,
+  setCurrentLocation
+} from 'actions/addressActions';
 import Api from 'facades/Api';
 
-const styles = () => ({});
+const styles = () => ({
+  selector: {
+    boxSizing: 'border-box',
+  },
+  selectorInput: {
+    paddingTop: 6,
+    paddingBottom: 7,
+  }
+});
 
 class AddressSelector extends React.Component {
   state = {
     currentLocationError: null,
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.loadAddresses();
+  }
 
-    if (props.addresses === null) {
-      this.loadAddresses();
-    }
+  componentDidUpdate(_prevProps, _prevState, _snapshot) {
+    this.loadAddresses();
   }
 
   loadAddresses() {
+    if (this.props.addresses !== null) {
+      return;
+    }
     Api.addressList().then((res) => {
       const addresses = res.data;
       store.dispatch(loadAddress(addresses));
@@ -73,48 +90,67 @@ class AddressSelector extends React.Component {
   };
 
   render() {
-    const { selectedAddress, addresses, currentLocation } = this.props;
+    const { selectedAddress, addresses, currentLocation, classes } = this.props;
     const { currentLocationError } = this.state;
     const selectedCurrentLocation = selectedAddress === 0;
     return (
-      <div>
-        <Select
-          value={selectedAddress === null ? -1 : selectedAddress}
-          onChange={this.handleSelectAddress}
-          error={selectedCurrentLocation && currentLocationError !== null}
-          fullWidth>
-          {addresses === null &&
-          <MenuItem value={-1} disabled>
-            Loading...
+      <TextField
+        select
+        variant="outlined"
+        value={selectedAddress === null ? -1 : selectedAddress}
+        onChange={this.handleSelectAddress}
+        error={selectedCurrentLocation && currentLocationError !== null}
+        InputProps={{
+          startAdornment: selectedCurrentLocation
+            ? (
+              <InputAdornment position="start">
+                <NearMe
+                  color={currentLocation === null
+                    ? (currentLocationError === null
+                        ? 'inherit'
+                        : 'error')
+                    : 'primary'}
+                  fontSize="small" />
+              </InputAdornment>
+            )
+            : null,
+          className: classes.selector,
+          classes: {
+            input: classes.selectorInput,
+          }
+        }}
+        fullWidth>
+        {addresses === null &&
+        <MenuItem value={-1} disabled>
+          Loading...
+        </MenuItem>
+        }
+        {addresses !== null && addresses.map(address => (
+          <MenuItem key={address.id} value={address.id}>
+            {address.name} - {address.line_1}
           </MenuItem>
+        ))
+        }
+        {addresses !== null &&
+        <MenuItem value={0}>
+          {currentLocation === null
+            ? (selectedCurrentLocation
+                ? (currentLocationError === null
+                    ? 'Loading...'
+                    : `Failed: ${currentLocationError}`
+                )
+                : 'Use current location'
+            )
+            : currentLocation.formatted_address
           }
-          {addresses !== null && addresses.map(address => (
-            <MenuItem key={address.id} value={address.id}>
-              {address.name} - {address.line_1}
-            </MenuItem>
-          ))
-          }
-          {addresses !== null &&
-          <MenuItem value={0}>
-            {currentLocation === null
-              ? (selectedCurrentLocation
-                  ? (currentLocationError === null
-                      ? 'Loading...'
-                      : `Failed: ${currentLocationError}`
-                  )
-                  : 'Use current location'
-              )
-              : currentLocation.formatted_address
-            }
-          </MenuItem>
-          }
-          {addresses !== null &&
-          <MenuItem value={-1}>
-            + Create new address
-          </MenuItem>
-          }
-        </Select>
-      </div>
+        </MenuItem>
+        }
+        {addresses !== null &&
+        <MenuItem value={-1}>
+          + Create new address
+        </MenuItem>
+        }
+      </TextField>
     );
   }
 }

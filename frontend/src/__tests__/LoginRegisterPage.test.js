@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Tab from '@material-ui/core/Tab';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import TextField from '@material-ui/core/TextField';
-import ReactRouterEnzymeContext from 'react-router-enzyme-context';
+import Typography from '@material-ui/core/Typography';
+import RouterContext from '__mocks__/router-context/RouterContext';
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
 import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
@@ -12,61 +11,48 @@ import ApiMock from '__mocks__/api/ApiMock';
 import Auth from 'facades/Auth';
 
 describe('<LoginRegisterPage />', () => {
-  const options = new ReactRouterEnzymeContext();
-
-  it('switch tabs', () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
+  const mountElement = (routerContext, url) => {
+    routerContext.getHistory().replace(url);
+    const props = routerContext.props();
+    return mount(
+      <LoginRegisterPage location={props.location} history={props.history} />,
+      routerContext.get(),
     );
-    const tabs = wrapper.find(Tab);
-    tabs.forEach((tab) => {
-      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'login');
-    });
-    expect(wrapper.find(InputTextField)).toHaveLength(2);
-    tabs.filter({ value: 'register' }).simulate('click');
-    wrapper.find(Tab).forEach((tab) => {
-      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'register');
-    });
-    expect(wrapper.find(InputTextField)).toHaveLength(4);
-  });
+  };
 
   it('login succeed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext, '/login');
+    wrapper.find(Tab).forEach((tab) => {
+      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'login');
+    });
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
     expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
-    // TODO: redirect after login
+    expect(routerContext.getLocation().pathname).toEqual('/');
   });
 
   it('login failed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext, '/login');
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), 'wrong');
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(2);
+    expect(wrapper.find(FormErrorMessages).find(Typography)).toHaveLength(2);
     expect(Auth.getToken()).toEqual(null);
   });
 
   it('register succeed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
-    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
-    wrapper.update();
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext, '/register?from=/from');
+    wrapper.find(Tab).forEach((tab) => {
+      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'register');
+    });
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
@@ -74,18 +60,13 @@ describe('<LoginRegisterPage />', () => {
     wrapper.find('form').simulate('submit');
     await ApiMock.waitForResponse();
     wrapper.update();
-    expect(wrapper.find(FormErrorMessages).find(FormHelperText)).toHaveLength(0);
     expect(Auth.getToken()).toEqual(ApiMock.API_TOKEN);
-    // TODO: redirect after registered
+    expect(routerContext.getLocation().pathname).toEqual('/from');
   });
 
   it('register failed', async () => {
-    const wrapper = mount(
-      <LoginRegisterPage />,
-      options.get(),
-    );
-    wrapper.find(Tab).filter({ value: "register" }).simulate('click');
-    wrapper.update();
+    const routerContext = new RouterContext();
+    const wrapper = mountElement(routerContext, '/register');
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), 'exist@foodie-connector.delivery');
     Test.fill(wrapper.find('input#password'), 'short');
@@ -109,5 +90,5 @@ describe('<LoginRegisterPage />', () => {
       wrapper.find(InputTextField).filter({ name: 'password' }),
       'The password must have at least 6 characters and contains numbers and letters.',
     );
-  })
+  });
 });

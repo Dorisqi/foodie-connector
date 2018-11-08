@@ -9,6 +9,7 @@ class Api {
   static login(data) {
     return this.handleRequest(this.instance(false).post('/auth/login', data));
   }
+
   static register(data) {
     return this.handleRequest(this.instance(false).post('/auth/register', data));
   }

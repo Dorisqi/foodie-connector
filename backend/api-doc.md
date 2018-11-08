@@ -303,7 +303,7 @@ Not required
 | :--- | :--- | :--- | :--- |
 | token | required | integer | digits:8 |
 | email | required | email |  |
-| password | required | string | min:6 |
+| password | required | password |  |
 
 #### **Status Code: 200**
 
@@ -315,7 +315,7 @@ Successful operation.
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
 }
 ```
@@ -329,7 +329,7 @@ The password reset token is invalid or expired.
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
 }
 ```
@@ -358,7 +358,7 @@ We can't find a user with that e-mail address.
 ```
 {
     "email": "wrong@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
 }
 ```
@@ -406,7 +406,7 @@ Too many attempts.
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
 }
 ```

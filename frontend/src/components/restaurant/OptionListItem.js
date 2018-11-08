@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 
 const styles = () => ({
   root: {
@@ -8,35 +9,39 @@ const styles = () => ({
     flexDirection: 'row',
     lineHeight: '1.1875em',
   },
-  left: {
+  label: {
     paddingTop: 6,
     paddingBottom: 7,
-    width: 120,
+    minWidth: 120,
   },
-  right: {
+  content: {
     flexGrow: 1,
   },
 });
 
 class OptionListItem extends React.Component {
   render() {
-    const { classes, children } = this.props;
+    const { classes, label, children } = this.props;
     return (
       <div className={classes.root}>
-        <div className={classes.left}>
-          {children[0]}
-        </div>
-        <div className={classes.right}>
-          {children[1]}
+        <Typography variant="body1" className={classes.label} component="div">
+          {label}
+        </Typography>
+        <div className={classes.content}>
+          {children}
         </div>
       </div>
-    )
+    );
   }
 }
 
 OptionListItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.array.isRequired,
+  label: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+  ]).isRequired,
 };
 
 export default withStyles(styles)(OptionListItem);

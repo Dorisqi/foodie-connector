@@ -285,14 +285,6 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-json-strings" "^7.0.0"
 
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.0.0.tgz#b72ec31adf612d062dc0348316246127a451e45f"
-  integrity sha512-QIN3UFo1ul4ruAsjIqK43PeXedo1qY74zeGrODJl1KfCGeMc6qJC4rb5Ylml/smzxibqsDeVZGH+TmWHCldRQQ==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.0.0"
-
 "@babel/plugin-proposal-object-rest-spread@7.0.0", "@babel/plugin-proposal-object-rest-spread@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.0.0.tgz#9a17b547f64d0676b6c9cecd4edf74a82ab85e7e"
@@ -364,13 +356,6 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.0.0.tgz#034d5e2b4e14ccaea2e4c137af7e4afb39375ffd"
   integrity sha512-PdmL2AoPsCLWxhIr3kG2+F9v4WH06Q3z+NoGVpQgnUNGcagXHq5sB3OXxkSahKq9TLdNMN/AJzFYSOo8UKDMHg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-
-"@babel/plugin-syntax-nullish-coalescing-operator@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-nullish-coalescing-operator/-/plugin-syntax-nullish-coalescing-operator-7.0.0.tgz#b60931d5a15da82625fff6657c39419969598743"
-  integrity sha512-oAJmMsAvTSIk9y0sZdU2S/nY44PEUuHN7EzNDMgbuR4e/OwyfR9lSmoBJBZ2lslFZIqhksrTt4i+av7uKfNYDw==
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
@@ -2229,7 +2214,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4813,6 +4798,11 @@ immutability-helper@^2.8.1:
   integrity sha512-8AVB5EUpRBUdXqfe4cFsFECsOIZ9hX/Arl8B8S9/tmwpYv3UWvOsXUPOjkuZIMaVxfSWkxCzkng1rjmEoSWrxQ==
   dependencies:
     invariant "^2.2.0"
+
+immutable@^4.0.0-rc.12:
+  version "4.0.0-rc.12"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
+  integrity sha512-0M2XxkZLx/mi3t8NVwIm1g8nHoEmM9p9UBl/G9k4+hm0kBgOVdMV/B3CY5dQ8qG8qc80NN4gDV4HQv6FTJ5q7A==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -8049,7 +8039,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -8141,6 +8131,14 @@ qs@6.5.2, qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
+
+query-string@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.2.0.tgz#468edeb542b7e0538f9f9b1aeb26f034f19c86e1"
+  integrity sha512-5wupExkIt8RYL4h/FE+WTg3JHk62e6fFPWtAZA9J5IWK1PfTfKkMS93HBUHcFpeYi9KsY5pFbh+ldvEyaz5MyA==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
@@ -8303,13 +8301,6 @@ react-geocode@^0.1.2:
   resolved "https://registry.yarnpkg.com/react-geocode/-/react-geocode-0.1.2.tgz#9e7c8114fbd66550d32a417cf95d36fa4f1cd45f"
   integrity sha512-XEJkEPmwufeGykul/eqJyA1WduXa3IGxJam5BA0jzYfs/KMjCrtQjJl1FcH9Cybn05oQnRVUsRW8OGwEmTER5g==
 
-react-geolocated@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-geolocated/-/react-geolocated-2.4.0.tgz#36287997574a12bdccc01381abfe6c4d191b0ecf"
-  integrity sha512-0gHl4cxRWzTF3Wf8RB3WTWoAOwFeSs+GYpF+0oj0gYKZ1WkocIVTSXbHm3aD9iFl6O3BwisJd9n6C+3FaPQ8/A==
-  dependencies:
-    prop-types "^15.5.8"
-
 react-is@^16.3.2, react-is@^16.5.2, react-is@^16.6.0:
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.0.tgz#456645144581a6e99f6816ae2bd24ee94bdd0c01"
@@ -8344,14 +8335,6 @@ react-router-dom@^4.3.1:
     prop-types "^15.6.1"
     react-router "^4.3.1"
     warning "^4.0.1"
-
-react-router-enzyme-context@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-router-enzyme-context/-/react-router-enzyme-context-1.2.0.tgz#7aa11c80e23278fa31f8a29845f7b37760d99350"
-  integrity sha512-z6+PQ6sdOHsRk9u4gSfsbeEuWZeogffrmgHo4dFXX5t/K8mUFftZBJQ+imzL3f3T6rkIIp+J7I0CeREYgcqe9A==
-  dependencies:
-    history "^4.7.2"
-    prop-types "^15.6.0"
 
 react-router@^4.3.1:
   version "4.3.1"
@@ -9448,6 +9431,11 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
   integrity sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
+
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+  integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
 
 string-length@^2.0.0:
   version "2.0.0"

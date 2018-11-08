@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Storage from 'facades/Storage';
+import Footer from 'components/template/Footer';
 
 const styles = () => ({
   root: {
@@ -17,10 +18,15 @@ const styles = () => ({
   },
   content: {
     backgroundColor: '#F0F4F7',
+    display: 'flex',
+    flexDirection: 'column',
     maxWidth: 400,
-    padding: '150px 80px',
+    padding: '150px 80px 100px',
     textAlign: 'center',
     width: '100%',
+  },
+  main: {
+    flexGrow: 1,
   },
 });
 
@@ -32,7 +38,10 @@ class AuthTemplate extends React.Component {
       <div className={classes.root}>
         <div className={classes.image} />
         <div className={classes.content}>
-          {this.props.children}
+          <div className={classes.main}>
+            {this.props.children}
+          </div>
+          <Footer />
         </div>
       </div>
     );

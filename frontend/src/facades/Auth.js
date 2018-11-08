@@ -1,7 +1,12 @@
+import queryString from 'query-string';
+import lodash from 'lodash';
+import store from 'store';
+import { clearAddress } from 'actions/addressActions';
 import LocalStorage from './LocalStorage';
 
 class Auth {
   static authenticateUser(authentication, email) {
+    store.dispatch(clearAddress());
     LocalStorage.setItem('authentication', authentication);
     LocalStorage.setItem('email', email);
   }
@@ -11,6 +16,7 @@ class Auth {
   }
 
   static deauthenticateUser() {
+    store.dispatch(clearAddress());
     LocalStorage.removeItem('authentication');
     LocalStorage.removeItem('email');
   }
@@ -25,6 +31,15 @@ class Auth {
 
   static setEmail(email) {
     LocalStorage.setItem('email', email);
+  }
+
+  static redirect(history, location) {
+    const queries = queryString.parse(location.search);
+    if (lodash.isNil(queries.from)) {
+      history.push('/');
+    } else {
+      history.replace(queries.from);
+    }
   }
 }
 

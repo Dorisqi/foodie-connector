@@ -1,13 +1,47 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import queryString from 'query-string';
+
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
+import LogoutPage from 'components/pages/auth/LogoutPage';
+
 import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
 
+import NotFoundPage from 'components/pages/error/NotFoundPage';
+
+import Auth from 'facades/Auth';
+
 const Routes = () => (
-  <div>
-    <Route path="/" component={RestaurantListPage} />
+  <Switch>
     <Route path="/login" component={LoginRegisterPage} />
-  </div>
+    <Route path="/register" component={LoginRegisterPage} />
+    <PrivateRoute path="/logout" component={LogoutPage} />
+
+    <PrivateRoute path="/" exact component={RestaurantListPage} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
 );
+
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props => (Auth.isUserAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            search: props.location.pathname === '/logout'
+              ? null
+              : queryString.stringify({ from: props.location.pathname }),
+          }}
+        />
+      ))
+      }
+    />
+  );
+}
 
 export default Routes;

@@ -19,8 +19,7 @@ class LocalStorage {
     this.getInstance().removeItem(key);
   }
 
-  static mocking()
-  {
+  static mocking() {
     this.isMocking = true;
     FakeLocalStorage.init();
   }
