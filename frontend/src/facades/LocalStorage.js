@@ -1,27 +1,23 @@
-import FakeLocalStorage from '__mocks__/storage/LocalStorage';
-
 class LocalStorage {
-  static isMocking = false;
+  static instance = null;
 
-  static getInstance() {
-    return this.isMocking ? FakeLocalStorage : localStorage;
+  static initialize(instance) {
+    if (this.instance !== null) {
+      return;
+    }
+    this.instance = instance;
   }
 
   static getItem(key) {
-    return this.getInstance().getItem(key);
+    return this.instance.getItem(key);
   }
 
   static setItem(key, value) {
-    this.getInstance().setItem(key, value);
+    this.instance.setItem(key, value);
   }
 
   static removeItem(key) {
-    this.getInstance().removeItem(key);
-  }
-
-  static mocking() {
-    this.isMocking = true;
-    FakeLocalStorage.init();
+    this.instance.removeItem(key);
   }
 }
 

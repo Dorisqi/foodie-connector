@@ -11,6 +11,7 @@ import registerServiceWorker from 'registerServiceWorker';
 import Root from 'components/template/Root';
 import store from 'store';
 import Api from 'facades/Api';
+import LocalStorage from 'facades/LocalStorage';
 
 const theme = createMuiTheme({
   typography: {
@@ -26,6 +27,7 @@ Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 Geocode.enableDebug();
 
 Api.initialize(axios);
+LocalStorage.initialize(localStorage);
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
