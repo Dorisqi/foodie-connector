@@ -1,3 +1,7 @@
+/*-------------------------
+From https://github.com/express-labs/react-router-enzyme-context/blob/master/src/index.js
+ */
+
 import createHistory from 'history/createMemoryHistory';
 import PropTypes from 'prop-types';
 

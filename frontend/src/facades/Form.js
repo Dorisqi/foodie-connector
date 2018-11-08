@@ -17,7 +17,7 @@ class Form {
         const errorMessage = [response.data.message];
         if (response.headers['x-ratelimit-remaining'] !== undefined) {
           if (response.headers['x-ratelimit-remaining'] > 0) {
-            errorMessage.push(`Your account will be blocked for 10 minutes if you failed to login for ${response.headers['x-ratelimit-remaining']} more times.`);
+            errorMessage.push(`Your account will be blocked for 10 minutes if you failed for ${response.headers['x-ratelimit-remaining']} more times.`);
           } else {
             errorMessage.push(`Your account has been blocked. Please try again in ${response.headers['retry-after']} seconds.`);
           }
@@ -45,6 +45,18 @@ class Form {
         ];
     }
     component.setState({ errors });
+  };
+
+  static confirmPassword(component) {
+    if (component.state.password !== component.state.confirmPassword) {
+      component.setState({
+        errors: {
+          confirmPassword: 'The passwords do not match.',
+        },
+      });
+      return false;
+    }
+    return true;
   }
 }
 

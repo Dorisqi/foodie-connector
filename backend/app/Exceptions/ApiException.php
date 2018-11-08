@@ -20,9 +20,9 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors($validator->errors());
     }
-    public static function validationFailedErrors($errors)
+    public static function validationFailedErrors($errors, $headers = null)
     {
-        return new ApiException('Validation failed.', 422, null, $errors);
+        return new ApiException('Validation failed.', 422, $headers, $errors);
     }
 
     /* User and Authentication */
@@ -44,11 +44,11 @@ class ApiException extends Exception
     }
     public static function invalidResetPasswordToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
-        return new ApiException(
-            'The password reset token is invalid or expired.',
-            401,
-            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
-        );
+        return self::validationFailedErrors([
+            'token' => [
+                'The token is invalid or expired.'
+            ],
+        ], ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter));
     }
     public static function emailAlreadyVerified()
     {

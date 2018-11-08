@@ -14,6 +14,14 @@ class Api {
     return this.handleRequest(this.instance(false).post('/auth/register', data));
   }
 
+  static resetPasswordEmail(data) {
+    return this.handleRequest(this.instance(false).post('/auth/reset-password-email', data));
+  }
+
+  static resetPassword(data) {
+    return this.handleRequest(this.instance(false).post('/auth/reset-password', data));
+  }
+
   /* --- Address --- */
   static addressList() {
     return this.handleRequest(this.instance().get('/addresses'));

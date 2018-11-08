@@ -316,7 +316,7 @@
             {
                 "header": null,
                 "request": {
-                    "email": "user@foodie-connector.delivery"
+                    "email": "throttle@foodie-connector.delivery"
                 },
                 "status_code": 429,
                 "response": {
@@ -528,7 +528,7 @@
                 "header": null,
                 "request": {
                     "email": "user@foodie-connector.delivery",
-                    "password": "new_password",
+                    "password": "new123456",
                     "token": "12345678"
                 },
                 "status_code": 200,
@@ -558,7 +558,7 @@
                 "header": null,
                 "request": {
                     "email": "wrong@foodie-connector.delivery",
-                    "password": "new_password",
+                    "password": "new123456",
                     "token": "12345678"
                 },
                 "status_code": 404,
@@ -571,23 +571,25 @@
                 "header": null,
                 "request": {
                     "email": "user@foodie-connector.delivery",
-                    "password": "new_password",
-                    "token": "12345678"
+                    "password": "new123456",
+                    "token": "87654321"
                 },
-                "status_code": 401,
+                "status_code": 422,
                 "response": {
-                    "message": "The password reset token is invalid or expired."
+                    "message": "Validation failed.",
+                    "data": {
+                        "token": [
+                            "The token is invalid or expired."
+                        ]
+                    }
                 },
-                "response_header": {
-                    "X-RateLimit-Limit": 5,
-                    "X-RateLimit-Remaining": 4
-                }
+                "response_header": null
             },
             {
                 "header": null,
                 "request": {
-                    "email": "user@foodie-connector.delivery",
-                    "password": "new_password",
+                    "email": "throttle@foodie-connector.delivery",
+                    "password": "new123456",
                     "token": "12345678"
                 },
                 "status_code": 429,

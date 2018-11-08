@@ -319,35 +319,6 @@ Successful operation.
     "token": "12345678"
 }
 ```
-#### **Status Code: 401**
-
-The password reset token is invalid or expired.
-
-**URI**: /api/v1/auth/reset-password
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery",
-    "password": "new123456",
-    "token": "12345678"
-}
-```
-
-**Response Header:**
-```
-{
-    "X-RateLimit-Limit": 5,
-    "X-RateLimit-Remaining": 4
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The password reset token is invalid or expired."
-}
-```
 #### **Status Code: 404**
 
 We can't find a user with that e-mail address.
@@ -396,6 +367,32 @@ Validation failed.
     }
 }
 ```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "user@foodie-connector.delivery",
+    "password": "new123456",
+    "token": "87654321"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "token": [
+            "The token is invalid or expired."
+        ]
+    }
+}
+```
 #### **Status Code: 429**
 
 Too many attempts.
@@ -405,7 +402,7 @@ Too many attempts.
 **Request Body:**
 ```
 {
-    "email": "user@foodie-connector.delivery",
+    "email": "throttle@foodie-connector.delivery",
     "password": "new123456",
     "token": "12345678"
 }
@@ -514,7 +511,7 @@ Too many attempts.
 **Request Body:**
 ```
 {
-    "email": "user@foodie-connector.delivery"
+    "email": "throttle@foodie-connector.delivery"
 }
 ```
 
