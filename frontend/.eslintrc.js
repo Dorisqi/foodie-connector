@@ -10,6 +10,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', {
       'devDependencies': [
         'src/setupTests.js',
+        'src/facades/Test.js',
         'src/__tests__/**/*.js',
         'src/__mocks__/**/*.js',
       ],

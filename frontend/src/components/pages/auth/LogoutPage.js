@@ -1,7 +1,3 @@
-/*-------------------------
-From https://github.com/express-labs/react-router-enzyme-context/blob/master/src/index.js
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -9,7 +5,7 @@ import queryString from 'query-string';
 import _ from 'lodash';
 import Auth from 'facades/Auth';
 import DocumentTitle from 'components/template/DocumentTitle';
-import AuthTemplate from './AuthTemplate';
+import AuthTemplate from 'components/template/AuthTemplate';
 
 class LogoutPage extends React.Component {
   componentDidMount() {

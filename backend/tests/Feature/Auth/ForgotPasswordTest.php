@@ -39,6 +39,12 @@ class ForgotPasswordTest extends ApiTestCase
                 return $notification->token == $token;
             }
         );
+        $user = $this->userFactory()->create([
+            'email' => 'throttle@foodie-connector.delivery',
+        ]);
+        $this->assertSucceed([
+            'email' => $user->email,
+        ], false);
         $this->assertThrottle($this->assertFailed([
             'email' => $user->email,
         ], 429), 1, 0, $decayMinutes * 60);

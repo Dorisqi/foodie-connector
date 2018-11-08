@@ -9,14 +9,14 @@ import Button from '@material-ui/core/Button';
 import orange from '@material-ui/core/colors/orange';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
-import lodash from 'lodash';
+import _ from 'lodash';
 import Auth from 'facades/Auth';
 import Api from 'facades/Api';
 import Form from 'facades/Form';
 import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import DocumentTitle from 'components/template/DocumentTitle';
-import AuthTemplate from './AuthTemplate';
+import AuthTemplate from 'components/template/AuthTemplate';
 
 const styles = theme => ({
   title: {
@@ -51,7 +51,7 @@ class LoginRegisterPage extends React.Component {
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: '', // eslint-disable-line react/no-unused-state
     errors: [],
   };
 
@@ -68,6 +68,9 @@ class LoginRegisterPage extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+      errors: [],
+    });
     const { location } = this.props;
     if (location.pathname === '/login') {
       this.handleLogin();
@@ -77,41 +80,32 @@ class LoginRegisterPage extends React.Component {
   };
 
   handleLogin() {
-    this.setState({
-      errors: [],
-    });
     Api.login({
       email: this.state.email,
       password: this.state.password,
-    }).then((res) => {
-      Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      Auth.redirect(this.props.history, this.props.location);
-    }).catch(Form.handleErrors(this));
+    })
+      .then(Auth.authenticateFromResponse(this))
+      .catch(Form.handleErrors(this));
   }
 
   handleRegister() {
-    if (this.state.password !== this.state.confirmPassword) {
-      this.setState({
-        errors: {
-          confirmPassword: 'The passwords do not match.',
-        },
-      });
+    if (!Form.confirmPassword(this)) {
       return;
     }
     Api.register({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-    }).then((res) => {
-      Auth.authenticateUser(res.data.api_token, res.data.user.email);
-      Auth.redirect(this.props.history, this.props.location);
-    }).catch(Form.handleErrors(this));
+    })
+      .then(Auth.authenticateFromResponse(this))
+      .catch(Form.handleErrors(this));
   }
 
   render() {
     const { classes, location } = this.props;
+    const { errors } = this.state;
     const queries = queryString.parse(location.search);
-    const showWarningText = !lodash.isNil(queries.from);
+    const showWarningText = !_.isNil(queries.from);
     const isLogin = location.pathname === '/login';
 
     return (
@@ -145,7 +139,7 @@ class LoginRegisterPage extends React.Component {
               </Typography>
             )
             }
-            <FormErrorMessages errors={this.state.errors.form} />
+            <FormErrorMessages errors={errors.form} />
             {!isLogin
             && (
               <InputTextField
@@ -183,7 +177,14 @@ class LoginRegisterPage extends React.Component {
                 className={`${classes.margin} ${classes.forgetPasswordControl}`}
                 fullWidth
               >
-                <Button color="primary" component={Link} to="/reset-password">
+                <Button
+                  color="primary"
+                  component={Link}
+                  to={{
+                    pathname: '/reset-password',
+                    search: location.search,
+                  }}
+                >
                   Forgot your password?
                 </Button>
               </FormControl>
@@ -203,13 +204,8 @@ class LoginRegisterPage extends React.Component {
 
 LoginRegisterPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-    replace: PropTypes.func.isRequired,
-  }).isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
-  }).isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(LoginRegisterPage);

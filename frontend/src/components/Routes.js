@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import queryString from 'query-string';
 
 import LoginRegisterPage from 'components/pages/auth/LoginRegisterPage';
+import ResetPasswordPage from 'components/pages/auth/ResetPasswordPage';
 import LogoutPage from 'components/pages/auth/LogoutPage';
 
 import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
@@ -15,6 +16,7 @@ const Routes = () => (
   <Switch>
     <Route path="/login" component={LoginRegisterPage} />
     <Route path="/register" component={LoginRegisterPage} />
+    <Route path="/reset-password" component={ResetPasswordPage} />
     <PrivateRoute path="/logout" component={LogoutPage} />
 
     <PrivateRoute path="/" exact component={RestaurantListPage} />

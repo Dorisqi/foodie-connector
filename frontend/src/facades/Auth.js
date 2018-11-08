@@ -11,6 +11,13 @@ class Auth {
     LocalStorage.setItem('email', email);
   }
 
+  static authenticateFromResponse = component => (res) => {
+    const { api_token: apiToken, user } = res.data;
+    Auth.authenticateUser(apiToken, user.email);
+    const { history, location } = component.props;
+    Auth.redirect(history, location);
+  };
+
   static isUserAuthenticated() {
     return LocalStorage.getItem('authentication') !== null;
   }

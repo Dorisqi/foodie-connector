@@ -33,6 +33,7 @@ class Root extends React.Component {
     const { classes, location } = this.props;
     const withHeader = location.pathname !== '/login'
       && location.pathname !== '/register'
+      && location.pathname !== '/reset-password'
       && location.pathname !== '/logout';
 
     return (
