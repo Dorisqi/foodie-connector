@@ -6,7 +6,7 @@ describe('<ResetPasswordPage />', () => {
   const newPassword = 'new123456';
 
   it('reset succeed', async () => {
-    const { routerContext, wrapper } = Test.mountElement(ResetPasswordPage, '/reset-password?from=/from');
+    const { routerContext, wrapper } = Test.mountElement(ResetPasswordPage, '/reset-password?from=%2Ffrom');
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     await Test.submitForm(wrapper);
     Test.assertFormError(wrapper, 0);
@@ -15,7 +15,7 @@ describe('<ResetPasswordPage />', () => {
     Test.fill(wrapper.find('input#confirmPassword'), newPassword);
     await Test.submitForm(wrapper);
     expect(routerContext.getLocation().pathname).toEqual('/login');
-    expect(routerContext.getLocation().search).toEqual('?from=/from');
+    expect(routerContext.getLocation().search).toEqual('?from=%2Ffrom');
   });
 
   it('reset failed', async () => {

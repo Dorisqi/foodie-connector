@@ -5,15 +5,14 @@ import { clearAddress } from 'actions/addressActions';
 import LocalStorage from './LocalStorage';
 
 class Auth {
-  static authenticateUser(authentication, email) {
+  static authenticateUser(authentication) {
     store.dispatch(clearAddress());
     LocalStorage.setItem('authentication', authentication);
-    LocalStorage.setItem('email', email);
   }
 
   static authenticateFromResponse = component => (res) => {
-    const { api_token: apiToken, user } = res.data;
-    Auth.authenticateUser(apiToken, user.email);
+    const { api_token: apiToken } = res.data;
+    Auth.authenticateUser(apiToken);
     const { history, location } = component.props;
     Auth.redirect(history, location);
   };
@@ -25,19 +24,10 @@ class Auth {
   static deauthenticateUser() {
     store.dispatch(clearAddress());
     LocalStorage.removeItem('authentication');
-    LocalStorage.removeItem('email');
   }
 
   static getToken() {
     return LocalStorage.getItem('authentication');
-  }
-
-  static getEmail() {
-    return LocalStorage.getItem('email');
-  }
-
-  static setEmail(email) {
-    LocalStorage.setItem('email', email);
   }
 
   static redirect(history, location) {

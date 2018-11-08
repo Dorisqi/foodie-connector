@@ -31,7 +31,7 @@ describe('<LoginRegisterPage />', () => {
   it('register succeed', async () => {
     const { routerContext, wrapper } = Test.mountElement(
       LoginRegisterPage,
-      '/register?from=/from',
+      '/register?from=%2Ffrom',
     );
     wrapper.find(Tab).forEach((tab) => {
       expect(tab.prop('selected')).toEqual(tab.prop('value') === 'register');

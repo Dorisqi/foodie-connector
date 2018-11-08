@@ -50,7 +50,10 @@ class AuthTemplate extends React.Component {
 
 AuthTemplate.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.element,
+  ]).isRequired,
 };
 
 export default withStyles(styles)(AuthTemplate);

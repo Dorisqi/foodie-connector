@@ -7,6 +7,11 @@ configure({ adapter: new Adapter() });
 
 Api.mocking();
 
+// eslint-disable-next-line no-console
+console.error = (message) => {
+  throw new Error(message);
+};
+
 beforeEach(() => {
   LocalStorage.mocking();
 });
