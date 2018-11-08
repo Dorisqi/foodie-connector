@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Routes from 'components/Routes';
 import Header from './Header';
+import Footer from './Footer';
 
 const styles = () => ({
   wrapper: {
@@ -16,25 +17,44 @@ const styles = () => ({
     width: '100%',
   },
   content: {
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  main: {
     marginTop: 90,
+    flexGrow: 1,
   },
 });
 
 class Root extends React.Component {
   render() {
     const { classes, location } = this.props;
-    const withHeader = location.pathname !== '/login';
+    const withHeader = location.pathname !== '/login'
+      && location.pathname !== '/register'
+      && location.pathname !== '/logout';
 
     return (
       <div>
         {withHeader
-          && <Header wrapperClassName={classes.wrapper} location={location}/>
+        && <Header wrapperClassName={classes.wrapper} location={location} />
         }
         <div className={withHeader
-            ? classNames(classes.wrapper, classes.content)
+          ? classNames(classes.wrapper, classes.content)
+          : null
+          }
+        >
+          <div className={withHeader
+            ? classes.main
             : null
-          }>
-          <Routes />
+            }
+          >
+            <Routes className={classes.routes} />
+          </div>
+          {withHeader
+          && <Footer />
+          }
         </div>
       </div>
     );

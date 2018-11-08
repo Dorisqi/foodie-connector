@@ -66,11 +66,7 @@ class ApiMock {
   static handleRequest(promise) {
     this.requestStarted();
     return new Promise((resolve, reject) => {
-      promise.then((res) => {
-        resolve(res);
-      }).catch((err) => {
-        reject(err);
-      }).then(() => {
+      promise.then(resolve).catch(reject).then(() => {
         this.requestFinished();
       });
     });

@@ -11,7 +11,7 @@ import ApiMock from '__mocks__/api/ApiMock';
 import Auth from 'facades/Auth';
 
 describe('<LoginRegisterPage />', () => {
-  const mountElement = (routerContext, url = '/login') => {
+  const mountElement = (routerContext, url) => {
     routerContext.getHistory().replace(url);
     const props = routerContext.props();
     return mount(
@@ -20,24 +20,12 @@ describe('<LoginRegisterPage />', () => {
     );
   };
 
-  it('switch tabs', () => {
-    const routerContext = new RouterContext();
-    const wrapper = mountElement(routerContext);
-    const tabs = wrapper.find(Tab);
-    tabs.forEach((tab) => {
-      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'login');
-    });
-    expect(wrapper.find(InputTextField)).toHaveLength(2);
-    tabs.filter({ value: 'register' }).simulate('click');
-    wrapper.find(Tab).forEach((tab) => {
-      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'register');
-    });
-    expect(wrapper.find(InputTextField)).toHaveLength(4);
-  });
-
   it('login succeed', async () => {
     const routerContext = new RouterContext();
-    const wrapper = mountElement(routerContext);
+    const wrapper = mountElement(routerContext, '/login');
+    wrapper.find(Tab).forEach((tab) => {
+      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'login');
+    });
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
     wrapper.find('form').simulate('submit');
@@ -49,7 +37,7 @@ describe('<LoginRegisterPage />', () => {
 
   it('login failed', async () => {
     const routerContext = new RouterContext();
-    const wrapper = mountElement(routerContext);
+    const wrapper = mountElement(routerContext, '/login');
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), 'wrong');
     wrapper.find('form').simulate('submit');
@@ -61,9 +49,10 @@ describe('<LoginRegisterPage />', () => {
 
   it('register succeed', async () => {
     const routerContext = new RouterContext();
-    const wrapper = mountElement(routerContext, '/login?from=/from');
-    wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
-    wrapper.update();
+    const wrapper = mountElement(routerContext, '/register?from=/from');
+    wrapper.find(Tab).forEach((tab) => {
+      expect(tab.prop('selected')).toEqual(tab.prop('value') === 'register');
+    });
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), ApiMock.EMAIL);
     Test.fill(wrapper.find('input#password'), ApiMock.PASSWORD);
@@ -77,9 +66,7 @@ describe('<LoginRegisterPage />', () => {
 
   it('register failed', async () => {
     const routerContext = new RouterContext();
-    const wrapper = mountElement(routerContext);
-    wrapper.find(Tab).filter({ value: 'register' }).simulate('click');
-    wrapper.update();
+    const wrapper = mountElement(routerContext, '/register');
     Test.fill(wrapper.find('input#name'), ApiMock.NAME);
     Test.fill(wrapper.find('input#email'), 'exist@foodie-connector.delivery');
     Test.fill(wrapper.find('input#password'), 'short');

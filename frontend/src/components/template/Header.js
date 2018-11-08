@@ -14,7 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Auth from '../../Auth/Auth';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
   },
@@ -23,9 +23,17 @@ const styles = theme => ({
   },
   title: {
     display: 'block',
+    marginLeft: -16,
+  },
+  titleTypography: {
+    color: '#FFF',
+    textTransform: 'none',
   },
   rightSection: {
     display: 'flex',
+  },
+  accountButton: {
+    marginRight: -12,
   },
 });
 
@@ -37,9 +45,10 @@ class Header extends React.Component {
     };
   }
 
-  handleProfileMenuOpen = event => {
+  handleProfileMenuOpen = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
+
   handleProfileMenuClose = () => {
     this.setState({ anchorEl: null });
   };
@@ -55,9 +64,11 @@ class Header extends React.Component {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
-        onClose={this.handleProfileMenuClose}>
+        onClose={this.handleProfileMenuClose}
+      >
         <MenuItem>My Profile</MenuItem>
-        {location.pathname !== '/logout' &&
+        {location.pathname !== '/logout'
+        && (
         <MenuItem
           button
           component={Link}
@@ -68,6 +79,7 @@ class Header extends React.Component {
         >
           Log Out
         </MenuItem>
+        )
         }
       </Menu>
     );
@@ -76,15 +88,18 @@ class Header extends React.Component {
       <header className={classes.root}>
         <AppBar position="fixed">
           <Toolbar className={wrapperClassName}>
-            <Typography className={classes.title} variant="h5" color="inherit" noWrap>
-              Foodie Connector
-            </Typography>
+            <Button className={classes.title} component={Link} to="/">
+              <Typography className={classes.titleTypography} variant="h5" noWrap>
+                Foodie Connector
+              </Typography>
+            </Button>
             <div className={classes.grow} />
             <div className={classes.rightSection}>
               {Auth.isUserAuthenticated() ? (
                 <IconButton
                   aria-owns={isMenuOpen ? 'material-appbar' : null}
                   aria-haspopup="true"
+                  className={classes.accountButton}
                   onClick={this.handleProfileMenuOpen}
                   color="inherit"
                 >
@@ -104,7 +119,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  wrapperClassName: PropTypes.string,
+  wrapperClassName: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,

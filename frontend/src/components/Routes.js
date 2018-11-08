@@ -14,6 +14,7 @@ import Auth from 'facades/Auth';
 const Routes = () => (
   <Switch>
     <Route path="/login" component={LoginRegisterPage} />
+    <Route path="/register" component={LoginRegisterPage} />
     <PrivateRoute path="/logout" component={LogoutPage} />
 
     <PrivateRoute path="/" exact component={RestaurantListPage} />

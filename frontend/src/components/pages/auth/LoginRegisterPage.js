@@ -15,6 +15,7 @@ import Api from 'facades/Api';
 import Form from 'facades/Form';
 import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
+import DocumentTitle from 'components/template/DocumentTitle';
 import AuthTemplate from './AuthTemplate';
 
 const styles = theme => ({
@@ -47,7 +48,6 @@ const styles = theme => ({
 
 class LoginRegisterPage extends React.Component {
   state = {
-    tab: 'login',
     name: '',
     email: '',
     password: '',
@@ -55,16 +55,21 @@ class LoginRegisterPage extends React.Component {
     errors: [],
   };
 
-  handleTabChange = (_, tab) => {
+  handleTabChange = (_e, tab) => {
+    const { history, location } = this.props;
+    history.push({
+      pathname: `/${tab}`,
+      search: location.search,
+    });
     this.setState({
-      tab,
       errors: [],
     });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.tab === 'login') {
+    const { location } = this.props;
+    if (location.pathname === '/login') {
       this.handleLogin();
     } else {
       this.handleRegister();
@@ -107,88 +112,91 @@ class LoginRegisterPage extends React.Component {
     const { classes, location } = this.props;
     const queries = queryString.parse(location.search);
     const showWarningText = !lodash.isNil(queries.from);
+    const isLogin = location.pathname === '/login';
 
     return (
-      <AuthTemplate>
-        <Typography variant="h4" className={classes.title}>
-          Foodie Connector
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          className={classes.subtitle}
-          color="textSecondary"
-        >
-          Log in to enjoy food with your neighbors and friends
-        </Typography>
-        <Tabs
-          value={this.state.tab}
-          onChange={this.handleTabChange}
-          textColor="primary"
-          centered
-          className={classes.tabs}
-        >
-          <Tab value="login" label="Log In" />
-          <Tab value="register" label="Sign Up" />
-        </Tabs>
-        <form onSubmit={this.handleSubmit}>
-          {showWarningText
-            && (
-            <Typography className={classes.warningText} variant="body1" component="p">
-              Please login or register.
-            </Typography>
-            )
-          }
-          <FormErrorMessages errors={this.state.errors.form} />
-          {this.state.tab === 'register'
-          && (
-          <InputTextField
-            parent={this}
-            name="name"
-            label="Name"
-          />
-          )
-          }
-          <InputTextField
-            parent={this}
-            name="email"
-            label="Email"
-            type="email"
-          />
-          <InputTextField
-            parent={this}
-            name="password"
-            label="Password"
-            type="password"
-          />
-          {this.state.tab === 'register'
-          && (
-          <InputTextField
-            parent={this}
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-          />
-          )
-          }
-          {this.state.tab === 'login'
-          && (
-          <FormControl
-            className={`${classes.margin} ${classes.forgetPasswordControl}`}
-            fullWidth
+      <DocumentTitle title={isLogin ? 'Log In' : 'Sign Up'}>
+        <AuthTemplate>
+          <Typography variant="h4" component="h1" className={classes.title}>
+            Foodie Connector
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            className={classes.subtitle}
+            color="textSecondary"
           >
-            <Button color="primary" component={Link} to="/reset-password">
-              Forgot your password?
-            </Button>
-          </FormControl>
-          )
-          }
-          <FormControl className={[classes.margin, classes.submitButton].join(' ')} fullWidth>
-            <Button type="submit" variant="contained" color="primary">
-              {this.state.tab === 'login' ? 'Log In' : 'Sign Up'}
-            </Button>
-          </FormControl>
-        </form>
-      </AuthTemplate>
+            Log in to enjoy food with your neighbors and friends
+          </Typography>
+          <Tabs
+            value={isLogin ? 'login' : 'register'}
+            onChange={this.handleTabChange}
+            textColor="primary"
+            centered
+            className={classes.tabs}
+          >
+            <Tab value="login" label="Log In" />
+            <Tab value="register" label="Sign Up" />
+          </Tabs>
+          <form onSubmit={this.handleSubmit}>
+            {showWarningText
+            && (
+              <Typography className={classes.warningText} variant="body1" component="p">
+                Please login or register.
+              </Typography>
+            )
+            }
+            <FormErrorMessages errors={this.state.errors.form} />
+            {!isLogin
+            && (
+              <InputTextField
+                parent={this}
+                name="name"
+                label="Name"
+              />
+            )
+            }
+            <InputTextField
+              parent={this}
+              name="email"
+              label="Email"
+              type="email"
+            />
+            <InputTextField
+              parent={this}
+              name="password"
+              label="Password"
+              type="password"
+            />
+            {!isLogin
+            && (
+              <InputTextField
+                parent={this}
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+              />
+            )
+            }
+            {isLogin
+            && (
+              <FormControl
+                className={`${classes.margin} ${classes.forgetPasswordControl}`}
+                fullWidth
+              >
+                <Button color="primary" component={Link} to="/reset-password">
+                  Forgot your password?
+                </Button>
+              </FormControl>
+            )
+            }
+            <FormControl className={[classes.margin, classes.submitButton].join(' ')} fullWidth>
+              <Button type="submit" variant="contained" color="primary">
+                {isLogin ? 'Log In' : 'Sign Up'}
+              </Button>
+            </FormControl>
+          </form>
+        </AuthTemplate>
+      </DocumentTitle>
     );
   }
 }

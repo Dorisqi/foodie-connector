@@ -30,15 +30,18 @@ class AddressSelector extends React.Component {
     currentLocationError: null,
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.loadAddresses();
+  }
 
-    if (props.addresses === null) {
-      this.loadAddresses();
-    }
+  componentDidUpdate(_prevProps, _prevState, _snapshot) {
+    this.loadAddresses();
   }
 
   loadAddresses() {
+    if (this.props.addresses !== null) {
+      return;
+    }
     Api.addressList().then((res) => {
       const addresses = res.data;
       store.dispatch(loadAddress(addresses));

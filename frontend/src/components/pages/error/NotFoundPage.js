@@ -1,17 +1,20 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import DocumentTitle from 'components/template/DocumentTitle';
 
 class NotFoundPage extends React.Component {
   render() {
     return (
-      <div>
-        <Typography variant="h1">
+      <DocumentTitle title="Page Not Found">
+        <div>
+          <Typography variant="h1">
           404
-        </Typography>
-        <Typography variant="h2">
+          </Typography>
+          <Typography variant="h2">
           PAGE NOT FOUND
-        </Typography>
-      </div>
+          </Typography>
+        </div>
+      </DocumentTitle>
     );
   }
 }
