@@ -123,10 +123,6 @@ class Restaurant extends Model
         $data['distance'] = is_null($this->distance) ? null : round($this->distance, 1);
         $data['estimated_delivery_time'] = $this->estimated_delivery_time;
         $data['is_deliverable'] = $this->is_deliverable;
-        if (isset($data['restaurant_menu'])) {
-            $data['product_categories'] = $data['restaurant_menu'];
-            unset($data['restaurant_menu']);
-        }
 
         return $data;
     }

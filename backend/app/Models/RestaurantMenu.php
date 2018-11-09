@@ -40,18 +40,6 @@ class RestaurantMenu extends Model
 
     public function toArray()
     {
-        $menuData = json_decode($this->menu, true);
-        $productCategories = $menuData['product_categories'];
-        $productOptionGroups = $menuData['product_option_groups'];
-        foreach ($productCategories as &$productCategory) {
-            foreach ($productCategory['products'] as &$product) {
-                $subOptionGroups = [];
-                foreach ($product['product_option_groups'] as $productOptionGroup) {
-                    array_push($subOptionGroups, $productOptionGroups[$productOptionGroup]);
-                }
-                $product['product_option_groups'] = $subOptionGroups;
-            }
-        }
-        return $productCategories;
+        return json_decode($this->menu, true);
     }
 }

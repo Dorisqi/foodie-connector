@@ -1,6 +1,6 @@
 (function () {
 
-var defs = {}; // id -> {dependencies, definition, instance (possibly undefined)}
+var defs = {}; // id -> {dependencies, definition, localStorage (possibly undefined)}
 
 // Used when there is no 'main' module.
 // The name is probably (hopefully) unique so minification removes for releases.

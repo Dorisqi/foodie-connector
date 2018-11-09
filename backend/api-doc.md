@@ -1878,7 +1878,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "1",
             "rating": "3.5",
@@ -1942,7 +1942,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 2,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "2",
             "rating": "3.5",
@@ -2057,7 +2057,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2094,51 +2094,56 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "end_time": "2:00:00"
         }
     ],
+    "restaurant_menu": {
+        "product_categories": [
+            {
+                "id": 0,
+                "name": "Test Category",
+                "products": [
+                    {
+                        "id": 0,
+                        "name": "Test Product",
+                        "description": "This is a test product",
+                        "price": 2.99,
+                        "min_price": 3.99,
+                        "max_price": 4.99,
+                        "product_option_groups": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        ],
+        "product_option_groups": [
+            {
+                "id": 0,
+                "name": "Test Option Group",
+                "min_choice": 1,
+                "max_choice": 2,
+                "product_options": [
+                    {
+                        "id": 0,
+                        "name": "Test Option 1",
+                        "price": 1
+                    },
+                    {
+                        "id": 1,
+                        "name": "Test Option 2",
+                        "price": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Test Option 3",
+                        "price": 1
+                    }
+                ]
+            }
+        ]
+    },
     "is_open": true,
     "distance": null,
     "estimated_delivery_time": null,
-    "is_deliverable": null,
-    "product_categories": [
-        {
-            "id": 0,
-            "name": "Test Category",
-            "products": [
-                {
-                    "id": 0,
-                    "name": "Test Product",
-                    "description": "This is a test product",
-                    "price": 2.99,
-                    "min_price": 3.99,
-                    "max_price": 4.99,
-                    "product_option_groups": [
-                        {
-                            "id": 0,
-                            "name": "Test Option Group",
-                            "min_choice": 1,
-                            "max_choice": 2,
-                            "product_options": [
-                                {
-                                    "id": 0,
-                                    "name": "Test Option 1",
-                                    "price": 1
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "Test Option 2",
-                                    "price": 1
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "Test Option 3",
-                                    "price": 1
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+    "is_deliverable": null
 }
 ```
 #### **Status Code: 200**
@@ -2157,7 +2162,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2575,7 +2580,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2736,7 +2741,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2850,7 +2855,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2990,7 +2995,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/your-bucket/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",

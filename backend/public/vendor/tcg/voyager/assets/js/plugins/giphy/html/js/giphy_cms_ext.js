@@ -17,7 +17,7 @@ var GiphyCMSExt = {
 
     //parent.tinyMCE.activeEditor.execCommand("mceInsertRawHTML", false, uri);
     parent.tinyMCE.activeEditor.execCommand("mceInsertContent", false, uri);
-    parent.tinyMCE.activeEditor.selection.select(parent.tinyMCE.activeEditor.getBody(), true); // ed is the editor instance
+    parent.tinyMCE.activeEditor.selection.select(parent.tinyMCE.activeEditor.getBody(), true); // ed is the editor localStorage
     parent.tinyMCE.activeEditor.selection.collapse(false);
     parent.tinyMCE.activeEditor.windowManager.close(window);
   }

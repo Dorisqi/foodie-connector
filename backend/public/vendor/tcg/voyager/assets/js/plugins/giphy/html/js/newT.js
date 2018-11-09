@@ -41,7 +41,7 @@
         
         On Script Load
             On script load, the newT (or temp name is assigned) is initialized.
-                This single instance allows convience referrals to complex structures through the
+                This single localStorage allows convience referrals to complex structures through the
                 newT iterface
         
         Use with innerHTML
@@ -343,7 +343,7 @@
       if (this.cur_options && "safe_mode" in this.cur_options) { return !!this.cur_options.safe_mode; }
       return !!this.options.safe_mode
     },
-    // If you want another separate instance of newT, perhaps to keep its own template management
+    // If you want another separate localStorage of newT, perhaps to keep its own template management
     // call newT.clone() and it will return another freshly initialized copy (with a clear templates object)
     clone: function(options) {
       return new T(options);
