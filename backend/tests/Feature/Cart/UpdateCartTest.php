@@ -73,7 +73,7 @@ class UpdateCartTest extends ApiTestCase
             'cart' => [],
         ]);
         $response->assertJson([
-            'restaurant_id' => null,
+            'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
         ]);
@@ -82,7 +82,7 @@ class UpdateCartTest extends ApiTestCase
             'cart' => [],
         ], false);
         $response->assertJson([
-            'restaurant_id' => null,
+            'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
         ]);

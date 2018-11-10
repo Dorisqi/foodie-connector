@@ -63,7 +63,7 @@ class CartController extends ApiController
         $cart = $this->user()->cart()->with('restaurant')->first();
         if (is_null($cart)) {
             return $this->response([
-                'restaurant_id' => null,
+                'restaurant' => null,
                 'cart' => [],
                 'subtotal' => 0,
             ]);

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Cart;
 
 use App\Models\Cart;
+use App\Models\Restaurant;
 use Tests\ApiTestCase;
 
 class ShowCartTest extends ApiTestCase
@@ -18,14 +19,16 @@ class ShowCartTest extends ApiTestCase
         $this->login();
         $response = $this->assertSucceed(null);
         $response->assertJson([
-            'restaurant_id' => null,
+            'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
         ]);
         $cart = factory(Cart::class)->create();
         $response = $this->assertSucceed(null);
         $response->assertJson([
-            'restaurant_id' => $cart->restaurant_id,
+            'restaurant' => [
+                'id' => $cart->restaurant_id,
+            ],
             'cart' => json_decode($cart->cart, true),
             'subtotal' => (2.99 + 2 * 1) * 2,
         ]);
