@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Routes from 'components/Routes';
+import Routes from 'components/route/Routes';
 import Header from './Header';
 import Footer from './Footer';
 
