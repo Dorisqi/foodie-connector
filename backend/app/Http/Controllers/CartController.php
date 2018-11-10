@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use App\Models\Cart;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class CartController extends ApiController
@@ -20,7 +21,7 @@ class CartController extends ApiController
     public function update(Request $request)
     {
         $this->validateInput($request);
-        $cart = $this->user()->cart()->first();
+        $cart = $this->user()->cart()->with('restaurant')->first();
         if (is_null($cart)) {
             $cart = new Cart();
             $cart->user()->associate($this->user()->id);
@@ -28,7 +29,7 @@ class CartController extends ApiController
         if (is_null($request->input('restaurant_id'))) {
             $cart->restaurant()->dissociate();
         } else {
-            $cart->restaurant()->associate($request->input('restaurant_id'));
+            $cart->restaurant()->associate(Restaurant::find($request->input('restaurant_id')));
         }
         try {
             $cart->calculateSummary(true, $request->input('cart'));
@@ -59,7 +60,7 @@ class CartController extends ApiController
      */
     public function show()
     {
-        $cart = $this->user()->cart()->first();
+        $cart = $this->user()->cart()->with('restaurant')->first();
         if (is_null($cart)) {
             return $this->response([
                 'restaurant_id' => null,

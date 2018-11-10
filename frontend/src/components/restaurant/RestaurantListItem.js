@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import StarRate from '@material-ui/icons/StarRate';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   imageWrapper: {
@@ -56,6 +57,7 @@ class RestaurantListItem extends React.Component {
   render() {
     const { restaurant, classes } = this.props;
     const {
+      id,
       image,
       name,
       restaurant_categories: restaurantCategories,
@@ -68,7 +70,7 @@ class RestaurantListItem extends React.Component {
     } = restaurant;
     return (
       <Card>
-        <CardActionArea>
+        <CardActionArea component={Link} to={`/restaurants/${id}`}>
           <div className={classes.imageWrapper}>
             <CardMedia
               image={image}

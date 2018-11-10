@@ -10,6 +10,7 @@ import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import Api from 'facades/Api';
 import Form from 'facades/Form';
+import Axios from 'facades/Axios';
 
 const styles = theme => ({
   title: {
@@ -26,16 +27,20 @@ class ResetPasswordPage extends React.Component {
     token: '',
     password: '',
     confirmPassword: '', // eslint-disable-line react/no-unused-state
-    errors: [],
-
+    errors: {},
     sentCode: false,
+    loading: null,
   };
+
+  componentWillUnmount() {
+    Axios.cancelRequest(this.state.loading);
+  }
 
   handleSubmit = (e) => {
     const { sentCode } = this.state;
     e.preventDefault();
     this.setState({
-      errors: [],
+      errors: {},
     });
     if (!sentCode) {
       this.sendEmail();
@@ -45,30 +50,36 @@ class ResetPasswordPage extends React.Component {
   };
 
   sendEmail = () => {
-    const { email } = this.state;
-    Api.resetPasswordEmail({
-      email,
-    }).then(() => {
-      this.setState({
-        sentCode: true,
-      });
-    }).catch(Form.handleErrors(this));
+    const { email, loading } = this.state;
+    Axios.cancelRequest(loading);
+    this.setState({
+      loading: Api.resetPasswordEmail(email).then(() => {
+        this.setState({
+          sentCode: true,
+        });
+      }).catch(Form.handleErrors(this)),
+    });
   };
 
   resetPassword = () => {
     if (!Form.confirmPassword(this)) {
       return;
     }
-    const { email, token, password } = this.state;
+    const {
+      email, token, password, loading,
+    } = this.state;
     const { history, location } = this.props;
-    Api.resetPassword({ email, token, password })
-      .then(() => {
-        history.push({
-          pathname: '/login',
-          search: location.search,
-        });
-      })
-      .catch(Form.handleErrors(this));
+    Axios.cancelRequest(loading);
+    this.setState({
+      loading: Api.resetPassword(email, token, password)
+        .then(() => {
+          history.push({
+            pathname: '/login',
+            search: location.search,
+          });
+        })
+        .catch(Form.handleErrors(this)),
+    });
   };
 
   render() {

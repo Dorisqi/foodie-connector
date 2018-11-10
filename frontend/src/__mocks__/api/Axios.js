@@ -1,15 +1,13 @@
 import axios from 'axios';
 import ApiMock from './ApiMock';
 
+ApiMock.setup(axios);
+
 class Axios {
   instance;
 
   constructor(config) {
     this.instance = axios.create(config);
-  }
-
-  static initialize() {
-    ApiMock.setup(axios);
   }
 
   static create(config) {

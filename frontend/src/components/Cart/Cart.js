@@ -1,134 +1,249 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-
-function setTwoDecimal(num) {
-  return parseFloat(Math.round(num * 100) / 100).toFixed(2);
-}
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { cartUpdate, cartClear, cartUpdateItem } from 'actions/cartActions';
+import store from 'store';
+import Price from 'facades/Price';
+import Api from 'facades/Api';
+import Axios from 'facades/Axios';
+import ProductOptionSelector from './ProductOptionSelector';
+import AmountSelector from './AmountSelector';
 
 const styles = theme => ({
-  root: {
+  loading: {
+    paddingTop: 2 * theme.spacing.unit,
+    paddingBottom: 2 * theme.spacing.unit,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  clearCartAlert: {
+    paddingBottom: 0,
+  },
+  emptyCart: {
+    textAlign: 'center',
+  },
+  item: {
+    display: 'block',
+  },
+  itemLine: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+  },
+  productPrice: {
+    flexGrow: 0,
+    paddingRight: 0,
+    minWidth: 'fit-content',
+  },
+  option: {
+    maxHeight: 21,
+    overflow: 'hidden',
+    padding: 0,
+  },
+  itemOptions: {
     flexGrow: 1,
-    maxWidth: 752,
-    minWidth:100
   },
-  demo: {
-    backgroundColor: theme.palette.background.paper,
+  amountSelector: {
+    minWidth: 'fit-content',
   },
-  title: {
-    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
+  summaryPrice: {
+    textAlign: 'right',
+    padding: 0,
   },
 });
 
 class Cart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: props.id,
-      restaurantName: "",
-      cart: {
-        "restaurant_id": null,
-        "cart": [],
-        "subtotal": 0,
-      },
-      menu: []
-    };
-    this.deleteItem = this.deleteItem.bind(this);
+  state = {
+    loading: null,
+    updatingItemIndex: null,
+  };
 
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.cart.hasOwnProperty('restaurant_id')) {
-      const { menu } = nextProps;
-      const products = menu.map(p => p.products).flat();
-      const { restaurantName, cart } = this.state;
-      console.log(nextProps.cart);
+  componentDidMount() {
+    const { cart } = this.props;
+    if (cart === null) {
       this.setState({
-        id: nextProps.id,
-        restaurantName: restaurantName === "" && cart.cart.length === 0
-                        ? nextProps.restaurantName
-                        : restaurantName,
-        cart: nextProps.cart,
-        menu: products,
-      })
+        loading: Api.cartShow().then((res) => {
+          store.dispatch(cartUpdate(res.data));
+          this.setState({
+            loading: null,
+          });
+        }).catch((err) => {
+          this.setState({
+            loading: null,
+          });
+          throw err;
+        }),
+      });
     }
   }
 
-  deleteItem(item, idx) {
-    const { updateCart } = this.props;
-    const { cart } = this.state;
-    const cartItems = cart.cart;
-    if (item.product_amount === 1) {
-      cartItems.splice(idx, 1);
-    }
-    else {
-      item.product_amount--;
-    }
-    updateCart(cart);
+  componentWillUnmount() {
+    Axios.cancelRequest(this.state.loading);
   }
+
+  handleClearClick = () => {
+    store.dispatch(cartClear());
+  };
+
+  handleItemClick = index => () => {
+    this.setState({
+      updatingItemIndex: index,
+    });
+  };
+
+  handleOptionSelectorClose = () => {
+    this.setState({
+      updatingItemIndex: null,
+    });
+  };
+
+  handleItemUpdate = index => (item) => {
+    this.setState({
+      updatingItemIndex: null,
+    });
+    store.dispatch(cartUpdateItem(index, item));
+  };
 
   render() {
-    const { classes } = this.props;
-    const { id, cart, menu } = this.state;
-    var { subtotal } = cart;
-
-    const cartItems = cart.cart;
-    subtotal = setTwoDecimal(subtotal);
-
-    return (
-      <Grid item xs={12} md={3}>
-          <Typography variant="h1" component="h1" align="center" className={classes.title}>
-            Cart
-          </Typography>
-          {id == cart.restaurant_id || cart.restaurant_id === null
-            ? <List>
-              {cartItems.map((item, idx) => {
-                const product = menu.find(x => x.id === item.product_id);
-                const name = product.name;
-                const options = item.product_option_groups.map(group => {
-                  const gid = group.product_option_group_id;
-                  const product_option_group = product['product_option_groups'].find(x => x.id === gid);
-                  return group.product_options.map(id => product_option_group['product_options'].find(x => x.id === id).name);
-                }).flat();
-                const primary = name+" X "+item.product_amount;
-                const secondary = options.join(", ")
-                return (
-                  <ListItem>
-                    <ListItemText
-                      primary={primary}
-                      secondary={secondary}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete" onClick={(e) => this.deleteItem(item, idx)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-              )})}
-              </List>
-            : <Typography variant="h4" component="h4" align="center" className={classes.title}>
-                There are items from <a href={`/restaurant/${cart.restaurant_id}`}>this restaurant</a>,
-                empty the cart before adding new item.
-              </Typography>
+    const {
+      classes, restaurant, cart, productMap,
+    } = this.props;
+    const { updatingItemIndex } = this.state;
+    if (restaurant === null || cart === null) {
+      return (
+        <LinearProgress />
+      );
+    }
+    return cart.restaurantId !== null && cart.restaurantId !== restaurant.id
+      ? (
+        <Card>
+          <CardContent className={classes.clearCartAlert}>
+            <Typography component="p">
+              You have items from another restaurant
+              (
+              <Link to={`/restaurants/${cart.restaurantId}`}>{cart.restaurantName}</Link>
+).
+              Please clear the cart before adding items.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button onClick={this.handleClearClick} size="small" color="primary">
+              Clear
+            </Button>
+          </CardActions>
+        </Card>
+      )
+      : (
+        <Paper>
+          {updatingItemIndex !== null
+            && (
+            <ProductOptionSelector
+              cartItem={cart.cart[updatingItemIndex]}
+              product={productMap[cart.cart[updatingItemIndex].product_id]}
+              onUpdateItem={this.handleItemUpdate(updatingItemIndex)}
+              onClose={this.handleOptionSelectorClose}
+            />
+            )
           }
-
-          <Typography variant="h5">
-            Total Cost: ${subtotal}
-          </Typography>
-      </Grid>
-    )
+          <List>
+            {cart.cart.length === 0
+            && (
+            <ListItem>
+              <ListItemText
+                className={classes.emptyCart}
+                primary="There is no item in the cart"
+              />
+            </ListItem>
+            )
+            }
+            {cart.cart.map((cartItem, index) => {
+              const product = productMap[cartItem.product_id];
+              return (
+                <ListItem
+                  button
+                  key={index} // eslint-disable-line react/no-array-index-key
+                  className={classes.item}
+                  onClick={this.handleItemClick(index)}
+                >
+                  <div className={classes.itemLine}>
+                    <ListItemText
+                      primary={product.name}
+                    />
+                    <ListItemText
+                      className={classes.productPrice}
+                      primary={Price.display(cartItem.product_price)}
+                    />
+                  </div>
+                  <div className={classes.itemLine}>
+                    <div className={classes.itemOptions}>
+                      {cartItem.product_option_groups.map((itemOptionGroup) => {
+                        const optionGroup = product.product_option_group_map[
+                          itemOptionGroup.product_option_group_id
+                        ];
+                        return (
+                          <ListItemText
+                            key={itemOptionGroup.product_option_group_id}
+                            className={classes.option}
+                            secondary={itemOptionGroup.product_options.map(optionId => optionGroup.product_option_map[optionId].name).join(', ')}
+                          />
+                        );
+                      })
+                        }
+                    </div>
+                    <AmountSelector
+                      className={classes.amountSelector}
+                      value={cartItem.product_amount}
+                      cartIndex={index}
+                    />
+                  </div>
+                </ListItem>
+              );
+            })}
+            <ListItem>
+              <ListItemText
+                className={classes.summaryPrice}
+                primary={`Subtotal: ${Price.display(cart.subtotal)}`}
+                primaryTypographyProps={{
+                  variant: 'h6',
+                }}
+              />
+            </ListItem>
+          </List>
+        </Paper>
+      );
   }
 }
 
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
 Cart.propTypes = {
-  cartItems: PropTypes.shape({}).isRequired,
+  classes: PropTypes.object.isRequired,
+  restaurant: PropTypes.object,
+  productMap: PropTypes.object,
+  cart: PropTypes.object,
 };
-export default withStyles(styles)(Cart);
+
+Cart.defaultProps = {
+  restaurant: null,
+  productMap: null,
+  cart: null,
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps)(Cart),
+);

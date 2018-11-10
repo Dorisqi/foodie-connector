@@ -14,46 +14,50 @@ import {
   setCurrentLocation
 } from 'actions/addressActions';
 import Api from 'facades/Api';
+import Axios from 'facades/Axios';
 
 const styles = () => ({
   selector: {
     boxSizing: 'border-box',
   },
   selectorInput: {
-    paddingTop: 6,
-    paddingBottom: 7,
+    paddingTop: 8,
+    paddingBottom: 8,
   }
 });
 
 class AddressSelector extends React.Component {
   state = {
     currentLocationError: null,
+    loadingAddress: null,
   };
 
   componentDidMount() {
     this.loadAddresses();
   }
 
-  componentDidUpdate(_prevProps, _prevState, _snapshot) {
-    this.loadAddresses();
+  componentWillUnmount() {
+    Axios.cancelRequest(this.state.loadingAddress);
   }
 
   loadAddresses() {
     if (this.props.addresses !== null) {
       return;
     }
-    Api.addressList().then((res) => {
-      const addresses = res.data;
-      store.dispatch(loadAddress(addresses));
-      if (addresses.length === 0) {
-        this.loadCurrentLocation(); // Use current location
-      } else {
-        addresses.forEach(address => {
-          if (address.is_default) {
-            store.dispatch(selectAddress(address.id));
-          }
-        });
-      }
+    this.setState({
+      loadingAddress: Api.addressList().then((res) => {
+        const addresses = res.data;
+        store.dispatch(loadAddress(addresses));
+        if (addresses.length === 0) {
+          this.loadCurrentLocation(); // Use current location
+        } else {
+          addresses.forEach(address => {
+            if (address.is_default) {
+              store.dispatch(selectAddress(address.id));
+            }
+          });
+        }
+      })
     });
   }
 

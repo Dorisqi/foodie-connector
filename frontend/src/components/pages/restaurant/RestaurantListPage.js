@@ -18,7 +18,8 @@ import OptionListItem from 'components/restaurant/OptionListItem';
 import NumericFilter from 'components/restaurant/NumericFilter';
 import SwitchButton from 'components/restaurant/SwitchButton';
 import SortSwitch from 'components/restaurant/SortSwitch';
-import DocumentTitle from 'components/template/DocumentTitle';
+import MainContent from 'components/template/MainContent';
+import Axios from 'facades/Axios';
 
 const styles = theme => ({
   restaurantListContainer: {
@@ -36,10 +37,6 @@ const styles = theme => ({
     padding: 10,
     width: `${100 / 3}%`,
   },
-  divider: {
-    marginTop: 2 * theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
   optionDivider: {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
@@ -49,7 +46,6 @@ const styles = theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     overflow: 'hidden',
-    outline: 'none',
     paddingRight: 10,
     position: 'relative',
   },
@@ -57,6 +53,7 @@ const styles = theme => ({
     background: 'none',
     border: 'none',
     cursor: 'pointer',
+    outline: 'none',
     padding: 0,
     position: 'absolute',
     right: 0,
@@ -73,8 +70,8 @@ const styles = theme => ({
     marginTop: -8,
   },
   searchBarInput: {
-    paddingTop: 6,
-    paddingBottom: 7,
+    paddingTop: 8,
+    paddingBottom: 8,
   },
   noRestaurant: {
     textAlign: 'center',
@@ -110,7 +107,7 @@ class RestaurantListPage extends React.Component {
   state = {
     restaurants: null,
     categories: null,
-    loading: false,
+    loading: null,
     error: null,
 
     categoriesExpanded: false,
@@ -150,12 +147,20 @@ class RestaurantListPage extends React.Component {
     });
   }, 500);
 
+  componentDidMount() {
+    this.loadList();
+  }
+
   componentDidUpdate(prevProps, _prevState, _prevContext) {
     const { selectedAddress, currentLocation } = this.props;
     if (prevProps.selectedAddress !== selectedAddress
       || (selectedAddress === 0 && prevProps.currentLocation !== currentLocation)) {
       this.loadList();
     }
+  }
+
+  componentWillUnmount() {
+    Axios.cancelRequest(this.state.loading);
   }
 
   handleCategoriesExpanderClicked = () => {
@@ -237,10 +242,8 @@ class RestaurantListPage extends React.Component {
         address_id: selectedAddress,
       };
     }
-    this.setState({
-      loading: true,
-    });
-    Api.restaurantList(params).then((res) => {
+    Axios.cancelRequest(this.state.loading);
+    const loading = Api.restaurantList(params).then((res) => {
       const { restaurants, categories } = res.data;
       const categoriesSelected = Map();
       categories.forEach((category) => {
@@ -253,15 +256,16 @@ class RestaurantListPage extends React.Component {
         categories,
         categoriesSelected,
         error: null,
-        loading: false,
+        loading: null,
       });
     }).catch((err) => {
       this.setState({
         restaurants: {},
         error: err.response.message,
-        loading: false,
+        loading: null,
       });
     });
+    this.setState({ loading });
   }
 
   filterAccepted(restaurant) {
@@ -345,138 +349,133 @@ class RestaurantListPage extends React.Component {
         return 0;
       });
     return (
-      <DocumentTitle title="Restaurants">
-        <div>
-          <Typography variant="h4" component="h1">
-          Restaurants
-          </Typography>
-          <Divider className={classes.divider} />
-          <OptionListItem label="Address">
-            <AddressSelector />
-          </OptionListItem>
-          <Divider className={classes.optionDivider} light />
-          <OptionListItem label="Categories">
-            <Collapse in={categoriesExpanded} collapsedHeight="37px">
-              <div className={classes.optionRow}>
-                <button
-                  className={classes.categoriesExpander}
-                  onClick={this.handleCategoriesExpanderClicked}
-                  type="button"
-                >
-                  <ExpandMore
-                    className={categoriesExpanded
-                      ? classNames(classes.categoriesExpanderIcon,
-                        classes.categoriesExpanderIconExpanded)
-                      : classes.categoriesExpanderIcon}
-                    fontSize="small"
-                  />
-                </button>
-                <SwitchButton
-                  active={selectedAllCategories}
-                  label="All"
-                  onClick={this.handleCategoryClicked(0)}
+      <MainContent title="Restaurants">
+        <OptionListItem label="Address">
+          <AddressSelector />
+        </OptionListItem>
+        <Divider className={classes.optionDivider} light />
+        <OptionListItem label="Categories">
+          <Collapse in={categoriesExpanded} collapsedHeight="43px">
+            <div className={classes.optionRow}>
+              <button
+                className={classes.categoriesExpander}
+                onClick={this.handleCategoriesExpanderClicked}
+                type="button"
+              >
+                <ExpandMore
+                  className={categoriesExpanded
+                    ? classNames(classes.categoriesExpanderIcon,
+                      classes.categoriesExpanderIconExpanded)
+                    : classes.categoriesExpanderIcon}
+                  fontSize="small"
                 />
-                {categories !== null && categories.map(category => (
-                  <SwitchButton
-                    active={categoriesSelected.get(category.id) === true}
-                    key={category.id}
-                    label={category.name}
-                    onClick={this.handleCategoryClicked(category.id)}
-                  />
-                ))}
-              </div>
-            </Collapse>
-          </OptionListItem>
-          <Divider className={classes.optionDivider} light />
-          <OptionListItem label="Filters">
-            <div className={classes.optionRow}>
+              </button>
               <SwitchButton
-                active={filterIsOpen}
-                onClick={this.handleIsOpenClicked}
-                label="Opened"
+                active={selectedAllCategories}
+                label="All"
+                onClick={this.handleCategoryClicked(0)}
               />
-              <NumericFilter
-                label="Rating"
-                value={filterRating}
-                onChange={this.handleFilterChange('filterRating')}
-              />
-              <NumericFilter
-                label="Distance"
-                value={filterDistance}
-                onChange={this.handleFilterChange('filterDistance')}
-              />
-              <NumericFilter
-                label="Delivery time"
-                value={filterDeliveryTime}
-                onChange={this.handleFilterChange('filterDeliveryTime')}
-              />
-              <NumericFilter
-                label="Delivery fee"
-                value={filterDeliveryFee}
-                onChange={this.handleFilterChange('filterDeliveryFee')}
-              />
-              <NumericFilter
-                label="Order min."
-                value={filterOrderMinimum}
-                onChange={this.handleFilterChange('filterOrderMinimum')}
-              />
+              {categories !== null && categories.map(category => (
+                <SwitchButton
+                  active={categoriesSelected.get(category.id) === true}
+                  key={category.id}
+                  label={category.name}
+                  onClick={this.handleCategoryClicked(category.id)}
+                />
+              ))}
             </div>
-          </OptionListItem>
-          <Divider className={classes.optionDivider} light />
-          <OptionListItem label="Order By">
-            <div className={classes.optionRow}>
-              <SortSwitch
-                label="Distance"
-                active={orderBy === 'distance'}
-                isDesc={orderByDesc}
-                onClick={this.handleSortClick('distance')}
-              />
-              <SortSwitch
-                label="Rating"
-                active={orderBy === 'rating'}
-                isDesc={orderByDesc}
-                defaultDesc
-                onClick={this.handleSortClick('rating')}
-              />
-              <SortSwitch
-                label="Delivery time"
-                active={orderBy === 'delivery_time'}
-                isDesc={orderByDesc}
-                onClick={this.handleSortClick('delivery_time')}
-              />
-              <SortSwitch
-                label="Delivery fee"
-                active={orderBy === 'delivery_fee'}
-                isDesc={orderByDesc}
-                onClick={this.handleSortClick('delivery_fee')}
-              />
-              <SortSwitch
-                label="Order min."
-                active={orderBy === 'order_minimum'}
-                isDesc={orderByDesc}
-                onClick={this.handleSortClick('order_minimum')}
-              />
-            </div>
-          </OptionListItem>
-          <Divider className={classes.optionDivider} light />
-          <OptionListItem label="Search">
-            <TextField
-              variant="outlined"
-              InputProps={{
-                classes: {
-                  input: classes.searchBarInput,
-                },
-              }}
-              onChange={this.handleSearchChange}
-              fullWidth
+          </Collapse>
+        </OptionListItem>
+        <Divider className={classes.optionDivider} light />
+        <OptionListItem label="Filters">
+          <div className={classes.optionRow}>
+            <SwitchButton
+              active={filterIsOpen}
+              onClick={this.handleIsOpenClicked}
+              label="Opened"
             />
-          </OptionListItem>
-          <div className={classes.restaurantListContainer}>
-            {loading
-            && <LineProgress />
+            <NumericFilter
+              label="Rating"
+              value={filterRating}
+              onChange={this.handleFilterChange('filterRating')}
+            />
+            <NumericFilter
+              label="Distance"
+              value={filterDistance}
+              onChange={this.handleFilterChange('filterDistance')}
+            />
+            <NumericFilter
+              label="Delivery time"
+              value={filterDeliveryTime}
+              onChange={this.handleFilterChange('filterDeliveryTime')}
+            />
+            <NumericFilter
+              label="Delivery fee"
+              value={filterDeliveryFee}
+              onChange={this.handleFilterChange('filterDeliveryFee')}
+            />
+            <NumericFilter
+              label="Order min."
+              value={filterOrderMinimum}
+              onChange={this.handleFilterChange('filterOrderMinimum')}
+            />
+          </div>
+        </OptionListItem>
+        <Divider className={classes.optionDivider} light />
+        <OptionListItem label="Order By">
+          <div className={classes.optionRow}>
+            <SortSwitch
+              label="Distance"
+              active={orderBy === 'distance'}
+              isDesc={orderByDesc}
+              onClick={this.handleSortClick('distance')}
+            />
+            <SortSwitch
+              label="Rating"
+              active={orderBy === 'rating'}
+              isDesc={orderByDesc}
+              defaultDesc
+              onClick={this.handleSortClick('rating')}
+            />
+            <SortSwitch
+              label="Delivery time"
+              active={orderBy === 'delivery_time'}
+              isDesc={orderByDesc}
+              onClick={this.handleSortClick('delivery_time')}
+            />
+            <SortSwitch
+              label="Delivery fee"
+              active={orderBy === 'delivery_fee'}
+              isDesc={orderByDesc}
+              onClick={this.handleSortClick('delivery_fee')}
+            />
+            <SortSwitch
+              label="Order min."
+              active={orderBy === 'order_minimum'}
+              isDesc={orderByDesc}
+              onClick={this.handleSortClick('order_minimum')}
+            />
+          </div>
+        </OptionListItem>
+        <Divider className={classes.optionDivider} light />
+        <OptionListItem label="Search">
+          <TextField
+            variant="outlined"
+            InputProps={{
+              classes: {
+                input: classes.searchBarInput,
+              },
+            }}
+            onChange={this.handleSearchChange}
+            fullWidth
+          />
+        </OptionListItem>
+        <div className={classes.restaurantListContainer}>
+          {loading !== null
+          && <LineProgress />
           }
-            {sortedRestaurants !== null && sortedRestaurants.length === 0
-            && (
+          {sortedRestaurants !== null && sortedRestaurants.length === 0
+          && (
             <Typography
               className={classes.noRestaurant}
               variant="h5"
@@ -484,20 +483,19 @@ class RestaurantListPage extends React.Component {
             >
               There is no restaurant.
             </Typography>
-            )
+          )
           }
-            <div className={classes.restaurantList}>
-              {sortedRestaurants !== null && sortedRestaurants.map(restaurant => (
-                <div className={classes.restaurantListItem} key={restaurant.id}>
-                  <RestaurantListItem
-                    restaurant={restaurant}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className={classes.restaurantList}>
+            {sortedRestaurants !== null && sortedRestaurants.map(restaurant => (
+              <div className={classes.restaurantListItem} key={restaurant.id}>
+                <RestaurantListItem
+                  restaurant={restaurant}
+                />
+              </div>
+            ))}
           </div>
         </div>
-      </DocumentTitle>
+      </MainContent>
     );
   }
 }

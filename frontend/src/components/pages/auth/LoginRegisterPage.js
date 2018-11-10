@@ -13,6 +13,7 @@ import _ from 'lodash';
 import Auth from 'facades/Auth';
 import Api from 'facades/Api';
 import Form from 'facades/Form';
+import Axios from 'facades/Axios';
 import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import DocumentTitle from 'components/template/DocumentTitle';
@@ -52,8 +53,16 @@ class LoginRegisterPage extends React.Component {
     email: '',
     password: '',
     confirmPassword: '', // eslint-disable-line react/no-unused-state
-    errors: [],
+    errors: {},
+    loggingIn: null,
+    signingUp: null,
   };
+
+  componentWillUnmount() {
+    const { loggingIn, signingUp } = this.state;
+    Axios.cancelRequest(loggingIn);
+    Axios.cancelRequest(signingUp);
+  }
 
   handleTabChange = (_e, tab) => {
     const { history, location } = this.props;
@@ -61,15 +70,20 @@ class LoginRegisterPage extends React.Component {
       pathname: `/${tab}`,
       search: location.search,
     });
+    const { loggingIn, signingUp } = this.state;
+    Axios.cancelRequest(loggingIn);
+    Axios.cancelRequest(signingUp);
     this.setState({
-      errors: [],
+      errors: {},
+      loggingIn: null,
+      signingUp: null,
     });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
-      errors: [],
+      errors: {},
     });
     const { location } = this.props;
     if (location.pathname === '/login') {
@@ -80,25 +94,26 @@ class LoginRegisterPage extends React.Component {
   };
 
   handleLogin() {
-    Api.login({
-      email: this.state.email,
-      password: this.state.password,
-    })
-      .then(Auth.authenticateFromResponse(this))
-      .catch(Form.handleErrors(this));
+    Axios.cancelRequest(this.state.loggingIn);
+    const { email, password } = this.state;
+    this.setState({
+      loggingIn: Api.login(email, password)
+        .then(Auth.authenticateFromResponse(this))
+        .catch(Form.handleErrors(this)),
+    });
   }
 
   handleRegister() {
     if (!Form.confirmPassword(this)) {
       return;
     }
-    Api.register({
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-    })
-      .then(Auth.authenticateFromResponse(this))
-      .catch(Form.handleErrors(this));
+    Axios.cancelRequest(this.state.signingUp);
+    const { name, email, password } = this.state;
+    this.setState({
+      signingUp: Api.register(name, email, password)
+        .then(Auth.authenticateFromResponse(this))
+        .catch(Form.handleErrors(this)),
+    });
   }
 
   render() {

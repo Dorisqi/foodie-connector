@@ -1,9 +1,9 @@
-import update from 'immutability-helper';
-
 class Form {
   static handleInputChange = (component, name) => (event) => {
+    const errors = { ...component.state.errors };
+    delete errors[name];
     const state = {
-      errors: update(component.state.errors, { $unset: [name] }),
+      errors,
     };
     state[name] = event.target.value;
     component.setState(state);

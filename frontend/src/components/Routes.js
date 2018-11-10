@@ -7,6 +7,7 @@ import ResetPasswordPage from 'components/pages/auth/ResetPasswordPage';
 import LogoutPage from 'components/pages/auth/LogoutPage';
 
 import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
+import RestaurantDetailPage from 'components/pages/restaurant/RestaurantDetailPage';
 
 import NotFoundPage from 'components/pages/error/NotFoundPage';
 
@@ -20,6 +21,7 @@ const Routes = () => (
     <PrivateRoute path="/logout" component={LogoutPage} />
 
     <PrivateRoute path="/" exact component={RestaurantListPage} />
+    <PrivateRoute path="/restaurants/:id" component={RestaurantDetailPage} />
 
     <Route component={NotFoundPage} />
   </Switch>

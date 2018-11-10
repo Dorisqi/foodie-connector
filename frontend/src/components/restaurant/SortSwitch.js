@@ -7,22 +7,20 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 
 const styles = theme => ({
   sortSwitch: {
-    height: 32,
     marginBottom: theme.spacing.unit / 2,
     marginTop: theme.spacing.unit / 2,
     marginRight: theme.spacing.unit,
-    minHeight: 32,
   },
 });
 
 class SortSwitch extends React.Component {
   static defaultProps = {
     defaultDesc: false,
-  }
+  };
 
   handleSortSwitchClick = (e) => {
     this.props.onClick(e);
-  }
+  };
 
   render() {
     const {

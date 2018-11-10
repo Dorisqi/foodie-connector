@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import apiList from '../../apiList';
 import Menu from '../../components/Menu/Menu';
-import Cart from '../../components/Cart/Cart';
+import Cart from '../../components/CartOld/Cart';
 import RestaurantInfo from '../../components/RestaurantInfo/RestaurantInfo';
 import CreateorderCard from '../../components/GrouporderInfo/CreateorderCard';
 import ConfirmOrder from '../../components/ConfirmOrder/ConfirmOrder';

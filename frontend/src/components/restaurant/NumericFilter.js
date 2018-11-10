@@ -14,7 +14,7 @@ const styles = theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     padding: '7px 8px',
-    height: 32,
+    height: 35,
     marginTop: theme.spacing.unit / 2,
     marginRight: theme.spacing.unit,
     marginBottom: theme.spacing.unit / 2,

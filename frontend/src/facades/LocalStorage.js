@@ -1,23 +1,20 @@
 class LocalStorage {
-  static instance = null;
+  static localStorage = localStorage;
 
-  static initialize(instance) {
-    if (this.instance !== null) {
-      return;
-    }
-    this.instance = instance;
+  static inject(localStorage) {
+    this.localStorage = localStorage;
   }
 
   static getItem(key) {
-    return this.instance.getItem(key);
+    return this.localStorage.getItem(key);
   }
 
   static setItem(key, value) {
-    this.instance.setItem(key, value);
+    this.localStorage.setItem(key, value);
   }
 
   static removeItem(key) {
-    this.instance.removeItem(key);
+    this.localStorage.removeItem(key);
   }
 }
 

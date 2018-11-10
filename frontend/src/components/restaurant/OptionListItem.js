@@ -10,8 +10,8 @@ const styles = () => ({
     lineHeight: '1.1875em',
   },
   label: {
-    paddingTop: 6,
-    paddingBottom: 7,
+    paddingTop: 8,
+    paddingBottom: 8,
     minWidth: 120,
   },
   content: {

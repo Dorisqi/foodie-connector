@@ -13,11 +13,11 @@ class Cart extends Model
     protected $primaryKey = 'api_user_id';
 
     protected $fillable = [
-        'cart',
+        'cart'
     ];
 
     protected $hidden = [
-        'api_user_id',
+        'api_user_id', 'restaurant_id',
     ];
 
     public function user()
@@ -110,6 +110,7 @@ class Cart extends Model
                 unset($optionGroups[$optionGroupId]);
             }
 
+            $cartItem['product_price'] = round($singlePrice, 2);
             $subtotal += $singlePrice * $productAmount;
             array_push($cart, $cartItem);
         }
@@ -120,7 +121,7 @@ class Cart extends Model
         if ($updated || $saveAfterCalculation) {
             $this->save();
         }
-        $this->localSubtotal = $subtotal;
+        $this->localSubtotal = round($subtotal, 2);
     }
 
     public function getSubtotalAttribute()

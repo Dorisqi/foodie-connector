@@ -1,23 +1,22 @@
 import Auth from './Auth';
+import axios from './Axios';
 
 class Api {
-  static axios = null;
-
   /* --- Auth --- */
-  static login(data) {
-    return this.instance(false).post('/auth/login', data);
+  static login(email, password) {
+    return this.instance(false).post('/auth/login', { email, password });
   }
 
-  static register(data) {
-    return this.instance(false).post('/auth/register', data);
+  static register(name, email, password) {
+    return this.instance(false).post('/auth/register', { name, email, password });
   }
 
-  static resetPasswordEmail(data) {
-    return this.instance(false).post('/auth/reset-password-email', data);
+  static resetPasswordEmail(email) {
+    return this.instance(false).post('/auth/reset-password-email', { email });
   }
 
-  static resetPassword(data) {
-    return this.instance(false).post('/auth/reset-password', data);
+  static resetPassword(email, token, password) {
+    return this.instance(false).post('/auth/reset-password', { email, token, password });
   }
 
   /* --- Address --- */
@@ -32,15 +31,28 @@ class Api {
     });
   }
 
-  static initialize(axios) {
-    if (this.axios !== null) {
-      return;
-    }
-    Api.axios = axios;
+  /* --- Cart --- */
+  static cartShow() {
+    return this.instance().get('/cart');
+  }
+
+  static cartUpdate(restaurantId, cart) {
+    return this.instance().put('/cart', {
+      restaurant_id: restaurantId,
+      cart,
+    });
+  }
+
+  static restaurantShow(id, withMenu = true) {
+    return this.instance().get(`/restaurants/${id}`, {
+      params: {
+        with_menu: withMenu,
+      },
+    });
   }
 
   static instance(requireAuth = true) {
-    const instance = Api.axios.create({
+    const instance = axios.create({
       baseURL: process.env.REACT_APP_API_BASE_URL,
     });
 
