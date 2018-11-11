@@ -6,11 +6,17 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import MainContent from 'components/template/MainContent';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import ChangePassword from 'components/profile/ChangePassword';
 import InputForm from 'components/profile/InputForm';
+import { loadAddress, selectAddress } from 'actions/addressActions';
+import store from 'store';
 
 const styles = theme => ({
   root: {
@@ -25,6 +31,9 @@ const styles = theme => ({
   sectionTitle: {
     marginBottom: theme.spacing.unit,
   },
+  sectionTitleWrap: {
+    paddingBottom: 0,
+  },
   attributeForm: {
     display: 'flex',
   },
@@ -37,17 +46,19 @@ const styles = theme => ({
 class ProfilePage extends React.Component {
   state = {
     profile: null,
+    cards: null,
     changingPassword: false,
     loadingProfile: null,
+    loadingAddress: null,
+    loadingCard: null,
   };
 
   componentDidMount() {
     Axios.cancelRequest(this.state.loadingProfile);
     this.setState({
       loadingProfile: Api.profileShow().then((res) => {
-        const profile = res.data;
         this.setState({
-          profile,
+          profile: res.data,
           loadingProfile: null,
         });
       }).catch((err) => {
@@ -56,11 +67,45 @@ class ProfilePage extends React.Component {
         });
         throw err;
       }),
+      loadingAddress: Api.addressList().then((res) => {
+        this.setState({
+          loadingAddress: null,
+        });
+        const addresses = res.data;
+        store.dispatch(loadAddress(addresses));
+        if (addresses.length === 0) {
+          store.dispatch(selectAddress(0));
+        } else {
+          addresses.forEach((address) => {
+            if (address.is_default) {
+              store.dispatch(selectAddress(address.id));
+            }
+          });
+        }
+      }).catch((err) => {
+        this.setState({
+          loadingAddress: null,
+        });
+        throw err;
+      }),
+      loadingCard: Api.cardList().then((res) => {
+        this.setState({
+          cards: res.data,
+          loadingCard: null,
+        });
+      }).catch((err) => {
+        this.setState({
+          loadingCard: null,
+        });
+        throw err;
+      }),
     });
   }
 
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loadingProfile);
+    Axios.cancelRequest(this.state.loadingAddress);
+    Axios.cancelRequest(this.state.loadingCard);
   }
 
   handleProfileChange = (profile) => {
@@ -82,8 +127,15 @@ class ProfilePage extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { loadingProfile, profile, changingPassword } = this.state;
+    const { classes, addresses } = this.props;
+    const {
+      loadingProfile,
+      loadingAddress,
+      loadingCard,
+      profile,
+      cards,
+      changingPassword,
+    } = this.state;
     return (
       <MainContent title="Profile">
         <div className={classes.root}>
@@ -129,14 +181,89 @@ class ProfilePage extends React.Component {
               </CardContent>
             </Card>
           </div>
+          <div className={classes.section}>
+            <Card>
+              <CardContent className={classes.sectionTitleWrap}>
+                <Typography className={classes.sectionTitle} variant="h5" component="h2">
+                  Addresses
+                </Typography>
+                {loadingAddress
+                  && <LinearProgress />
+                }
+              </CardContent>
+              {addresses !== null
+                  && (
+                  <List>
+                    <ListItem button>
+                      <ListItemText primary="Add New Address" />
+                    </ListItem>
+                    {addresses.map(address => (
+                      <ListItem
+                        button
+                        key={address.id}
+                      >
+                        <ListItemText
+                          primary={address.name}
+                          secondary={`${address.line_1}, ${address.line_2}, ${address.city}, ${address.state} ${address.zip_code}`}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                  )
+                }
+            </Card>
+          </div>
+          <div className={classes.section}>
+            <Card>
+              <CardContent className={classes.sectionTitleWrap}>
+                <Typography className={classes.sectionTitle} variant="h5" component="h2">
+                  Cards
+                </Typography>
+                {loadingCard
+                && <LinearProgress />
+                }
+              </CardContent>
+              {cards !== null
+              && (
+              <List>
+                <ListItem button>
+                  <ListItemText primary="Add New Card" />
+                </ListItem>
+                {cards.map(card => (
+                  <ListItem
+                    button
+                    key={card.id}
+                  >
+                    <ListItemText
+                      primary={card.nickname}
+                      secondary={`${card.brand} card ends with ${card.last_four}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+              )
+              }
+            </Card>
+          </div>
         </div>
       </MainContent>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  addresses: state.address.addresses,
+});
+
 ProfilePage.propTypes = {
   classes: PropTypes.object.isRequired,
+  addresses: PropTypes.array,
 };
 
-export default withStyles(styles)(ProfilePage);
+ProfilePage.defaultProps = {
+  addresses: null,
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps)(ProfilePage),
+);

@@ -44,6 +44,11 @@ class Api {
     return Api.instance().get('/addresses');
   }
 
+  /* --- Card --- */
+  static cardList() {
+    return Api.instance().get('/cards');
+  }
+
   /* --- Restaurant --- */
   static restaurantList(data) {
     return Api.instance().get('/restaurants', {
