@@ -1,8 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Routes from 'components/route/Routes';
+import Snackbar from 'facades/Snackbar';
+import Auth from 'facades/Auth';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -29,6 +32,27 @@ const styles = () => ({
 });
 
 class Root extends React.Component {
+  constructor(props) {
+    super(props);
+
+    Snackbar.inject(this.props.enqueueSnackbar);
+    window.addEventListener('unhandledrejection', this.handleApiError);
+    window.addEventListener('error', this.handleApiError);
+  }
+
+  handleApiError(err) {
+    let response = err.response;
+    if (response === undefined && err.reason !== undefined) {
+      response = err.reason.response;
+    }
+    if (response !== undefined && response.status === 401) {
+      Auth.deauthenticateUser();
+      this.forceUpdate();
+      return;
+    }
+    Snackbar.error(err.message);
+  }
+
   render() {
     const { classes, location } = this.props;
     const withHeader = location.pathname !== '/login'
@@ -67,6 +91,7 @@ Root.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   classes: PropTypes.object.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Root);
+export default withStyles(styles)(withSnackbar(Root));

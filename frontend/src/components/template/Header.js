@@ -12,8 +12,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-import Auth from '../../Auth/Auth';
-
 const styles = () => ({
   root: {
     width: '100%',
@@ -66,19 +64,29 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleProfileMenuClose}
       >
-        <MenuItem>My Profile</MenuItem>
-        {location.pathname !== '/logout'
-        && (
         <MenuItem
           button
           component={Link}
           to={{
-            pathname: '/logout',
-            search: queryString.stringify({ from: location.pathname }),
+            pathname: '/profile',
           }}
+          onClick={this.handleProfileMenuClose}
         >
-          Log Out
+          Profile
         </MenuItem>
+        {location.pathname !== '/logout'
+        && (
+          <MenuItem
+            button
+            component={Link}
+            to={{
+              pathname: '/logout',
+              search: queryString.stringify({ from: location.pathname }),
+            }}
+            onClick={this.handleProfileMenuClose}
+          >
+            Log Out
+          </MenuItem>
         )
         }
       </Menu>
@@ -95,19 +103,15 @@ class Header extends React.Component {
             </Button>
             <div className={classes.grow} />
             <div className={classes.rightSection}>
-              {Auth.isUserAuthenticated() ? (
-                <IconButton
-                  aria-owns={isMenuOpen ? 'material-appbar' : null}
-                  aria-haspopup="true"
-                  className={classes.accountButton}
-                  onClick={this.handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              ) : (
-                <Button color="inherit" to="/login">Login</Button>
-              )}
+              <IconButton
+                aria-owns={isMenuOpen ? 'material-appbar' : null}
+                aria-haspopup="true"
+                className={classes.accountButton}
+                onClick={this.handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
             </div>
           </Toolbar>
         </AppBar>

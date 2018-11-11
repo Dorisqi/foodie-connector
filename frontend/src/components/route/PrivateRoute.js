@@ -5,18 +5,6 @@ import queryString from 'query-string';
 import Auth from 'facades/Auth';
 
 class PrivateRoute extends React.Component {
-  constructor(props) {
-    super(props);
-
-    window.addEventListener('unhandledrejection', (err) => {
-      const response = err.reason.response;
-      if (response !== undefined && response.status === 401) {
-        Auth.deauthenticateUser();
-        this.forceUpdate();
-      }
-    });
-  }
-
   render() {
     const { component: Component, ...rest } = this.props;
     return (

@@ -12,6 +12,7 @@
     "i": "^0.3.6",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
+    "notistack": "^0.3.7",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "react": "^16.5.2",
@@ -29,7 +30,7 @@
     "build": "cross-env NODE_PATH=src/ react-scripts build",
     "test": "cross-env NODE_PATH=src/ CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint src/components/route/**/*.js src/facades/**/*.js src/components/pages/**/*.js src/components/form/**/*.js src/components/restaurant/**/*.js src/components/template/**/*.js src/components/cart/**/*.js src/App.js src/index.js src/setupTests.js src/__tests__/**/*.js src/__mocks__/**/*.js"
+    "lint": "eslint src/components/route/**/*.js src/facades/**/*.js src/components/address/**/*.js src/components/pages/**/*.js src/components/form/**/*.js src/components/restaurant/**/*.js src/components/template/**/*.js src/components/cart/**/*.js src/App.js src/components/profile/**/*.js src/index.js src/setupTests.js src/__tests__/**/*.js src/__mocks__/**/*.js"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",

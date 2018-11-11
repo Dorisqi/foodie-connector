@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import Form from '../../facades/Form';
+import Form from 'facades/Form';
 
 const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
+  textField: {
+    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
   },
 });
 
@@ -33,7 +34,7 @@ class InputTextField extends React.Component {
         id={name}
         type={type}
         label={label}
-        className={classes.margin}
+        className={classes.textField}
         value={parent.state[name]}
         onChange={Form.handleInputChange(parent, name)}
         error={parent.state.errors[name] !== undefined}

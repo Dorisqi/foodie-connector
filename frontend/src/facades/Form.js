@@ -1,3 +1,5 @@
+import Format from './Format';
+
 class Form {
   static handleInputChange = (component, name) => (event) => {
     const errors = { ...component.state.errors };
@@ -9,7 +11,7 @@ class Form {
     component.setState(state);
   };
 
-  static handleErrors = component => (err) => {
+  static handleErrors = (component, requestingName = 'requesting') => (err) => {
     const response = err.response;
     const errors = {};
     switch (response.status) {
@@ -28,7 +30,7 @@ class Form {
       case 422: {
         const errorData = response.data.data;
         Object.entries(errorData).forEach((entry) => {
-          errors[entry[0]] = entry[1][0];
+          errors[Format.underline2camel(entry[0])] = entry[1][0];
         });
         break;
       }
@@ -38,17 +40,20 @@ class Form {
           `Please try again in ${response.headers['retry-after']} seconds.`,
         ];
         break;
-      default:
-        errors.form = [
-          'Unknown error',
-          JSON.stringify(response.data),
-        ];
+      default: {
+        const state = {};
+        state[requestingName] = null;
+        component.setState(state);
+        throw err;
+      }
     }
-    component.setState({ errors });
+    const state = { errors };
+    state[requestingName] = null;
+    component.setState(state);
   };
 
-  static confirmPassword(component) {
-    if (component.state.password !== component.state.confirmPassword) {
+  static confirmPassword(component, passwordName = 'password') {
+    if (component.state[passwordName] !== component.state.confirmPassword) {
       component.setState({
         errors: {
           confirmPassword: 'The passwords do not match.',

@@ -18,6 +18,7 @@ import InputTextField from 'components/form/InputTextField';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import DocumentTitle from 'components/template/DocumentTitle';
 import AuthTemplate from 'components/template/AuthTemplate';
+import ProgressButton from 'components/form/ProgressButton';
 
 const styles = theme => ({
   title: {
@@ -33,7 +34,8 @@ const styles = theme => ({
     color: orange['500'],
   },
   margin: {
-    margin: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
   formError: {
     fontSize: '1rem',
@@ -54,14 +56,11 @@ class LoginRegisterPage extends React.Component {
     password: '',
     confirmPassword: '', // eslint-disable-line react/no-unused-state
     errors: {},
-    loggingIn: null,
-    signingUp: null,
+    requesting: null,
   };
 
   componentWillUnmount() {
-    const { loggingIn, signingUp } = this.state;
-    Axios.cancelRequest(loggingIn);
-    Axios.cancelRequest(signingUp);
+    Axios.cancelRequest(this.state.requesting);
   }
 
   handleTabChange = (_e, tab) => {
@@ -70,21 +69,18 @@ class LoginRegisterPage extends React.Component {
       pathname: `/${tab}`,
       search: location.search,
     });
-    const { loggingIn, signingUp } = this.state;
-    Axios.cancelRequest(loggingIn);
-    Axios.cancelRequest(signingUp);
+    Axios.cancelRequest(this.state.requesting);
     this.setState({
       errors: {},
-      loggingIn: null,
-      signingUp: null,
+      requesting: null,
     });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      errors: {},
-    });
+    if (this.state.requesting !== null) {
+      return;
+    }
     const { location } = this.props;
     if (location.pathname === '/login') {
       this.handleLogin();
@@ -94,12 +90,12 @@ class LoginRegisterPage extends React.Component {
   };
 
   handleLogin() {
-    Axios.cancelRequest(this.state.loggingIn);
     const { email, password } = this.state;
     this.setState({
-      loggingIn: Api.login(email, password)
+      requesting: Api.login(email, password)
         .then(Auth.authenticateFromResponse(this))
         .catch(Form.handleErrors(this)),
+      errors: {},
     });
   }
 
@@ -107,18 +103,18 @@ class LoginRegisterPage extends React.Component {
     if (!Form.confirmPassword(this)) {
       return;
     }
-    Axios.cancelRequest(this.state.signingUp);
     const { name, email, password } = this.state;
     this.setState({
-      signingUp: Api.register(name, email, password)
+      requesting: Api.register(name, email, password)
         .then(Auth.authenticateFromResponse(this))
         .catch(Form.handleErrors(this)),
+      errors: {},
     });
   }
 
   render() {
     const { classes, location } = this.props;
-    const { errors } = this.state;
+    const { errors, requesting } = this.state;
     const queries = queryString.parse(location.search);
     const showWarningText = !_.isNil(queries.from);
     const isLogin = location.pathname === '/login';
@@ -206,9 +202,15 @@ class LoginRegisterPage extends React.Component {
             )
             }
             <FormControl className={[classes.margin, classes.submitButton].join(' ')} fullWidth>
-              <Button type="submit" variant="contained" color="primary">
+              <ProgressButton
+                type="submit"
+                variant="contained"
+                color="primary"
+                loading={requesting !== null}
+                fullWidth
+              >
                 {isLogin ? 'Log In' : 'Sign Up'}
-              </Button>
+              </ProgressButton>
             </FormControl>
           </form>
         </AuthTemplate>
