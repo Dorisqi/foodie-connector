@@ -1712,9 +1712,14 @@
                     "old_password": "wrong",
                     "new_password": "new123456"
                 },
-                "status_code": 401,
+                "status_code": 422,
                 "response": {
-                    "message": "The old password does not match our records."
+                    "message": "Validation failed.",
+                    "data": {
+                        "old_password": [
+                            "The old password does not match our records."
+                        ]
+                    }
                 },
                 "response_header": null
             }

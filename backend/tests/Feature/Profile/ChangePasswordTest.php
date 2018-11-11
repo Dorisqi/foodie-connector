@@ -37,7 +37,7 @@ class ChangePasswordTest extends ApiTestCase
         $this->assertFailed([
             'old_password' => 'wrong',
             'new_password' => $this::NEW_PASSWORD,
-        ], 401);
+        ], 422);
     }
 
     protected function method()

@@ -108,7 +108,11 @@ class ApiException extends Exception
     /* Profile */
     public static function invalidOldPassword()
     {
-        return new ApiException('The old password does not match our records.', 401);
+        return self::validationFailedErrors([
+            'old_password' => [
+                'The old password does not match our records.',
+            ],
+        ]);
     }
 
     /* Address */

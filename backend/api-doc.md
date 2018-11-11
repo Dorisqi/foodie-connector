@@ -888,31 +888,6 @@ This page requires authentication.
     "message": "This page requires authentication."
 }
 ```
-#### **Status Code: 401**
-
-The old password does not match our records.
-
-**URI**: /api/v1/profile/password
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "old_password": "wrong",
-    "new_password": "new123456"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The old password does not match our records."
-}
-```
 #### **Status Code: 422**
 
 Validation failed.
@@ -939,6 +914,36 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "data": {
         "new_password": [
             "The new password must have at least 6 characters and contains numbers and letters."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "wrong",
+    "new_password": "new123456"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "old_password": [
+            "The old password does not match our records."
         ]
     }
 }
