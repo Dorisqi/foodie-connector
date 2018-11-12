@@ -47,10 +47,12 @@ class ProfilePage extends React.Component {
   state = {
     profile: null,
     cards: null,
+    orders: null,
     changingPassword: false,
     loadingProfile: null,
     loadingAddress: null,
     loadingCard: null,
+    loadingOrders: null,
   };
 
   componentDidMount() {
@@ -132,8 +134,10 @@ class ProfilePage extends React.Component {
       loadingProfile,
       loadingAddress,
       loadingCard,
+      loadingOrders,
       profile,
       cards,
+      orders,
       changingPassword,
     } = this.state;
     return (
@@ -237,6 +241,35 @@ class ProfilePage extends React.Component {
                     <ListItemText
                       primary={card.nickname}
                       secondary={`${card.brand} card ends with ${card.last_four}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+              )
+              }
+            </Card>
+          </div>
+          <div className={classes.section}>
+            <Card>
+              <CardContent className={classes.sectionTitleWrap}>
+                <Typography className={classes.sectionTitle} variant="h5" component="h2">
+                  Past Orders
+                </Typography>
+                {loadingOrders
+                && <LinearProgress />
+                }
+              </CardContent>
+              {orders !== null
+              && (
+              <List>
+                {orders.map(order => (
+                  <ListItem
+                    button
+                    key={order.id}
+                  >
+                    <ListItemText
+                      primary={order.time}
+                      secondary={`Total cost ${order.cost}`}
                     />
                   </ListItem>
                 ))}
