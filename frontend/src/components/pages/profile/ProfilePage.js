@@ -32,6 +32,9 @@ const styles = theme => ({
     width: `${100 / 3}%`,
     padding: theme.spacing.unit,
   },
+  card: {
+    marginBottom: 2 * theme.spacing.unit,
+  },
   sectionTitle: {
     marginBottom: theme.spacing.unit,
   },
@@ -189,7 +192,7 @@ class ProfilePage extends React.Component {
       <MainContent title="Profile">
         <div className={classes.root}>
           <div className={classes.section}>
-            <Card>
+            <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.sectionTitle} variant="h5" component="h2">
                   Profile
@@ -229,9 +232,36 @@ class ProfilePage extends React.Component {
                 )}
               </CardContent>
             </Card>
+            <Card className={classes.card}>
+              <CardContent className={classes.sectionTitleWrap}>
+                <Typography className={classes.sectionTitle} variant="h5" component="h2">
+                  Past Orders
+                </Typography>
+                {loadingOrders
+                && <LinearProgress />
+                }
+              </CardContent>
+              {orders !== null
+              && (
+                <List>
+                  {orders.map(order => (
+                    <ListItem
+                      button
+                      key={order.id}
+                    >
+                      <ListItemText
+                        primary={order.time}
+                        secondary={`Total cost ${order.cost}`}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              )
+              }
+            </Card>
           </div>
           <div className={classes.section}>
-            <Card>
+            <Card className={classes.card}>
               <CardContent className={classes.sectionTitleWrap}>
                 <Typography className={classes.sectionTitle} variant="h5" component="h2">
                   Addresses
@@ -281,7 +311,7 @@ class ProfilePage extends React.Component {
             </Card>
           </div>
           <div className={classes.section}>
-            <Card>
+            <Card className={classes.card}>
               <CardContent className={classes.sectionTitleWrap}>
                 <Typography className={classes.sectionTitle} variant="h5" component="h2">
                   Cards
@@ -325,35 +355,6 @@ class ProfilePage extends React.Component {
                     </ProfileItem>
                   ))}
                 </List>
-              )
-              }
-            </Card>
-          </div>
-          <div className={classes.section}>
-            <Card>
-              <CardContent className={classes.sectionTitleWrap}>
-                <Typography className={classes.sectionTitle} variant="h5" component="h2">
-                  Past Orders
-                </Typography>
-                {loadingOrders
-                && <LinearProgress />
-                }
-              </CardContent>
-              {orders !== null
-              && (
-              <List>
-                {orders.map(order => (
-                  <ListItem
-                    button
-                    key={order.id}
-                  >
-                    <ListItemText
-                      primary={order.time}
-                      secondary={`Total cost ${order.cost}`}
-                    />
-                  </ListItem>
-                ))}
-              </List>
               )
               }
             </Card>
