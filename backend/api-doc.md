@@ -983,28 +983,28 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 4,
         "name": "Test User",
         "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
+        "line_1": "134 Pierce St",
         "city": "West Lafayette",
         "state": "IN",
-        "zip_code": "47906-5123",
+        "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
         "lat": "40.4227584",
         "lng": "-86.9090892",
+        "line_2": "Apt XXX",
         "is_default": false
     },
     {
         "id": 5,
         "name": "Test User",
         "phone": "7653500000",
-        "line_1": "134 Pierce Street",
-        "line_2": "Apt XXX",
+        "line_1": "134 Pierce St",
         "city": "West Lafayette",
         "state": "IN",
-        "zip_code": "47906-5123",
+        "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
         "lat": "40.4227584",
         "lng": "-86.9090892",
+        "line_2": "Apt XXX",
         "is_default": false
     }
 ]
@@ -1034,14 +1034,10 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
+| place_id | required | string | max:255 |
+| line_2 | optional | string | nullable, max:255 |
 | name | required | string | max:255 |
 | phone | required | phone:US |  |
-| line_1 | required | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | required | string | max:255 |
-| state | required | string | max:255 |
-| zip_code | required | zip_code |  |
-| place_id | required | string | max:255 |
 | is_default | required | boolean |  |
 
 #### **Status Code: 200**
@@ -1060,11 +1056,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "phone": "7653500000",
-    "line_1": "134 Pierce Street",
+    "line_1": "134 Pierce St",
     "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
     "lat": "40.4227584",
     "lng": "-86.9090892",
@@ -1074,26 +1070,22 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": 40.4227584,
-    "lng": -86.9090892,
-    "id": 1,
-    "user": {
+[
+    {
         "id": 1,
         "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
+        "phone": "7653500000",
+        "line_1": "134 Pierce St",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "line_2": "Apt XXX",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 401**
 
@@ -1123,20 +1115,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "phone": "invalid_phone",
-    "line_1": "134 Pierce Street",
+    "line_1": "134 Pierce St",
     "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
     "lat": "40.4227584",
     "lng": "-86.9090892",
-    "user": {
-        "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
     "is_default": true
 }
 ```
@@ -1182,14 +1168,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "id": 1,
     "name": "Test User",
     "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
+    "line_1": "134 Pierce St",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
     "lat": "40.4227584",
     "lng": "-86.9090892",
+    "line_2": "Apt XXX",
     "is_default": false
 }
 ```
@@ -1235,14 +1221,10 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
+| place_id | optional | string | max:255 |
+| line_2 | optional | string | nullable, max:255 |
 | name | optional | string | max:255 |
 | phone | optional | phone:US |  |
-| line_1 | optional | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | optional | string | max:255 |
-| state | optional | string | max:255 |
-| zip_code | optional | zip_code |  |
-| place_id | optional | string | max:255 |
 | is_default | optional | boolean |  |
 
 #### **Status Code: 200**
@@ -1267,26 +1249,22 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "id": 1,
-    "name": "Changed Name",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
-    "lat": 40.4248,
-    "lng": -86.911,
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
+        "name": "Changed Name",
+        "phone": "7653500000",
+        "line_1": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47907",
+        "place_id": "ChIJPbVda67iEogRTWzmvivderE",
+        "lat": "40.4248",
+        "lng": "-86.911",
+        "line_2": "Apt XXX",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 401**
 
@@ -1375,6 +1353,11 @@ Successful operation.
 **Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[]
 ```
 #### **Status Code: 401**
 
@@ -1509,22 +1492,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "nickname": "Test Visa",
-    "brand": "Visa",
-    "last_four": "4242",
-    "expiration_month": 12,
-    "expiration_year": 2030,
-    "zip_code": "47906",
-    "id": 1,
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47906",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 401**
 
@@ -1708,22 +1687,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "id": 1,
-    "nickname": "Test Visa",
-    "brand": "Visa",
-    "last_four": "4242",
-    "expiration_month": "12",
-    "expiration_year": "2030",
-    "zip_code": "47907",
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": "12",
+        "expiration_year": "2030",
+        "zip_code": "47907",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 401**
 
@@ -1779,7 +1754,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "expiration_month": [
-            "The expiration_month must be a current or future month."
+            "The expiration month must be a current or future month."
         ]
     }
 }
@@ -1806,6 +1781,11 @@ Successful operation.
 **Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[]
 ```
 #### **Status Code: 401**
 
@@ -2613,11 +2593,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
     "is_public": "1",
-    "address_line_1": "134 Pierce Street",
+    "address_line_1": "134 Pierce St",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "lat": "40.4227584",
     "lng": "-86.9090892",
     "phone": "7653500000",

@@ -25,7 +25,7 @@ class Card extends Model
 
     public function getIsDefaultAttribute()
     {
-        return $this->user->default_card_id === $this->id;
+        return (int)$this->user->default_card_id === (int)$this->id;
     }
 
     public function setIsDefaultAttribute($value)
@@ -41,6 +41,7 @@ class Card extends Model
     {
         $data = parent::toArray();
         $data['is_default'] = $this->is_default;
+        unset($data['user']);
         return $data;
     }
 

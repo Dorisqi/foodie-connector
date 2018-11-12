@@ -86,7 +86,7 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors([
             'expiration_year' => [
-                'The expiration_year must be a current or future year.',
+                'The expiration year must be a current or future year.',
             ],
         ]);
     }
@@ -94,7 +94,15 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors([
             'expiration_month' => [
-                'The expiration_month must be a current or future month.',
+                'The expiration month must be a current or future month.',
+            ],
+        ]);
+    }
+    public static function stripeError($exception)
+    {
+        return self::validationFailedErrors([
+            'form' => [
+                $exception->getMessage(),
             ],
         ]);
     }
@@ -149,6 +157,11 @@ class ApiException extends Exception
                 'This order is no longer joinable.',
             ],
         ]);
+    }
+    
+    public static function zeroResult()
+    {
+        return new ApiException('No result found.', 404);
     }
 
     /**

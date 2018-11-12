@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\App;
 
 class AddDefaultAddressToApiUsersTable extends Migration
 {
@@ -16,7 +17,9 @@ class AddDefaultAddressToApiUsersTable extends Migration
         Schema::table('api_users', function (Blueprint $table) {
             $table->unsignedInteger('default_address_id')->nullable();
 
-            $table->foreign('default_address_id')->references('id')->on('addresses');
+            if (!App::environment('testing')) {
+                $table->foreign('default_address_id')->references('id')->on('addresses');
+            }
         });
     }
 

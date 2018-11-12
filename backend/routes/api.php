@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
         Route::resource('addresses', 'AddressController')->only([
             'index', 'store', 'show', 'update', 'destroy'
         ]);
+        Route::get('geo-coding/coords', 'AddressController@reverseGeoCodingByCoords');
 
         Route::resource('cards', 'CardController')->only([
             'index', 'store', 'show', 'update', 'destroy'

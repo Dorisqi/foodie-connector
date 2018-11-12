@@ -32,7 +32,7 @@ class CardController extends ApiController
      */
     public function index()
     {
-        return $this->response($this->user()->cards);
+        return $this->response($this->user()->cards()->get());
     }
 
     /**
@@ -84,7 +84,7 @@ class CardController extends ApiController
             throw $exception;
         }
 
-        return $this->response($card);
+        return $this->response($this->user()->cards()->get());
     }
 
     /**
@@ -136,18 +136,26 @@ class CardController extends ApiController
         try {
             DB::beginTransaction();
 
-            $customer = Customer::retrieve($this->user()->stripe_id);
-            $source = $customer->sources->retrieve($card->stripe_id);
-            if ($request->has('expiration_month')) {
-                $source->exp_month = $request->input('expiration_month');
+            if ($request->has('expiration_month')
+                || $request->has('expiration_year')
+                || $request->has('zip_code')) {
+                try {
+                    $customer = Customer::retrieve($this->user()->stripe_id);
+                    $source = $customer->sources->retrieve($card->stripe_id);
+                    if ($request->has('expiration_month')) {
+                        $source->exp_month = $request->input('expiration_month');
+                    }
+                    if ($request->has('expiration_year')) {
+                        $source->exp_year = $request->input('expiration_year');
+                    }
+                    if ($request->has('zip_code')) {
+                        $source->address_zip = $request->input('zip_code');
+                    }
+                    $source->save();
+                } catch (\Stripe\Error\Card $exception) {
+                    throw ApiException::stripeError($exception);
+                }
             }
-            if ($request->has('expiration_year')) {
-                $source->exp_year = $request->input('expiration_year');
-            }
-            if ($request->has('zip_code')) {
-                $source->address_zip = $request->input('zip_code');
-            }
-            $source->save();
 
             if ($request->has('expiration_month')) {
                 $card->expiration_month = $request->input('expiration_month');
@@ -173,7 +181,7 @@ class CardController extends ApiController
             throw $exception;
         }
 
-        return $this->response($card);
+        return $this->response($this->user()->cards()->get());
     }
 
     /**
@@ -215,7 +223,7 @@ class CardController extends ApiController
             DB::rollBack();
             throw $exception;
         }
-        return $this->response();
+        return $this->response($this->user()->cards()->get());
     }
 
     /**

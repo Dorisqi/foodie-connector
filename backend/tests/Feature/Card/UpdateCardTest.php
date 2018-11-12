@@ -29,7 +29,7 @@ class UpdateCardTest extends ApiTestCase
             'zip_code' => '47907',
             'is_default' => true,
         ]);
-        $response->assertJson($cardArray);
+        $response->assertJson([$cardArray]);
         $this->assertFailed([
             'expiration_month' => 1,
             'expiration_year' => 2018,

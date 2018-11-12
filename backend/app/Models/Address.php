@@ -23,17 +23,11 @@ class Address extends Model
 
     public function getIsDefaultAttribute()
     {
-        if (is_null($this->api_user_id)) {
-            return false;
-        }
-        return $this->user->default_address_id === $this->id;
+        return (int)$this->user->default_address_id === (int)$this->id;
     }
 
     public function setIsDefaultAttribute($value)
     {
-        if (is_null($this->api_user_id)) {
-            return;
-        }
         if ($value === true) {
             $user = $this->user;
             $user->default_address_id = $this->id;
@@ -44,9 +38,8 @@ class Address extends Model
     public function toArray()
     {
         $data = parent::toArray();
-        if (!is_null($this->api_user_id)) {
-            $data['is_default'] = $this->is_default;
-        }
+        $data['is_default'] = $this->is_default;
+        unset($data['user']);
         return $data;
     }
 }
