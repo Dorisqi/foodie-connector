@@ -192,7 +192,7 @@ ProfileItem.propTypes = {
   setDefaultApi: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   updatingDialog: PropTypes.func.isRequired,
-  children: PropTypes.oneOfTypes([
+  children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
     PropTypes.array,
