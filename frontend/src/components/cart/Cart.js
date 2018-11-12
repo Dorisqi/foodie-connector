@@ -20,6 +20,7 @@ import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
+import ProgressButton from 'components/form/ProgressButton';
 
 const styles = theme => ({
   loading: {
@@ -222,6 +223,14 @@ class Cart extends React.Component {
               />
             </ListItem>
           </List>
+          <ProgressButton
+            type="submit"
+            variant="contained"
+            color={cart.cart.length === 0? "grey" :"primary"}
+            fullWidth
+          >
+          Checkout
+          </ProgressButton>
         </Paper>
       );
   }
