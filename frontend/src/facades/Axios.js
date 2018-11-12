@@ -36,7 +36,7 @@ class Instance {
     this.defaults = instance.defaults;
   }
 
-  static configWithCancelTolen(config, cancelSource) {
+  static configWithCancelToken(config, cancelSource) {
     if (_.isNil(config)) {
       return {
         cancelToken: cancelSource.token,
@@ -51,7 +51,7 @@ class Instance {
   get(url, config) {
     const cancelSource = Axios.cancelSource();
     return new CancellablePromise(
-      this.instance.get(url, Instance.configWithCancelTolen(config, cancelSource)),
+      this.instance.get(url, Instance.configWithCancelToken(config, cancelSource)),
       cancelSource,
     );
   }
@@ -59,7 +59,7 @@ class Instance {
   post(url, data, config) {
     const cancelSource = Axios.cancelSource();
     return new CancellablePromise(
-      this.instance.post(url, data, Instance.configWithCancelTolen(config, cancelSource)),
+      this.instance.post(url, data, Instance.configWithCancelToken(config, cancelSource)),
       cancelSource,
     );
   }
@@ -67,7 +67,15 @@ class Instance {
   put(url, data, config) {
     const cancelSource = Axios.cancelSource();
     return new CancellablePromise(
-      this.instance.put(url, data, Instance.configWithCancelTolen(config, cancelSource)),
+      this.instance.put(url, data, Instance.configWithCancelToken(config, cancelSource)),
+      cancelSource,
+    );
+  }
+
+  delete(url, config) {
+    const cancelSource = Axios.cancelSource();
+    return new CancellablePromise(
+      this.instance.delete(url, Instance.configWithCancelToken(config, cancelSource)),
       cancelSource,
     );
   }

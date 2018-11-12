@@ -27,10 +27,12 @@ class InputTextField extends React.Component {
       fullWidth,
       required,
       classes,
+      ...rest
     } = this.props;
 
     return (
       <TextField
+        {...rest}
         id={name}
         type={type}
         label={label}

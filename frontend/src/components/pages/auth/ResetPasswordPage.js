@@ -17,7 +17,8 @@ const styles = theme => ({
     marginBottom: 50,
   },
   margin: {
-    margin: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -57,7 +58,7 @@ class ResetPasswordPage extends React.Component {
         this.setState({
           sentCode: true,
         });
-      }).catch(Form.handleErrors(this)),
+      }).catch(Form.handleErrors(this, false)),
     });
   };
 
@@ -78,7 +79,7 @@ class ResetPasswordPage extends React.Component {
             search: location.search,
           });
         })
-        .catch(Form.handleErrors(this)),
+        .catch(Form.handleErrors(this, false)),
     });
   };
 

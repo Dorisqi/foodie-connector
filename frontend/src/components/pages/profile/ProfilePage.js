@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import red from '@material-ui/core/colors/red';
 import MainContent from 'components/template/MainContent';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
@@ -17,6 +18,9 @@ import ChangePassword from 'components/profile/ChangePassword';
 import InputForm from 'components/profile/InputForm';
 import { loadAddress, selectAddress } from 'actions/addressActions';
 import store from 'store';
+import AddressDialog from 'components/address/AddressDialog';
+import CardDialog from 'components/card/CardDialog';
+import ProfileItem from 'components/profile/ProfileItem';
 
 const styles = theme => ({
   root: {
@@ -41,6 +45,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  itemActions: {
+    paddingTop: 0,
+    justifyContent: 'flex-end',
+  },
+  itemDelete: {
+    color: red['500'],
+  },
 });
 
 class ProfilePage extends React.Component {
@@ -51,10 +62,11 @@ class ProfilePage extends React.Component {
     loadingProfile: null,
     loadingAddress: null,
     loadingCard: null,
+    addingAddress: false,
+    addingCard: false,
   };
 
   componentDidMount() {
-    Axios.cancelRequest(this.state.loadingProfile);
     this.setState({
       loadingProfile: Api.profileShow().then((res) => {
         this.setState({
@@ -120,9 +132,41 @@ class ProfilePage extends React.Component {
     });
   };
 
-  handleChangePasswordClose = () => {
+  handleDialogClose = () => {
     this.setState({
       changingPassword: false,
+      addingAddress: false,
+      addingCard: false,
+    });
+  };
+
+  handleAddAddressClick = () => {
+    this.setState({
+      addingAddress: true,
+    });
+  };
+
+  handleAddCardClick = () => {
+    this.setState({
+      addingCard: true,
+    });
+  };
+
+  addressDeleteApi = address => () => Api.addressDelete(address.id);
+
+  addressSetDefaultApi = address => () => Api.addressSetDefault(address.id);
+
+  cardDeleteApi = card => () => Api.cardDelete(card.id);
+
+  cardSetDefaultApi = card => () => Api.cardSetDefault(card.id);
+
+  handleAddressUpdate = (res) => {
+    store.dispatch(loadAddress(res.data));
+  };
+
+  handleCardUpdate = (res) => {
+    this.setState({
+      cards: res.data,
     });
   };
 
@@ -135,6 +179,8 @@ class ProfilePage extends React.Component {
       profile,
       cards,
       changingPassword,
+      addingAddress,
+      addingCard,
     } = this.state;
     return (
       <MainContent title="Profile">
@@ -174,7 +220,7 @@ class ProfilePage extends React.Component {
                       Change Password
                     </Button>
                     {changingPassword
-                      && <ChangePassword onClose={this.handleChangePasswordClose} />
+                    && <ChangePassword onClose={this.handleDialogClose} />
                     }
                   </div>
                 )}
@@ -188,29 +234,47 @@ class ProfilePage extends React.Component {
                   Addresses
                 </Typography>
                 {loadingAddress
-                  && <LinearProgress />
+                && <LinearProgress />
                 }
               </CardContent>
               {addresses !== null
+              && (
+                <List>
+                  {addingAddress
                   && (
-                  <List>
-                    <ListItem button>
-                      <ListItemText primary="Add New Address" />
-                    </ListItem>
-                    {addresses.map(address => (
-                      <ListItem
-                        button
+                  <AddressDialog
+                    onClose={this.handleDialogClose}
+                    onUpdate={this.handleAddressUpdate}
+                  />
+                  )
+                  }
+                  <ListItem button onClick={this.handleAddAddressClick}>
+                    <ListItemText primary="Add New Address" />
+                  </ListItem>
+                  {addresses.map((address) => {
+                    const line2 = address.line_2.length > 0 ? `${address.line_2}, ` : '';
+                    const formattedAddress = `${address.line_1}, ${line2}${address.city}, ${address.state} ${address.zip_code}`;
+                    return (
+                      <ProfileItem
                         key={address.id}
+                        item={address}
+                        type="address"
+                        alias={address.name}
+                        deleteApi={this.addressDeleteApi(address)}
+                        setDefaultApi={this.addressSetDefaultApi(address)}
+                        onUpdate={this.handleAddressUpdate}
+                        updatingDialog={AddressDialog}
                       >
                         <ListItemText
                           primary={address.name}
-                          secondary={`${address.line_1}, ${address.line_2}, ${address.city}, ${address.state} ${address.zip_code}`}
+                          secondary={formattedAddress}
                         />
-                      </ListItem>
-                    ))}
-                  </List>
-                  )
-                }
+                      </ProfileItem>
+                    );
+                  })}
+                </List>
+              )
+              }
             </Card>
           </div>
           <div className={classes.section}>
@@ -225,22 +289,39 @@ class ProfilePage extends React.Component {
               </CardContent>
               {cards !== null
               && (
-              <List>
-                <ListItem button>
-                  <ListItemText primary="Add New Card" />
-                </ListItem>
-                {cards.map(card => (
-                  <ListItem
-                    button
-                    key={card.id}
-                  >
+                <List>
+                  {addingCard
+                  && (
+                  <CardDialog
+                    onClose={this.handleDialogClose}
+                    onUpdate={this.handleCardUpdate}
+                  />
+                  )
+                  }
+                  <ListItem button>
                     <ListItemText
-                      primary={card.nickname}
-                      secondary={`${card.brand} card ends with ${card.last_four}`}
+                      primary="Add New Card"
+                      onClick={this.handleAddCardClick}
                     />
                   </ListItem>
-                ))}
-              </List>
+                  {cards.map(card => (
+                    <ProfileItem
+                      key={card.id}
+                      item={card}
+                      type="card"
+                      alias={card.nickname}
+                      deleteApi={this.cardDeleteApi(card)}
+                      setDefaultApi={this.cardSetDefaultApi(card)}
+                      onUpdate={this.handleCardUpdate}
+                      updatingDialog={CardDialog}
+                    >
+                      <ListItemText
+                        primary={card.nickname}
+                        secondary={`${card.brand} card ends with ${card.last_four}`}
+                      />
+                    </ProfileItem>
+                  ))}
+                </List>
               )
               }
             </Card>

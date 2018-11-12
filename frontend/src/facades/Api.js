@@ -40,13 +40,76 @@ class Api {
   }
 
   /* --- Address --- */
+  static geoCodingByCoords(lat, lng) {
+    return Api.instance().get('/geo-coding/coords', {
+      params: {
+        lat,
+        lng,
+      },
+    });
+  }
+
   static addressList() {
     return Api.instance().get('/addresses');
+  }
+
+  static addressAdd(placeId, line2, name, phone, isDefault) {
+    return Api.instance().post('/addresses', {
+      place_id: placeId,
+      line_2: line2,
+      name,
+      phone,
+      is_default: isDefault,
+    });
+  }
+
+  static addressUpdate(id, placeId, line2, name, phone, isDefault) {
+    return Api.instance().put(`/addresses/${id}`, {
+      place_id: placeId,
+      line_2: line2,
+      name,
+      phone,
+      is_default: isDefault,
+    });
+  }
+
+  static addressSetDefault(id) {
+    return Api.instance().put(`/addresses/${id}`, { is_default: true });
+  }
+
+  static addressDelete(id) {
+    return Api.instance().delete(`/addresses/${id}`);
   }
 
   /* --- Card --- */
   static cardList() {
     return Api.instance().get('/cards');
+  }
+
+  static cardAdd(nickname, token, isDefault) {
+    return Api.instance().post('/cards', {
+      nickname,
+      token,
+      is_default: isDefault,
+    });
+  }
+
+  static cardUpdate(id, nickname, expirationMonth, expirationYear, zipCode, isDefault) {
+    return Api.instance().put(`/cards/${id}`, {
+      nickname,
+      expiration_month: expirationMonth,
+      expiration_year: expirationYear,
+      zip_code: zipCode,
+      is_default: isDefault,
+    });
+  }
+
+  static cardSetDefault(id) {
+    return Api.instance().put(`/cards/${id}`, { is_default: true });
+  }
+
+  static cardDelete(id) {
+    return Api.instance().delete(`/cards/${id}`);
   }
 
   /* --- Restaurant --- */

@@ -42,7 +42,7 @@ const styles = theme => ({
   },
   forgetPasswordControl: {
     flexDirection: 'row',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
   },
   submitButton: {
     marginTop: 2 * theme.spacing.unit,
@@ -94,7 +94,7 @@ class LoginRegisterPage extends React.Component {
     this.setState({
       requesting: Api.login(email, password)
         .then(Auth.authenticateFromResponse(this))
-        .catch(Form.handleErrors(this)),
+        .catch(Form.handleErrors(this, false)),
       errors: {},
     });
   }
@@ -107,7 +107,7 @@ class LoginRegisterPage extends React.Component {
     this.setState({
       requesting: Api.register(name, email, password)
         .then(Auth.authenticateFromResponse(this))
-        .catch(Form.handleErrors(this)),
+        .catch(Form.handleErrors(this, false)),
       errors: {},
     });
   }

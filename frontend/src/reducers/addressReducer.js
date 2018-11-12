@@ -2,8 +2,11 @@ import {
   LOAD_ADDRESS,
   SELECT_ADDRESS,
   CLEAR_ADDRESS,
-  SET_CURRENT_LOCATION
+  SET_CURRENT_LOCATION,
+  ADD_ADDRESS,
+  UPDATE_ADDRESS,
 } from 'actions/addressActions';
+import _ from 'lodash';
 
 const initialState = {
   selectedAddress: null,
@@ -13,11 +16,18 @@ const initialState = {
 
 function addressReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_ADDRESS:
-      return {
-        ...initialState,
-        addresses: action.addresses,
+    case LOAD_ADDRESS: {
+      const { addresses } = action;
+      const newState = {
+        ...state,
+        addresses,
       };
+      if (action.reselect && addresses.length > 0) {
+        const defaultIndex = _.findIndex(addresses, address => address.is_default);
+        newState.selectedAddress = addresses[defaultIndex].id;
+      }
+      return newState;
+    }
     case SELECT_ADDRESS:
       return {
         ...state,
@@ -30,6 +40,25 @@ function addressReducer(state = initialState, action) {
         ...state,
         currentLocation: action.currentLocation,
       };
+    case ADD_ADDRESS:
+      return {
+        ...state,
+        addresses: [
+          ...state.addresses,
+          action.address,
+        ],
+        selectedAddress: action.address.id,
+      };
+    case UPDATE_ADDRESS: {
+      const addresses = [...state.addresses];
+      const index = _.findIndex(addresses, address => address.id === action.id);
+      addresses[index] = action.address;
+      return {
+        ...state,
+        addresses,
+        selectedAddress: action.address.id,
+      };
+    }
     default:
       return state;
   }

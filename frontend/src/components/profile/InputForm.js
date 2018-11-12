@@ -122,7 +122,13 @@ class InputForm extends React.Component {
 
   render() {
     const {
-      name, label, ...rest
+      classes: classesIgnored,
+      value: valueIgnored,
+      name,
+      label,
+      api: apiIgnored,
+      onChange: onChangeIgnored,
+      ...rest
     } = this.props;
     const {
       value, editing, error,
