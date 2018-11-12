@@ -40,7 +40,7 @@ class Root extends React.Component {
     window.addEventListener('error', this.handleApiError);
   }
 
-  handleApiError(err) {
+  handleApiError = (err) => {
     const reason = err.reason;
     const response = reason === undefined ? err.response : reason.response;
     if (response !== undefined && response.status === 401) {
