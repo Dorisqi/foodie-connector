@@ -67,12 +67,13 @@ class Maps
 
     /**
      * Get address components from GeoCoding result
-     * 
+     *
      * @param array $geoCoding
      * @param bool $addressPrefix [optional]
      * @return array
      */
-    public static function decodeResult(array $geoCoding, $addressPrefix = false) {
+    public static function decodeResult(array $geoCoding, $addressPrefix = false)
+    {
         $components = [];
         $streetNumber = null;
         $route = '';
@@ -125,11 +126,11 @@ class Maps
 
     /**
      * Reverse GeoCoding
-     * 
+     *
      * @param double $lat
      * @param double $lng
      * @return array
-     * 
+     *
      * @throws \App\Exceptions\ApiException
      * @throws \App\Exceptions\MpasException
      * @throws \Exception

@@ -157,10 +157,10 @@ class AddressController extends ApiController
 
     /**
      * Reverse GeoCoding
-     * 
+     *
      * @param \Illuminate\Http\Request
      * @return \Illuminate\Http\JsonResponse
-     * 
+     *
      * @throws \App\Exceptions\ApiException
      */
     public function reverseGeoCodingByCoords(Request $request)

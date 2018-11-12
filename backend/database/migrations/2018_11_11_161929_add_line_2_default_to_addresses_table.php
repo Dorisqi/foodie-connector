@@ -15,7 +15,7 @@ class AddLine2DefaultToAddressesTable extends Migration
     public function up()
     {
         DB::table('addresses')
-            ->where('line_2', NULL)
+            ->where('line_2', null)
             ->update(['line_2' => '']);
         Schema::table('addresses', function (Blueprint $table) {
             $table->string('line_2')->nullable(false)->default('')->change();
