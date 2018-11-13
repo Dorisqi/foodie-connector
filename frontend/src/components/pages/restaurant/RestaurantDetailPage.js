@@ -9,6 +9,7 @@ import ListSubHeader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Card from '@material-ui/core/Card';
 import Api from 'facades/Api';
 import MainContent from 'components/template/MainContent';
 import ClearAlert from 'components/cart/ClearAlert';
@@ -19,19 +20,14 @@ import Menu from 'facades/Menu';
 import Axios from 'facades/Axios';
 import NotFoundPage from 'components/pages/error/NotFoundPage';
 import Cart from 'components/cart/Cart';
-import Price from 'facades/Price';
+import Format from 'facades/Format';
 import AmountSelector from 'components/cart/AmountSelector';
+import RestaurantOrder from 'components/order/RestaurantOrder';
 import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
     display: 'flex',
-  },
-  infoRow: {
-    display: 'flex',
-  },
-  infoName: {
-    width: 110,
   },
   subComponent: {
     marginTop: 2 * theme.spacing.unit,
@@ -132,14 +128,38 @@ class RestaurantDetailPage extends React.Component {
     store.dispatch(cartAddItem(id, name, item));
   };
 
+  handleRestaurantUpdate = (newRestaurant) => {
+    const { restaurant } = this.state;
+    this.setState({
+      restaurant: {
+        ...restaurant,
+        ...newRestaurant,
+      },
+    });
+  };
+
   loadRestaurant() {
-    const id = this.props.match.params.id;
     Axios.cancelRequest(this.state.loading);
+    const id = this.props.match.params.id;
+    const { address } = this.props;
+    const { selectedAddress, currentLocation } = address;
+    let promise = null;
+    if (selectedAddress === null) {
+      promise = Api.restaurantShow(id);
+    } else if (selectedAddress === 0) {
+      if (currentLocation === null) {
+        promise = Api.restaurantShow(id);
+      } else {
+        promise = Api.restaurantShow(id, true, null, currentLocation.place_id);
+      }
+    } else {
+      promise = Api.restaurantShow(id, true, selectedAddress);
+    }
     this.setState({
       restaurant: null,
       productMap: null,
       notFound: false,
-      loading: Api.restaurantShow(id).then((res) => {
+      loading: promise.then((res) => {
         this.setState({
           restaurant: res.data,
           productMap: Menu.generateMap(res.data.restaurant_menu),
@@ -156,20 +176,6 @@ class RestaurantDetailPage extends React.Component {
         throw err;
       }),
     });
-  }
-
-  renderRestaurantInfo(name, value) {
-    const { classes } = this.props;
-    return (
-      <div className={classes.infoRow}>
-        <Typography variant="body1" className={classes.infoName}>
-          {name}
-        </Typography>
-        <Typography variant="body1">
-          {value}
-        </Typography>
-      </div>
-    );
   }
 
   render() {
@@ -196,15 +202,52 @@ class RestaurantDetailPage extends React.Component {
           && (
             <div className={classes.root}>
               <div className={classes.leftContent}>
-                <div>
-                  {this.renderRestaurantInfo(
-                    'Address:',
-                    `${restaurant.address_line_1}, ${restaurant.city}, ${restaurant.state} ${restaurant.zip_code}`,
-                  )}
-                  {this.renderRestaurantInfo('Phone:', restaurant.phone)}
-                  {restaurant.rating !== null && this.renderRestaurantInfo('Rating:', restaurant.rating)}
-                  {this.renderRestaurantInfo('Delivery Fee:', `$${restaurant.delivery_fee}`)}
-                  {this.renderRestaurantInfo('Order Min.:', `$${restaurant.order_minimum}`)}
+                <div className={classes.subComponent}>
+                  <Typography
+                    className={classes.subComponentTitle}
+                    variant="h5"
+                    component="h2"
+                  >
+                    Restaurant Info
+                  </Typography>
+                  <Card>
+                    <List>
+                      <ListItem>
+                        <ListItemText
+                          primary="Address"
+                          secondary={Format.formatAddress(restaurant, true)}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Phone"
+                          secondary={restaurant.phone}
+                        />
+                      </ListItem>
+                      {restaurant.rating !== null
+                      && (
+                      <ListItem>
+                        <ListItemText
+                          primary="Rating"
+                          secondary={`${restaurant.rating} / 5`}
+                        />
+                      </ListItem>
+                      )
+                      }
+                      <ListItem>
+                        <ListItemText
+                          primary="Delivery Fee"
+                          secondary={Format.displayPrice(restaurant.delivery_fee)}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Order Minimum"
+                          secondary={Format.displayPrice(restaurant.order_minimum)}
+                        />
+                      </ListItem>
+                    </List>
+                  </Card>
                 </div>
                 <div className={classes.subComponent}>
                   <Typography
@@ -256,8 +299,8 @@ class RestaurantDetailPage extends React.Component {
                                         <ListItemText
                                           className={classes.productPrice}
                                           primary={product.min_price < product.max_price
-                                            ? `${Price.display(product.min_price)} - ${Price.display(product.max_price)}`
-                                            : Price.display(product.min_price)
+                                            ? `${Format.displayPrice(product.min_price)} - ${Format.displayPrice(product.max_price)}`
+                                            : Format.displayPrice(product.min_price)
                                           }
                                         />
                                       </div>
@@ -309,6 +352,19 @@ class RestaurantDetailPage extends React.Component {
                     variant="h5"
                     component="h2"
                   >
+                    Group Order
+                  </Typography>
+                  <RestaurantOrder
+                    restaurant={restaurant}
+                    onRestaurantUpdate={this.handleRestaurantUpdate}
+                  />
+                </div>
+                <div className={classes.subComponent}>
+                  <Typography
+                    className={classes.subComponentTitle}
+                    variant="h5"
+                    component="h2"
+                  >
                     Cart
                   </Typography>
                   {cart !== null
@@ -327,12 +383,14 @@ class RestaurantDetailPage extends React.Component {
 
 const mapStateToProps = state => ({
   cart: state.cart,
+  address: state.address,
 });
 
 RestaurantDetailPage.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   cart: PropTypes.object,
+  address: PropTypes.object.isRequired,
 };
 
 RestaurantDetailPage.defaultProps = {

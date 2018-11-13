@@ -28,15 +28,17 @@ function generateMap(cart) {
 }
 
 function updateLocalCart(state) {
-  state.cartMap = generateMap(state.cart);
-  state.subtotal = state.cart.reduce((subtotal, item) =>
-    subtotal + item.product_price * item.product_amount
-  , 0).toFixed(2);
-  return state;
+  const newState = { ...state };
+  newState.cartMap = generateMap(state.cart);
+  newState.subtotal = state.cart.reduce(
+    (subtotal, item) => subtotal + item.product_price * item.product_amount,
+    0,
+  ).toFixed(2);
+  return newState;
 }
 
 function updateCart(state) {
-  if (loading !== null){
+  if (loading !== null) {
     loading.cancel();
   }
   loading = Api.cartUpdate(state.restaurantId, state.cart).then((res) => {
@@ -110,16 +112,15 @@ function cartReducer(state = null, action) {
           ...state,
           cart,
         });
-      } else {
-        cart[action.cartIndex] = {
-          ...cart[action.cartIndex],
-          product_amount: action.productAmount,
-        };
-        return updateCart({
-          ...state,
-          cart,
-        });
       }
+      cart[action.cartIndex] = {
+        ...cart[action.cartIndex],
+        product_amount: action.productAmount,
+      };
+      return updateCart({
+        ...state,
+        cart,
+      });
     }
     case CART_UPDATE_ITEM: {
       const cart = [...state.cart];
@@ -129,9 +130,9 @@ function cartReducer(state = null, action) {
           ...state,
           cart,
         });
-      } else {
-        cart[action.cartIndex] = action.item;
       }
+      cart[action.cartIndex] = action.item;
+
       return updateCart({
         ...state,
         cart,

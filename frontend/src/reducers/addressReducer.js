@@ -22,7 +22,9 @@ function addressReducer(state = initialState, action) {
         ...state,
         addresses,
       };
-      if (action.reselect && addresses.length > 0) {
+      if (action.selectedAddress !== null) {
+        newState.selectedAddress = action.selectedAddress;
+      } else if (addresses.length > 0) {
         const defaultIndex = _.findIndex(addresses, address => address.is_default);
         newState.selectedAddress = addresses[defaultIndex].id;
       }

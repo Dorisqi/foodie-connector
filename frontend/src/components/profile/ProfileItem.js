@@ -2,23 +2,18 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
-import red from '@material-ui/core/colors/red';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
 import ProgressButton from 'components/form/ProgressButton';
 import Axios from 'facades/Axios';
+import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 
-const styles = () => ({
+const styles = theme => ({
   itemActions: {
     paddingTop: 0,
     justifyContent: 'flex-end',
   },
   itemDelete: {
-    color: red['500'],
+    color: theme.palette.error.main,
   },
 });
 
@@ -26,12 +21,10 @@ class ProfileItem extends React.Component {
   state = {
     updating: false,
     deletingAlert: false,
-    deleting: null,
     settingDefault: null,
   };
 
   componentWillUnmount() {
-    Axios.cancelRequest(this.state.deleting);
     Axios.cancelRequest(this.state.settingDefault);
   }
 
@@ -50,27 +43,6 @@ class ProfileItem extends React.Component {
   handleItemDeleteClick = () => {
     this.setState({
       deletingAlert: true,
-    });
-  };
-
-  handleItemDelete = () => {
-    if (this.state.deleting !== null) {
-      return;
-    }
-    const { deleteApi, onUpdate } = this.props;
-    this.setState({
-      deleting: deleteApi().then((res) => {
-        this.setState({
-          deleting: null,
-          deletingAlert: false,
-        });
-        onUpdate(res);
-      }).catch((err) => {
-        this.setState({
-          deleting: null,
-        });
-        throw err;
-      }),
     });
   };
 
@@ -106,12 +78,13 @@ class ProfileItem extends React.Component {
       item,
       type,
       alias,
+      deleteApi,
       onUpdate,
       children,
       updatingDialog: UpdatingDialog,
     } = this.props;
     const {
-      updating, deletingAlert, deleting, settingDefault,
+      updating, deletingAlert, settingDefault,
     } = this.state;
     return (
       <div>
@@ -124,36 +97,14 @@ class ProfileItem extends React.Component {
         />
         )
         }
-        <Dialog
+        <DialogDeleteAlert
           open={deletingAlert}
+          title={`Delete ${type}?`}
+          text={`Do you really want to delete the ${type} ${alias}?`}
+          api={deleteApi}
+          onUpdate={onUpdate}
           onClose={this.handleDeletingAlertClose}
-          aria-labelledby="deleting-alert-title"
-          aria-describedby="deleting-alert-description"
-        >
-          <DialogTitle id="deleting-alert-title">
-            Delete
-            {' '}
-            {type}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="deleting-alert-description">
-              {`Do you really want to delete the ${type} ${alias}?`}
-              The operation cannot be undone.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleDeletingAlertClose}>
-              Cancel
-            </Button>
-            <ProgressButton
-              className={classes.itemDelete}
-              loading={deleting !== null}
-              onClick={this.handleItemDelete}
-            >
-              Delete
-            </ProgressButton>
-          </DialogActions>
-        </Dialog>
+        />
         <ListItem button onClick={this.handleItemClick}>
           {children}
         </ListItem>

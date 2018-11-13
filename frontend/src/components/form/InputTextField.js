@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { withStyles } from '@material-ui/core/styles';
 import Form from 'facades/Form';
 
@@ -29,21 +32,30 @@ class InputTextField extends React.Component {
       classes,
       ...rest
     } = this.props;
-
+    const error = parent.state.errors[name];
     return (
-      <TextField
-        {...rest}
-        id={name}
-        type={type}
-        label={label}
+      <FormControl
         className={classes.textField}
-        value={parent.state[name]}
-        onChange={Form.handleInputChange(parent, name)}
-        error={parent.state.errors[name] !== undefined}
-        helperText={parent.state.errors[name]}
-        fullWidth={fullWidth}
+        error={error !== undefined}
         required={required}
-      />
+        fullWidth={fullWidth}
+      >
+        <InputLabel htmlFor={name}>
+          {label}
+        </InputLabel>
+        <Input
+          {...rest}
+          id={name}
+          type={type}
+          value={parent.state[name]}
+          onChange={Form.handleInputChange(parent, name)}
+        />
+        {error !== undefined && (
+          <FormHelperText>
+            {error}
+          </FormHelperText>
+        )}
+      </FormControl>
     );
   }
 }

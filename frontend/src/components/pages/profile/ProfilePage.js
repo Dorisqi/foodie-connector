@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import red from '@material-ui/core/colors/red';
 import MainContent from 'components/template/MainContent';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
@@ -53,7 +52,7 @@ const styles = theme => ({
     justifyContent: 'flex-end',
   },
   itemDelete: {
-    color: red['500'],
+    color: theme.palette.error.main,
   },
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Typography from '@material-ui/core/Typography';
 import FormErrorMessages from 'components/form/FormErrorMessages';
 import InputTextField from 'components/form/InputTextField';
@@ -20,11 +20,11 @@ class Test {
   }
 
   static assertInputError(wrapper, name, errorMessage) {
-    const textField = wrapper.find(InputTextField)
+    const helperText = wrapper.find(InputTextField)
       .filter({ name })
-      .find(TextField);
-    expect(textField.prop('error')).toEqual(true);
-    expect(textField.prop('helperText')).toEqual(errorMessage);
+      .find(FormHelperText);
+    expect(helperText).toHaveLength(1);
+    expect(helperText.prop('children')).toEqual(errorMessage);
   }
 
   static assertFormError(wrapper, length) {

@@ -5,11 +5,11 @@ export const SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION';
 export const ADD_ADDRESS = 'ADD_ADDRESS';
 export const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
 
-export function loadAddress(addresses, reselect = true) {
+export function loadAddress(addresses, selectedAddress = null) {
   return {
     type: LOAD_ADDRESS,
     addresses,
-    reselect,
+    selectedAddress,
   };
 }
 
@@ -23,14 +23,14 @@ export function selectAddress(selectedAddress) {
 export function clearAddress() {
   return {
     type: CLEAR_ADDRESS,
-  }
+  };
 }
 
 export function setCurrentLocation(currentLocation) {
   return {
     type: SET_CURRENT_LOCATION,
     currentLocation,
-  }
+  };
 }
 
 export function updateAddress(address) {

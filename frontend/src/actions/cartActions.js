@@ -18,19 +18,19 @@ export function cartAddItem(restaurantId, restaurantName, item) {
     restaurantId,
     restaurantName,
     item,
-  }
+  };
 }
 
 export function cartClear() {
   return {
     type: CART_CLEAR,
-  }
+  };
 }
 
 export function cartCloseClearAlert() {
   return {
     type: CART_CLOSE_CLEAR_ALERT,
-  }
+  };
 }
 
 export function cartUpdateAmount(cartIndex, productAmount) {
@@ -38,7 +38,7 @@ export function cartUpdateAmount(cartIndex, productAmount) {
     type: CART_UPDATE_AMOUNT,
     cartIndex,
     productAmount,
-  }
+  };
 }
 
 export function cartUpdateItem(cartIndex, item) {
@@ -46,5 +46,5 @@ export function cartUpdateItem(cartIndex, item) {
     type: CART_UPDATE_ITEM,
     cartIndex,
     item,
-  }
+  };
 }

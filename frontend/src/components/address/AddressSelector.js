@@ -3,8 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import NearMe from '@material-ui/icons/NearMe';
 import TextField from '@material-ui/core/TextField';
 import store from 'store';
 import { loadAddress, selectAddress, setCurrentLocation } from 'actions/addressActions';
@@ -54,6 +52,11 @@ class AddressSelector extends React.Component {
     this.setState({
       addingAddress: false,
     });
+  };
+
+  handleAddressUpdate = (res) => {
+    const addresses = res.data;
+    store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
   };
 
   loadCurrentLocation() {
@@ -112,10 +115,6 @@ class AddressSelector extends React.Component {
     } = this.props;
     const { currentLocationError, addingAddress } = this.state;
     const selectedCurrentLocation = selectedAddress === 0;
-    let nearMeColor = 'primary';
-    if (currentLocation === null) {
-      nearMeColor = currentLocationError === null ? 'inherit' : 'error';
-    }
     let currentLocationText = 'Use current location';
     if (selectedCurrentLocation) {
       if (currentLocation === null) {
@@ -129,7 +128,12 @@ class AddressSelector extends React.Component {
     return (
       <div>
         {addingAddress
-        && <AddressDialog onClose={this.handleAddingAddressClose} />
+        && (
+        <AddressDialog
+          onClose={this.handleAddingAddressClose}
+          onUpdate={this.handleAddressUpdate}
+        />
+        )
         }
         <TextField
           select
@@ -138,16 +142,6 @@ class AddressSelector extends React.Component {
           onChange={this.handleSelectAddress}
           error={selectedCurrentLocation && currentLocationError !== null}
           InputProps={{
-            startAdornment: selectedCurrentLocation
-              ? (
-                <InputAdornment position="start">
-                  <NearMe
-                    color={nearMeColor}
-                    fontSize="small"
-                  />
-                </InputAdornment>
-              )
-              : null,
             className: classes.selector,
             classes: {
               input: classes.selectorInput,

@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
-import Price from 'facades/Price';
+import Format from 'facades/Format';
 import AmountSelector from './AmountSelector';
 
 const styles = theme => ({
@@ -270,7 +270,7 @@ class ProductOptionSelector extends React.Component {
                       value={option.id.toString()}
                       label={option.price === 0
                         ? option.name
-                        : `${option.name} - ${Price.display(option.price)}`
+                        : `${option.name} - ${Format.displayPrice(option.price)}`
                       }
                       key={option.id}
                     />
@@ -288,7 +288,7 @@ class ProductOptionSelector extends React.Component {
         >
           Price:
           {' '}
-          {Price.display(price)}
+          {Format.displayPrice(price)}
         </Typography>
         <div className={classes.amountSelector}>
           <AmountSelector

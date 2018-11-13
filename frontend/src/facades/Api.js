@@ -131,12 +131,37 @@ class Api {
     });
   }
 
-  static restaurantShow(id, withMenu = true) {
+  static restaurantShow(id, withMenu = true, addressId = null, placeId = null) {
     return Api.instance().get(`/restaurants/${id}`, {
       params: {
         with_menu: withMenu,
+        address_id: addressId,
+        place_id: placeId,
       },
     });
+  }
+
+  /* --- Order --- */
+  static orderList(restaurantId, orderStatus) {
+    return Api.instance().get('/orders', {
+      params: {
+        restaurant_id: restaurantId,
+        order_status: orderStatus,
+      },
+    });
+  }
+
+  static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
+    return Api.instance().post('/orders', {
+      restaurant_id: restaurantId,
+      address_id: addressId,
+      is_public: isPublic,
+      join_limit: joinLimit,
+    });
+  }
+
+  static orderCancel(orderId) {
+    return Api.instance().delete(`/orders/${orderId}`);
   }
 
   static instance(requireAuth = true) {

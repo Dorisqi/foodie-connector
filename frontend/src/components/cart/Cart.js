@@ -15,10 +15,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { cartUpdate, cartClear, cartUpdateItem } from 'actions/cartActions';
 import store from 'store';
-import Price from 'facades/Price';
+import Format from 'facades/Format';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
-import ProgressButton from 'components/form/ProgressButton';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
 
@@ -185,7 +184,7 @@ class Cart extends React.Component {
                     />
                     <ListItemText
                       className={classes.productPrice}
-                      primary={Price.display(cartItem.product_price)}
+                      primary={Format.displayPrice(cartItem.product_price)}
                     />
                   </div>
                   <div className={classes.itemLine}>
@@ -216,21 +215,23 @@ class Cart extends React.Component {
             <ListItem>
               <ListItemText
                 className={classes.summaryPrice}
-                primary={`Subtotal: ${Price.display(cart.subtotal)}`}
+                primary={`Subtotal: ${Format.displayPrice(cart.subtotal)}`}
                 primaryTypographyProps={{
                   variant: 'h6',
                 }}
               />
             </ListItem>
+            <ListItem>
+              <Button
+                variant="outlined"
+                disabled={cart.cart.length === 0}
+                color="primary"
+                fullWidth
+              >
+                Direct Checkout
+              </Button>
+            </ListItem>
           </List>
-          <ProgressButton
-            type="submit"
-            variant="contained"
-            color={cart.cart.length === 0 ? 'grey' : 'primary'}
-            fullWidth
-          >
-          Checkout
-          </ProgressButton>
         </Paper>
       );
   }

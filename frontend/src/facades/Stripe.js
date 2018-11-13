@@ -5,6 +5,8 @@ class Stripe {
 
   static stripe = null;
 
+  static loaded = false;
+
   static load() {
     const script = document.createElement('script');
     script.onload = this.onLoad;
