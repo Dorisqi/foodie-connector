@@ -14,6 +14,11 @@ class OrderStatus extends Model
         self::CLOSED => 'closed',
         self::CONFIRMED => 'confirmed',
     ];
+    public const STATUS_IDS = [
+        'created' => self::CREATED,
+        'closed' => self::CLOSED,
+        'confirmed' => self::CONFIRMED,
+    ];
 
     public $timestamps = false;
 

@@ -2912,11 +2912,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ],
     "order_statuses": [
         {
-            "status": "created",
+            "status": "closed",
             "time": "2018-10-27 15:00:01"
         },
         {
-            "status": "closed",
+            "status": "created",
             "time": "2018-10-27 15:00:01"
         }
     ],
@@ -3052,11 +3052,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ],
     "order_statuses": [
         {
-            "status": "created",
+            "status": "confirmed",
             "time": "2018-10-27 15:00:01"
         },
         {
-            "status": "confirmed",
+            "status": "created",
             "time": "2018-10-27 15:00:01"
         }
     ],

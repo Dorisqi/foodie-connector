@@ -20,6 +20,26 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class OrderController extends ApiController
 {
     /**
+     * List all orders
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function index(Request $request)
+    {
+        $this->validateInput($request, $this::listRules());
+
+        $orders = $this->query(
+            true,
+            $request->input('restaurant_id'),
+            $request->input('order_status')
+        )->get();
+        return $this->response($orders);
+    }
+
+    /**
      * Create a new group order
      *
      * @param \Illuminate\Http\Request $request
@@ -44,6 +64,18 @@ class OrderController extends ApiController
                         break;
                     }
                 }
+            }
+
+            if ($this->query(
+                true,
+                $request->input('restaurant_id'),
+                'created'
+            )->first() !== null) {
+                throw ApiException::validationFailedErrors([
+                    'form' => [
+                        'You have unconfirmed order. Please confirm that before creating new one.'
+                    ],
+                ]);
             }
 
             $restaurant = Restaurant::find($request->input('restaurant_id'));
@@ -212,7 +244,7 @@ class OrderController extends ApiController
     public function qrCode($id)
     {
         $order = Order::with('orderStatuses')->find($id);
-        if (is_null($order) || !$order->is_joinable) {
+        if (is_null($order)) {
             throw abort(404);
         }
         $cacheKey = 'order_qr_code_cache:' . $order->id;
@@ -260,20 +292,53 @@ class OrderController extends ApiController
     /**
      * Query order from the database
      *
-     * @param $id
+     * @param int $id
+     * @param bool $onlyMember [optional]
      * @return \App\Models\Order|null
      */
-    protected function getOrder($id)
+    protected function getOrder($id, $onlyMember = false)
     {
-        return Order::with([
+        return $this->query($onlyMember)->find($id);
+    }
+
+    /**
+     * Return the query
+     *
+     * @param bool $onlyMember [optional]
+     * @param int|null $restaurantId [optional]
+     * @param string|null $orderStatus [optional]
+     * @return Order|\Illuminate\Database\Eloquent\Builder
+     */
+    protected function query($onlyMember = true, $restaurantId = null, $orderStatus = null)
+    {
+        $query = Order::with([
             'restaurant',
             'creator:id,name',
             'orderMembers',
             'orderMembers.user:id,name',
             'orderStatuses' => function ($query) {
-                $query->orderBy('time');
+                $query->orderBy('time', 'desc');
             },
-        ])->find($id);
+        ]);
+        if ($onlyMember) {
+            $user = $this->user();
+            $query = $query->whereHas('orderMembers', function ($query) use ($user) {
+                $query->where('api_user_id', $user->id);
+            });
+        }
+        if ($restaurantId !== null) {
+            $query = $query->where('restaurant_id', $restaurantId);
+        }
+        if ($orderStatus !== null) {
+            $statusId = OrderStatus::STATUS_IDS[$orderStatus];
+            $query = $query->whereDoesntHave(
+                'orderStatuses',
+                function ($query) use ($statusId) {
+                    $query->where('status', '>', $statusId);
+                }
+            );
+        }
+        return $query;
     }
 
     public static function rules()
@@ -283,6 +348,14 @@ class OrderController extends ApiController
             'join_limit' => 'required|integer|between:600,7200', // 10minutes - 2hours
             'is_public' => 'required|boolean',
             'address_id' => 'required|integer',
+        ];
+    }
+
+    public static function listRules()
+    {
+        return [
+            'restaurant_id' => 'integer|exists:restaurants,id',
+            'order_status' => 'string',
         ];
     }
 

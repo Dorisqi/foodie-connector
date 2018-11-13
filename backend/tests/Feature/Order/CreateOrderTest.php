@@ -29,9 +29,7 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => true,
         ]);
-        $order = Order::first();
-        $order->id = 'OLD'; // Update id to prevent conflict
-        $order->save();
+        Order::query()->delete();
         $this->mockCurrentTime('2018-10-27 11:50:00');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
@@ -39,6 +37,7 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => false,
         ], false);
+        Order::query()->delete();
         $this->mockCurrentTime('2018-10-28 12:00:00');
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,

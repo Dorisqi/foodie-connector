@@ -148,6 +148,7 @@ class RestaurantController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
+     * @throws \App\Exceptions\MapsException
      */
     public function show($id, Request $request)
     {
@@ -164,13 +165,17 @@ class RestaurantController extends ApiController
         if (is_null($restaurant)) {
             throw ApiException::resourceNotFound();
         }
-        $address_id = $request->query('address_id');
-        if (!is_null($address_id)) {
-            $address = $this->user()->addresses()->find($address_id);
+        $addressId = $request->query('address_id');
+        $placeId = $request->query('place_id');
+        if (!is_null($addressId)) {
+            $address = $this->user()->addresses()->find($addressId);
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
             $restaurant->setAddress($address);
+        } elseif (!is_null($placeId)) {
+            $coordinate = Maps::latLngByPlaceID($request->query('place_id'));
+            $restaurant->setAddress($coordinate);
         }
         return $this->response($restaurant);
     }

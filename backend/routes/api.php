@@ -38,7 +38,7 @@ Route::prefix('v1')->group(function () {
         ]);
 
         Route::resource('orders', 'OrderController')->only([
-            'store', 'show', 'destroy',
+            'index', 'store', 'show', 'destroy',
         ]);
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
         Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');

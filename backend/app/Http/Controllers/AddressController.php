@@ -102,6 +102,9 @@ class AddressController extends ApiController
             DB::beginTransaction();
 
             $addressArray = $request->only($this->modelParams());
+            if ($request->has('line_2') && $request->input('line_2') === null) {
+                $addressArray['line_2'] = '';
+            }
             if ($request->has('place_id')) {
                 $addressArray = array_merge(
                     $addressArray,
