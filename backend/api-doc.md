@@ -2164,6 +2164,7 @@ Required
 | :--- | :--- | :--- | :--- |
 | with_menu | optional | boolean |  |
 | address_id | optional | integer |  |
+| place_id | optional | string |  |
 
 #### **Status Code: 200**
 

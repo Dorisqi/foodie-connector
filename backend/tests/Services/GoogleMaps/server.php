@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['PHP_SELF'] === '/geocode/j
     $filePath = null;
     if ($placeId !== null) {
         $filePath = "${dataPath}/place-id/${placeId}.json";
-    } else if ($latlng !== null) {
+    } elseif ($latlng !== null) {
         $filePath = "${dataPath}/latlng/${latlng}.json";
     }
     if ($filePath !== null && file_exists($filePath)) {

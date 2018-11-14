@@ -39,6 +39,12 @@ class ShowRestaurantTest extends ApiTestCase
         $this->assertFalse(is_null($response->json('is_deliverable')));
         $this->assertFalse(is_null($response->json('distance')));
         $this->assertFalse(is_null($response->json('estimated_delivery_time')));
+        $response = $this->assertSucceed([
+            'place_id' => $address->place_id,
+        ], false);
+        $this->assertFalse(is_null($response->json('is_deliverable')));
+        $this->assertFalse(is_null($response->json('distance')));
+        $this->assertFalse(is_null($response->json('estimated_delivery_time')));
     }
 
     public function method()
@@ -66,6 +72,7 @@ class ShowRestaurantTest extends ApiTestCase
         return [
             'with_menu' => 'boolean',
             'address_id' => 'integer',
+            'place_id' => 'string',
         ];
     }
 }
