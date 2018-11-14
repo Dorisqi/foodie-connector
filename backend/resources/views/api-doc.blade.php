@@ -24,7 +24,7 @@ No param
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
 @foreach ($api['params'] as $param)
-| {!! $param->{'key'} !!} | {!! isset($param->{'required'}) ? 'required' : 'optional' !!} | {!! isset($param->{'email'}) ? 'email' : $param->{'type'} !!} | {!! $param->{'extra'} !!} |
+| {!! $param['key'] !!} | {!! isset($param['required']) ? 'required' : 'optional' !!} | {!! isset($param['email']) ? 'email' : $param['type'] !!} | {!! $param['extra'] !!} |
 @endforeach
 @endif
 

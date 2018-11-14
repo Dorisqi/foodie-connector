@@ -6,7 +6,6 @@ use App\Exceptions\ApiException;
 use App\Exceptions\MapsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Monolog\Logger;
 
 class Maps
 {
@@ -132,7 +131,7 @@ class Maps
      * @return array
      *
      * @throws \App\Exceptions\ApiException
-     * @throws \App\Exceptions\MpasException
+     * @throws \App\Exceptions\MapsException
      * @throws \Exception
      */
     public static function reverseGeoCodingByCoords($lat, $lng)
