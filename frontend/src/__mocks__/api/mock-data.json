@@ -1681,6 +1681,157 @@
                 },
                 "response_header": null
             }
+        ],
+        "GET": [
+            {
+                "header": null,
+                "request": null,
+                "status_code": 401,
+                "response": {
+                    "message": "This page requires authentication."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 200,
+                "response": [
+                    {
+                        "id": "HFEJ32RAFW58ER29R8SW",
+                        "join_before": "2018-10-27 15:10:01",
+                        "is_public": "1",
+                        "address_line_1": "134 Pierce Street",
+                        "address_line_2": "Apt XXX",
+                        "city": "West Lafayette",
+                        "state": "IN",
+                        "zip_code": "47906",
+                        "lat": "40.4227584",
+                        "lng": "-86.9090892",
+                        "phone": "7650000000",
+                        "restaurant": {
+                            "id": 1,
+                            "name": "Test Restaurant",
+                            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+                            "order_minimum": "9.99",
+                            "delivery_fee": "2.99",
+                            "rating": "3.5",
+                            "address_line_1": "100 Pierce Street",
+                            "address_line_2": "",
+                            "city": "West Lafayette",
+                            "state": "IN",
+                            "zip_code": "47906",
+                            "lat": "40.4227584",
+                            "lng": "-86.9090892",
+                            "phone": "7651111111",
+                            "is_open": true,
+                            "distance": null,
+                            "estimated_delivery_time": null,
+                            "is_deliverable": null
+                        },
+                        "creator": {
+                            "id": 1,
+                            "name": "Test User"
+                        },
+                        "order_members": [
+                            {
+                                "is_ready": "0",
+                                "phone": "7650000000",
+                                "user": {
+                                    "id": 1,
+                                    "name": "Test User"
+                                }
+                            }
+                        ],
+                        "order_statuses": [
+                            {
+                                "status": "created",
+                                "time": "2018-10-27 15:00:01"
+                            }
+                        ],
+                        "is_joinable": true,
+                        "is_creator": true,
+                        "is_member": true,
+                        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+                        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+                    }
+                ],
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/orders?restaurant_id=1&order_status=created": {
+        "GET": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 200,
+                "response": [
+                    {
+                        "id": "HFEJ32RAFW58ER29R8SW",
+                        "join_before": "2018-10-27 15:10:01",
+                        "is_public": "1",
+                        "address_line_1": "134 Pierce Street",
+                        "address_line_2": "Apt XXX",
+                        "city": "West Lafayette",
+                        "state": "IN",
+                        "zip_code": "47906",
+                        "lat": "40.4227584",
+                        "lng": "-86.9090892",
+                        "phone": "7650000000",
+                        "restaurant": {
+                            "id": 1,
+                            "name": "Test Restaurant",
+                            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+                            "order_minimum": "9.99",
+                            "delivery_fee": "2.99",
+                            "rating": "3.5",
+                            "address_line_1": "100 Pierce Street",
+                            "address_line_2": "",
+                            "city": "West Lafayette",
+                            "state": "IN",
+                            "zip_code": "47906",
+                            "lat": "40.4227584",
+                            "lng": "-86.9090892",
+                            "phone": "7651111111",
+                            "is_open": true,
+                            "distance": null,
+                            "estimated_delivery_time": null,
+                            "is_deliverable": null
+                        },
+                        "creator": {
+                            "id": 1,
+                            "name": "Test User"
+                        },
+                        "order_members": [
+                            {
+                                "is_ready": "0",
+                                "phone": "7650000000",
+                                "user": {
+                                    "id": 1,
+                                    "name": "Test User"
+                                }
+                            }
+                        ],
+                        "order_statuses": [
+                            {
+                                "status": "created",
+                                "time": "2018-10-27 15:00:01"
+                            }
+                        ],
+                        "is_joinable": true,
+                        "is_creator": true,
+                        "is_member": true,
+                        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+                        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+                    }
+                ],
+                "response_header": null
+            }
         ]
     },
     "/api/v1/orders/0/invitation-email": {

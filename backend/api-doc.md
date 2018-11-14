@@ -2688,6 +2688,182 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Everything about order
 
+### **GET - /api/v1/orders**
+
+Get a list of orders
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | optional | integer | exists:restaurants,id |
+| order_status | optional | string |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?restaurant_id=1&order_status=created
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": "1",
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7650000000",
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "2.99",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "lat": "40.4227584",
+            "lng": "-86.9090892",
+            "phone": "7651111111",
+            "is_open": true,
+            "distance": null,
+            "estimated_delivery_time": null,
+            "is_deliverable": null
+        },
+        "creator": {
+            "id": 1,
+            "name": "Test User"
+        },
+        "order_members": [
+            {
+                "is_ready": "0",
+                "phone": "7650000000",
+                "user": {
+                    "id": 1,
+                    "name": "Test User"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "is_joinable": true,
+        "is_creator": true,
+        "is_member": true,
+        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": "1",
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "lat": "40.4227584",
+        "lng": "-86.9090892",
+        "phone": "7650000000",
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "2.99",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "lat": "40.4227584",
+            "lng": "-86.9090892",
+            "phone": "7651111111",
+            "is_open": true,
+            "distance": null,
+            "estimated_delivery_time": null,
+            "is_deliverable": null
+        },
+        "creator": {
+            "id": 1,
+            "name": "Test User"
+        },
+        "order_members": [
+            {
+                "is_ready": "0",
+                "phone": "7650000000",
+                "user": {
+                    "id": 1,
+                    "name": "Test User"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "is_joinable": true,
+        "is_creator": true,
+        "is_member": true,
+        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    }
+]
+```
+#### **Status Code: 401**
+
+This page requires authentication.
+
+**URI**: /api/v1/orders
+
+**Response Body:**
+```
+{
+    "message": "This page requires authentication."
+}
+```
+
 ### **POST - /api/v1/orders**
 
 Create a new order
