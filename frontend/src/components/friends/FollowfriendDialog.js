@@ -9,174 +9,158 @@ import Maps from 'facades/Maps';
 import Api from 'facades/Api';
 import Snackbar from 'facades/Snackbar';
 import Form from 'facades/Form';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import PersonAdd from '@material-ui/icons/PersonAdd';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const styles = theme => ({
   margin: {
     marginTop: theme.spacing.unit*3,
     marginBottom: theme.spacing.unit,
   },
+  root: {
+    //width: '100%',
+    maxWidth: '100px',
+    backgroundColor: theme.palette.background.paper,
+  },
+  textarea: {
+    width:'100'
+  }
 });
 
 class FollowfriendDialog extends React.Component {
   state = {
-    email:''
+    email:'',
     errors: {},
   };
 
   constructor(props) {
     super(props);
 
-    const { item: address } = props;
-    if (address !== null) {
+    const { item: email } = props;
+    if (email !== null) {
       this.state = {
-        name: address.name,
-        // eslint-disable-next-line react/no-unused-state
-        address: `${address.line_1}, ${address.city}, ${address.state} ${address.zip_code}`,
-        line2: address.line_2,
-        phone: address.phone,
-        isDefault: address.is_default,
-        disableIsDefault: address.is_default,
+        email:email,
         errors: {},
       };
     }
   }
 
-  addressInputRef = (ref) => {
-    if (ref === null) {
-      return;
-    }
-    Maps.load(() => {
-      this.autocomplete = new Maps.maps.places.Autocomplete(
-        ref,
-        { types: ['geocode'] },
-      );
-      this.autocomplete.addListener('place_changed', this.handlePlaceChange);
-    });
-  };
+  //email autocomplete if time allowed
 
-  handlePlaceChange = () => {
-    const place = this.autocomplete.getPlace();
-    if (_.isNil(place)) {
-      this.setState({
-        address: '', // eslint-disable-line react/no-unused-state
-        placeId: '',
-      });
-      return;
-    }
+  handleonChange = e => {
+    const value = e.target.value;
     this.setState({
-      address: place.formatted_address, // eslint-disable-line react/no-unused-state
-      placeId: place.place_id,
-    });
-  };
+      email: value, // eslint-disable-line react/no-unused-state
 
-  submit = () => {
+    });
+  }
+  adding = () => {
     this.setState({
       errors: {},
     });
     const {
-      placeId, line2, name, phone, isDefault,
+      email
     } = this.state;
     const { item: address } = this.props;
-    return address === null
+    //// TODO: Axios.addingFriend
+    //alert for the corresponding error, after Successfully adding,clear the input
+    /*return address === null
       ? Api.addressAdd(placeId, line2, name, phone, isDefault)
-      : Api.addressUpdate(address.id, placeId, line2, name, phone, isDefault);
+      : Api.addressUpdate(address.id, placeId, line2, name, phone, isDefault);*/
   };
 
   handleRequestSuccess = (res) => {
     if (this.props.item === null) {
-      Snackbar.success('Successfully add new address.');
-    } else {
-      Snackbar.success('Successfully update address.');
+      Snackbar.success('Successfully follow new friend!');
     }
     this.props.onUpdate(res);
   };
 
   handleRequestFail = (err) => {
     Form.handleErrors(this)(err);
-    if (this.state.errors.placeId !== undefined) {
+    //not sure about the error using
+    if (this.state.errors.email !== undefined) {
       const { errors } = this.state;
       const newErrors = { ...errors };
-      newErrors.address = 'The address is invalid.';
+      newErrors.address = 'The email is invalid.';
       this.setState({ errors: newErrors });
     }
   };
 
-  handleAddressKeyPress = (e) => {
+  handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
   };
 
-  handleIsDefaultChange = (_e, checked) => {
-    this.setState({
-      isDefault: checked,
-    });
-  };
 
   render() {
-    const { classes, item: address } = this.props;
-    const { errors, isDefault, disableIsDefault } = this.state;
-    const isCreate = address === null;
+    const { classes, item: email } = this.props;
+    const { errors, curemail } = this.state;
+
     return (
       <DialogForm
-        title={isCreate ? 'Add New Address' : 'Update Address'}
-        submitLabel={isCreate ? 'Add' : 'Update'}
+        title='Friends'
+        submitLabel='Close'
         formErrors={errors.form}
-        api={this.submit}
+        api={this.adding}
+        className={classes.root}
         onRequestSucceed={this.handleRequestSuccess}
         onRequestFailed={this.handleRequestFail}
         onClose={this.props.onClose}
       >
+
         <InputTextField
           parent={this}
-          name="name"
-          label="Alias"
+          name="email"
+          label="Follow new friend by Email "
+          className={classes.textarea}
+
         />
-        <InputTextField
-          parent={this}
-          name="address"
-          label="Address"
-          inputProps={{
-            ref: this.addressInputRef,
-            onKeyPress: this.handleAddressKeyPress,
-          }}
-        />
-        <InputTextField
-          parent={this}
-          name="line2"
-          label="Apt #"
-          required={false}
-        />
-        <InputTextField
-          parent={this}
-          name="phone"
-          label="Phone number"
-        />
-        <FormControlLabel
-          className={classes.margin}
-          control={(
-            <Switch
-              checked={isDefault}
-              onChange={this.handleIsDefaultChange}
-            />
-)}
-          disabled={disableIsDefault}
-          label="Set as default"
-        />
+        <IconButton
+
+          aria-haspopup="true"
+          className={classes.accountButton}
+          color="inherit"
+        >
+          <PersonAdd />
+        </IconButton>
+
+        <List component="nav">
+        <ListItem>
+          <ListItemText primary="friends1" secondary="email"/>
+        </ListItem>
+        <Divider />
+        <ListItem divider>
+          <ListItemText primary="friend2" secondary="email"/>
+        </ListItem>
+        <ListItem >
+          <ListItemText primary="friend3" secondary="email"/>
+        </ListItem>
+        <Divider light />
+        <ListItem>
+          <ListItemText primary="friend4" secondary="email"/>
+        </ListItem>
+      </List>
+
       </DialogForm>
     );
   }
 }
 
-AddressDialog.propTypes = {
+FollowfriendDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
   item: PropTypes.object,
 };
 
-AddressDialog.defaultProps = {
+FollowfriendDialog.defaultProps = {
   item: null,
 };
 
-export default withStyles(styles)(AddressDialog);
+export default withStyles(styles)(FollowfriendDialog);
