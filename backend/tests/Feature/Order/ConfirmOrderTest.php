@@ -17,7 +17,7 @@ class ConfirmOrderTest extends ApiTestCase
      */
     public function testConfirmOrder()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->id = 'A00000';
         $this->assertFailed(null, 404);

@@ -1,74 +1,4 @@
 {
-    "/api/v1/addresses/0": {
-        "DELETE": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ],
-        "GET": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ],
-        "PUT": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": {
-                    "name": "Changed Name"
-                },
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ]
-    },
     "/api/v1/addresses/1": {
         "DELETE": [
             {
@@ -136,17 +66,51 @@
             }
         ]
     },
-    "/api/v1/addresses": {
-        "GET": [
+    "/api/v1/addresses/0": {
+        "DELETE": [
             {
-                "header": null,
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
                 "request": null,
-                "status_code": 401,
+                "status_code": 404,
                 "response": {
-                    "message": "This page requires authentication."
+                    "message": "Resource not found."
                 },
                 "response_header": null
-            },
+            }
+        ],
+        "GET": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
+                },
+                "response_header": null
+            }
+        ],
+        "PUT": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "name": "Changed Name"
+                },
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
+                },
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/addresses": {
+        "GET": [
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -187,15 +151,6 @@
             }
         ],
         "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -257,19 +212,6 @@
                             "The phone must be a phone number."
                         ]
                     }
-                },
-                "response_header": null
-            }
-        ]
-    },
-    "/api/v1/geo-coding/coords": {
-        "GET": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
                 },
                 "response_header": null
             }
@@ -480,6 +422,7 @@
                         "id": 1,
                         "name": "Test User",
                         "email": "user@foodie-connector.delivery",
+                        "friend_id": "FRIEND",
                         "is_email_verified": false
                     }
                 },
@@ -550,6 +493,7 @@
                         "id": 1,
                         "name": "Test User",
                         "email": "user@foodie-connector.delivery",
+                        "friend_id": "FRIEND",
                         "is_email_verified": false
                     }
                 },
@@ -580,15 +524,6 @@
     },
     "/api/v1/auth/resend-verification-email": {
         "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -750,74 +685,6 @@
             }
         ]
     },
-    "/api/v1/cards/0": {
-        "DELETE": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ],
-        "GET": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ],
-        "PUT": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ]
-    },
     "/api/v1/cards/1": {
         "DELETE": [
             {
@@ -895,17 +762,49 @@
             }
         ]
     },
-    "/api/v1/cards": {
-        "GET": [
+    "/api/v1/cards/0": {
+        "DELETE": [
             {
-                "header": null,
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
                 "request": null,
-                "status_code": 401,
+                "status_code": 404,
                 "response": {
-                    "message": "This page requires authentication."
+                    "message": "Resource not found."
                 },
                 "response_header": null
-            },
+            }
+        ],
+        "GET": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
+                },
+                "response_header": null
+            }
+        ],
+        "PUT": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
+                },
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/cards": {
+        "GET": [
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -938,15 +837,6 @@
             }
         ],
         "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -1018,15 +908,6 @@
     "/api/v1/cart": {
         "GET": [
             {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
@@ -1088,15 +969,6 @@
             }
         ],
         "PUT": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -1229,25 +1101,101 @@
             }
         ]
     },
-    "/api/v1/orders/0": {
+    "/api/v1/friends/NEWFRD": {
         "DELETE": [
             {
-                "header": null,
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
                 "request": null,
-                "status_code": 401,
+                "status_code": 200,
+                "response": [],
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/friends/NOTEXI": {
+        "DELETE": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 404,
                 "response": {
-                    "message": "This page requires authentication."
+                    "message": "Resource not found."
                 },
                 "response_header": null
             }
-        ],
+        ]
+    },
+    "/api/v1/friends": {
         "GET": [
             {
-                "header": null,
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
                 "request": null,
-                "status_code": 401,
+                "status_code": 200,
+                "response": [
+                    {
+                        "name": "Test User",
+                        "friend_id": "NEWFRD"
+                    }
+                ],
+                "response_header": null
+            }
+        ],
+        "POST": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "friend_id": "NEWFRD"
+                },
+                "status_code": 200,
+                "response": [
+                    {
+                        "name": "Test User",
+                        "friend_id": "NEWFRD"
+                    }
+                ],
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "friend_id": "INVALD"
+                },
+                "status_code": 422,
                 "response": {
-                    "message": "This page requires authentication."
+                    "message": "Validation failed.",
+                    "data": {
+                        "friend_id": [
+                            "The selected friend id is invalid."
+                        ]
+                    }
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "friend_id": "EXISTS"
+                },
+                "status_code": 422,
+                "response": {
+                    "message": "Validation failed.",
+                    "data": {
+                        "friend_id": [
+                            "The user is already your friend"
+                        ]
+                    }
                 },
                 "response_header": null
             }
@@ -1439,19 +1387,6 @@
             }
         ]
     },
-    "/api/v1/orders/0/confirm": {
-        "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            }
-        ]
-    },
     "/api/v1/orders/A00000/confirm": {
         "POST": [
             {
@@ -1559,15 +1494,6 @@
     },
     "/api/v1/orders": {
         "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -1683,15 +1609,6 @@
             }
         ],
         "GET": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -1834,19 +1751,6 @@
             }
         ]
     },
-    "/api/v1/orders/0/invitation-email": {
-        "POST": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            }
-        ]
-    },
     "/api/v1/orders/A00000/invitation-email": {
         "POST": [
             {
@@ -1916,15 +1820,6 @@
     "/api/v1/profile/password": {
         "PUT": [
             {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
@@ -1979,15 +1874,6 @@
     "/api/v1/profile": {
         "GET": [
             {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
@@ -1996,6 +1882,7 @@
                 "response": {
                     "name": "Test User",
                     "email": "user@foodie-connector.delivery",
+                    "friend_id": "FRIEND",
                     "id": 1,
                     "is_email_verified": false
                 },
@@ -2003,15 +1890,6 @@
             }
         ],
         "PUT": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -2023,6 +1901,7 @@
                 "response": {
                     "name": "New Name",
                     "email": "user@foodie-connector.delivery",
+                    "friend_id": "FRIEND",
                     "id": 1,
                     "is_email_verified": false
                 },
@@ -2051,15 +1930,6 @@
     "/api/v1/profile/email": {
         "PUT": [
             {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
@@ -2070,6 +1940,7 @@
                 "response": {
                     "name": "Test User",
                     "email": "new@foodie-connector.delivery",
+                    "friend_id": "FRIEND",
                     "id": 1,
                     "is_email_verified": false
                 },
@@ -2106,38 +1977,6 @@
                     "data": {
                         "email": [
                             "The email must be a valid email address."
-                        ]
-                    }
-                },
-                "response_header": null
-            }
-        ]
-    },
-    "/api/v1/restaurants": {
-        "GET": [
-            {
-                "header": null,
-                "request": null,
-                "status_code": 401,
-                "response": {
-                    "message": "This page requires authentication."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 422,
-                "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "address_id": [
-                            "Must provide address_id or place_id."
-                        ],
-                        "place_id": [
-                            "Must provide address_id or place_id."
                         ]
                     }
                 },
@@ -2269,17 +2108,31 @@
             }
         ]
     },
-    "/api/v1/restaurants/0": {
+    "/api/v1/restaurants": {
         "GET": [
             {
-                "header": null,
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
                 "request": null,
-                "status_code": 401,
+                "status_code": 422,
                 "response": {
-                    "message": "This page requires authentication."
+                    "message": "Validation failed.",
+                    "data": {
+                        "address_id": [
+                            "Must provide address_id or place_id."
+                        ],
+                        "place_id": [
+                            "Must provide address_id or place_id."
+                        ]
+                    }
                 },
                 "response_header": null
-            },
+            }
+        ]
+    },
+    "/api/v1/restaurants/0": {
+        "GET": [
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="

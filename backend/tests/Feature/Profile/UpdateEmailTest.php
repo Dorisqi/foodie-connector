@@ -19,7 +19,7 @@ class UpdateEmailTest extends ApiTestCase
     public function testUpdateEmail()
     {
         Notification::fake();
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed([
@@ -39,9 +39,7 @@ class UpdateEmailTest extends ApiTestCase
                 return $notification->token == $token;
             }
         );
-        $this->userFactory()->create([
-            'email' => 'exist@foodie-connector.delivery',
-        ]);
+        $this->userFactory()->state('exist')->create();
         $this->assertFailed([
             'email' => 'exist@foodie-connector.delivery',
         ], 422);

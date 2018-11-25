@@ -16,7 +16,7 @@ class ListOrderTest extends ApiTestCase
      */
     public function testListingOrder()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $order = factory(Order::class)->create();
         $this->assertSucceed(null)->assertJsonCount(1);

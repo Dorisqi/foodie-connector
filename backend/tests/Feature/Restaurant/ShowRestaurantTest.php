@@ -18,7 +18,7 @@ class ShowRestaurantTest extends ApiTestCase
      */
     public function testShowRestaurant()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->assertFailed(null, 404);
         $restaurant = factory(Restaurant::class)->create();

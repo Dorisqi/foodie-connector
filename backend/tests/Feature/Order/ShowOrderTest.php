@@ -18,7 +18,7 @@ class ShowOrderTest extends ApiTestCase
      */
     public function testShowOrder()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->id = 'A00000';
         $this->assertFailed(null, 404);

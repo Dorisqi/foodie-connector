@@ -19,7 +19,7 @@ class UpdateAddressTest extends ApiTestCase
      */
     public function testUpdateAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login(factory(ApiUser::class)->create());
         $address = factory(Address::class)->create();
         $this->id = $address->id;

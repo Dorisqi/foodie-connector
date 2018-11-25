@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Brokers\VerifyEmailBroker;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ApiException;
 use App\Models\ApiUser;
@@ -54,10 +55,23 @@ class RegisterController extends ApiController
         try {
             DB::beginTransaction();
 
+            $friendId = null;
+            if (App::environment('testing')) {
+                $friendId = ApiUser::TESTING_FRIEND_ID;
+            } else {
+                while (true) {
+                    $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+                    if (!ApiUser::where('friend_id', $friendId)->exists()) {
+                        break;
+                    }
+                }
+            }
+
             $user = ApiUser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
+                'friend_id' => $friendId,
             ]);
 
             $customer = Customer::create([

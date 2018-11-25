@@ -26,7 +26,7 @@ class SendInvitationEmailTest extends ApiTestCase
     public function testSendInvitationEmail()
     {
         Notification::fake();
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->id = 'A00000';
         $this->assertFailed(null, 422);
@@ -53,11 +53,7 @@ class SendInvitationEmailTest extends ApiTestCase
         $this->assertFailed([
             'email' => $receiverEmail,
         ], 422);
-        $this->login(
-            factory(ApiUser::class)->create([
-                'email' => 'another@foodie-connector.delivery',
-            ])
-        );
+        $this->login($this->userFactory()->state('new')->create());
         $this->assertFailed([
             'email' => $receiverEmail,
         ], 404, false);

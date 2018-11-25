@@ -18,7 +18,7 @@ class DeleteCardTest extends ApiTestCase
      */
     public function testDeleteCard()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $card = factory(Card::class)->create();

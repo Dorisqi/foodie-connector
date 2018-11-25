@@ -14,7 +14,7 @@ class ReverseGeoCodingTest extends ApiTestCase
      */
     public function testReverseGeoCoding()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->assertSucceed([
             'lat' => '40.4225562',

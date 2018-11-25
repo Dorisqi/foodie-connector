@@ -15,7 +15,7 @@ class ShowCartTest extends ApiTestCase
      */
     public function testShowCart()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $response = $this->assertSucceed(null);
         $response->assertJson([

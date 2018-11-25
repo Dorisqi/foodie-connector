@@ -15,7 +15,7 @@ class UpdateCartTest extends ApiTestCase
      */
     public function testUpdateCart()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->assertFailed([
             'restaurant_id' => 0,

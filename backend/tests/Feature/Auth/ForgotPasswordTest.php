@@ -39,7 +39,7 @@ class ForgotPasswordTest extends ApiTestCase
                 return $notification->token == $token;
             }
         );
-        $user = $this->userFactory()->create([
+        $user = $this->userFactory()->state('new')->create([
             'email' => 'throttle@foodie-connector.delivery',
         ]);
         $this->assertSucceed([

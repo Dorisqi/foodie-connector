@@ -19,6 +19,8 @@ class RegisterTest extends ApiTestCase
      * Register test
      *
      * @return void
+     *
+     * @throws \Exception
      */
     public function testRegister()
     {
@@ -47,6 +49,7 @@ class RegisterTest extends ApiTestCase
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));
+        $user->delete();
         $this->assertSucceed([
             'email' => 'exist@foodie-connector.delivery',
             'password' => ApiUser::testingPassword(),

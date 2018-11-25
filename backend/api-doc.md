@@ -43,6 +43,7 @@ Successful operation.
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
         "is_email_verified": false
     }
 }
@@ -168,6 +169,7 @@ Successful operation.
         "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
         "is_email_verified": false
     }
 }
@@ -231,18 +233,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "X-RateLimit-Limit": 1,
     "X-RateLimit-Remaining": 0,
     "Retry-After": 60
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/auth/resend-verification-email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 403**
@@ -631,20 +621,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
+    "friend_id": "FRIEND",
     "id": 1,
     "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 
@@ -685,20 +664,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
+    "friend_id": "FRIEND",
     "id": 1,
     "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -768,20 +736,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
+    "friend_id": "FRIEND",
     "id": 1,
     "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile/email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -874,18 +831,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "old_password": "test123456",
     "new_password": "new123456"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile/password
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -1009,18 +954,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 ]
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 
 ### **POST - /api/v1/addresses**
 
@@ -1086,18 +1019,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": true
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 #### **Status Code: 422**
 
@@ -1179,18 +1100,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_default": false
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -1265,18 +1174,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": true
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 #### **Status Code: 404**
 
@@ -1358,18 +1255,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 []
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 #### **Status Code: 404**
 
@@ -1515,18 +1400,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ]
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/geo-coding/coords
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 
 ## **card**
 
@@ -1580,18 +1453,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 ]
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 
 ### **POST - /api/v1/cards**
 
@@ -1643,18 +1504,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": true
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 #### **Status Code: 422**
 
@@ -1757,18 +1606,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_default": false
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -1838,18 +1675,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_default": true
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 #### **Status Code: 404**
 
@@ -1926,18 +1751,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 []
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -1984,70 +1797,6 @@ Required
 | order_by | optional | string |  |
 | order_by_desc | optional | string |  |
 
-#### **Status Code: 200**
-
-Successful operation.
-
-**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8&filter_distance=_1
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "restaurants": [
-        {
-            "id": 1,
-            "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "1",
-            "rating": "3.5",
-            "address_line_1": "100 Pierce Street",
-            "address_line_2": "",
-            "city": "West Lafayette",
-            "state": "IN",
-            "zip_code": "47906",
-            "lat": "40.4227584",
-            "lng": "-86.9090892",
-            "phone": "7651111111",
-            "restaurant_categories": [
-                {
-                    "id": 1,
-                    "name": "Category 1",
-                    "pivot": {
-                        "restaurant_id": "1",
-                        "restaurant_category_id": "1"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "Category 2",
-                    "pivot": {
-                        "restaurant_id": "1",
-                        "restaurant_category_id": "2"
-                    }
-                }
-            ],
-            "operation_times": [
-                {
-                    "day_of_week": "6",
-                    "start_time": "12:00:00",
-                    "end_time": "2:00:00"
-                }
-            ],
-            "is_open": true,
-            "distance": 0,
-            "estimated_delivery_time": 20,
-            "is_deliverable": true
-        },
-        "..."
-    ]
-}
-```
 #### **Status Code: 200**
 
 Successful operation.
@@ -2112,16 +1861,68 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ]
 }
 ```
-#### **Status Code: 401**
+#### **Status Code: 200**
 
-This page requires authentication.
+Successful operation.
 
-**URI**: /api/v1/restaurants
+**URI**: /api/v1/restaurants?place_id=ChIJO_0IEK_iEogR4GrIyYopzz8&filter_distance=_1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
 
 **Response Body:**
 ```
 {
-    "message": "This page requires authentication."
+    "restaurants": [
+        {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "1",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "lat": "40.4227584",
+            "lng": "-86.9090892",
+            "phone": "7651111111",
+            "restaurant_categories": [
+                {
+                    "id": 1,
+                    "name": "Category 1",
+                    "pivot": {
+                        "restaurant_id": "1",
+                        "restaurant_category_id": "1"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Category 2",
+                    "pivot": {
+                        "restaurant_id": "1",
+                        "restaurant_category_id": "2"
+                    }
+                }
+            ],
+            "operation_times": [
+                {
+                    "day_of_week": "6",
+                    "start_time": "12:00:00",
+                    "end_time": "2:00:00"
+                }
+            ],
+            "is_open": true,
+            "distance": 0,
+            "estimated_delivery_time": 20,
+            "is_deliverable": true
+        },
+        "..."
+    ]
 }
 ```
 #### **Status Code: 422**
@@ -2330,18 +2131,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_deliverable": true
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/restaurants/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -2412,6 +2201,25 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
+    "restaurant": null,
+    "cart": [],
+    "subtotal": 0
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
     "cart": [
         {
             "product_id": 0,
@@ -2449,37 +2257,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_deliverable": null
     },
     "subtotal": 9.98
-}
-```
-#### **Status Code: 200**
-
-Successful operation.
-
-**URI**: /api/v1/cart
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "restaurant": null,
-    "cart": [],
-    "subtotal": 0
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cart
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 
@@ -2600,18 +2377,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "subtotal": 0
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cart
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 422**
 
 Validation failed.
@@ -2708,7 +2473,7 @@ Required
 
 Successful operation.
 
-**URI**: /api/v1/orders?restaurant_id=1&order_status=created
+**URI**: /api/v1/orders
 
 **Request Header:**
 ```
@@ -2782,7 +2547,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Successful operation.
 
-**URI**: /api/v1/orders
+**URI**: /api/v1/orders?restaurant_id=1&order_status=created
 
 **Request Header:**
 ```
@@ -2851,18 +2616,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 
 ### **POST - /api/v1/orders**
@@ -2962,18 +2715,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_member": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -3125,18 +2866,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -3241,18 +2970,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_member": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders/0
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 404**
@@ -3383,18 +3100,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders/0/confirm
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 404**
 
 Resource not found.
@@ -3464,18 +3169,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "email": "receiver@foodie-connector.delivery"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/orders/0/invitation-email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 404**
@@ -3551,6 +3244,188 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "This order is no longer joinable."
         ]
     }
+}
+```
+
+## **friend**
+
+Everything about friend
+
+### **GET - /api/v1/friends**
+
+List all friends
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+
+### **POST - /api/v1/friends**
+
+Add a new friend
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| friend_id | required | string | exists:api_users,friend_id |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NEWFRD"
+}
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "INVALD"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "friend_id": [
+            "The selected friend id is invalid."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "EXISTS"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "friend_id": [
+            "The user is already your friend"
+        ]
+    }
+}
+```
+
+### **DELETE - /api/v1/friends/{id}**
+
+Delete a friend
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends/NEWFRD
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[]
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/friends/NOTEXI
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
 }
 ```
 

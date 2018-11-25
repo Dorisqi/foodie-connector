@@ -18,7 +18,7 @@ class UpdateCardTest extends ApiTestCase
      */
     public function testUpdateCard()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $card = factory(Card::class)->create();
         $this->id = $card->id;

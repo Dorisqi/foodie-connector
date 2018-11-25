@@ -6,10 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail as VerifyEmailNotification;
+use Illuminate\Support\Facades\Auth;
 
 class ApiUser extends Authenticatable
 {
     use Notifiable;
+
+    public const TESTING_FRIEND_ID = 'FRIEND';
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -26,7 +29,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'stripe_id'
+        'name', 'email', 'password', 'stripe_id', 'friend_id'
     ];
 
     /**
@@ -74,6 +77,18 @@ class ApiUser extends Authenticatable
         return $this->hasMany(Order::class, 'creator_id');
     }
 
+    public function friends()
+    {
+        return $this->belongsToMany(
+            ApiUser::class,
+            'friends',
+            'api_user_id',
+            'friend_id',
+            'id',
+            'friend_id'
+        );
+    }
+
     public function getIsEmailVerifiedAttribute()
     {
         return !is_null($this->email_verified_at);
@@ -81,6 +96,12 @@ class ApiUser extends Authenticatable
 
     public function toArray()
     {
+        if ($this->id !== Auth::guard('api')->user()->id) {
+            return [
+                'name' => $this->name,
+                'friend_id' => $this->friend_id,
+            ];
+        }
         $data = parent::toArray();
         if (!is_null($this->email)) {
             $data['is_email_verified'] = $this->is_email_verified;

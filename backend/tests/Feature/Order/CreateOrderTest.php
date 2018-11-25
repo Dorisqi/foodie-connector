@@ -19,7 +19,7 @@ class CreateOrderTest extends ApiTestCase
      */
     public function testCreateOrder()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         $restaurant = factory(Restaurant::class)->create();

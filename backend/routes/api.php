@@ -43,6 +43,10 @@ Route::prefix('v1')->group(function () {
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
         Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');
 
+        Route::resource('friends', 'FriendController')->only([
+            'index', 'store', 'destroy',
+        ]);
+
         Route::put('cart', 'CartController@update');
         Route::get('cart', 'CartController@show');
 

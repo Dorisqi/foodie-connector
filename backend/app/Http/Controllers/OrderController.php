@@ -54,17 +54,6 @@ class OrderController extends ApiController
 
         try {
             DB::beginTransaction();
-            $id = null;
-            if (App::environment('testing')) {
-                $id = Order::TESTING_ID;
-            } else {
-                while (true) {
-                    $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
-                    if (is_null(Order::find($id))) {
-                        break;
-                    }
-                }
-            }
 
             if ($this->query(
                 true,
@@ -106,6 +95,19 @@ class OrderController extends ApiController
                 'join_before' => $joinBefore->toDateTimeString(),
                 'is_public' => $request['is_public'],
             ]);
+
+            $id = null;
+            if (App::environment('testing')) {
+                $id = Order::TESTING_ID;
+            } else {
+                while (true) {
+                    $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
+                    if (is_null(Order::find($id))) {
+                        break;
+                    }
+                }
+            }
+
             $order->id = $id;
             $order->restaurant()->associate($restaurant);
             $order->creator()->associate($this->user());

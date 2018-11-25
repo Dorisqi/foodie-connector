@@ -361,7 +361,7 @@ abstract class ApiTestCase extends TestCase
     {
         $params = [];
         foreach ($this->rules() as $key => $rule) {
-            $restrictions = explode('|', $rule);
+            $restrictions = is_string($rule) ? explode('|', $rule) : $rule;
             $param = [
                 'key' => $key,
             ];
@@ -385,7 +385,9 @@ abstract class ApiTestCase extends TestCase
                         $param['email'] = true;
                         break;
                     default:
-                        array_push($extra, $restriction);
+                        if (is_string($restriction)) {
+                            array_push($extra, $restriction);
+                        }
                 }
             }
             $param['extra'] = implode(', ', $extra);

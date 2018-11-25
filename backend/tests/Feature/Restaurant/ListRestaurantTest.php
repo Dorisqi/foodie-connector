@@ -17,7 +17,7 @@ class ListRestaurantTest extends ApiTestCase
      */
     public function testListRestaurant()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         for ($i = 0; $i < 3; $i++) {

@@ -18,7 +18,7 @@ class DeleteAddressTest extends ApiTestCase
      */
     public function testDeleteAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $address = factory(Address::class)->create();

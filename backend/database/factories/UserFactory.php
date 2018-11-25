@@ -1,6 +1,5 @@
 <?php
 
-use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ApiUser;
 
@@ -15,7 +14,7 @@ use App\Models\ApiUser;
 |
 */
 
-$factory->define(ApiUser::class, function (Faker $faker) {
+$factory->define(ApiUser::class, function () {
     return [
         'name' => 'Test User',
         'email' => 'user@foodie-connector.delivery',
@@ -25,6 +24,21 @@ $factory->define(ApiUser::class, function (Faker $faker) {
                 'description' => 'ApiUser-Test',
             ]);
             return $customer->id;
-        }
+        },
+        'friend_id' => ApiUser::TESTING_FRIEND_ID,
     ];
+});
+
+$factory->state(ApiUser::class, 'new', [
+    'email' => 'another-user@foodie-connector.delivery',
+    'friend_id' => 'NEWFRD',
+]);
+
+$factory->state(ApiUser::class, 'exist', [
+    'email' => 'exist@foodie-connector.delivery',
+    'friend_id' => 'EXISTS',
+]);
+
+$factory->afterCreatingState(ApiUser::class, 'friend', function ($user) {
+    \Illuminate\Support\Facades\Auth::guard('api')->user()->friends()->attach($user);
 });

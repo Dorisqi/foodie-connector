@@ -18,7 +18,7 @@ class ShowAddressTest extends ApiTestCase
      */
     public function testShowAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         $this->id = $address->id;

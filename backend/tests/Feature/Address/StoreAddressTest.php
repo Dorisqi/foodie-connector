@@ -16,7 +16,7 @@ class StoreAddressTest extends ApiTestCase
      */
     public function testStoreAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login(factory(ApiUser::class)->create());
         $address = factory(Address::class)->make();
         $response = $this->assertSucceed($address->toArray());
