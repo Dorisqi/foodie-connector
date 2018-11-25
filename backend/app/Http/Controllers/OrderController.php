@@ -264,7 +264,7 @@ class OrderController extends ApiController
     }
 
     /**
-     * Invite through email
+     * Invite
      *
      * @param string $id
      * @param \Illuminate\Http\Request $request
@@ -272,9 +272,9 @@ class OrderController extends ApiController
      *
      * @throws \App\Exceptions\ApiException
      */
-    public function sendInvitationEmail($id, Request $request)
+    public function invite($id, Request $request)
     {
-        $this->validateInput($request, $this::sendInvitationEmailRules());
+        $this->validateInput($request, $this::inviteRules());
         $order = $this->getOrder($id);
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
@@ -285,8 +285,20 @@ class OrderController extends ApiController
         if (!$order->is_joinable) {
             throw ApiException::orderNotJoinable();
         }
-        $receiver = new AnonymousNotifiable();
-        $receiver->route('mail', $request->input('email'));
+        if ($request->has('email')) {
+            $receiver = new AnonymousNotifiable();
+            $receiver->route('mail', $request->input('email'));
+        } else {
+            $receiver = $this->user()->friends()
+                ->where('friends.friend_id', $request->input('friend_id'))->first();
+            if (is_null($receiver)) {
+                throw ApiException::validationFailedErrors([
+                    'friend_id' => [
+                        'The user is not your friend.',
+                    ],
+                ]);
+            }
+        }
         $receiver->notify(new OrderInvitation($this->user()->name, $order->share_link));
         return $this->response();
     }
@@ -361,10 +373,11 @@ class OrderController extends ApiController
         ];
     }
 
-    public static function sendInvitationEmailRules()
+    public static function inviteRules()
     {
         return [
-            'email' => 'required|email',
+            'email' => 'email',
+            'friend_id' => 'required_without:email|string',
         ];
     }
 }

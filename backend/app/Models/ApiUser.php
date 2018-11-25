@@ -38,6 +38,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'id',
         'password',
         'email_verified_at',
         'created_at',

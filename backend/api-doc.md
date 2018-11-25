@@ -40,7 +40,6 @@ Successful operation.
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
-        "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "friend_id": "FRIEND",
@@ -166,7 +165,6 @@ Successful operation.
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
-        "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "friend_id": "FRIEND",
@@ -622,7 +620,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
     "friend_id": "FRIEND",
-    "id": 1,
     "is_email_verified": false
 }
 ```
@@ -665,7 +662,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
     "friend_id": "FRIEND",
-    "id": 1,
     "is_email_verified": false
 }
 ```
@@ -737,7 +733,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
     "friend_id": "FRIEND",
-    "id": 1,
     "is_email_verified": false
 }
 ```
@@ -2516,7 +2511,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_deliverable": null
         },
         "creator": {
-            "id": 1,
             "name": "Test User"
         },
         "order_members": [
@@ -2524,7 +2518,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "is_ready": "0",
                 "phone": "7650000000",
                 "user": {
-                    "id": 1,
                     "name": "Test User"
                 }
             }
@@ -2590,7 +2583,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_deliverable": null
         },
         "creator": {
-            "id": 1,
             "name": "Test User"
         },
         "order_members": [
@@ -2598,7 +2590,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "is_ready": "0",
                 "phone": "7650000000",
                 "user": {
-                    "id": 1,
                     "name": "Test User"
                 }
             }
@@ -2691,7 +2682,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_deliverable": null
     },
     "creator": {
-        "id": 1,
         "name": "Test User"
     },
     "order_members": [
@@ -2699,7 +2689,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_ready": "0",
             "phone": "7653500000",
             "user": {
-                "id": 1,
                 "name": "Test User"
             }
         }
@@ -2840,7 +2829,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_deliverable": null
     },
     "creator": {
-        "id": 1,
         "name": "Test User"
     },
     "order_members": [
@@ -2848,7 +2836,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_ready": "0",
             "phone": "7650000000",
             "user": {
-                "id": 1,
                 "name": "Test User"
             }
         }
@@ -2942,7 +2929,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_deliverable": null
     },
     "creator": {
-        "id": 1,
         "name": "Test User"
     },
     "order_members": [
@@ -2950,7 +2936,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_ready": "0",
             "phone": "7650000000",
             "user": {
-                "id": 1,
                 "name": "Test User"
             }
         }
@@ -3070,7 +3055,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "is_deliverable": null
     },
     "creator": {
-        "id": 1,
         "name": "Test User"
     },
     "order_members": [
@@ -3078,7 +3062,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "is_ready": "0",
             "phone": "7650000000",
             "user": {
-                "id": 1,
                 "name": "Test User"
             }
         }
@@ -3140,9 +3123,9 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
-### **POST - /api/v1/orders/{id}/invitation-email**
+### **POST - /api/v1/orders/{id}/invitation**
 
-Send invitation email
+Send invitations
 
 #### **Authorization**
 
@@ -3152,13 +3135,14 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| email | required | email |  |
+| email | optional | email |  |
+| friend_id | optional | string | required_without:email |
 
 #### **Status Code: 200**
 
 Successful operation.
 
-**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
 
 **Request Header:**
 ```
@@ -3171,11 +3155,28 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "email": "receiver@foodie-connector.delivery"
 }
 ```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NEWFRD"
+}
+```
 #### **Status Code: 404**
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000/invitation-email
+**URI**: /api/v1/orders/A00000/invitation
 
 **Request Header:**
 ```
@@ -3199,7 +3200,36 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Validation failed.
 
-**URI**: /api/v1/orders/A00000/invitation-email
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NOTEXI"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "friend_id": [
+            "The user is not your friend."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
 
 **Request Header:**
 ```
@@ -3211,8 +3241,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "email": [
-            "The email field is required."
+        "friend_id": [
+            "The friend id field is required when email is not present."
         ]
     }
 }
@@ -3221,7 +3251,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Validation failed.
 
-**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
 
 **Request Header:**
 ```
@@ -3378,7 +3408,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "friend_id": [
-            "The user is already your friend"
+            "The user is already your friend."
         ]
     }
 }

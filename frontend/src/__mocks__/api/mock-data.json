@@ -419,7 +419,6 @@
                 "response": {
                     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
                     "user": {
-                        "id": 1,
                         "name": "Test User",
                         "email": "user@foodie-connector.delivery",
                         "friend_id": "FRIEND",
@@ -490,7 +489,6 @@
                 "response": {
                     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
                     "user": {
-                        "id": 1,
                         "name": "Test User",
                         "email": "user@foodie-connector.delivery",
                         "friend_id": "FRIEND",
@@ -1193,7 +1191,7 @@
                     "message": "Validation failed.",
                     "data": {
                         "friend_id": [
-                            "The user is already your friend"
+                            "The user is already your friend."
                         ]
                     }
                 },
@@ -1270,7 +1268,6 @@
                         "is_deliverable": null
                     },
                     "creator": {
-                        "id": 1,
                         "name": "Test User"
                     },
                     "order_members": [
@@ -1278,7 +1275,6 @@
                             "is_ready": "0",
                             "phone": "7650000000",
                             "user": {
-                                "id": 1,
                                 "name": "Test User"
                             }
                         }
@@ -1358,7 +1354,6 @@
                         "is_deliverable": null
                     },
                     "creator": {
-                        "id": 1,
                         "name": "Test User"
                     },
                     "order_members": [
@@ -1366,7 +1361,6 @@
                             "is_ready": "0",
                             "phone": "7650000000",
                             "user": {
-                                "id": 1,
                                 "name": "Test User"
                             }
                         }
@@ -1443,7 +1437,6 @@
                         "is_deliverable": null
                     },
                     "creator": {
-                        "id": 1,
                         "name": "Test User"
                     },
                     "order_members": [
@@ -1451,7 +1444,6 @@
                             "is_ready": "0",
                             "phone": "7650000000",
                             "user": {
-                                "id": 1,
                                 "name": "Test User"
                             }
                         }
@@ -1538,7 +1530,6 @@
                         "is_deliverable": null
                     },
                     "creator": {
-                        "id": 1,
                         "name": "Test User"
                     },
                     "order_members": [
@@ -1546,7 +1537,6 @@
                             "is_ready": "0",
                             "phone": "7653500000",
                             "user": {
-                                "id": 1,
                                 "name": "Test User"
                             }
                         }
@@ -1649,7 +1639,6 @@
                             "is_deliverable": null
                         },
                         "creator": {
-                            "id": 1,
                             "name": "Test User"
                         },
                         "order_members": [
@@ -1657,7 +1646,6 @@
                                 "is_ready": "0",
                                 "phone": "7650000000",
                                 "user": {
-                                    "id": 1,
                                     "name": "Test User"
                                 }
                             }
@@ -1675,6 +1663,101 @@
                         "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
                     }
                 ],
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/orders/A00000/invitation": {
+        "POST": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "email": "receiver@foodie-connector.delivery"
+                },
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
+                },
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation": {
+        "POST": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "email": "receiver@foodie-connector.delivery"
+                },
+                "status_code": 200,
+                "response": null,
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "friend_id": "NEWFRD"
+                },
+                "status_code": 200,
+                "response": null,
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "friend_id": "NOTEXI"
+                },
+                "status_code": 422,
+                "response": {
+                    "message": "Validation failed.",
+                    "data": {
+                        "friend_id": [
+                            "The user is not your friend."
+                        ]
+                    }
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "Validation failed.",
+                    "data": {
+                        "friend_id": [
+                            "The friend id field is required when email is not present."
+                        ]
+                    }
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "email": "receiver@foodie-connector.delivery"
+                },
+                "status_code": 422,
+                "response": {
+                    "message": "Validation failed.",
+                    "data": {
+                        "id": [
+                            "This order is no longer joinable."
+                        ]
+                    }
+                },
                 "response_header": null
             }
         ]
@@ -1721,7 +1804,6 @@
                             "is_deliverable": null
                         },
                         "creator": {
-                            "id": 1,
                             "name": "Test User"
                         },
                         "order_members": [
@@ -1729,7 +1811,6 @@
                                 "is_ready": "0",
                                 "phone": "7650000000",
                                 "user": {
-                                    "id": 1,
                                     "name": "Test User"
                                 }
                             }
@@ -1747,72 +1828,6 @@
                         "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
                     }
                 ],
-                "response_header": null
-            }
-        ]
-    },
-    "/api/v1/orders/A00000/invitation-email": {
-        "POST": [
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 422,
-                "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "email": [
-                            "The email field is required."
-                        ]
-                    }
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": {
-                    "email": "receiver@foodie-connector.delivery"
-                },
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ]
-    },
-    "/api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation-email": {
-        "POST": [
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": {
-                    "email": "receiver@foodie-connector.delivery"
-                },
-                "status_code": 200,
-                "response": null,
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": {
-                    "email": "receiver@foodie-connector.delivery"
-                },
-                "status_code": 422,
-                "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "id": [
-                            "This order is no longer joinable."
-                        ]
-                    }
-                },
                 "response_header": null
             }
         ]
@@ -1883,7 +1898,6 @@
                     "name": "Test User",
                     "email": "user@foodie-connector.delivery",
                     "friend_id": "FRIEND",
-                    "id": 1,
                     "is_email_verified": false
                 },
                 "response_header": null
@@ -1902,7 +1916,6 @@
                     "name": "New Name",
                     "email": "user@foodie-connector.delivery",
                     "friend_id": "FRIEND",
-                    "id": 1,
                     "is_email_verified": false
                 },
                 "response_header": null
@@ -1941,7 +1954,6 @@
                     "name": "Test User",
                     "email": "new@foodie-connector.delivery",
                     "friend_id": "FRIEND",
-                    "id": 1,
                     "is_email_verified": false
                 },
                 "response_header": null

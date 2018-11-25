@@ -41,7 +41,7 @@ Route::prefix('v1')->group(function () {
             'index', 'store', 'show', 'destroy',
         ]);
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
-        Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');
+        Route::post('orders/{id}/invitation', 'OrderController@invite');
 
         Route::resource('friends', 'FriendController')->only([
             'index', 'store', 'destroy',

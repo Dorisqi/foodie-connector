@@ -34,7 +34,7 @@ class FriendController extends ApiController
         if ($this->user()->friends()->where('friends.friend_id', $request->input('friend_id'))->exists()) {
             throw ApiException::validationFailedErrors([
                 'friend_id' => [
-                    'The user is already your friend',
+                    'The user is already your friend.',
                 ],
             ]);
         }
