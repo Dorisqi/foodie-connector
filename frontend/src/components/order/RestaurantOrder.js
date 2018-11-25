@@ -65,6 +65,7 @@ class RestaurantOrder extends React.Component {
     errors: {},
     cancelAlert: false,
     sharing: false,
+    checkout: false,
   };
 
   componentDidMount() {
@@ -199,7 +200,6 @@ class RestaurantOrder extends React.Component {
       sharing: true,
     });
   };
-
   render() {
     const { classes, restaurant } = this.props;
     const {
@@ -352,6 +352,7 @@ class RestaurantOrder extends React.Component {
                 variant="outlined"
                 color="primary"
                 fullWidth
+                onClick = {this.handleGroupCheckout}
               >
                 Checkout
               </Button>
