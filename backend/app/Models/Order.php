@@ -70,7 +70,7 @@ class Order extends Model
     public static function query($onlyMember = true, $restaurantId = null, $orderStatus = null)
     {
         $userId = Auth::guard('api')->user()->id;
-        $currentTime = Time::currentTime()->timestamp;
+        $currentTime = Time::currentTime()->toDateTimeString();
         $createdStatusId = OrderStatus::CREATED;
         $query = Order::with([
             'restaurant',
@@ -89,7 +89,7 @@ class Order extends Model
             DB::raw("(`creator_id`=${userId}) as `is_creator`"),
             DB::raw("EXISTS(SELECT * FROM `order_members` WHERE `order_id`=`orders`.`id` AND "
                 . "`api_user_id`=${userId}) as `is_member`"),
-            DB::raw("((SELECT `order_status`)=${createdStatusId} AND `join_before`>=FROM_UNIXTIME(${currentTime})) "
+            DB::raw("((SELECT `order_status`)=${createdStatusId} AND `join_before`>='${currentTime}') "
                 . "as `is_joinable`"),
             DB::raw("((SELECT `is_joinable`) OR (SELECT `is_member`)) as `is_visible`"),
         ])->orderByDesc('created_at');

@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use App\Models\ApiUser;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 abstract class ApiTestCase extends TestCase
@@ -112,6 +110,9 @@ abstract class ApiTestCase extends TestCase
     protected function assertSucceed($data, bool $documented = true, $documentedRequest = null)
     {
         $response = $this->request($data);
+        if ($response->status() !== 200) {
+            echo $response->content();
+        }
         $response->assertStatus(200);
         if ($documented && $this->documented) {
             $this->insertRequest($data, $response, $documentedRequest);
@@ -130,6 +131,9 @@ abstract class ApiTestCase extends TestCase
     protected function assertFailed($data, int $code, bool $documented = true)
     {
         $response = $this->request($data);
+        if ($response->status() !== $code) {
+            echo $response->content();
+        }
         $response->assertStatus($code);
         if ($documented && $this->documented) {
             $this->insertRequest($data, $response);
@@ -228,58 +232,6 @@ abstract class ApiTestCase extends TestCase
             }
         }
         return $this::PREFIX . $uri;
-    }
-
-    /**
-     * Login for authorization
-     *
-     * @param \App\Models\ApiUser $user [optional]
-     * @return void
-     */
-    protected function login(ApiUser $user = null)
-    {
-        $this->guard()->login($user ?? $this->userFactory()->create());
-        $this->token = $this->guard()->token();
-    }
-
-    /**
-     * Get the guard
-     *
-     * @return \App\Services\Auth\ApiGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard('api');
-    }
-
-    /**
-     * Get user factory
-     *
-     * @return \Illuminate\Database\Eloquent\FactoryBuilder
-     */
-    protected function userFactory()
-    {
-        return factory(ApiUser::class);
-    }
-
-    /**
-     * Get the current user
-     *
-     * @return \App\Models\ApiUser
-     */
-    protected function user()
-    {
-        return $this->guard()->user();
-    }
-
-    /**
-     * Get the guard config
-     *
-     * @return array
-     */
-    protected function guardConfig()
-    {
-        return config('auth.guards.api');
     }
 
     /**

@@ -3,9 +3,11 @@
 namespace Tests;
 
 use App\Facades\Time;
+use App\Models\ApiUser;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
@@ -110,5 +112,57 @@ abstract class TestCase extends BaseTestCase
         $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
         $property->setAccessible(true);
         $property->setValue(Carbon::parse($time)->timestamp);
+    }
+
+    /**
+     * Login for authorization
+     *
+     * @param \App\Models\ApiUser $user [optional]
+     * @return void
+     */
+    protected function login(ApiUser $user = null)
+    {
+        $this->guard()->login($user ?? $this->userFactory()->create());
+        $this->token = $this->guard()->token();
+    }
+
+    /**
+     * Get the guard
+     *
+     * @return \App\Services\Auth\ApiGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
+
+    /**
+     * Get user factory
+     *
+     * @return \Illuminate\Database\Eloquent\FactoryBuilder
+     */
+    protected function userFactory()
+    {
+        return factory(ApiUser::class);
+    }
+
+    /**
+     * Get the current user
+     *
+     * @return \App\Models\ApiUser
+     */
+    protected function user()
+    {
+        return $this->guard()->user();
+    }
+
+    /**
+     * Get the guard config
+     *
+     * @return array
+     */
+    protected function guardConfig()
+    {
+        return config('auth.guards.api');
     }
 }
