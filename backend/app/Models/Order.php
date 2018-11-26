@@ -82,6 +82,8 @@ class Order extends Model
             },
         ])->addSelect([
             '*',
+            DB::raw("(SELECT `time` FROM `order_statuses` WHERE `order_id`=`orders`.`id` "
+                . "AND `status`=${createdStatusId}) as `created_at`"),
             DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
                 . "DESC LIMIT 1) as `order_status`"),
             DB::raw("(`creator_id`=${userId}) as `is_creator`"),
@@ -90,7 +92,7 @@ class Order extends Model
             DB::raw("((SELECT `order_status`)=${createdStatusId} AND `join_before`>=FROM_UNIXTIME(${currentTime})) "
                 . "as `is_joinable`"),
             DB::raw("((SELECT `is_joinable`) OR (SELECT `is_member`)) as `is_visible`"),
-        ]);
+        ])->orderByDesc('created_at');
         if ($onlyMember) {
             $user = Auth::guard('api')->user();
             $query = $query->whereHas('orderMembers', function ($query) use ($user) {
