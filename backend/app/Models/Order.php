@@ -65,9 +65,10 @@ class Order extends Model
      * @param bool $onlyMember [optional]
      * @param int|null $restaurantId [optional]
      * @param string|null $orderStatus [optional]
+     * @param bool $onlyVisible [optional]
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function query($onlyMember = true, $restaurantId = null, $orderStatus = null)
+    public static function query($onlyMember = true, $restaurantId = null, $orderStatus = null, $onlyVisible = true)
     {
         $userId = Auth::guard('api')->user()->id;
         $currentTime = Time::currentTime()->toDateTimeString();
@@ -98,6 +99,9 @@ class Order extends Model
             $query = $query->whereHas('orderMembers', function ($query) use ($user) {
                 $query->where('api_user_id', $user->id);
             });
+        }
+        if ($onlyVisible) {
+            $query = $query->having('is_visible', true);
         }
         if ($restaurantId !== null) {
             $query = $query->where('restaurant_id', $restaurantId);

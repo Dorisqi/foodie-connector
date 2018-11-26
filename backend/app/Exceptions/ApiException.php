@@ -150,13 +150,31 @@ class ApiException extends Exception
     {
         return new ApiException('This operation can only be done by an order member.', 403);
     }
+    public static function orderNotCancellable()
+    {
+        return new ApiException('This order cannot be canceled.', 422);
+    }
     public static function orderNotJoinable()
     {
-        return self::validationFailedErrors([
-            'id' => [
-                'This order is no longer joinable.',
-            ],
-        ]);
+        return new ApiException('This order is no longer joinable.', 422);
+    }
+    public static function orderAlreadyJoined()
+    {
+        return new ApiException('You have already joined this order.', 422);
+    }
+    public static function orderNotConfirmable()
+    {
+        return new ApiException('This order cannot be confirmed.', 422);
+    }
+
+    /* Friend */
+    public static function notFriend()
+    {
+        return new ApiException('This user is not your friend.', 422);
+    }
+    public static function alreadyFriend()
+    {
+        return new ApiException('This user is already your friend.', 422);
     }
     
     public static function zeroResult()

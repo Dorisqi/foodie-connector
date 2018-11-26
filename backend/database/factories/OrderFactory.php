@@ -1,10 +1,9 @@
 <?php
 
 $factory->define(\App\Models\Order::class, function () {
-    $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
         'id' => \App\Models\Order::TESTING_ID,
-        'join_before' => $currentTime->copy()->addMinutes(10),
+        'join_before' => \App\Facades\Time::currentTime()->addMinutes(10),
         'is_public' => true,
         'address_line_1' => '134 Pierce Street',
         'address_line_2' => 'Apt XXX',

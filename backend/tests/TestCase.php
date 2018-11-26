@@ -104,8 +104,6 @@ abstract class TestCase extends BaseTestCase
      *
      * @param string $time
      * @return void
-     *
-     * @throws \ReflectionException
      */
     protected function mockCurrentTime(string $time)
     {

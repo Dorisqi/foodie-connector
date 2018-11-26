@@ -14,7 +14,7 @@ class OrderQueryTest extends TestCase
      *
      * @return void
      *
-     * @throws \ReflectionException
+     * @throws \Exception
      */
     public function testOrderQuery()
     {
@@ -40,21 +40,9 @@ class OrderQueryTest extends TestCase
             'time' => Time::currentTime()->addMinutes(1),
         ]);
         $order->orderStatuses()->save($orderStatus);
-        $this->assertArraySubset([
-            'order_status' => 'closed',
-            'is_creator' => 0,
-            'is_member' => 0,
-            'is_joinable' => 0,
-            'is_visible' => 0,
-        ], Order::query(false)->find($order->id)->toArray());
+        $this->assertNull(Order::query(false)->find($order->id));
         $orderStatus->delete();
         $this->mockCurrentTime(Time::currentTime()->addHours(3)->toDateTimeString());
-        $this->assertArraySubset([
-            'order_status' => 'created',
-            'is_creator' => 0,
-            'is_member' => 0,
-            'is_joinable' => 0,
-            'is_visible' => 0,
-        ], Order::query(false)->find($order->id)->toArray());
+        $this->assertNull(Order::query(false)->find($order->id));
     }
 }

@@ -3318,7 +3318,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation failed.
+This order cannot be canceled.
 
 **URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
 
@@ -3330,12 +3330,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation failed.",
-    "data": {
-        "id": [
-            "The order corresponding to the id cannot be canceled"
-        ]
-    }
+    "message": "This order cannot be canceled."
 }
 ```
 
@@ -3455,7 +3450,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation failed.
+This order cannot be confirmed.
 
 **URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
 
@@ -3467,12 +3462,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation failed.",
-    "data": {
-        "id": [
-            "The order corresponding to the id cannot be confirmed"
-        ]
-    }
+    "message": "This order cannot be confirmed."
 }
 ```
 
@@ -3551,7 +3541,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation failed.
+This user is not your friend.
 
 **URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
 
@@ -3570,12 +3560,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation failed.",
-    "data": {
-        "friend_id": [
-            "The user is not your friend."
-        ]
-    }
+    "message": "This user is not your friend."
 }
 ```
 #### **Status Code: 422**
@@ -3602,7 +3587,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation failed.
+This order is no longer joinable.
 
 **URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
 
@@ -3621,12 +3606,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation failed.",
-    "data": {
-        "id": [
-            "This order is no longer joinable."
-        ]
-    }
+    "message": "This order is no longer joinable."
 }
 ```
 
@@ -3739,7 +3719,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 422**
 
-Validation failed.
+This user is already your friend.
 
 **URI**: /api/v1/friends
 
@@ -3758,12 +3738,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Validation failed.",
-    "data": {
-        "friend_id": [
-            "The user is already your friend."
-        ]
-    }
+    "message": "This user is already your friend."
 }
 ```
 

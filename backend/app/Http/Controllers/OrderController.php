@@ -36,7 +36,8 @@ class OrderController extends ApiController
         $query = Order::query(
             true,
             $request->input('restaurant_id'),
-            $request->input('order_status')
+            $request->input('order_status'),
+            false
         );
         $coords = Address::parseCoords($request);
         if (!is_null($coords)) { // nearby orders
@@ -177,7 +178,7 @@ class OrderController extends ApiController
     public function show($id)
     {
         $order = Order::query(false)->find($id);
-        if (is_null($order) || !$order->is_visible) {
+        if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
         return $this->response($order);
@@ -194,18 +195,14 @@ class OrderController extends ApiController
     public function destroy($id)
     {
         $order = Order::query()->find($id);
-        if (is_null($order) || !$order->is_visible) {
+        if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
         if (!$order->is_creator) {
             throw ApiException::notOrderCreator();
         }
         if ($order->order_status !== OrderStatus::CREATED) {
-            throw ApiException::validationFailedErrors([
-                'id' => [
-                    'The order corresponding to the id cannot be canceled',
-                ],
-            ]);
+            throw ApiException::orderNotCancellable();
         }
         $orderStatus = new OrderStatus([
             'status' => OrderStatus::CLOSED,
@@ -213,6 +210,38 @@ class OrderController extends ApiController
         ]);
         $orderStatus->order()->associate($order);
         $orderStatus->save();
+
+        return $this->response(Order::query()->find($order->id));
+    }
+
+    /**
+     * Join an order
+     *
+     * @param string $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function join($id, Request $request)
+    {
+        $this->validateInput($request, $this::joinRules());
+        $order = Order::query(false)->find($id);
+        if (is_null($order)) {
+            throw ApiException::resourceNotFound();
+        }
+        if (!$order->is_joinable) {
+            throw ApiException::orderNotJoinable();
+        }
+        if ($order->is_member) {
+            throw ApiException::orderAlreadyJoined();
+        }
+        $orderMember = new OrderMember([
+            'phone' => $request->input('phone'),
+        ]);
+        $orderMember->user()->associate($this->user());
+        $orderMember->order()->associate($order);
+        $orderMember->save();
 
         return $this->response(Order::query()->find($order->id));
     }
@@ -228,18 +257,14 @@ class OrderController extends ApiController
     public function confirm($id)
     {
         $order = Order::query()->find($id);
-        if (is_null($order) || !$order->is_visible) {
+        if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
         if (!$order->is_creator) {
             throw ApiException::notOrderCreator();
         }
         if ($order->order_status !== OrderStatus::CREATED) {
-            throw ApiException::validationFailedErrors([
-                'id' => [
-                    'The order corresponding to the id cannot be confirmed',
-                ],
-            ]);
+            throw ApiException::orderNotConfirmable();
         }
         // TODO: Check ready status
         $orderStatus = new OrderStatus([
@@ -291,7 +316,7 @@ class OrderController extends ApiController
     {
         $this->validateInput($request, $this::inviteRules());
         $order = Order::query()->find($id);
-        if (is_null($order) || !$order->is_visible) {
+        if (is_null($order)) {
             throw ApiException::resourceNotFound();
         }
         if (!$order->is_member) {
@@ -307,11 +332,7 @@ class OrderController extends ApiController
             $receiver = $this->user()->friends()
                 ->where('friends.friend_id', $request->input('friend_id'))->first();
             if (is_null($receiver)) {
-                throw ApiException::validationFailedErrors([
-                    'friend_id' => [
-                        'The user is not your friend.',
-                    ],
-                ]);
+                throw ApiException::notFriend();
             }
         }
         $receiver->notify(new OrderInvitation($this->user()->name, $order->share_link));
@@ -344,6 +365,13 @@ class OrderController extends ApiController
         return [
             'email' => 'email',
             'friend_id' => 'required_without:email|string',
+        ];
+    }
+
+    public static function joinRules()
+    {
+        return [
+            'phone' => 'required|phone',
         ];
     }
 }

@@ -1218,12 +1218,7 @@
                 },
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "friend_id": [
-                            "The user is already your friend."
-                        ]
-                    }
+                    "message": "This user is already your friend."
                 },
                 "response_header": null
             }
@@ -1345,12 +1340,7 @@
                 "request": null,
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "id": [
-                            "The order corresponding to the id cannot be canceled"
-                        ]
-                    }
+                    "message": "This order cannot be canceled."
                 },
                 "response_header": null
             }
@@ -1536,12 +1526,7 @@
                 "request": null,
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "id": [
-                            "The order corresponding to the id cannot be confirmed"
-                        ]
-                    }
+                    "message": "This order cannot be confirmed."
                 },
                 "response_header": null
             }
@@ -1823,12 +1808,7 @@
                 },
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "friend_id": [
-                            "The user is not your friend."
-                        ]
-                    }
+                    "message": "This user is not your friend."
                 },
                 "response_header": null
             },
@@ -1857,12 +1837,7 @@
                 },
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "id": [
-                            "This order is no longer joinable."
-                        ]
-                    }
+                    "message": "This order is no longer joinable."
                 },
                 "response_header": null
             }
