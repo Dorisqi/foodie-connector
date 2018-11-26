@@ -1,7 +1,8 @@
 FROM php:7.2-alpine
 
-# Install PHP GD
-RUN apk add --no-cache libpng libpng-dev && docker-php-ext-install gd && apk del libpng-dev
+# Install PHP Extensions
+RUN apk add libpng-dev
+RUN docker-php-ext-install gd && docker-php-ext-install pdo_mysql
 
 # Install composer
 RUN curl -L https://getcomposer.org/download/1.7.2/composer.phar > /usr/bin/composer && chmod +x /usr/bin/composer
