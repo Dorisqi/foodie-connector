@@ -371,7 +371,7 @@ class OrderController extends ApiController
     public static function joinRules()
     {
         return [
-            'phone' => 'required|phone',
+            'phone' => 'required|phone:US',
         ];
     }
 }
