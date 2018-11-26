@@ -2676,6 +2676,216 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 ]
 ```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?address_id=1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": 1,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "order_status": "created",
+        "is_creator": 1,
+        "is_member": 1,
+        "is_joinable": 1,
+        "is_visible": 1,
+        "distance": 0,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "2.99",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111"
+        },
+        "creator": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "is_ready": 0,
+                "phone": "7650000000",
+                "user": {
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?place_id=ChIJPbVda67iEogRTWzmvivderE
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": 1,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "order_status": "created",
+        "is_creator": 1,
+        "is_member": 1,
+        "is_joinable": 1,
+        "is_visible": 1,
+        "distance": 279,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
+            "order_minimum": "9.99",
+            "delivery_fee": "2.99",
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111"
+        },
+        "creator": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "is_ready": 0,
+                "phone": "7650000000",
+                "user": {
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    }
+]
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders?address_id=0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "The address_id is invalid"
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders?place_id=INVALID
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "place_id": [
+            "The place_id is invalid"
+        ]
+    }
+}
+```
 
 ### **POST - /api/v1/orders**
 
