@@ -53,7 +53,7 @@ class Restaurant extends Model
      * Return the query
      *
      * @param \Grimzy\LaravelMysqlSpatial\Types\Point|null $coordinates
-     * @return Restaurant|\Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function query($coordinates = null)
     {
@@ -68,10 +68,10 @@ class Restaurant extends Model
             $lng = (float)$coordinates->getLng();
             $query = $query->addSelect([
                 '*',
-                DB::raw("ROUND(ST_Distance_Sphere(geo_location, point(${lng}, ${lat})) / 1000, 1) AS distance"),
-                DB::raw('ROUND(20 + (SELECT distance) * 3) AS estimated_delivery_time'),
-                DB::raw('((SELECT distance) < 5) AS is_deliverable'),
-                DB::raw(self::isOpenQuery('restaurants.id')),
+                DB::raw("ROUND(ST_Distance_Sphere(`geo_location`, POINT(${lng}, ${lat})) / 1000, 1) AS `distance`"),
+                DB::raw('ROUND(20 + (SELECT `distance`) * 3) AS `estimated_delivery_time`'),
+                DB::raw('((SELECT `distance`) < 5) AS `is_deliverable`'),
+                DB::raw(self::isOpenQuery('`restaurants`.`id`')),
             ]);
         }
         return $query;
@@ -90,11 +90,11 @@ class Restaurant extends Model
         $dayOfWeek = $currentTime->dayOfWeek;
         $nextDayOfWeek = ($dayOfWeek + 1) % 7;
         $currentTimeStr = $currentTime->toTimeString();
-        return "EXISTS(SELECT * FROM operation_times WHERE restaurant_id=${restaurant_id} "
-            . "AND ((day_of_week=${dayOfWeek} AND TIME('${currentTimeStr}') >= start_time "
-            . "AND (TIME('${currentTimeStr}') < end_time OR start_time > end_time)) "
-            . "OR (day_of_week=${nextDayOfWeek} AND start_time > end_time "
-            . "AND TIME('${currentTimeStr}') < end_time))) as is_open";
+        return "EXISTS(SELECT * FROM `operation_times` WHERE `restaurant_id`=${restaurant_id} "
+            . "AND ((`day_of_week`=${dayOfWeek} AND TIME('${currentTimeStr}') >= `start_time` "
+            . "AND (TIME('${currentTimeStr}') < `end_time` OR `start_time` > `end_time`)) "
+            . "OR (`day_of_week`=${nextDayOfWeek} AND `start_time` > `end_time` "
+            . "AND TIME('${currentTimeStr}') < `end_time`))) as `is_open`";
     }
 
     protected $localIsOpen = null;

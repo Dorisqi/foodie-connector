@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -58,58 +59,63 @@ class Order extends Model
         return $this->hasMany(OrderStatus::class);
     }
 
+    /**
+     * Return the query
+     *
+     * @param bool $onlyMember [optional]
+     * @param int|null $restaurantId [optional]
+     * @param string|null $orderStatus [optional]
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function query($onlyMember = true, $restaurantId = null, $orderStatus = null)
+    {
+        $userId = Auth::guard('api')->user()->id;
+        $currentTime = Time::currentTime()->timestamp;
+        $createdStatusId = OrderStatus::CREATED;
+        $query = Order::with([
+            'restaurant',
+            'creator:id,name,friend_id',
+            'orderMembers',
+            'orderMembers.user:id,name,friend_id',
+            'orderStatuses' => function ($query) {
+                $query->orderBy('time', 'desc');
+            },
+        ])->addSelect([
+            '*',
+            DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
+                . "DESC LIMIT 1) as `order_status`"),
+            DB::raw("(`creator_id`=${userId}) as `is_creator`"),
+            DB::raw("EXISTS(SELECT * FROM `order_members` WHERE `order_id`=`orders`.`id` AND "
+                . "`api_user_id`=${userId}) as `is_member`"),
+            DB::raw("((SELECT `order_status`)=${createdStatusId} AND `join_before`>=FROM_UNIXTIME(${currentTime})) "
+                . "as `is_joinable`"),
+            DB::raw("((SELECT `is_joinable`) OR (SELECT `is_member`)) as `is_visible`"),
+        ]);
+        if ($onlyMember) {
+            $user = Auth::guard('api')->user();
+            $query = $query->whereHas('orderMembers', function ($query) use ($user) {
+                $query->where('api_user_id', $user->id);
+            });
+        }
+        if ($restaurantId !== null) {
+            $query = $query->where('restaurant_id', $restaurantId);
+        }
+        if ($orderStatus !== null) {
+            $statusId = OrderStatus::STATUS_IDS[$orderStatus];
+            $query = $query->having('order_status', $statusId);
+        }
+        return $query;
+    }
+
     public function getShareLinkAttribute()
     {
         return url('orders/' . $this->id);
     }
 
-    public function getIsCreatorAttribute()
-    {
-        return $this->creator->id === Auth::guard('api')->user()->id;
-    }
-
-    public function getIsMemberAttribute()
-    {
-        $userId = Auth::guard('api')->user()->id;
-        foreach ($this->orderMembers as $orderMember) {
-            if ($orderMember->user->id === $userId) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function getIsJoinableAttribute()
-    {
-        if (Time::currentTime()->greaterThan(
-            is_numeric($this->join_before)
-                ? Carbon::createFromTimestamp($this->join_before)
-                : Carbon::parse($this->join_before)
-        )) {
-            return false;
-        }
-        foreach ($this->orderStatuses as $orderStatus) {
-            if ($orderStatus->status > OrderStatus::CREATED) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public function getIsVisibleAttribute()
-    {
-        if ($this->is_joinable || $this->is_member) {
-            return true;
-        }
-        return false;
-    }
-
     public function toArray()
     {
         $data = parent::toArray();
-        $data['is_joinable'] = $this->is_joinable;
-        $data['is_creator'] = $this->is_creator;
-        $data['is_member'] = $this->is_member;
+        $data['order_status'] = OrderStatus::STATUS_NAMES[$this->order_status];
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         return $data;

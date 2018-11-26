@@ -1838,7 +1838,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 2,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "2.00",
             "rating": "3.5",
@@ -1907,7 +1907,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "1.00",
             "rating": "3.5",
@@ -2016,7 +2016,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com//restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2122,7 +2122,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com//restaurants/test.jpg",
     "order_minimum": "9.99",
     "delivery_fee": "2.99",
     "rating": "3.5",
@@ -2278,7 +2278,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2370,7 +2370,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2507,6 +2507,8 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
+| place_id | optional | string |  |
+| address_id | optional | integer | sometimes |
 | restaurant_id | optional | integer | exists:restaurants,id |
 | order_status | optional | string |  |
 
@@ -2541,10 +2543,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7650000000",
+        "order_status": "created",
+        "is_creator": 1,
+        "is_member": 1,
+        "is_joinable": 1,
+        "is_visible": 1,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "2.99",
             "rating": "3.5",
@@ -2563,14 +2570,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "phone": "7651111111"
         },
         "creator": {
-            "name": "Test User"
+            "name": "Test User",
+            "friend_id": "FRIEND"
         },
         "order_members": [
             {
                 "is_ready": 0,
                 "phone": "7650000000",
                 "user": {
-                    "name": "Test User"
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
                 }
             }
         ],
@@ -2580,11 +2589,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "is_joinable": true,
-        "is_creator": true,
-        "is_member": true,
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
     }
 ]
 ```
@@ -2619,10 +2625,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7650000000",
+        "order_status": "created",
+        "is_creator": 1,
+        "is_member": 1,
+        "is_joinable": 1,
+        "is_visible": 1,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com//restaurants/test.jpg",
             "order_minimum": "9.99",
             "delivery_fee": "2.99",
             "rating": "3.5",
@@ -2641,14 +2652,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "phone": "7651111111"
         },
         "creator": {
-            "name": "Test User"
+            "name": "Test User",
+            "friend_id": "FRIEND"
         },
         "order_members": [
             {
                 "is_ready": 0,
                 "phone": "7650000000",
                 "user": {
-                    "name": "Test User"
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
                 }
             }
         ],
@@ -2658,11 +2671,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "is_joinable": true,
-        "is_creator": true,
-        "is_member": true,
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
     }
 ]
 ```
@@ -2719,10 +2729,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7653500000",
+    "order_status": "created",
+    "is_creator": 1,
+    "is_member": 1,
+    "is_joinable": 1,
+    "is_visible": 1,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2741,14 +2756,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7651111111"
     },
     "creator": {
-        "name": "Test User"
+        "name": "Test User",
+        "friend_id": "FRIEND"
     },
     "order_members": [
         {
             "is_ready": 0,
             "phone": "7653500000",
             "user": {
-                "name": "Test User"
+                "name": "Test User",
+                "friend_id": "FRIEND"
             }
         }
     ],
@@ -2758,11 +2775,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "is_joinable": true,
-    "is_creator": true,
-    "is_member": true,
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 422**
@@ -2904,10 +2918,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7650000000",
+    "order_status": "created",
+    "is_creator": 1,
+    "is_member": 1,
+    "is_joinable": 1,
+    "is_visible": 1,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -2926,14 +2945,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7651111111"
     },
     "creator": {
-        "name": "Test User"
+        "name": "Test User",
+        "friend_id": "FRIEND"
     },
     "order_members": [
         {
             "is_ready": 0,
             "phone": "7650000000",
             "user": {
-                "name": "Test User"
+                "name": "Test User",
+                "friend_id": "FRIEND"
             }
         }
     ],
@@ -2943,11 +2964,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "is_joinable": true,
-    "is_creator": true,
-    "is_member": true,
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 404**
@@ -3010,10 +3028,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7650000000",
+    "order_status": "closed",
+    "is_creator": 1,
+    "is_member": 1,
+    "is_joinable": 0,
+    "is_visible": 1,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -3032,14 +3055,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7651111111"
     },
     "creator": {
-        "name": "Test User"
+        "name": "Test User",
+        "friend_id": "FRIEND"
     },
     "order_members": [
         {
             "is_ready": 0,
             "phone": "7650000000",
             "user": {
-                "name": "Test User"
+                "name": "Test User",
+                "friend_id": "FRIEND"
             }
         }
     ],
@@ -3053,11 +3078,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "is_joinable": false,
-    "is_creator": true,
-    "is_member": true,
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 404**
@@ -3142,10 +3164,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7650000000",
+    "order_status": "confirmed",
+    "is_creator": 1,
+    "is_member": 1,
+    "is_joinable": 0,
+    "is_visible": 1,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com//restaurants/test.jpg",
         "order_minimum": "9.99",
         "delivery_fee": "2.99",
         "rating": "3.5",
@@ -3164,14 +3191,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7651111111"
     },
     "creator": {
-        "name": "Test User"
+        "name": "Test User",
+        "friend_id": "FRIEND"
     },
     "order_members": [
         {
             "is_ready": 0,
             "phone": "7650000000",
             "user": {
-                "name": "Test User"
+                "name": "Test User",
+                "friend_id": "FRIEND"
             }
         }
     ],
@@ -3185,11 +3214,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "is_joinable": false,
-    "is_creator": true,
-    "is_member": true,
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW"
 }
 ```
 #### **Status Code: 404**

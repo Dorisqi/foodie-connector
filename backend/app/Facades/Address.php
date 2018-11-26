@@ -2,8 +2,10 @@
 
 namespace App\Facades;
 
+use App\Exceptions\ApiException;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
@@ -83,33 +85,49 @@ class Address
     /**
      * Return the validation rules for address
      *
-     * @param bool $withAddressId
+     * @param bool $withPlaceId [optional]
      * @param bool $isRequired [optional]
      * @return array
      */
-    public static function rules(bool $withAddressId, bool $isRequired = true)
+    public static function rules(bool $withPlaceId = true, bool $isRequired = true)
     {
         $rules = [];
-        if ($withAddressId) {
-            $rules['address_id'] = [
-                'sometimes',
-                Rule::exists('addresses', 'id')->where(function ($query) {
-                    $query->where('api_user_id', Auth::guard('api')->user()->id);
-                }),
-            ];
+        if ($withPlaceId) {
+            $rules['place_id'] = 'string';
         }
-        $requiredRule = $isRequired ?
-            ($withAddressId ? 'required_without:address_id|' : 'required|')
-            : '';
-        $rules = array_merge($rules, [
-            'address_line_1' => "${requiredRule}string|max:255",
-            'address_line_2' => "sometimes|string|max:255",
-            'city' => "${requiredRule}string|max:255",
-            'state' => "${requiredRule}string|max:255",
-            'zip_code' => "${requiredRule}zip_code",
-            'phone' => "${requiredRule}phone:US",
-        ]);
+        if ($isRequired) {
+            $requiredRule = $withPlaceId ? 'required_without:place_id' : 'required';
+        } else {
+            $requiredRule = 'sometimes';
+        }
+        $rules['address_id'] = [
+            $requiredRule,
+            'integer',
+        ];
         return $rules;
+    }
+
+    /**
+     * Parse coordinate
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Grimzy\LaravelMysqlSpatial\Types\Point
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \App\Exceptions\MapsException
+     */
+    public static function parseCoords(Request $request)
+    {
+        if ($request->has('address_id')) {
+            $address = Auth::guard('api')->user()->addresses()->find($request->query('address_id'));
+            if (is_null($address)) {
+                throw ApiException::invalidAddressId();
+            }
+            return $address->geo_location;
+        } elseif ($request->has('place_id')) {
+            return Maps::latLngByPlaceID($request->query('place_id'));
+        }
+        return null;
     }
 
     /**

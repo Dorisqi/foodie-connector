@@ -15,6 +15,7 @@ use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends ApiController
@@ -26,17 +27,31 @@ class OrderController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
+     * @throws \App\Exceptions\MapsException
      */
     public function index(Request $request)
     {
         $this->validateInput($request, $this::listRules());
 
-        $orders = $this->query(
+        $query = Order::query(
             true,
             $request->input('restaurant_id'),
             $request->input('order_status')
-        )->get();
-        return $this->response($orders);
+        );
+        $coords = Address::parseCoords($request);
+        if (!is_null($coords)) { // nearby orders
+            $lat = (float)$coords->getLat();
+            $lng = (float)$coords->getLng();
+            $query = $query
+                ->where('is_public', true)
+                ->having('is_joinable', true)
+                ->distanceSphere('geo_location', $coords, 500) // within 500 meters
+                ->addSelect([
+                    DB::raw("ROUND(ST_Distance_Sphere(`geo_location`, POINT(${lng}, ${lat}))) AS `distance`"),
+                ]);
+        }
+
+        return $this->response($query->get());
     }
 
     /**
@@ -55,7 +70,7 @@ class OrderController extends ApiController
         try {
             DB::beginTransaction();
 
-            if ($this->query(
+            if (Order::query(
                 true,
                 $request->input('restaurant_id'),
                 'created'
@@ -148,7 +163,7 @@ class OrderController extends ApiController
             throw $exception;
         }
 
-        return $this->response($this->getOrder($order->id));
+        return $this->response(Order::query()->find($order->id));
     }
 
     /**
@@ -161,7 +176,7 @@ class OrderController extends ApiController
      */
     public function show($id)
     {
-        $order = $this->getOrder($id);
+        $order = Order::query(false)->find($id);
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
@@ -178,21 +193,19 @@ class OrderController extends ApiController
      */
     public function destroy($id)
     {
-        $order = $this->getOrder($id);
+        $order = Order::query()->find($id);
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
         if (!$order->is_creator) {
             throw ApiException::notOrderCreator();
         }
-        foreach ($order->orderStatuses as $orderStatus) {
-            if ($orderStatus->status > OrderStatus::CREATED) {
-                throw ApiException::validationFailedErrors([
-                    'id' => [
-                        'The order corresponding to the id cannot be canceled',
-                    ],
-                ]);
-            }
+        if ($order->order_status !== OrderStatus::CREATED) {
+            throw ApiException::validationFailedErrors([
+                'id' => [
+                    'The order corresponding to the id cannot be canceled',
+                ],
+            ]);
         }
         $orderStatus = new OrderStatus([
             'status' => OrderStatus::CLOSED,
@@ -201,7 +214,7 @@ class OrderController extends ApiController
         $orderStatus->order()->associate($order);
         $orderStatus->save();
 
-        return $this->response($this->getOrder($id));
+        return $this->response(Order::query()->find($order->id));
     }
 
     /**
@@ -214,21 +227,19 @@ class OrderController extends ApiController
      */
     public function confirm($id)
     {
-        $order = $this->getOrder($id);
+        $order = Order::query()->find($id);
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
         if (!$order->is_creator) {
             throw ApiException::notOrderCreator();
         }
-        foreach ($order->orderStatuses as $orderStatus) {
-            if ($orderStatus->status > OrderStatus::CREATED) {
-                throw ApiException::validationFailedErrors([
-                    'id' => [
-                        'The order corresponding to the id cannot be confirmed',
-                    ],
-                ]);
-            }
+        if ($order->order_status !== OrderStatus::CREATED) {
+            throw ApiException::validationFailedErrors([
+                'id' => [
+                    'The order corresponding to the id cannot be confirmed',
+                ],
+            ]);
         }
         // TODO: Check ready status
         $orderStatus = new OrderStatus([
@@ -238,7 +249,7 @@ class OrderController extends ApiController
         $orderStatus->order()->associate($order);
         $orderStatus->save();
 
-        return $this->response($this->getOrder($id));
+        return $this->response(Order::query()->find($order->id));
     }
 
     /**
@@ -249,7 +260,7 @@ class OrderController extends ApiController
      */
     public function qrCode($id)
     {
-        $order = Order::with('orderStatuses')->find($id);
+        $order = Order::find($id);
         if (is_null($order)) {
             throw abort(404);
         }
@@ -279,7 +290,7 @@ class OrderController extends ApiController
     public function invite($id, Request $request)
     {
         $this->validateInput($request, $this::inviteRules());
-        $order = $this->getOrder($id);
+        $order = Order::query()->find($id);
         if (is_null($order) || !$order->is_visible) {
             throw ApiException::resourceNotFound();
         }
@@ -307,58 +318,6 @@ class OrderController extends ApiController
         return $this->response();
     }
 
-    /**
-     * Query order from the database
-     *
-     * @param int $id
-     * @param bool $onlyMember [optional]
-     * @return \App\Models\Order|null
-     */
-    protected function getOrder($id, $onlyMember = false)
-    {
-        return $this->query($onlyMember)->find($id);
-    }
-
-    /**
-     * Return the query
-     *
-     * @param bool $onlyMember [optional]
-     * @param int|null $restaurantId [optional]
-     * @param string|null $orderStatus [optional]
-     * @return Order|\Illuminate\Database\Eloquent\Builder
-     */
-    protected function query($onlyMember = true, $restaurantId = null, $orderStatus = null)
-    {
-        $query = Order::with([
-            'restaurant',
-            'creator:id,name',
-            'orderMembers',
-            'orderMembers.user:id,name',
-            'orderStatuses' => function ($query) {
-                $query->orderBy('time', 'desc');
-            },
-        ]);
-        if ($onlyMember) {
-            $user = $this->user();
-            $query = $query->whereHas('orderMembers', function ($query) use ($user) {
-                $query->where('api_user_id', $user->id);
-            });
-        }
-        if ($restaurantId !== null) {
-            $query = $query->where('restaurant_id', $restaurantId);
-        }
-        if ($orderStatus !== null) {
-            $statusId = OrderStatus::STATUS_IDS[$orderStatus];
-            $query = $query->whereDoesntHave(
-                'orderStatuses',
-                function ($query) use ($statusId) {
-                    $query->where('status', '>', $statusId);
-                }
-            );
-        }
-        return $query;
-    }
-
     public static function storeRules()
     {
         return [
@@ -371,10 +330,13 @@ class OrderController extends ApiController
 
     public static function listRules()
     {
-        return [
+        return array_merge(Address::rules(true, false), [
             'restaurant_id' => 'integer|exists:restaurants,id',
-            'order_status' => 'string',
-        ];
+            'order_status' => [
+                'string',
+                Rule::in(array_keys(OrderStatus::STATUS_IDS)),
+            ],
+        ]);
     }
 
     public static function inviteRules()
