@@ -61,7 +61,7 @@ class RegisterController extends ApiController
             } else {
                 while (true) {
                     $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
-                    if (!ApiUser::where('friend_id', $friendId)->exists()) {
+                    if (ApiUser::where('friend_id', $friendId)->doesntExists()) {
                         break;
                     }
                 }

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Facades\Time;
 use Carbon\Carbon;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
+    use SpatialTrait;
+
     public const TESTING_ID = 'HFEJ32RAFW58ER29R8SW';
 
     public $timestamps = false;
@@ -23,13 +26,16 @@ class Order extends Model
         'city',
         'state',
         'zip_code',
-        'lat',
-        'lng',
+        'geo_location',
         'phone',
     ];
 
     protected $hidden = [
         'restaurant_id', 'creator_id',
+    ];
+
+    protected $spatialFields = [
+        'geo_location',
     ];
 
     public function restaurant()

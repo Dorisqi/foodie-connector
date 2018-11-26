@@ -50,7 +50,7 @@ class OrderController extends ApiController
      */
     public function store(Request $request)
     {
-        $this->validateInput($request);
+        $this->validateInput($request, $this::storeRules());
 
         try {
             DB::beginTransaction();
@@ -67,13 +67,13 @@ class OrderController extends ApiController
                 ]);
             }
 
-            $restaurant = Restaurant::find($request->input('restaurant_id'));
-
             $address = $this->user()->addresses()->find($request->input('address_id'));
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
-            $restaurant->setAddress($address);
+
+            $restaurant = Restaurant::query($address->geo_location)->find($request->input('restaurant_id'));
+
             if (!$restaurant->is_deliverable) {
                 throw ApiException::validationFailedErrors([
                     'address_id' => [
@@ -84,13 +84,17 @@ class OrderController extends ApiController
 
             $createAt = Time::currentTime();
             $joinBefore = $createAt->copy()->addSeconds((int)$request->input('join_limit'));
-            if (!$restaurant->isOpenAt($joinBefore->copy()->addMinute(10))) {
+
+            if (!DB::selectOne(
+                'SELECT ' . Restaurant::isOpenQuery($restaurant->id, $joinBefore->copy()->addMinutes(10))
+            )->{'is_open'}) {
                 throw ApiException::validationFailedErrors([
                     'join_limit' => [
                         'The restaurant must be open for at least 10 minutes after the join limit.',
                     ],
                 ]);
             }
+
             $order = new Order([
                 'join_before' => $joinBefore->toDateTimeString(),
                 'is_public' => $request['is_public'],
@@ -355,7 +359,7 @@ class OrderController extends ApiController
         return $query;
     }
 
-    public static function rules()
+    public static function storeRules()
     {
         return [
             'restaurant_id' => 'required|integer|exists:restaurants,id',

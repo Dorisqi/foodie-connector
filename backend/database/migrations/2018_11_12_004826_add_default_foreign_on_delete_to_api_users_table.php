@@ -14,12 +14,10 @@ class AddDefaultForeignOnDeleteToApiUsersTable extends Migration
      */
     public function up()
     {
-        if (!App::environment('testing')) {
-            Schema::table('api_users', function (Blueprint $table) {
-                $table->dropForeign(['default_address_id']);
-                $table->dropForeign(['default_card_id']);
-            });
-        }
+        Schema::table('api_users', function (Blueprint $table) {
+            $table->dropForeign(['default_address_id']);
+            $table->dropForeign(['default_card_id']);
+        });
 
         Schema::table('api_users', function (Blueprint $table) {
             $table->foreign('default_address_id')

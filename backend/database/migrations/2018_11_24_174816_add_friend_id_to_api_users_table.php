@@ -22,7 +22,7 @@ class AddFriendIdToApiUsersTable extends Migration
             $friendId = null;
             while (true) {
                 $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
-                if (!\App\Models\ApiUser::where('friend_id', $friendId)->exists()) {
+                if (\App\Models\ApiUser::where('friend_id', $friendId)->doesntExist()) {
                     break;
                 }
             }

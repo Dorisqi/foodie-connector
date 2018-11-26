@@ -17,9 +17,7 @@ class AddDefaultAddressToApiUsersTable extends Migration
         Schema::table('api_users', function (Blueprint $table) {
             $table->unsignedInteger('default_address_id')->nullable();
 
-            if (!App::environment('testing')) {
-                $table->foreign('default_address_id')->references('id')->on('addresses');
-            }
+            $table->foreign('default_address_id')->references('id')->on('addresses');
         });
     }
 

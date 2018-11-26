@@ -2,19 +2,22 @@
 
 namespace App\Facades;
 
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 class Address
 {
     /**
      * Migrate address information into database
+     * This method is a old one (using decimal fields for geo_location)
      *
      * @param \Illuminate\Database\Schema\Blueprint $table
      * @return void
      */
-    public static function migrate(Blueprint $table)
+    public static function oldMigrate(Blueprint $table)
     {
         $table->string('address_line_1');
         $table->string('address_line_2')->default('');
@@ -24,6 +27,57 @@ class Address
         $table->decimal('lat', 10, 8);
         $table->decimal('lng', 11, 8);
         $table->string('phone');
+    }
+
+    /**
+     * Migrate to use point for geo_location
+     *
+     * @param string $table
+     * @param string $model
+     * @return void
+     */
+    public static function migrateToPoint($table, $model)
+    {
+        Schema::table($table, function (Blueprint $table) {
+            $table->point('geo_location')->nullable()->after('lng');
+        });
+        $rows = call_user_func($model . '::all');
+        foreach ($rows as $row) {
+            $row->geo_location = new Point($row->lat, $row->lng);
+            $row->save();
+        }
+        Schema::table($table, function (Blueprint $table) {
+            $table->dropColumn('lat');
+            $table->dropColumn('lng');
+            $table->point('geo_location')->nullable(false)->change();
+            $table->spatialIndex('geo_location');
+        });
+    }
+
+    /**
+     * Migrate back from point
+     *
+     * @param string $table
+     * @param string $model
+     * @return void
+     */
+    public static function migrateBackFromPoint($table, $model)
+    {
+        Schema::table($table, function (Blueprint $table) {
+            $table->decimal('lat', 10, 8)->after('geo_location')->nullable();
+            $table->decimal('lng', 11, 8)->after('lat')->nullable();
+        });
+        $rows = call_user_func($model . '::all');
+        foreach ($rows as $row) {
+            $row->lat = $row->geo_location->getLat();
+            $row->lng = $row->geo_location->getLng();
+            $row->save();
+        }
+        Schema::table($table, function (Blueprint $table) {
+            $table->dropColumn('geo_location');
+            $table->decimal('lat', 10, 8)->nullable(false)->change();
+            $table->decimal('lng', 11, 8)->nullable(false)->change();
+        });
     }
 
     /**
@@ -69,7 +123,7 @@ class Address
         return array_merge([
             'address_line_1' => $address['line_1'],
             'address_line_2' => $address['line_2'],
-        ], array_only($address, ['city', 'state', 'zip_code', 'lat', 'lng', 'phone']));
+        ], array_only($address, ['city', 'state', 'zip_code', 'geo_location', 'phone']));
     }
 
     /**
@@ -86,8 +140,7 @@ class Address
             'city',
             'state',
             'zip_code',
-            'lat',
-            'lng',
+            'geo_location',
             'phone',
         ];
     }

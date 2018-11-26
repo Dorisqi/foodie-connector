@@ -24,6 +24,7 @@ class ShowAddressTest extends ApiTestCase
         $this->id = $address->id;
         $addressArray = $address->toArray();
         $addressArray['is_default'] = false;
+        unset($addressArray['geo_location']);
         $this->assertSucceed(null)->assertJson($addressArray);
         $this->id = 0;
         $this->assertFailed(null, 404);

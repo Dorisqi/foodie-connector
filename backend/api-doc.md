@@ -924,13 +924,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce St",
+        "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "line_2": "Apt XXX",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "is_default": false
     },
     {
@@ -938,13 +943,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce St",
+        "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "line_2": "Apt XXX",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "is_default": false
     }
 ]
@@ -990,8 +1000,13 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "is_default": true
 }
 ```
@@ -1004,13 +1019,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "name": "Test User",
         "phone": "7653500000",
         "line_1": "134 Pierce St",
+        "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "line_2": "Apt XXX",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "is_default": true
     }
 ]
@@ -1037,8 +1057,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "state": "IN",
     "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
     "is_default": true
 }
 ```
@@ -1085,13 +1103,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "name": "Test User",
     "phone": "7653500000",
     "line_1": "134 Pierce St",
+    "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
-    "line_2": "Apt XXX",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "is_default": false
 }
 ```
@@ -1159,13 +1182,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "name": "Changed Name",
         "phone": "7653500000",
         "line_1": "",
+        "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47907",
         "place_id": "ChIJPbVda67iEogRTWzmvivderE",
-        "lat": "40.4248",
-        "lng": "-86.911",
-        "line_2": "Apt XXX",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.911,
+                40.4248
+            ]
+        },
         "is_default": true
     }
 ]
@@ -1431,8 +1459,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47906",
         "is_default": false
     },
@@ -1441,8 +1469,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47906",
         "is_default": false
     }
@@ -1493,8 +1521,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47906",
         "is_default": true
     }
@@ -1595,8 +1623,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "nickname": "Test Visa",
     "brand": "Visa",
     "last_four": "4242",
-    "expiration_month": "12",
-    "expiration_year": "2030",
+    "expiration_month": 12,
+    "expiration_year": 2030,
     "zip_code": "47906",
     "is_default": false
 }
@@ -1664,8 +1692,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47907",
         "is_default": true
     }
@@ -1812,45 +1840,50 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
             "order_minimum": "9.99",
-            "delivery_fee": "2",
+            "delivery_fee": "2.00",
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.4227584",
-            "lng": "-86.9090892",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
             "phone": "7651111111",
+            "distance": 0,
+            "estimated_delivery_time": 20,
+            "is_deliverable": 1,
+            "is_open": 1,
             "restaurant_categories": [
                 {
                     "id": 1,
                     "name": "Category 1",
                     "pivot": {
-                        "restaurant_id": "2",
-                        "restaurant_category_id": "1"
+                        "restaurant_id": 2,
+                        "restaurant_category_id": 1
                     }
                 },
                 {
                     "id": 2,
                     "name": "Category 2",
                     "pivot": {
-                        "restaurant_id": "2",
-                        "restaurant_category_id": "2"
+                        "restaurant_id": 2,
+                        "restaurant_category_id": 2
                     }
                 }
             ],
             "operation_times": [
                 {
-                    "day_of_week": "6",
+                    "day_of_week": 6,
                     "start_time": "12:00:00",
-                    "end_time": "2:00:00"
+                    "end_time": "02:00:00"
                 }
-            ],
-            "is_open": true,
-            "distance": 0,
-            "estimated_delivery_time": 20,
-            "is_deliverable": true
+            ]
         },
         "..."
     ]
@@ -1876,45 +1909,50 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
             "order_minimum": "9.99",
-            "delivery_fee": "1",
+            "delivery_fee": "1.00",
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.4227584",
-            "lng": "-86.9090892",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
             "phone": "7651111111",
+            "distance": 0,
+            "estimated_delivery_time": 20,
+            "is_deliverable": 1,
+            "is_open": 1,
             "restaurant_categories": [
                 {
                     "id": 1,
                     "name": "Category 1",
                     "pivot": {
-                        "restaurant_id": "1",
-                        "restaurant_category_id": "1"
+                        "restaurant_id": 1,
+                        "restaurant_category_id": 1
                     }
                 },
                 {
                     "id": 2,
                     "name": "Category 2",
                     "pivot": {
-                        "restaurant_id": "1",
-                        "restaurant_category_id": "2"
+                        "restaurant_id": 1,
+                        "restaurant_category_id": 2
                     }
                 }
             ],
             "operation_times": [
                 {
-                    "day_of_week": "6",
+                    "day_of_week": 6,
                     "start_time": "12:00:00",
-                    "end_time": "2:00:00"
+                    "end_time": "02:00:00"
                 }
-            ],
-            "is_open": true,
-            "distance": 0,
-            "estimated_delivery_time": 20,
-            "is_deliverable": true
+            ]
         },
         "..."
     ]
@@ -1987,32 +2025,37 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7651111111",
     "restaurant_categories": [
         {
             "id": 1,
             "name": "Category 1",
             "pivot": {
-                "restaurant_id": "1",
-                "restaurant_category_id": "1"
+                "restaurant_id": 1,
+                "restaurant_category_id": 1
             }
         },
         {
             "id": 2,
             "name": "Category 2",
             "pivot": {
-                "restaurant_id": "1",
-                "restaurant_category_id": "2"
+                "restaurant_id": 1,
+                "restaurant_category_id": 2
             }
         }
     ],
     "operation_times": [
         {
-            "day_of_week": "6",
+            "day_of_week": 6,
             "start_time": "12:00:00",
-            "end_time": "2:00:00"
+            "end_time": "02:00:00"
         }
     ],
     "restaurant_menu": {
@@ -2060,11 +2103,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             }
         ]
-    },
-    "is_open": true,
-    "distance": null,
-    "estimated_delivery_time": null,
-    "is_deliverable": null
+    }
 }
 ```
 #### **Status Code: 200**
@@ -2092,38 +2131,43 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7651111111",
+    "distance": 0,
+    "estimated_delivery_time": 20,
+    "is_deliverable": 1,
+    "is_open": 1,
     "restaurant_categories": [
         {
             "id": 1,
             "name": "Category 1",
             "pivot": {
-                "restaurant_id": "1",
-                "restaurant_category_id": "1"
+                "restaurant_id": 1,
+                "restaurant_category_id": 1
             }
         },
         {
             "id": 2,
             "name": "Category 2",
             "pivot": {
-                "restaurant_id": "1",
-                "restaurant_category_id": "2"
+                "restaurant_id": 1,
+                "restaurant_category_id": 2
             }
         }
     ],
     "operation_times": [
         {
-            "day_of_week": "6",
+            "day_of_week": 6,
             "start_time": "12:00:00",
-            "end_time": "2:00:00"
+            "end_time": "02:00:00"
         }
-    ],
-    "is_open": true,
-    "distance": 0,
-    "estimated_delivery_time": 20,
-    "is_deliverable": true
+    ]
 }
 ```
 #### **Status Code: 404**
@@ -2243,13 +2287,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "subtotal": 9.98
 }
@@ -2334,13 +2379,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "subtotal": 9.98
 }
@@ -2481,14 +2527,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": "1",
+        "is_public": 1,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "phone": "7650000000",
         "restaurant": {
             "id": 1,
@@ -2502,20 +2553,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.4227584",
-            "lng": "-86.9090892",
-            "phone": "7651111111",
-            "is_open": true,
-            "distance": null,
-            "estimated_delivery_time": null,
-            "is_deliverable": null
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111"
         },
         "creator": {
             "name": "Test User"
         },
         "order_members": [
             {
-                "is_ready": "0",
+                "is_ready": 0,
                 "phone": "7650000000",
                 "user": {
                     "name": "Test User"
@@ -2553,14 +2605,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": "1",
+        "is_public": 1,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "phone": "7650000000",
         "restaurant": {
             "id": 1,
@@ -2574,20 +2631,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "lat": "40.4227584",
-            "lng": "-86.9090892",
-            "phone": "7651111111",
-            "is_open": true,
-            "distance": null,
-            "estimated_delivery_time": null,
-            "is_deliverable": null
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111"
         },
         "creator": {
             "name": "Test User"
         },
         "order_members": [
             {
-                "is_ready": "0",
+                "is_ready": 0,
                 "phone": "7650000000",
                 "user": {
                     "name": "Test User"
@@ -2619,12 +2677,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| restaurant_id | required | integer | exists:restaurants,id |
-| join_limit | required | integer | between:600,7200 |
-| is_public | required | boolean |  |
-| address_id | required | integer |  |
+No param
 
 #### **Status Code: 200**
 
@@ -2652,14 +2705,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": "1",
+    "is_public": 1,
     "address_line_1": "134 Pierce St",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7653500000",
     "restaurant": {
         "id": 1,
@@ -2673,20 +2731,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "creator": {
         "name": "Test User"
     },
     "order_members": [
         {
-            "is_ready": "0",
+            "is_ready": 0,
             "phone": "7653500000",
             "user": {
                 "name": "Test User"
@@ -2704,6 +2763,38 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "is_member": true,
     "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW"
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 7200,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "form": [
+            "You have unconfirmed order. Please confirm that before creating new one."
+        ]
+    }
 }
 ```
 #### **Status Code: 422**
@@ -2799,14 +2890,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": "1",
+    "is_public": 1,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7650000000",
     "restaurant": {
         "id": 1,
@@ -2820,20 +2916,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "creator": {
         "name": "Test User"
     },
     "order_members": [
         {
-            "is_ready": "0",
+            "is_ready": 0,
             "phone": "7650000000",
             "user": {
                 "name": "Test User"
@@ -2899,14 +2996,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": "1",
+    "is_public": 1,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7650000000",
     "restaurant": {
         "id": 1,
@@ -2920,20 +3022,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "creator": {
         "name": "Test User"
     },
     "order_members": [
         {
-            "is_ready": "0",
+            "is_ready": 0,
             "phone": "7650000000",
             "user": {
                 "name": "Test User"
@@ -3025,14 +3128,19 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": "1",
+    "is_public": 1,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
     "zip_code": "47906",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "phone": "7650000000",
     "restaurant": {
         "id": 1,
@@ -3046,20 +3154,21 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "city": "West Lafayette",
         "state": "IN",
         "zip_code": "47906",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
-        "phone": "7651111111",
-        "is_open": true,
-        "distance": null,
-        "estimated_delivery_time": null,
-        "is_deliverable": null
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111"
     },
     "creator": {
         "name": "Test User"
     },
     "order_members": [
         {
-            "is_ready": "0",
+            "is_ready": 0,
             "phone": "7650000000",
             "user": {
                 "name": "Test User"

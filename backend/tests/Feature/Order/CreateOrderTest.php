@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Restaurant;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Tests\ApiTestCase;
 
 class CreateOrderTest extends ApiTestCase
@@ -37,6 +38,13 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => false,
         ], false);
+        $response = $this->assertFailed([
+            'restaurant_id' => $restaurant->id,
+            'join_limit' => 7200,
+            'address_id' => $address->id,
+            'is_public' => false,
+        ], 422);
+        $this->assertArrayHasKey('form', $response->json('data'));
         Order::query()->delete();
         $this->mockCurrentTime('2018-10-28 12:00:00');
         $response = $this->assertFailed([
@@ -54,12 +62,10 @@ class CreateOrderTest extends ApiTestCase
         ], 422, false);
         $this->assertArrayHasKey('address_id', $response->json('data'));
         $address->fill([
-            'lat' => 0,
-            'lng' => 0,
+            'geo_location' => new Point(0, 0),
         ])->save();
         $restaurant->fill([
-            'lat' => 10,
-            'lng' => 10,
+            'geo_location' => new Point(10, 10),
         ])->save();
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,

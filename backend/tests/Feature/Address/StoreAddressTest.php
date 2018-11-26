@@ -22,6 +22,7 @@ class StoreAddressTest extends ApiTestCase
         $response = $this->assertSucceed($address->toArray());
         $alteredAddress = $address->toArray();
         $alteredAddress['is_default'] = true;
+        unset($alteredAddress['geo_location']);
         $response->assertJson([$alteredAddress]);
         $alteredAddress['phone'] = 'invalid_phone';
         $this->assertFailed($alteredAddress, 422);

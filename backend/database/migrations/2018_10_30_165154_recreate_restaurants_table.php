@@ -15,9 +15,7 @@ class RecreateRestaurantsTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            if (!App::environment('testing')) {
-                $table->dropForeign(['restaurant_id']); // SQLite doesn't support dropping foreign keys
-            }
+            $table->dropForeign(['restaurant_id']);
         });
         Schema::dropIfExists('restaurants');
         Schema::create('restaurants', function (Blueprint $table) {
@@ -28,7 +26,7 @@ class RecreateRestaurantsTable extends Migration
             $table->decimal('delivery_fee');
             $table->decimal('rating', 2, 1)->nullable();
 
-            \App\Facades\Address::migrate($table);
+            \App\Facades\Address::oldMigrate($table);
         });
         Schema::table('orders', function (Blueprint $table) {
             $table->foreign('restaurant_id')->references('id')->on('restaurants');

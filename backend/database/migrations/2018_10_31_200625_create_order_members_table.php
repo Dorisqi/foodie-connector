@@ -22,7 +22,8 @@ class CreateOrderMembersTable extends Migration
 
             $table->foreign('order_id')
                 ->references('id')
-                ->on('orders');
+                ->on('orders')
+                ->onDelete(\Illuminate\Support\Facades\App::environment('testing') ? 'CASCADE' : 'RESTRICT');
             $table->foreign('api_user_id')
                 ->references('id')
                 ->on('api_users');

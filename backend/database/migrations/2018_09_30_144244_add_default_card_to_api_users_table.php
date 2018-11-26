@@ -17,9 +17,7 @@ class AddDefaultCardToApiUsersTable extends Migration
         Schema::table('api_users', function (Blueprint $table) {
             $table->unsignedInteger('default_card_id')->nullable();
 
-            if (!App::environment('testing')) {
-                $table->foreign('default_card_id')->references('id')->on('cards');
-            }
+            $table->foreign('default_card_id')->references('id')->on('cards');
         });
     }
 
