@@ -10,6 +10,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationBox from './NotificationBox';
+import Api from 'facades/Api';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
@@ -40,7 +44,57 @@ class Header extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
+      notificationsOpen: false,
+      notifications: [],
+      unreadCount: 0,
     };
+    this.handleNotificationsUpdate = this.handleNotificationsUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    this.getNotifications();
+  }
+
+  getNotifications() {
+    Api.notificationList().then(res => {
+      const { notifications } = res.data;
+      this.setState({
+        notifications: notifications,
+        unreadCount: notifications.filter(n => !n.isRead).length
+      })
+    }).catch(err => {
+    });
+  }
+
+  handleDialogClose = () => {
+    this.setState({ notificationsOpen: false });
+  };
+
+  handleNotificationOpen = () => {
+    this.setState({ notificationsOpen: true });
+  }
+
+  handleMarkRead = (id) => () => {
+    Api.notificationMarkRead(id).then(res => {
+      const { notifications } = res.data;
+      this.setState({
+        notifications: notifications,
+        unreadCount: notifications.filter(n => !n.isRead).length
+      })
+    }).catch(err => {
+    })
+  }
+
+  handleMarkAllRead = () => {
+    return Api.notificationMarkAllRead();
+  }
+
+  handleNotificationsUpdate(res) {
+    const { notifications } = res.data;
+    this.setState({
+      notifications: notifications,
+      unreadCount: notifications.filter(n => !n.isRead).length
+    })
   }
 
   handleProfileMenuOpen = (event) => {
@@ -52,7 +106,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, notificationsOpen, notifications, unreadCount } = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 
@@ -107,6 +161,21 @@ class Header extends React.Component {
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
                 aria-haspopup="true"
                 className={classes.accountButton}
+                onClick={this.handleNotificationOpen}
+                color="inherit"
+              >
+                <Badge
+                  badgeContent={unreadCount}
+                  color="primary"
+                  invisible={unreadCount === 0} // TODO: can't make it invisible
+                >
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                aria-owns={isMenuOpen ? 'material-appbar' : null}
+                aria-haspopup="true"
+                className={classes.accountButton}
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
@@ -116,6 +185,16 @@ class Header extends React.Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
+        {notificationsOpen
+          ? <NotificationBox
+              notifications={notifications}
+              handleMarkRead={this.handleMarkRead}
+              handleMarkAllRead={this.handleMarkAllRead}
+              onUpdate={this.handleNotificationsUpdate}
+              onClose={this.handleDialogClose}
+            />
+          : null
+        }
       </header>
     );
   }

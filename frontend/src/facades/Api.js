@@ -1,5 +1,6 @@
 import Auth from './Auth';
 import axios from './Axios';
+import mockNotifications from '../mockData/mockNotifications';
 
 class Api {
   /* --- Auth --- */
@@ -162,6 +163,35 @@ class Api {
 
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
+  }
+
+  /* --- Notification --- */
+  // using mock data
+  static notificationList() {
+    return new Promise((resolve, _reject) => {
+      resolve({ data: { notifications: mockNotifications } });
+    });
+  }
+
+  static notificationMarkRead(notificationId) {
+    return new Promise((resolve, reject) => {
+      const notification = mockNotifications.find(item => item.id === notificationId);
+      if (notification) {
+        notification.isRead = true;
+        resolve({ data: { notifications: mockNotifications } });
+      } else {
+        reject(new Error(`Id${notificationId} does not exist.`));
+      }
+    });
+  }
+
+  static notificationMarkAllRead() {
+    return new Promise((resolve, _reject) => {
+      mockNotifications.forEach((notification) => {
+        notification.isRead = true; // eslint-disable-line no-param-reassign
+      });
+      resolve({ data: { notifications: mockNotifications } });
+    });
   }
 
   static instance(requireAuth = true) {
