@@ -21,16 +21,17 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
-  rightBar: {
+  leftBar: {
     marginLeft: 10,
     minWidth: 350,
     width: 350,
   },
   middleBar: {
-    marginLeft: 60,
+    marginLeft: 40,
     minWidth: 350,
     width: 350,
   },
+
   subComponent: {
     marginTop: 2 * theme.spacing.unit,
   },
@@ -70,7 +71,6 @@ class CheckoutPage extends React.Component {
       }).catch((err) => {
         throw err;
       });
-    console.log(this.state.productMap);
   })
 };
 
@@ -80,7 +80,7 @@ class CheckoutPage extends React.Component {
     return(
         <MainContent title="Review & Pay">
         <div className={classes.root}>
-          <div className={classes.rightBar}>
+          <div className={classes.leftBar}>
             <div className={classes.subComponent}>
               <Typography
                 className={classes.subComponentTitle}

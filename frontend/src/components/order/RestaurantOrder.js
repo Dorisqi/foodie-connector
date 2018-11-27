@@ -27,7 +27,8 @@ import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
 import classnames from 'classnames';
-
+import { withRouter } from 'react-router-dom';
+import compose from 'recompose/compose'
 const styles = theme => ({
   margin: {
     marginTop: theme.spacing.unit,
@@ -200,6 +201,18 @@ class RestaurantOrder extends React.Component {
       sharing: true,
     });
   };
+
+  handleGroupCheckout = () => {
+    const {order} = this.state;
+    Api.orderCheckout(order.id).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      throw err;
+    });
+    let path = `/orders/${order.id}/checkout`;
+    this.props.history.push(path);
+  };
+
   render() {
     const { classes, restaurant } = this.props;
     const {
@@ -351,8 +364,12 @@ class RestaurantOrder extends React.Component {
                 className={classes.action}
                 variant="outlined"
                 color="primary"
-                fullWidth
+                //component={Link}
                 onClick = {this.handleGroupCheckout}
+                fullWidth
+                //to={{
+                  //pathname: `/orders/${order.id}/checkout`,
+                //}}
               >
                 Checkout
               </Button>
@@ -402,6 +419,7 @@ RestaurantOrder.propTypes = {
   onRestaurantUpdate: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(RestaurantOrder),
-);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(withRouter(RestaurantOrder))

@@ -165,6 +165,20 @@ class Api {
     return Api.instance().delete(`/orders/${orderId}`);
   }
 
+  /* --- Checkout --- */
+  static orderCheckout (orderId) {
+    return Api.instance().post(`/orders/${orderId}/checkout`);
+  }
+
+  /* --- Pay --- */
+  static orderPay(orderId, tip, cardId) {
+    return Api.instance.post(`/orders/${orderId}/pay`, {
+      params: {
+        tip: tip,
+        cardId: cardId,
+      },
+    });
+  }
   /* --- Notification --- */
   // using mock data
   static notificationList() {

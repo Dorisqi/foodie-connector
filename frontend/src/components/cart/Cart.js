@@ -20,6 +20,7 @@ import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
+import {handleGroupCheckout} from 'components/order/RestaurantOrder';
 
 const styles = theme => ({
   loading: {
@@ -121,7 +122,7 @@ class Cart extends React.Component {
     const {
       classes, restaurant, cart, productMap,
     } = this.props;
-    const { updatingItemIndex } = this.state;
+    const { updatingItemIndex, } = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
