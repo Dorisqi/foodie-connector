@@ -1485,11 +1485,15 @@
                             ]
                         }
                     ],
-                    "subtotal": 9.98,
-                    "tax": 0.7,
+                    "subtotal": "9.98",
+                    "tax": "0.7",
                     "tip": null,
-                    "delivery_fee": 2.99,
-                    "total": null
+                    "delivery_fee": "2.99",
+                    "total": null,
+                    "user": {
+                        "name": "Test User",
+                        "friend_id": "FRIEND"
+                    }
                 },
                 "response_header": null
             },
@@ -1539,6 +1543,28 @@
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
                 "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "Some or all of the order members are not ready."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "Failed to meet the order minimum."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
                 "status_code": 200,
                 "response": {
                     "id": "HFEJ32RAFW58ER29R8SW",
@@ -1567,7 +1593,7 @@
                         "id": 1,
                         "name": "Test Restaurant",
                         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-                        "order_minimum": "9.99",
+                        "order_minimum": "0.00",
                         "delivery_fee": "2.99",
                         "rating": "3.5",
                         "address_line_1": "100 Pierce Street",
@@ -1591,14 +1617,14 @@
                     },
                     "order_members": [
                         {
-                            "is_ready": 0,
+                            "is_ready": 1,
                             "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
                             "tip": null,
-                            "delivery_fee": null,
-                            "total": null,
+                            "delivery_fee": "2.99",
+                            "total": "2.99",
                             "user": {
                                 "name": "Test User",
                                 "friend_id": "FRIEND"

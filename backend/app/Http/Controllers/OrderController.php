@@ -13,6 +13,7 @@ use App\Notifications\OrderInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -271,12 +272,57 @@ class OrderController extends ApiController
         if (empty($cartItems)) {
             throw ApiException::emptyCart();
         }
-        $orderMember = $order->orderMembers()->where('api_user_id', $this->user()->id)->first();
+        $orderMember = array_first($order->orderMembers, function ($value) {
+            return $value->api_user_id === $this->user()->id;
+        });
+        if ($orderMember->is_ready) {
+            throw ApiException::orderNotUpdatable();
+        }
         $orderMember->fill([
             'products' => json_encode($cartItems),
-            'subtotal' => $cart->subtotal,
-            'tax' => $cart->tax,
-            'delivery_fee' => $order->prices['estimated_delivery_fee'],
+            'subtotal' => (string)$cart->subtotal,
+            'tax' => (string)$cart->tax,
+            'delivery_fee' => (string)$order->prices['estimated_delivery_fee'],
+        ])->save();
+        return $this->response($orderMember);
+    }
+
+    /**
+     * Pay the order and set as ready
+     *
+     * @param $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function pay($id, Request $request)
+    {
+        $this->validateInput($request, $this::payRules());
+
+        $order = Order::query()->find($id);
+        if (is_null($order)) {
+            throw ApiException::resourceNotFound();
+        }
+        $orderMember = array_first($order->orderMembers, function ($value) {
+            return $value->api_user_id === $this->user()->id;
+        });
+        if ($orderMember->is_ready) {
+            throw ApiException::orderAlreadyPaid();
+        }
+        if (is_null($orderMember->products)) {
+            throw ApiException::orderNeedCheckout();
+        }
+
+        $tip = round((float)$request->input('tip'), 2);
+        $total = round($orderMember->subtotal + $orderMember->tax + $tip + $orderMember->delivery_fee, 2);
+
+        // TODO: Stripe payment
+
+        $orderMember->fill([
+            'is_ready' => 1,
+            'tip' => (string)$tip,
+            'total' => (string)$total,
         ])->save();
         return $this->response($orderMember);
     }
@@ -287,7 +333,7 @@ class OrderController extends ApiController
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      *
-     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
      */
     public function confirm($id)
     {
@@ -301,13 +347,43 @@ class OrderController extends ApiController
         if ($order->order_status !== OrderStatus::CREATED) {
             throw ApiException::orderNotConfirmable();
         }
-        // TODO: Check ready status
-        $orderStatus = new OrderStatus([
-            'status' => OrderStatus::CONFIRMED,
-            'time' => Time::currentTime(),
-        ]);
-        $orderStatus->order()->associate($order);
-        $orderStatus->save();
+
+        try {
+            DB::beginTransaction();
+
+            $subtotal = 0;
+            $deliveryFee = round($order->restaurant->delivery_fee / count($order->orderMembers), 2);
+            foreach ($order->orderMembers as $orderMember) {
+                if (!$orderMember->is_ready) {
+                    throw ApiException::orderMemberNotReady();
+                }
+                $subtotal += $orderMember->subtotal;
+                $orderMember->delivery_fee = $deliveryFee;
+                $orderMember->total = round(
+                    $orderMember->subtotal
+                    + $orderMember->tax
+                    + $orderMember->tip
+                    + $deliveryFee,
+                    2
+                );
+                $orderMember->save();
+            }
+            if ($subtotal < $order->restaurant->order_minimum) {
+                throw ApiException::orderMinimumFailed();
+            }
+
+            $orderStatus = new OrderStatus([
+                'status' => OrderStatus::CONFIRMED,
+                'time' => Time::currentTime(),
+            ]);
+            $orderStatus->order()->associate($order);
+            $orderStatus->save();
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
 
         return $this->response(Order::query()->find($order->id));
     }
@@ -407,6 +483,20 @@ class OrderController extends ApiController
     {
         return [
             'phone' => 'required|phone:US',
+        ];
+    }
+
+    public static function payRules()
+    {
+        return [
+            'tip' => 'required|numeric',
+            'card_id' => [
+                'required',
+                'integer',
+                Rule::exists('cards', 'id')->where(function ($query) {
+                    $query->where('api_user_id', Auth::guard('api')->user()->id);
+                }),
+            ],
         ];
     }
 }

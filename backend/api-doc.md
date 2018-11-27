@@ -3456,11 +3456,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         }
     ],
-    "subtotal": 9.98,
-    "tax": 0.7,
+    "subtotal": "9.98",
+    "tax": "0.7",
     "tip": null,
-    "delivery_fee": 2.99,
-    "total": null
+    "delivery_fee": "2.99",
+    "total": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
 }
 ```
 #### **Status Code: 422**
@@ -3567,7 +3571,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
+        "order_minimum": "0.00",
         "delivery_fee": "2.99",
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
@@ -3591,14 +3595,14 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 0,
+            "is_ready": 1,
             "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
-            "delivery_fee": null,
-            "total": null,
+            "delivery_fee": "2.99",
+            "total": "2.99",
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3635,6 +3639,40 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Some or all of the order members are not ready.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Some or all of the order members are not ready."
+}
+```
+#### **Status Code: 422**
+
+Failed to meet the order minimum.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Failed to meet the order minimum."
 }
 ```
 #### **Status Code: 422**

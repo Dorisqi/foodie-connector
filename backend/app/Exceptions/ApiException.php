@@ -174,6 +174,22 @@ class ApiException extends Exception
     {
         return new ApiException('The cart is empty.', 422);
     }
+    public static function orderAlreadyPaid()
+    {
+        return new ApiException('This order is already paid.', 422);
+    }
+    public static function orderNeedCheckout()
+    {
+        return new ApiException('This order requires checkout.', 422);
+    }
+    public static function orderMemberNotReady()
+    {
+        return new ApiException('Some or all of the order members are not ready.', 422);
+    }
+    public static function orderMinimumFailed()
+    {
+        return new ApiException('Failed to meet the order minimum.', 422);
+    }
 
     /* Friend */
     public static function notFriend()
