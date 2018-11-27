@@ -48,7 +48,12 @@ class Header extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
+      friendlistOpen:false,
     };
+  }
+
+  handleFriendsListsOpen=()=> {
+    this.setState({friendlistOpen: true});
   }
 
   handleProfileMenuOpen = (event) => {
@@ -67,8 +72,13 @@ class Header extends React.Component {
     });
   };
 
+  handleFriendsListsClose= () => {
+    this.setState({friendlistOpen: false});
+
+  };
+
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl ,friendlistOpen} = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 
@@ -108,9 +118,9 @@ class Header extends React.Component {
       </Menu>
     );
 
-    const friendslist = (
+    /*const friendslist = (
         <FollowfriendDialog/>
-    );
+    );*/
 
 
     return (
@@ -129,6 +139,7 @@ class Header extends React.Component {
                 aria-haspopup="true"
                 className={classes.accountButton}
                 color="inherit"
+                onClick={this.handleFriendsListsOpen}
               >
                 <GroupAdd />
               </IconButton>
@@ -148,6 +159,12 @@ class Header extends React.Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
+        {friendlistOpen ?
+          <FollowfriendDialog
+            onClose={this.handleFriendsListsClose}
+            on
+          />
+          : null}
       </header>
     );
   }

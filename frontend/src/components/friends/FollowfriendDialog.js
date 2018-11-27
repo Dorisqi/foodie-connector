@@ -167,11 +167,11 @@ class FollowfriendDialog extends React.Component {
   }
 
   onClose = () => {
-    
+
   };
 
   render() {
-    const { classes, item: email } = this.props;
+    const { classes } = this.props;
     const { errors,friends } = this.state;
 
     return (
