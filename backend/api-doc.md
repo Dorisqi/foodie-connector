@@ -3467,6 +3467,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     }
 }
 ```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
 #### **Status Code: 422**
 
 The cart is empty.
@@ -4031,6 +4048,173 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "The phone field is required."
         ]
     }
+}
+```
+
+### **POST - /api/v1/orders/{id}/pay**
+
+Pay for an order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| tip | required | numeric |  |
+| card_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "is_ready": 1,
+    "phone": "7650000000",
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": "9.98",
+    "tax": "0.70",
+    "tip": "2",
+    "delivery_fee": "2.99",
+    "total": "15.67",
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/0/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "tip": [
+            "The tip field is required."
+        ],
+        "card_id": [
+            "The card id field is required."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+This order requires checkout.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order requires checkout."
+}
+```
+#### **Status Code: 422**
+
+This order is already paid.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order is already paid."
 }
 ```
 

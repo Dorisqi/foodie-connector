@@ -28,7 +28,7 @@ class CheckoutTest extends ApiTestCase
         $this->login();
 
         $this->id = Order::TESTING_NOT_FOUND_ID;
-        $this->assertFailed(null, 404, false);
+        $this->assertFailed(null, 404);
 
         $order = factory(Order::class)->create();
         $this->id = $order->id;
