@@ -15,6 +15,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 
 
 const styles = theme => ({
@@ -28,7 +30,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   textarea: {
-    maxWidth:'50'
+    //maxWidth:'420px',
   },
   setstatus: {
     flexGrow: 0,
@@ -39,7 +41,7 @@ const styles = theme => ({
 
 class FollowfriendDialog extends React.Component {
   state = {
-    email:'',
+    friendEmail:'',
     errors: {},
     friends:[],
     loadingfriends:null,
@@ -51,7 +53,7 @@ class FollowfriendDialog extends React.Component {
     const { item: email } = props;
     if (email !== null) {
       this.state = {
-        email:email,
+        friendEmail:email,
         errors: {},
 
       };
@@ -63,17 +65,20 @@ class FollowfriendDialog extends React.Component {
   handleonChange = e => {
     const value = e.target.value;
     this.setState({
-      email: value, // eslint-disable-line react/no-unused-state
-
+      friendEmail: value, // eslint-disable-line react/no-unused-state
 
     });
   }
+
+
+
+
   adding = () => {
     this.setState({
       errors: {},
     });
     const {
-      email
+      friendEmail
     } = this.state;
     const { item: address } = this.props;
     //// TODO: Axios.addingFriend
@@ -107,13 +112,33 @@ class FollowfriendDialog extends React.Component {
     }
   };
 
-  /*handleAddingfriend{
+  handleAddingfriend = (e) =>{
+    this.setState({
+      loadingfriends: Api.followNewFriend(this.state.friendEmail).then((res) => {
+        const result = res.data;
+        this.setState({
+          loadingfriends: null,
+          friends: res.data.length > 0 ? res.data[0].order_members : null,
+        });
+        if(this.state.friends !== null){
+          console.log("loadfriends:" +this.state.friends[0].user.name);
+
+        }
 
 
-  }*/
+      }).catch((err) => {
+        this.setState({
+          loadingfriends: null,
+        });
+        throw (err);
+      }),
+    });
+
+  }
+
+
 
   loadFriends() {
-
     this.setState({
       loadingfriends: Api.friendList().then((res) => {
         const result = res.data;
@@ -141,6 +166,9 @@ class FollowfriendDialog extends React.Component {
     this.loadFriends();
   }
 
+  onClose = () => {
+    
+  };
 
   render() {
     const { classes, item: email } = this.props;
@@ -155,7 +183,7 @@ class FollowfriendDialog extends React.Component {
         className={classes.root}
         onRequestSucceed={this.handleRequestSuccess}
         onRequestFailed={this.handleRequestFail}
-        onClose={this.props.onClose}
+        onClose={this.onClose}
       >
 
         <InputTextField
@@ -163,17 +191,25 @@ class FollowfriendDialog extends React.Component {
           name="email"
           label="Follow new friend by Email "
           className={classes.textarea}
+          onChange={this.handleonChange}
+          endAdornment={
+                <InputAdornment position="end">
+                <IconButton
 
+                  aria-haspopup="true"
+                  className={classes.accountButton}
+                  color="inherit"
+                  onClick={this.handleAddingfriend}
+                >
+                  <PersonAdd />
+                </IconButton>
+                </InputAdornment>
+              }
         />
-        <IconButton
 
-          aria-haspopup="true"
-          className={classes.accountButton}
-          color="inherit"
-          onClick={this.handleAddingfriend}
-        >
-          <PersonAdd />
-        </IconButton>
+
+
+
         {friends === null
           ?
           (

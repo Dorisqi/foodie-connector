@@ -147,7 +147,7 @@ class Header extends React.Component {
 
           </Toolbar>
         </AppBar>
-        {friendslist}
+        {renderMenu}
       </header>
     );
   }

@@ -70,7 +70,7 @@ class GroupmemberStatusTable extends React.Component {
   loadGroupmbr() {
 
     //Axios.'/api/v1/orders/'(this.state.loadingGroupmbr);
-    console.log(this.props.restaurantId);
+  //  console.log(this.props.restaurantId);
     this.setState({
       loadingGroupmbr: Api.findOrder(this.props.restaurantId).then((res) => {
         const result = res.data;
