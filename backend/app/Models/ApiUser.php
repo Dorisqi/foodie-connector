@@ -100,6 +100,7 @@ class ApiUser extends Authenticatable
         if ($this->id !== Auth::guard('api')->user()->id) {
             return [
                 'name' => $this->name,
+                'email' => $this->email,
                 'friend_id' => $this->friend_id,
             ];
         }

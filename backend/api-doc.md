@@ -3935,6 +3935,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "creator": {
         "name": "Test User",
+        "email": null,
         "friend_id": "FRIEND"
     },
     "order_members": [
@@ -3949,6 +3950,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "total": null,
             "user": {
                 "name": "Test User",
+                "email": null,
                 "friend_id": "FRIEND"
             }
         },
@@ -4250,6 +4252,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 [
     {
         "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
         "friend_id": "NEWFRD"
     }
 ]
@@ -4267,7 +4270,8 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
-| friend_id | required | string | exists:api_users,friend_id |
+| friend_id | optional | string | exists:api_users |
+| email | optional | email | required_without:friend_id, exists:api_users |
 
 #### **Status Code: 200**
 
@@ -4292,6 +4296,35 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 [
     {
         "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "another-user@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
         "friend_id": "NEWFRD"
     }
 ]
@@ -4310,7 +4343,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Request Body:**
 ```
 {
-    "friend_id": "INVALD"
+    "email": "invalid@foodie-conenctor.delivery"
 }
 ```
 
@@ -4319,8 +4352,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "message": "Validation failed.",
     "data": {
-        "friend_id": [
-            "The selected friend id is invalid."
+        "email": [
+            "The selected email is invalid."
         ]
     }
 }
@@ -4339,7 +4372,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Request Body:**
 ```
 {
-    "friend_id": "EXISTS"
+    "email": "exist@foodie-connector.delivery"
 }
 ```
 

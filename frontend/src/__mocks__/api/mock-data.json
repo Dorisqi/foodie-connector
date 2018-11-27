@@ -1174,6 +1174,7 @@
                 "response": [
                     {
                         "name": "Test User",
+                        "email": "another-user@foodie-connector.delivery",
                         "friend_id": "NEWFRD"
                     }
                 ],
@@ -1192,6 +1193,7 @@
                 "response": [
                     {
                         "name": "Test User",
+                        "email": "another-user@foodie-connector.delivery",
                         "friend_id": "NEWFRD"
                     }
                 ],
@@ -1202,14 +1204,31 @@
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
                 "request": {
-                    "friend_id": "INVALD"
+                    "email": "another-user@foodie-connector.delivery"
+                },
+                "status_code": 200,
+                "response": [
+                    {
+                        "name": "Test User",
+                        "email": "another-user@foodie-connector.delivery",
+                        "friend_id": "NEWFRD"
+                    }
+                ],
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "email": "invalid@foodie-conenctor.delivery"
                 },
                 "status_code": 422,
                 "response": {
                     "message": "Validation failed.",
                     "data": {
-                        "friend_id": [
-                            "The selected friend id is invalid."
+                        "email": [
+                            "The selected email is invalid."
                         ]
                     }
                 },
@@ -1220,7 +1239,7 @@
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
                 "request": {
-                    "friend_id": "EXISTS"
+                    "email": "exist@foodie-connector.delivery"
                 },
                 "status_code": 422,
                 "response": {
@@ -2063,6 +2082,7 @@
                     },
                     "creator": {
                         "name": "Test User",
+                        "email": null,
                         "friend_id": "FRIEND"
                     },
                     "order_members": [
@@ -2077,6 +2097,7 @@
                             "total": null,
                             "user": {
                                 "name": "Test User",
+                                "email": null,
                                 "friend_id": "FRIEND"
                             }
                         },

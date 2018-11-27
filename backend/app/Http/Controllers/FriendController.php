@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Models\ApiUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -16,7 +17,7 @@ class FriendController extends ApiController
      */
     public function index()
     {
-        return $this->response($this->user()->friends()->get());
+        return $this->response($this->user()->friends()->select('name', 'email', 'friends.friend_id')->get());
     }
 
     /**
@@ -31,11 +32,16 @@ class FriendController extends ApiController
     {
         $this->validateInput($request, $this::storeRules());
 
-        if ($this->user()->friends()->where('friends.friend_id', $request->input('friend_id'))->exists()) {
+        if (!$request->has('friend_id')) {
+            $friend_id = ApiUser::where('email', $request->input('email'))->first()->friend_id;
+        } else {
+            $friend_id = $request->input('friend_id');
+        }
+        if ($this->user()->friends()->where('friends.friend_id', $friend_id)->exists()) {
             throw ApiException::alreadyFriend();
         }
 
-        $this->user()->friends()->attach($request->input('friend_id'));
+        $this->user()->friends()->attach($friend_id);
 
         return $this->response($this->user()->friends()->get());
     }
@@ -60,12 +66,18 @@ class FriendController extends ApiController
 
     public static function storeRules()
     {
+        $user = Auth::guard('api')->user();
         return [
             'friend_id' => [
-                'required',
                 'string',
-                'exists:api_users,friend_id',
-                Rule::notIn([Auth::guard('api')->user()->friend_id])
+                'exists:api_users',
+                Rule::notIn([$user->friend_id])
+            ],
+            'email' => [
+                'required_without:friend_id',
+                'email',
+                'exists:api_users',
+                Rule::notIn([$user->email]),
             ],
         ];
     }
