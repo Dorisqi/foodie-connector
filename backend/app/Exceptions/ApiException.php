@@ -200,10 +200,17 @@ class ApiException extends Exception
     {
         return new ApiException('This user is already your friend.', 422);
     }
-    
+
+    /* Map */
     public static function zeroResult()
     {
         return new ApiException('No result found.', 404);
+    }
+
+    /* Pusher */
+    public static function pusherAccessDenied()
+    {
+        return new ApiException('You do not have access to this channel.', 403);
     }
 
     /**

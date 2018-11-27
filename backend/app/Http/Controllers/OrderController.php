@@ -12,7 +12,6 @@ use App\Models\Restaurant;
 use App\Notifications\OrderInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -201,12 +200,7 @@ class OrderController extends ApiController
         if ($order->order_status !== OrderStatus::CREATED) {
             throw ApiException::orderNotCancellable();
         }
-        $orderStatus = new OrderStatus([
-            'status' => OrderStatus::CLOSED,
-            'time' => Time::currentTime(),
-        ]);
-        $orderStatus->order()->associate($order);
-        $orderStatus->save();
+        $order->updateStatus(OrderStatus::CLOSED);
 
         return $this->response(Order::query()->find($order->id));
     }
@@ -368,12 +362,7 @@ class OrderController extends ApiController
                 throw ApiException::orderMinimumFailed();
             }
 
-            $orderStatus = new OrderStatus([
-                'status' => OrderStatus::CONFIRMED,
-                'time' => Time::currentTime(),
-            ]);
-            $orderStatus->order()->associate($order);
-            $orderStatus->save();
+            $order->updateStatus(OrderStatus::CONFIRMED);
 
             DB::commit();
         } catch (\Exception $exception) {

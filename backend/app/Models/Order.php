@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\OrderStatusUpdated;
 use App\Facades\Time;
-use Carbon\Carbon;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -132,6 +132,15 @@ class Order extends Model
             ];
         }
         return $this->localPrices;
+    }
+
+    public function updateStatus($status)
+    {
+        $this->orderStatuses()->create([
+            'status' => $status,
+            'time' => Time::currentTime(),
+        ]);
+        event(new OrderStatusUpdated($this->id, $this->orderMembers, $status));
     }
 
     public function toArray()

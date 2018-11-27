@@ -95,7 +95,7 @@ class ApiUser extends Authenticatable
         return !is_null($this->email_verified_at);
     }
 
-    public function toArray()
+    public function toArray($showId = false)
     {
         if ($this->id !== Auth::guard('api')->user()->id) {
             return [
@@ -105,6 +105,9 @@ class ApiUser extends Authenticatable
             ];
         }
         $data = parent::toArray();
+        if ($showId) {
+            $data['id'] = $this->id;
+        }
         if (!is_null($this->email)) {
             $data['is_email_verified'] = $this->is_email_verified;
         }

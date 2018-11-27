@@ -43,6 +43,7 @@ Successful operation.
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "friend_id": "FRIEND",
+        "id": 1,
         "is_email_verified": false
     }
 }
@@ -168,6 +169,7 @@ Successful operation.
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
         "friend_id": "FRIEND",
+        "id": 1,
         "is_email_verified": false
     }
 }
@@ -305,6 +307,20 @@ Successful operation.
     "email": "user@foodie-connector.delivery",
     "password": "new123456",
     "token": "12345678"
+}
+```
+
+**Response Body:**
+```
+{
+    "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
+    "user": {
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
+        "id": 1,
+        "is_email_verified": false
+    }
 }
 ```
 #### **Status Code: 404**
