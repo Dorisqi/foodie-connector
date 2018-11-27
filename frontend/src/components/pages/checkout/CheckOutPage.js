@@ -12,33 +12,24 @@ import { connect } from 'react-redux';
 import Axios from 'facades/Axios';
 import Api from 'facades/Api';
 import Button from '@material-ui/core/Button';
-import Cart from 'components/cart/Cart';
+import CartCheckout from 'components/cart/CartCheckout';
+import CardSelector from 'components/card/CardSelector';
 import Menu from 'facades/Menu';
 
 
 const styles = theme => ({
-  margin: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+  root: {
+    display: 'flex',
   },
-  visibilityGroup: {
-    flexDirection: 'row',
+  rightBar: {
+    marginLeft: 10,
+    minWidth: 350,
+    width: 350,
   },
-  visibilityRadio: {
-    marginRight: 5 * theme.spacing.unit,
-  },
-  cancelButton: {
-    borderColor: theme.palette.error.light,
-    color: theme.palette.error.main,
-  },
-  actions: {
-    display: 'block',
-  },
-  action: {
-    marginBottom: theme.spacing.unit,
-  },
-  errorText: {
-    color: theme.palette.error.main,
+  leftBar: {
+    marginLeft: 450,
+    minWidth: 350,
+    width: 350,
   },
   subComponent: {
     marginTop: 2 * theme.spacing.unit,
@@ -87,19 +78,35 @@ class CheckoutPage extends React.Component {
     const { classes, cart } = this.props;
     const {restaurant, productMap} = this.state;
     return(
-        <MainContent title="Order Detail">
-          <div className={classes.subComponent}>
-            <Typography
-              className={classes.subComponentTitle}
-              variant="h5"
-              component="h2"
-            >
-              Cart
-            </Typography>
-            {cart !== null
-            && <ClearAlert />
-            }
-            <Cart restaurant={restaurant} productMap={productMap} />
+        <MainContent title="Review & Pay">
+        <div className={classes.root}>
+          <div className={classes.rightBar}>
+            <div className={classes.subComponent}>
+              <Typography
+                className={classes.subComponentTitle}
+                variant="h5"
+                component="h2"
+              >
+                ORDER SUMMARY
+              </Typography>
+              {cart !== null
+              && <ClearAlert />
+              }
+              <CartCheckout restaurant={restaurant} productMap={productMap} />
+            </div>
+          </div>
+          <div className={classes.leftBar}>
+            <div className={classes.subComponent}>
+              <Typography
+                className={classes.subComponentTitle}
+                variant="h5"
+                component="h2"
+              >
+                Payment Method
+              </Typography>
+              <CardSelector />
+            </div>
+          </div>
           </div>
         </MainContent>
       );
