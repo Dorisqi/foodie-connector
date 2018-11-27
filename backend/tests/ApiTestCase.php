@@ -175,7 +175,13 @@ abstract class ApiTestCase extends TestCase
      */
     protected function setDocumentResponse($response)
     {
-        $this->requests[count($this->requests) - 1]['response'] = $response;
+        if (is_null(env('GENERATE_API_DOC'))) {
+            return;
+        }
+        $this->requests[count($this->requests) - 1]['response'] = array_merge(
+            $this->requests[count($this->requests) - 1]['response'],
+            $response
+        );
     }
 
     /**

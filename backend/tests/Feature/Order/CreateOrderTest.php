@@ -15,8 +15,6 @@ class CreateOrderTest extends ApiTestCase
      * Test creating orders
      *
      * @return void
-     *
-     * @throws \ReflectionException
      */
     public function testCreateOrder()
     {
@@ -29,6 +27,11 @@ class CreateOrderTest extends ApiTestCase
             'join_limit' => 600,
             'address_id' => $address->id,
             'is_public' => true,
+        ]);
+        $this->setDocumentResponse([
+            'id' => Order::TESTING_ID,
+            'share_link' => 'http://localhost/orders/' . Order::TESTING_ID,
+            'qr_code_link' => 'http://localhost/orders/qr-code/' . Order::TESTING_ID,
         ]);
         Order::first()->delete();
         $this->mockCurrentTime('2018-10-27 11:50:00');

@@ -47,7 +47,7 @@ class OrderController extends ApiController
             $query = $query
                 ->where('is_public', true)
                 ->having('is_joinable', true)
-                ->distanceSphere('geo_location', $coords, 500) // within 500 meters
+                ->distanceSphere('geo_location', $coords, 500)// within 500 meters
                 ->addSelect([
                     DB::raw("ROUND(ST_Distance_Sphere(`geo_location`, POINT(${lng}, ${lat}))) AS `distance`"),
                 ]);
@@ -118,14 +118,10 @@ class OrderController extends ApiController
             ]);
 
             $id = null;
-            if (App::environment('testing')) {
-                $id = Order::TESTING_ID;
-            } else {
-                while (true) {
-                    $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
-                    if (is_null(Order::find($id))) {
-                        break;
-                    }
+            while (true) {
+                $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
+                if (is_null(Order::find($id))) {
+                    break;
                 }
             }
 

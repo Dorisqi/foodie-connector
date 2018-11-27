@@ -26,10 +26,15 @@ class RegisterTest extends ApiTestCase
     {
         Notification::fake();
         $user = $this->userFactory()->make();
-        $this->assertSucceed([
+        $response = $this->assertSucceed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
+        ]);
+        $this->setDocumentResponse([
+            'user' => array_merge($response->json('user'), [
+                'friend_id' => ApiUser::TESTING_FRIEND_ID,
+            ]),
         ]);
         $this->assertAuthenticated('api');
         $user = $this->user();

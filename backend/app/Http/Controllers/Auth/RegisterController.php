@@ -56,14 +56,10 @@ class RegisterController extends ApiController
             DB::beginTransaction();
 
             $friendId = null;
-            if (App::environment('testing')) {
-                $friendId = ApiUser::TESTING_FRIEND_ID;
-            } else {
-                while (true) {
-                    $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
-                    if (ApiUser::where('friend_id', $friendId)->doesntExists()) {
-                        break;
-                    }
+            while (true) {
+                $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+                if (ApiUser::where('friend_id', $friendId)->doesntExist()) {
+                    break;
                 }
             }
 

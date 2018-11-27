@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Models\Cart;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class CartController extends ApiController
 {
@@ -34,7 +35,7 @@ class CartController extends ApiController
         try {
             $cart->calculate(true, $request->input('cart'));
         } catch (\Exception $exception) {
-            if (config('app.debug')) {
+            if (config('app.debug') && !App::environment('testing')) {
                 throw ApiException::validationFailedErrors([
                     'cart' => [
                         'Invalid cart',
