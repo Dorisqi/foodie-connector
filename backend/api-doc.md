@@ -3412,6 +3412,109 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **POST - /api/v1/orders/{id}/checkout**
+
+Checkout. Calculate prices based on the cart.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "is_ready": 0,
+    "phone": "7650000000",
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98,
+    "tax": 0.7,
+    "tip": null,
+    "delivery_fee": 2.99,
+    "total": null
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+#### **Status Code: 422**
+
+This order cannot be updated.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "This order cannot be updated."
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+
 ### **POST - /api/v1/orders/{id}/confirm**
 
 Confirm an order.

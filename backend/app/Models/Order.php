@@ -14,6 +14,7 @@ class Order extends Model
     use SpatialTrait;
 
     public const TESTING_ID = 'HFEJ32RAFW58ER29R8SW';
+    public const TESTING_NOT_FOUND_ID = 'NOTFOUND83FD83IRUDO2';
 
     public $timestamps = false;
 

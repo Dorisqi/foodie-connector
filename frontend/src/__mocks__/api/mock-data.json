@@ -1447,6 +1447,76 @@
             }
         ]
     },
+    "/api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout": {
+        "POST": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "The cart is empty."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 200,
+                "response": {
+                    "is_ready": 0,
+                    "phone": "7650000000",
+                    "products": [
+                        {
+                            "name": "Test Product",
+                            "description": "This is a test product",
+                            "price": 4.99,
+                            "product_option_groups": [
+                                {
+                                    "name": "Test Option Group",
+                                    "options": [
+                                        "Test Option 1",
+                                        "Test Option 3"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "subtotal": 9.98,
+                    "tax": 0.7,
+                    "tip": null,
+                    "delivery_fee": 2.99,
+                    "total": null
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "This order cannot be updated."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 422,
+                "response": {
+                    "message": "The cart is empty."
+                },
+                "response_header": null
+            }
+        ]
+    },
     "/api/v1/orders/A00000/confirm": {
         "POST": [
             {
