@@ -247,6 +247,41 @@ class OrderController extends ApiController
     }
 
     /**
+     * Checkout
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function checkout($id)
+    {
+        $order = Order::query()->find($id);
+        if (is_null($order)) {
+            throw ApiException::resourceNotFound();
+        }
+        if ($order->order_status !== OrderStatus::CREATED) {
+            throw ApiException::orderNotUpdatable();
+        }
+        $cart = $this->user()->cart()->first();
+        if ($cart->restaurant_id !== $order->restaurant_id) {
+            throw ApiException::emptyCart();
+        }
+        $cartItems = $cart->calculate();
+        if (empty($cartItems)) {
+            throw ApiException::emptyCart();
+        }
+        $orderMember = $order->orderMembers()->where('api_user_id', $this->user()->id)->first();
+        $orderMember->fill([
+            'products' => json_encode($cartItems),
+            'subtotal' => $cart->subtotal,
+            'tax' => $cart->tax,
+            'delivery_fee' => $order->prices['estimated_delivery_fee'],
+        ])->save();
+        return $this->response($orderMember);
+    }
+
+    /**
      * Confirm an order
      *
      * @param string $id

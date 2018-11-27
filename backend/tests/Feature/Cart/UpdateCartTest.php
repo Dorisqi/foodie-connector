@@ -35,9 +35,11 @@ class UpdateCartTest extends ApiTestCase
                     ],
                 ],
             ],
+        ])->assertJson([
+            'subtotal' => 9.98,
+            'tax' => 0.70
         ]);
-        $this->assertEquals((2.99 + 2 * 1) * 2, $response->json('subtotal'));
-        $response = $this->assertSucceed([
+        $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
             'cart' => [
                 [
@@ -51,8 +53,10 @@ class UpdateCartTest extends ApiTestCase
                     ],
                 ],
             ],
-        ], false);
-        $this->assertEquals(0, $response->json('subtotal'));
+        ], false)->assertJson([
+            'subtotal' => 0,
+            'tax' => 0,
+        ]);
         $this->assertFailed([
             'restaurant_id' => $restaurant->id,
             'cart' => [
@@ -68,23 +72,23 @@ class UpdateCartTest extends ApiTestCase
                 ],
             ],
         ], 422);
-        $response = $this->assertSucceed([
+        $this->assertSucceed([
             'restaurant_id' => null,
             'cart' => [],
-        ]);
-        $response->assertJson([
+        ])->assertJson([
             'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
+            'tax' => 0,
         ]);
-        $response = $this->assertSucceed([
+        $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
             'cart' => [],
-        ], false);
-        $response->assertJson([
+        ], false)->assertJson([
             'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
+            'tax' => 0,
         ]);
     }
 

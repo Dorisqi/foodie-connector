@@ -97,13 +97,16 @@ class Restaurant extends Model
             . "AND TIME('${currentTimeStr}') < `end_time`))) as `is_open`";
     }
 
-    protected $localIsOpen = null;
+    public function getTaxPercentageAttribute()
+    {
+        return 7; // TODO: Variable tax in database
+    }
 
     public function toArray()
     {
         $data = parent::toArray();
         $data['image'] = Storage::disk(config('voyager.storage.disk'))->url('restaurants/' . $this->image);
-
+        $data['tax_percentage'] = $this->tax_percentage;
         return $data;
     }
 }

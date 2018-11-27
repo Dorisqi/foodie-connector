@@ -22,6 +22,7 @@ class ShowCartTest extends ApiTestCase
             'restaurant' => null,
             'cart' => [],
             'subtotal' => 0,
+            'tax' => 0,
         ]);
         $cart = factory(Cart::class)->create();
         $response = $this->assertSucceed(null);
@@ -30,7 +31,8 @@ class ShowCartTest extends ApiTestCase
                 'id' => $cart->restaurant_id,
             ],
             'cart' => json_decode($cart->cart, true),
-            'subtotal' => (2.99 + 2 * 1) * 2,
+            'subtotal' => 9.98,
+            'tax' => 0.70
         ]);
     }
 

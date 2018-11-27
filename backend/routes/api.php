@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function () {
             'index', 'store', 'show', 'destroy',
         ]);
         Route::post('orders/{id}/join', 'OrderController@join');
+        Route::post('orders/{id}/checkout', 'OrderController@checkout');
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
         Route::post('orders/{id}/invitation', 'OrderController@invite');
 

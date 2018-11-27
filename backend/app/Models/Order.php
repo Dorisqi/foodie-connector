@@ -118,12 +118,28 @@ class Order extends Model
         return url('orders/' . $this->id);
     }
 
+    protected $localPrices = null;
+    public function getPricesAttribute()
+    {
+        if (is_null($this->restaurant) || $this->order_status !== OrderStatus::CREATED) {
+            return null;
+        }
+        if (is_null($this->localPrices)) {
+            $this->localPrices = [
+                'estimated_delivery_fee' =>
+                    round($this->restaurant->delivery_fee / count($this->orderMembers), 2),
+            ];
+        }
+        return $this->localPrices;
+    }
+
     public function toArray()
     {
         $data = parent::toArray();
         $data['order_status'] = OrderStatus::STATUS_NAMES[$this->order_status];
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
+        $data['prices'] = $this->prices;
         return $data;
     }
 }

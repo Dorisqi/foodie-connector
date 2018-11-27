@@ -26,6 +26,10 @@ class JoinOrderTest extends ApiTestCase
         $this->login($this->userFactory()->state('new')->create());
         $this->assertSucceed([
             'phone' => '7653500000',
+        ])->assertJson([
+            'prices' => [
+                'estimated_delivery_fee' => 1.50,
+            ],
         ]);
         $this->assertFailed([
             'phone' => '7653500001',

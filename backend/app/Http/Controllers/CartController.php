@@ -32,7 +32,7 @@ class CartController extends ApiController
             $cart->restaurant()->associate(Restaurant::find($request->input('restaurant_id')));
         }
         try {
-            $cart->calculateSummary(true, $request->input('cart'));
+            $cart->calculate(true, $request->input('cart'));
         } catch (\Exception $exception) {
             if (config('app.debug')) {
                 throw ApiException::validationFailedErrors([
@@ -62,11 +62,9 @@ class CartController extends ApiController
     {
         $cart = $this->user()->cart()->with('restaurant')->first();
         if (is_null($cart)) {
-            return $this->response([
-                'restaurant' => null,
-                'cart' => [],
-                'subtotal' => 0,
-            ]);
+            return $this->response(new Cart([
+                'cart' => '[]'
+            ]));
         }
         return $this->response($cart);
     }

@@ -166,6 +166,14 @@ class ApiException extends Exception
     {
         return new ApiException('This order cannot be confirmed.', 422);
     }
+    public static function orderNotUpdatable()
+    {
+        return new ApiException('This order cannot be updated.', 422);
+    }
+    public static function emptyCart()
+    {
+        return new ApiException('The cart is empty.', 422);
+    }
 
     /* Friend */
     public static function notFriend()
