@@ -9,6 +9,8 @@ import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
+import CardDialog from 'components/card/CardDialog';
+import {loadCard} from 'actions/cardAction';
 
 const styles = () => ({
   selector: {
@@ -25,13 +27,15 @@ class CardSelector extends React.Component {
     cards: [],
     loadingCard: null,
     addingCard: false,
-    selectedCard: null,
+    selectedCard: 0,
   };
   constructor(props) {
     super(props);
   }
   componentDidMount() {
     this.handleShowCard();
+    this.handleAddingCard();
+
   }
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loadingCard);
@@ -49,16 +53,40 @@ class CardSelector extends React.Component {
 
   handleSelectCard = (e) => {
     const value = e.target.value;
+    if (value < 0)
+    {
+      this.setState({
+        addingCard: true,
+      });
+    }
     this.setState({
       selectedCard: value,
     });
   };
+  handleAddingCardClose = () => {
+    this.setState ({
+      addingCard: false,
+    });
+  };
+  handleAddingCard = () => {
+    //const cards = res.data;
+    //store.dispatch(loadCard(cards, cards[cards.length-1].id));
+  };
+
   render() {
     const {classes} = this.props;
-    const {cards, selectedCard} = this.state;
+    const {cards, selectedCard, addingCard} = this.state;
 
     return(
-        <div className={classes.selector}>
+        <div>
+          {addingCard
+          && (
+            <CardDialog
+              onClose={this.handleAddingCardClose}
+              onUpdate={this.handleAddingCard}
+            />
+          )
+          }
           <TextField
             select
             variant="outlined"
@@ -75,7 +103,7 @@ class CardSelector extends React.Component {
                 cards.map(card => (
                   <MenuItem key={card.nickname} value={card.nickname}>
                     {card.nickname}
-                    {'-- ends with '}
+                    {'-- card ends with '}
                     {card.last_four}
                   </MenuItem>
                 )), (
@@ -92,11 +120,15 @@ class CardSelector extends React.Component {
 }
 const mapStateToProps = state => ({
     selectedCard: state.selectedCard,
+    addingCard: state.addingCard,
     cards: state.cards,
 });
 
 CardSelector.propTypes = {
+  cards: PropTypes.array,
+  selectedCard: PropTypes.number,
   classes: PropTypes.object.isRequired,
+
 }
 export default withStyles(styles)(
     connect(mapStateToProps)(CardSelector),

@@ -26,8 +26,8 @@ const styles = theme => ({
     minWidth: 350,
     width: 350,
   },
-  leftBar: {
-    marginLeft: 450,
+  middleBar: {
+    marginLeft: 60,
     minWidth: 350,
     width: 350,
   },
@@ -95,7 +95,7 @@ class CheckoutPage extends React.Component {
               <CartCheckout restaurant={restaurant} productMap={productMap} />
             </div>
           </div>
-          <div className={classes.leftBar}>
+          <div className={classes.middleBar}>
             <div className={classes.subComponent}>
               <Typography
                 className={classes.subComponentTitle}
