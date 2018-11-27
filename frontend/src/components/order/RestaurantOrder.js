@@ -95,10 +95,9 @@ class RestaurantOrder extends React.Component {
     });
     return Api.orderCreate(
       restaurant.id,
-      joinLimit * 60,
       address.selectedAddress,
       visibility === 'public',
-
+      joinLimit * 60,
     );
   };
 

@@ -23,6 +23,7 @@ import Cart from 'components/cart/Cart';
 import Format from 'facades/Format';
 import AmountSelector from 'components/cart/AmountSelector';
 import RestaurantOrder from 'components/order/RestaurantOrder';
+import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
 import { connect } from 'react-redux';
 
 const styles = theme => ({
@@ -83,6 +84,7 @@ class RestaurantDetailPage extends React.Component {
     notFound: false,
     loading: null,
     selectingProductOption: null,
+    order:null,
   };
 
   componentDidMount() {
@@ -346,6 +348,7 @@ class RestaurantDetailPage extends React.Component {
                 </div>
               </div>
               <div className={classes.rightBar}>
+
                 <div className={classes.subComponent}>
                   <Typography
                     className={classes.subComponentTitle}
@@ -358,6 +361,16 @@ class RestaurantDetailPage extends React.Component {
                     restaurant={restaurant}
                     onRestaurantUpdate={this.handleRestaurantUpdate}
                   />
+                </div>
+                <div className={classes.subComponent}>
+                  <Typography
+                    className={classes.subComponentTitle}
+                    variant="h5"
+                    component="h2"
+                  >
+                    Group Member
+                  </Typography>
+                  <GroupmemberStatusTable restaurantId={restaurant.id} />
                 </div>
                 <div className={classes.subComponent}>
                   <Typography

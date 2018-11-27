@@ -4,11 +4,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import store from 'store';
-import { loadAddress, selectAddress, setCurrentLocation } from 'actions/addressActions';
+import { loadOrderinfo, updateGroupmember } from 'actions/orderActions';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import AddressDialog from 'components/address/AddressDialog';
+import Snackbar from 'facades/Snackbar';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
 
 const styles = () => ({
   selector: {
@@ -18,61 +26,62 @@ const styles = () => ({
     paddingTop: 8,
     paddingBottom: 8,
   },
+  item: {
+    display: 'block',
+  },
+  itemLine: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+  },
+  setstatus: {
+    flexGrow: 0,
+    paddingRight: 0,
+    minWidth: 'fit-content',
+  },
 });
 
 class GroupmemberStatusTable extends React.Component {
   state = {
-
+    restaurantId:null,
     loadingGroupmbr: null,
-    members: false,
-    creator: null
+    members: [],
+    is_creator: null,
+    all_ready:false
   };
 
   componentDidMount() {
-    this.loadAddresses();
+    this.loadGroupmbr();
   }
 
   componentWillUnmount() {
     //Axios.cancelRequest(this.state.loadingAddress);
   }
 
-/*  handleSelectAddress = (e) => {
-    const value = e.target.value;
-    if (value > 0) {
-      store.dispatch(selectAddress(value));
-    } else if (value === 0) {
-      this.loadCurrentLocation();
-    } else {
-      this.setState({
-        addingAddress: true,
-      });
-    }
-  };*/
 
 
-  handleGroupmbrUpdate = (res) => {
+  /*handleGroupmbrUpdate = (res) => {
     // TODO:  GET - /api/v1/orders/{id}
     const groupmbrs = res.data;
     //store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
-  };
+  };*/
 
 
   loadGroupmbr() {
-  /*  if (this.props.addresses !== null) {
-      if (this.props.addresses.length === 0) {
-        this.loadCurrentLocation();
-      }
-      return;
-    }*/
-    Axios.cancelRequest(this.state.loadingGroupmbr);
+
+    //Axios.'/api/v1/orders/'(this.state.loadingGroupmbr);
+    console.log(this.props.restaurantId);
     this.setState({
-      loadingGroupmbr: Api.addressList().then((res) => {
+      loadingGroupmbr: Api.findOrder(this.props.restaurantId).then((res) => {
+        const result = res.data;
         this.setState({
           loadingGroupmbr: null,
+          members: res.data.length > 0 ? res.data[0].order_members : null,
+          is_creator:res.data[0].is_creator,
         });
-        // TODO:  extract the groupmbrs info from the data
-        //const members = res.data;
-        //store.dispatch(loadAddress(addresses));
+
+        console.log("loadGroupmbr:" +this.state.members[0].user.name);
+
 
       }).catch((err) => {
         this.setState({
@@ -85,46 +94,49 @@ class GroupmemberStatusTable extends React.Component {
 
   render() {
     const {
-      members, currentLocation, classes,
+      classes,restaurantId
     } = this.props;
-    const { currentLocationError, addingAddress } = this.state;
-    const selectedCurrentLocation = selectedAddress === 0;
-    let currentLocationText = 'Use current location';
+    const { members,all_ready,is_creator } = this.state;
 
     return (
+  <Card>
       <div>
 
-        <TextField
-          select
-          variant="outlined"
-          value={selectedAddress === null ? -1 : selectedAddress}
-          onChange={this.handleSelectAddress}
-          error={selectedCurrentLocation && currentLocationError !== null}
-          InputProps={{
-            className: classes.selector,
-            classes: {
-              input: classes.selectorInput,
-            },
-          }}
-          fullWidth
-        >
+
           {members === null
             ? (
-              <MenuItem value={-1} disabled>
-                Loading...
-              </MenuItem>
+              <div>
+                No member join yet!
+              </div>
             ) : [
-              members.map(member => (
-                <MenuItem key={member.id} value={member.id}>
-                  {member.name}
 
-                  {member.is_ready}
-                </MenuItem>
+              members.map(member => (
+
+                <ListItem
+                  key={member.user.name} // eslint-disable-line react/no-array-index-key
+                  className={classes.item}
+                >
+                  <div className={classes.itemLine}>
+                    <ListItemText
+                    primary={member.user.name}
+                    secondary={is_creator ? "Creator" : ""}
+
+                    />
+                    <ListItemText
+                      className={classes.setstatus}
+                      primary={member.is_ready ? "confirmed" : "selecting"}
+
+                    />
+                  </div>
+                  </ListItem>
+
               ))
+
             ]
           }
-        </TextField>
+
       </div>
+    </Card>
     );
   }
 }
@@ -136,6 +148,7 @@ const mapStateToProps = state => ({
 
 GroupmemberStatusTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  restaurantId:PropTypes.object.isRequired,
   members: PropTypes.array,
   //currentLocation: PropTypes.object,
 };

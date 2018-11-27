@@ -28,14 +28,21 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   textarea: {
-    width:'100'
-  }
+    maxWidth:'50'
+  },
+  setstatus: {
+    flexGrow: 0,
+    paddingRight: 0,
+    minWidth: 'fit-content',
+  },
 });
 
 class FollowfriendDialog extends React.Component {
   state = {
     email:'',
     errors: {},
+    friends:[],
+    loadingfriends:null,
   };
 
   constructor(props) {
@@ -46,6 +53,7 @@ class FollowfriendDialog extends React.Component {
       this.state = {
         email:email,
         errors: {},
+
       };
     }
   }
@@ -56,6 +64,7 @@ class FollowfriendDialog extends React.Component {
     const value = e.target.value;
     this.setState({
       email: value, // eslint-disable-line react/no-unused-state
+
 
     });
   }
@@ -98,10 +107,44 @@ class FollowfriendDialog extends React.Component {
     }
   };
 
+  /*handleAddingfriend{
+
+
+  }*/
+
+  loadFriends() {
+
+    this.setState({
+      loadingfriends: Api.friendList().then((res) => {
+        const result = res.data;
+        this.setState({
+          loadingfriends: null,
+          friends: res.data.length > 0 ? res.data : null,
+
+        });
+        if(this.state.friends !== null){
+          console.log("loadFriends:" +this.state.friends[0].name);
+
+        }
+
+
+      }).catch((err) => {
+        this.setState({
+          loadingfriends: null,
+        });
+        throw (err);
+      }),
+    });
+  }
+
+  componentDidMount() {
+    this.loadFriends();
+  }
+
 
   render() {
     const { classes, item: email } = this.props;
-    const { errors, curemail } = this.state;
+    const { errors,friends } = this.state;
 
     return (
       <DialogForm
@@ -127,26 +170,42 @@ class FollowfriendDialog extends React.Component {
           aria-haspopup="true"
           className={classes.accountButton}
           color="inherit"
+          onClick={this.handleAddingfriend}
         >
           <PersonAdd />
         </IconButton>
+        {friends === null
+          ?
+          (
+            <div>
+              No following friends yet!  Follow friends now!
+            </div>
+          ) : [
+            friends.map(friend => (
 
-        <List component="nav">
-        <ListItem>
-          <ListItemText primary="friends1" secondary="email"/>
-        </ListItem>
-        <Divider />
-        <ListItem divider>
-          <ListItemText primary="friend2" secondary="email"/>
-        </ListItem>
-        <ListItem >
-          <ListItemText primary="friend3" secondary="email"/>
-        </ListItem>
-        <Divider light />
-        <ListItem>
-          <ListItemText primary="friend4" secondary="email"/>
-        </ListItem>
-      </List>
+              <ListItem
+                key={friend.user.name} // eslint-disable-line react/no-array-index-key
+                className={classes.item}
+              >
+                <div className={classes.itemLine}>
+                  <ListItemText
+                  primary={friend.name}
+
+                  />
+                  <ListItemText
+                    className={classes.setstatus}
+                    primary={friend.friend_id}
+
+                  />
+                </div>
+                </ListItem>
+
+            ))
+          ]
+
+
+
+        }
 
       </DialogForm>
     );

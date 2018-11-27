@@ -174,6 +174,24 @@ class Api {
     }
     return instance;
   }
+
+  static findOrder(id){
+    return Api.instance().get(`/orders/`,id);
+
+  }
+
+
+  /* --- Friends --- */
+  static friendList() {
+    return Api.instance().get('/friends');
+  }
+
+  static followNewFriend(friendId){
+    return Api.instance().post('/friends',friendId);
+  }
+
+
+
 }
 
 export default Api;
