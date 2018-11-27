@@ -55,6 +55,7 @@ const styles = theme => ({
   },
 });
 
+
 class RestaurantOrder extends React.Component {
   state = {
     visibility: 'private',
@@ -201,7 +202,6 @@ class RestaurantOrder extends React.Component {
       sharing: true,
     });
   };
-
   handleGroupCheckout = () => {
     const {order} = this.state;
     Api.orderCheckout(order.id).then((res) => {

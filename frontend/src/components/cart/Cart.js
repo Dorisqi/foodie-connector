@@ -227,11 +227,7 @@ class Cart extends React.Component {
                 variant="outlined"
                 disabled={cart.cart.length === 0}
                 color="primary"
-                component={Link}
                 fullWidth
-                to={{
-                  pathname: '/checkout',
-                }}
               >
                 Direct Checkout
               </Button>
