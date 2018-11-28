@@ -15,7 +15,9 @@ import Button from '@material-ui/core/Button';
 import CartCheckout from 'components/cart/CartCheckout';
 import CardSelector from 'components/card/CardSelector';
 import Menu from 'facades/Menu';
-
+import compose from 'recompose/compose'
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -41,44 +43,41 @@ const styles = theme => ({
 });
 
 
-class CheckoutPage extends React.Component {
+
+class CheckOutPage extends React.Component {
   state = {
     restaurantId: 0,
     restaurant: null,
     cart: [],
     subtotal: 0,
     productMap: null,
-  };
-  constructor(props) {
-    super(props);
+    loading: null,
   }
-
   componentDidMount() {
     this.handleShowCart();
   }
 
   handleShowCart = () =>{
-    Api.cartShow().then((res) => {
-      let promise = null;
-      promise = Api.restaurantShow(res.data.restaurant.id);
-      promise.then((res1) => {
-        this.setState({
-          productMap: Menu.generateMap(res1.data.restaurant_menu),
-          restaurant: res.data.restaurant,
-          cart: res.data.cart,
-          subtotal: res.data.subtotal,
-        });
-      }).catch((err) => {
+  Api.cartShow().then((res) => {
+    let promise = null;
+    promise = Api.restaurantShow(res.data.restaurant.id);
+    promise.then((res1) => {
+      this.setState({
+        productMap: Menu.generateMap(res1.data.restaurant_menu),
+        restaurant: res.data.restaurant,
+        cart: res.data.cart,
+        subtotal: res.data.subtotal,
+      });
+    }).catch((err) => {
         throw err;
       });
-  })
-};
-
+    })
+  };
   render() {
-    const { classes, cart } = this.props;
+    const { classes , cart} = this.props;
     const {restaurant, productMap} = this.state;
-    return(
-        <MainContent title="Review & Pay">
+    return (
+      <MainContent title="Review & Pay">
         <div className={classes.root}>
           <div className={classes.leftBar}>
             <div className={classes.subComponent}>
@@ -92,7 +91,7 @@ class CheckoutPage extends React.Component {
               {cart !== null
               && <ClearAlert />
               }
-              <CartCheckout restaurant={restaurant} productMap={productMap} />
+              <CartCheckout restaurant={restaurant} cart={cart} productMap={productMap} order={this.props.location.state.order} />
             </div>
           </div>
           <div className={classes.middleBar}>
@@ -107,9 +106,9 @@ class CheckoutPage extends React.Component {
               <CardSelector />
             </div>
           </div>
-          </div>
-        </MainContent>
-      );
+        </div>
+      </MainContent>
+    );
   }
 }
 
@@ -119,13 +118,12 @@ const mapStateToProps = state => ({
   restaurant: state.restaurant,
 });
 
-CheckoutPage.propTypes = {
+CheckOutPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  cart: PropTypes.object,
-  address: PropTypes.object.isRequired,
-  restaurant: PropTypes.object.isRequired,
+  order: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(CheckoutPage),
-);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(withRouter(CheckOutPage))

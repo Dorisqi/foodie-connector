@@ -29,6 +29,7 @@ import ShareOrderDialog from 'components/order/ShareOrderDialog';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import compose from 'recompose/compose'
+import CheckOutPage from 'components/pages/checkout/CheckOutPage'
 const styles = theme => ({
   margin: {
     marginTop: theme.spacing.unit,
@@ -62,12 +63,12 @@ class RestaurantOrder extends React.Component {
     joinLimit: 10,
     loading: null,
     loadingDeliverable: null,
-    order: undefined,
     creatingOrder: false,
     errors: {},
     cancelAlert: false,
     sharing: false,
     checkout: false,
+    order: null,
   };
 
   componentDidMount() {
@@ -202,19 +203,17 @@ class RestaurantOrder extends React.Component {
       sharing: true,
     });
   };
+
   handleGroupCheckout = () => {
     const {order} = this.state;
-    Api.orderCheckout(order.id).then((res) => {
-      console.log(res.data);
-    }).catch((err) => {
-      throw err;
+    //let path = `/orders/${order.id}/checkout`;
+    this.props.history.push({
+      pathname: `/orders/${order.id}/checkout`,
+      state: {order: order}
     });
-    let path = `/orders/${order.id}/checkout`;
-    this.props.history.push(path);
   };
-
   render() {
-    const { classes, restaurant } = this.props;
+    const { classes, restaurant} = this.props;
     const {
       order,
       visibility,
@@ -224,6 +223,7 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
+      isClick,
     } = this.state;
     if (loading !== null) {
       return (
@@ -358,21 +358,18 @@ class RestaurantOrder extends React.Component {
             >
               Order Detail
             </Button>
-            {order.is_creator && [(
-              <Button
-                key="checkout"
-                className={classes.action}
-                variant="outlined"
-                color="primary"
-                //component={Link}
-                onClick = {this.handleGroupCheckout}
-                fullWidth
-                //to={{
-                  //pathname: `/orders/${order.id}/checkout`,
-                //}}
-              >
-                Checkout
-              </Button>
+            {order.is_creator && [
+            (
+                <Button
+                  key="checkout"
+                  className={classes.action}
+                  variant="outlined"
+                  color="primary"
+                  onClick = {this.handleGroupCheckout}
+                  fullWidth
+                >
+                  Checkout
+                </Button>
             ), (
               <DialogDeleteAlert
                 key="cancel-dialog"

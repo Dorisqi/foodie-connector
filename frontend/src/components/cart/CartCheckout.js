@@ -18,7 +18,7 @@ import store from 'store';
 import Format from 'facades/Format';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
-
+import Divider from '@material-ui/core/Divider/Divider';
 
 
 const styles = theme => ({
@@ -57,8 +57,12 @@ const styles = theme => ({
     flexGrow: 1,
   },
   summaryPrice: {
-    textAlign: 'right',
+    textAlign: 'left',
     padding: 0,
+  },
+  optionDivider: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -69,7 +73,7 @@ class CartCheckout extends React.Component {
   };
 
   componentDidMount() {
-    const { cart } = this.props;
+    const { cart, order } = this.props;
     if (cart === null) {
       this.setState({
         loading: Api.cartShow().then((res) => {
@@ -97,80 +101,67 @@ class CartCheckout extends React.Component {
 
   render() {
     const {
-      classes, restaurant, cart, productMap,
+      classes, restaurant, cart, productMap, order
     } = this.props;
     const { updatingItemIndex } = this.state;
+    console.log(order);
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
       );
     }
-    return cart.restaurantId !== null && cart.restaurantId !== restaurant.id
-      ? (
-        <Card>
-          <CardContent className={classes.clearCartAlert}>
-            <Typography component="p">
-              You have items from another restaurant
-              (
-              <Link to={`/restaurants/${cart.restaurantId}`}>{cart.restaurantName}</Link>
-).
-              Please clear the cart before adding items.
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button onClick={this.handleClearClick} size="small" color="primary">
-              Clear
-            </Button>
-          </CardActions>
-        </Card>
-      )
-      : (
-        <Paper>
-          {updatingItemIndex !== null
-          }
-          <List>
-            {cart.cart.length === 0
-            && (
-            <ListItem>
-              <ListItemText
-                className={classes.emptyCart}
-                primary="There is no item in the cart"
-              />
-            </ListItem>
-            )
-            }
-            {cart.cart.map((cartItem, index) => {
-              const product = productMap[cartItem.product_id];
-              return (
-                <ListItem
-                  button
-                  key={index} // eslint-disable-line react/no-array-index-key
-                  className={classes.item}
-                >
-                  <div className={classes.itemLine}>
-                    <ListItemText
-                      primary={product.name}
-                    />
-                    <ListItemText
-                      className={classes.productPrice}
-                      primary={Format.displayPrice(cartItem.product_price)}
-                    />
-                  </div>
-                </ListItem>
-              );
-            })}
-            <ListItem>
-              <ListItemText
-                className={classes.summaryPrice}
-                primary={`Subtotal: ${Format.displayPrice(cart.subtotal)}`}
-                primaryTypographyProps={{
-                  variant: 'h6',
-                }}
-              />
-            </ListItem>
-          </List>
-        </Paper>
-      );
+    return (
+      <Paper>
+        <List>
+          {cart.cart.map((cartItem, index) => {
+            const product = productMap[cartItem.product_id];
+            return (
+              <ListItem>
+                <div className={classes.itemLine}>
+                  <ListItemText
+                    primary={product.name}
+                  />
+                  <ListItemText
+                    className={classes.productPrice}
+                    primary={Format.displayPrice(cartItem.product_price)}
+                  />
+                </div>
+              </ListItem>
+            );
+          })}
+          <Divider className={classes.optionDivider} light />
+          <ListItem>
+            <ListItemText
+              className={classes.summaryPrice}
+              primary={`Subtotal: ${Format.displayPrice(cart.subtotal)}`}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              className={classes.summaryPrice}
+              primary={`Estimated Delivery Fee: ${Format.displayPrice(order.prices.estimated_delivery_fee)}`}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              className={classes.summaryPrice}
+              primary={`Tax: ${Format.displayPrice(order.order_members[0].tax)}`}
+            />
+          </ListItem>
+          <Divider className={classes.optionDivider} light />
+          <ListItem>
+            <ListItemText
+              className={classes.summaryPrice}
+              primary={`Total: ${parseFloat(cart.subtotal + order.prices.estimated_delivery_fee + order.order_members[0].tax).toFixed(2)}`}
+              primaryTypographyProps={{
+                variant: 'h6',
+              }}
+            />
+          </ListItem>
+        </List>
+      </Paper>
+
+    );
   }
 }
 
@@ -180,15 +171,17 @@ const mapStateToProps = state => ({
 
 CartCheckout.propTypes = {
   classes: PropTypes.object.isRequired,
-  restaurant: PropTypes.object,
-  productMap: PropTypes.object,
-  cart: PropTypes.object,
+  restaurant: PropTypes.object.isRequired,
+  productMap: PropTypes.object.isRequired,
+  order: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 CartCheckout.defaultProps = {
   restaurant: null,
   productMap: null,
   cart: null,
+
 };
 
 export default withStyles(styles)(

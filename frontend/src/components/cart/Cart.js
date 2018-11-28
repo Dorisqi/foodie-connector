@@ -91,7 +91,6 @@ class Cart extends React.Component {
         }),
       });
     }
-    this.handleDirectCheckout();
   }
 
   componentWillUnmount() {
@@ -122,12 +121,12 @@ class Cart extends React.Component {
   };
 
   handleDirectCheckout = () => {
-    const {cart} = this.props;
+
     this.setState({
-      loading: Api.orderShow(cart.restaurantId).then((res) =>{
+      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) =>{
         this.setState({
           loading: null,
-          orderId: res.data[0].id,
+          orderId: res.data.id,
         });
       }).catch((err) => {
         this.setState({
@@ -137,6 +136,7 @@ class Cart extends React.Component {
       }),
     });
   };
+
   render() {
     const {classes, restaurant, cart, productMap,} = this.props;
     const { updatingItemIndex, orderId,} = this.state;
@@ -153,7 +153,7 @@ class Cart extends React.Component {
               You have items from another restaurant
               (
               <Link to={`/restaurants/${cart.restaurantId}`}>{cart.restaurantName}</Link>
-).
+              ).
               Please clear the cart before adding items.
             </Typography>
           </CardContent>
@@ -263,6 +263,8 @@ class Cart extends React.Component {
 const mapStateToProps = state => ({
   cart: state.cart,
   orderId: state.orderId,
+  address: state.address,
+
 });
 
 Cart.propTypes = {
@@ -270,6 +272,8 @@ Cart.propTypes = {
   restaurant: PropTypes.object,
   productMap: PropTypes.object,
   cart: PropTypes.object,
+  address: PropTypes.object.isRequired,
+
 };
 
 Cart.defaultProps = {

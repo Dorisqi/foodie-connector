@@ -144,11 +144,7 @@ class Api {
 
   /* --- Order --- */
   static orderShow(restaurantId) {
-    return Api.instance().get('/orders/',{
-      params: {
-        restaurant_id: restaurantId,
-      },
-    });
+    return Api.instance().get('/orders/',restaurantId);
   }
 
   static orderList(restaurantId, orderStatus) {
@@ -167,6 +163,10 @@ class Api {
       is_public: isPublic,
       join_limit: joinLimit,
     });
+  }
+
+  static singleOrderCreate(restaurantId){
+    return Api.instance().post('/orders', restaurantId);
   }
 
   static orderCancel(orderId) {
