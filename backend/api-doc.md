@@ -4296,6 +4296,101 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **POST - /api/v1/orders/{id}/rate**
+
+Rate the restaurant corresponding to the delivered order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| is_positive | required | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "is_ready": 0,
+    "phone": "7650000000",
+    "products": null,
+    "subtotal": null,
+    "tax": null,
+    "tip": null,
+    "delivery_fee": null,
+    "total": null,
+    "rate_is_positive": 1
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Only delivered orders can be rated.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Only delivered orders can be rated."
+}
+```
+
 ## **friend**
 
 Everything about friend
