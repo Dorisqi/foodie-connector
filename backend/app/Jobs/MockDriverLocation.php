@@ -16,7 +16,7 @@ class MockDriverLocation implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    const GEO_LOCATIONS = [
+    public static $geoLocations = [
         [
             -86.92065238952637,
             40.41388815007207
@@ -263,6 +263,8 @@ class MockDriverLocation implements ShouldQueue
         ],
     ];
 
+    public static $updatingInterval = 10;
+
     /**
      * Create a new job instance.
      *
@@ -281,9 +283,9 @@ class MockDriverLocation implements ShouldQueue
     public function handle()
     {
         $index = 0;
-        $length = count($this::GEO_LOCATIONS);
+        $length = count($this::$geoLocations);
         while (true) {
-            $geoLocation = $this::GEO_LOCATIONS[$index];
+            $geoLocation = $this::$geoLocations[$index];
             $orders = Order::select([
                 'id',
                 DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
@@ -298,7 +300,7 @@ class MockDriverLocation implements ShouldQueue
                 break;
             }
 
-            sleep(10);
+            sleep($this::$updatingInterval);
         }
     }
 }
