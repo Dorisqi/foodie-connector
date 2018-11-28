@@ -12,9 +12,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotificationBox from './NotificationBox';
 import Api from 'facades/Api';
 import { withStyles } from '@material-ui/core/styles';
+import NotificationBox from './NotificationBox';
 
 const styles = () => ({
   root: {
@@ -56,13 +56,13 @@ class Header extends React.Component {
   }
 
   getNotifications() {
-    Api.notificationList().then(res => {
+    Api.notificationList().then((res) => {
       const { notifications } = res.data;
       this.setState({
-        notifications: notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length
-      })
-    }).catch(err => {
+        notifications,
+        unreadCount: notifications.filter(n => !n.isRead).length,
+      });
+    }).catch((err) => {
     });
   }
 
@@ -74,27 +74,25 @@ class Header extends React.Component {
     this.setState({ notificationsOpen: true });
   }
 
-  handleMarkRead = (id) => () => {
-    Api.notificationMarkRead(id).then(res => {
+  handleMarkRead = id => () => {
+    Api.notificationMarkRead(id).then((res) => {
       const { notifications } = res.data;
       this.setState({
-        notifications: notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length
-      })
-    }).catch(err => {
-    })
+        notifications,
+        unreadCount: notifications.filter(n => !n.isRead).length,
+      });
+    }).catch((err) => {
+    });
   }
 
-  handleMarkAllRead = () => {
-    return Api.notificationMarkAllRead();
-  }
+  handleMarkAllRead = () => Api.notificationMarkAllRead()
 
   handleNotificationsUpdate(res) {
     const { notifications } = res.data;
     this.setState({
-      notifications: notifications,
-      unreadCount: notifications.filter(n => !n.isRead).length
-    })
+      notifications,
+      unreadCount: notifications.filter(n => !n.isRead).length,
+    });
   }
 
   handleProfileMenuOpen = (event) => {
@@ -106,7 +104,9 @@ class Header extends React.Component {
   };
 
   render() {
-    const { anchorEl, notificationsOpen, notifications, unreadCount } = this.state;
+    const {
+      anchorEl, notificationsOpen, notifications, unreadCount,
+    } = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
 
@@ -186,13 +186,15 @@ class Header extends React.Component {
         </AppBar>
         {renderMenu}
         {notificationsOpen
-          ? <NotificationBox
+          ? (
+            <NotificationBox
               notifications={notifications}
               handleMarkRead={this.handleMarkRead}
               handleMarkAllRead={this.handleMarkAllRead}
               onUpdate={this.handleNotificationsUpdate}
               onClose={this.handleDialogClose}
             />
+          )
           : null
         }
       </header>

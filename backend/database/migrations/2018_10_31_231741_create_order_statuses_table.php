@@ -21,7 +21,8 @@ class CreateOrderStatusesTable extends Migration
 
             $table->foreign('order_id')
                 ->references('id')
-                ->on('orders');
+                ->on('orders')
+                ->onDelete(\Illuminate\Support\Facades\App::environment('testing') ? 'CASCADE' : 'RESTRICT');
             $table->index(['order_id', 'time'], 'order_statuses_order');
         });
     }

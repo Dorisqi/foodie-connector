@@ -30,7 +30,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="MAIL_DRIVER" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite_testing"/>
+        <env name="DB_DATABASE" value="foodie_connector_testing"/>
         <env name="STRIPE_MOCK_PORT" value="8420"/>
         <env name="STRIPE_SECRET" value="sk_test_gagC9svT5sqFffncVUpzhEQo"/>
         <env name="GOOGLE_MAPS_MOCK_PORT" value="8520"/>

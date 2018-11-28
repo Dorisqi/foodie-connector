@@ -82,7 +82,11 @@ class GenerateApiDoc extends Command
             'order' => [
                 'description' => 'Everything about order',
                 'apis' => [],
-            ]
+            ],
+            'friend' => [
+                'description' => 'Everything about friend',
+                'apis' => [],
+            ],
         ];
         $mockData = [];
         foreach ($apis as $api) {

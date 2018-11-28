@@ -1,18 +1,16 @@
 <?php
 
 $factory->define(\App\Models\Order::class, function () {
-    $currentTime = \Carbon\Carbon::parse('2018-10-27 15:00:01');
     return [
         'id' => \App\Models\Order::TESTING_ID,
-        'join_before' => $currentTime->copy()->addMinutes(10),
+        'join_before' => \App\Facades\Time::currentTime()->addMinutes(10),
         'is_public' => true,
         'address_line_1' => '134 Pierce Street',
         'address_line_2' => 'Apt XXX',
         'city' => 'West Lafayette',
         'state' => 'IN',
         'zip_code' => '47906',
-        'lat' => '40.4227584',
-        'lng' => '-86.9090892',
+        'geo_location' => new \Grimzy\LaravelMysqlSpatial\Types\Point(40.4227584, -86.9090892),
         'phone' => '7650000000',
         'restaurant_id' => function () {
             return factory(\App\Models\Restaurant::class)->create()->id;

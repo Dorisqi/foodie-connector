@@ -9,15 +9,24 @@ class OrderStatus extends Model
     public const CREATED = 0;
     public const CLOSED = 1;
     public const CONFIRMED = 2;
+    public const PREPARING = 3;
+    public const DELIVERING = 4;
+    public const DELIVERED = 5;
     public const STATUS_NAMES = [
         self::CREATED => 'created',
         self::CLOSED => 'closed',
         self::CONFIRMED => 'confirmed',
+        self::PREPARING => 'preparing',
+        self::DELIVERING => 'delivering',
+        self::DELIVERED => 'delivered',
     ];
     public const STATUS_IDS = [
         'created' => self::CREATED,
         'closed' => self::CLOSED,
         'confirmed' => self::CONFIRMED,
+        'preparing' => self::PREPARING,
+        'delivering' => self::DELIVERING,
+        'delivered' => self::DELIVERED,
     ];
 
     public $timestamps = false;

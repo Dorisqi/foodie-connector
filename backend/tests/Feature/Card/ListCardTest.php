@@ -14,12 +14,10 @@ class ListCardTest extends ApiTestCase
      */
     public function testListCard()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         factory(Card::class, 3)->create();
-        $this->login($this->userFactory()->create([
-            'email' => 'another_user@foodie-connector.delivery',
-        ]));
+        $this->login($this->userFactory()->state('new')->create());
         factory(Card::class, 2)->create();
         $response = $this->assertSucceed(null);
         $response->assertJsonCount(2);

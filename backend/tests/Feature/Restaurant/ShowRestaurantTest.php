@@ -18,7 +18,7 @@ class ShowRestaurantTest extends ApiTestCase
      */
     public function testShowRestaurant()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->assertFailed(null, 404);
         $restaurant = factory(Restaurant::class)->create();
@@ -36,6 +36,12 @@ class ShowRestaurantTest extends ApiTestCase
         $response = $this->assertSucceed([
             'address_id' => $address->id,
         ]);
+        $this->assertFalse(is_null($response->json('is_deliverable')));
+        $this->assertFalse(is_null($response->json('distance')));
+        $this->assertFalse(is_null($response->json('estimated_delivery_time')));
+        $response = $this->assertSucceed([
+            'place_id' => $address->place_id,
+        ], false);
         $this->assertFalse(is_null($response->json('is_deliverable')));
         $this->assertFalse(is_null($response->json('distance')));
         $this->assertFalse(is_null($response->json('estimated_delivery_time')));
@@ -66,6 +72,7 @@ class ShowRestaurantTest extends ApiTestCase
         return [
             'with_menu' => 'boolean',
             'address_id' => 'integer',
+            'place_id' => 'string',
         ];
     }
 }

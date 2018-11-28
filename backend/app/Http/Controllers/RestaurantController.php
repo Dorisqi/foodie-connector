@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use App\Facades\GeoLocation;
 use App\Facades\Maps;
 use App\Models\Restaurant;
 use App\Models\RestaurantCategory;
@@ -23,26 +22,6 @@ class RestaurantController extends ApiController
      */
     public function index(Request $request)
     {
-        $coordinate = null;
-        if (!is_null($request->query('address_id'))) {
-            $address = $this->user()->addresses()->find($request->query('address_id'));
-            if (is_null($address)) {
-                throw ApiException::invalidAddressId();
-            }
-            $coordinate = $address;
-        } elseif (!is_null($request->query('place_id'))) {
-            $coordinate = Maps::latLngByPlaceID($request->query('place_id'));
-        } else {
-            throw ApiException::validationFailedErrors([
-                'address_id' => [
-                    'Must provide address_id or place_id.'
-                ],
-                'place_id' => [
-                    'Must provide address_id or place_id.'
-                ],
-            ]);
-        }
-
         $categories = null;
         if (!is_null($request->query('filter_categories'))) {
             $categories = explode('_', $request->query('filter_categories'));
@@ -63,12 +42,29 @@ class RestaurantController extends ApiController
         $orderMinimumFilter = $this->numericFilter($request, 'filter_order_minimum');
         $ratingFilter = $this->numericFilter($request, 'filter_rating');
 
-        $query = Restaurant::with([
-            'restaurantCategories',
-            'operationTimes' => function ($query) {
-                $query->orderBy('day_of_week')->orderBy('start_time');
-            },
-        ]);
+        if (!is_null($request->query('address_id'))) {
+            $address = $this->user()->addresses()->find($request->query('address_id'));
+            if (is_null($address)) {
+                throw ApiException::invalidAddressId();
+            }
+            $coordinate = $address->geo_location;
+        } elseif (!is_null($request->query('place_id'))) {
+            $coordinate = Maps::latLngByPlaceID($request->query('place_id'));
+        } else {
+            throw ApiException::validationFailedErrors([
+                'address_id' => [
+                    'Must provide address_id or place_id.'
+                ],
+                'place_id' => [
+                    'Must provide address_id or place_id.'
+                ],
+            ]);
+        }
+
+        $query = Restaurant::query($coordinate)
+            ->distanceSphere('geo_location', $coordinate, '5000');
+        $query = $this->filterQuery($query, $distanceFilter, 'distance');
+        $query = $this->filterQuery($query, $deliveryTimeFilter, 'estimated_delivery_time');
         $query = $this->filterQuery($query, $deliveryFeeFilter, 'delivery_fee');
         $query = $this->filterQuery($query, $orderMinimumFilter, 'order_minimum');
         $query = $this->filterQuery($query, $ratingFilter, 'rating');
@@ -76,6 +72,9 @@ class RestaurantController extends ApiController
             $query->whereHas('restaurantCategories', function ($query) use ($categories) {
                 $query->whereIn('id', $categories);
             });
+        }
+        if ($request->input('filter_open_only') === 'true') {
+            $query = $query->having('is_open', true);
         }
 
         $orderBy = $request->query('order_by');
@@ -102,41 +101,20 @@ class RestaurantController extends ApiController
                     ]);
             }
         }
-
-        $restaurants = $query->get();
-        $availableRestaurants = [];
-        $filterOpenOnly = $request->input('filter_open_only') === 'true';
-        foreach ($restaurants as $restaurant) {
-            if ($filterOpenOnly && !$restaurant->is_open) {
-                continue;
-            }
-            $restaurant->setAddress($coordinate);
-            if (!$restaurant->is_deliverable) {
-                continue;
-            }
-            if (!$this->filterAccepted($distanceFilter, $restaurant->distance)) {
-                continue;
-            }
-            if (!$this->filterAccepted($deliveryTimeFilter, $restaurant->estimated_delivery_time)) {
-                continue;
-            }
-            array_push($availableRestaurants, $restaurant->toArray());
-        }
-
         if (is_null($orderBy)) {
             $orderBy = 'distance';
         }
-        usort($availableRestaurants, function ($a, $b) use ($orderBy, $isDesc) {
-            return $isDesc
-                ? $b[$orderBy] <=> $a[$orderBy]
-                : $a[$orderBy] <=> $b[$orderBy];
-        });
+        $query = $isDesc
+            ? $query->orderByDesc($orderBy)
+            : $query->orderBy($orderBy);
+
+        $restaurants = $query->get();
 
         $categories = RestaurantCategory::all();
 
         return $this->response([
             'categories' => $categories,
-            'restaurants' => $availableRestaurants,
+            'restaurants' => $restaurants,
         ]);
     }
 
@@ -152,19 +130,6 @@ class RestaurantController extends ApiController
      */
     public function show($id, Request $request)
     {
-        $query = Restaurant::with([
-            'restaurantCategories',
-            'operationTimes' => function ($query) {
-                $query->orderBy('day_of_week')->orderBy('start_time');
-            },
-        ]);
-        if ($request->query('with_menu') === 'true') {
-            $query = $query->with('restaurantMenu');
-        }
-        $restaurant = $query->find($id);
-        if (is_null($restaurant)) {
-            throw ApiException::resourceNotFound();
-        }
         $addressId = $request->query('address_id');
         $placeId = $request->query('place_id');
         if (!is_null($addressId)) {
@@ -172,10 +137,19 @@ class RestaurantController extends ApiController
             if (is_null($address)) {
                 throw ApiException::invalidAddressId();
             }
-            $restaurant->setAddress($address);
+            $coordinate = $address->geo_location;
         } elseif (!is_null($placeId)) {
             $coordinate = Maps::latLngByPlaceID($request->query('place_id'));
-            $restaurant->setAddress($coordinate);
+        } else {
+            $coordinate = null;
+        }
+        $query = Restaurant::query($coordinate);
+        if ($request->query('with_menu') === 'true') {
+            $query = $query->with('restaurantMenu');
+        }
+        $restaurant = $query->find($id);
+        if (is_null($restaurant)) {
+            throw ApiException::resourceNotFound();
         }
         return $this->response($restaurant);
     }
@@ -245,10 +219,10 @@ class RestaurantController extends ApiController
             return $query;
         }
         if (!is_null($filter['min'])) {
-            $query = $query->where($param, '>=', $filter['min']);
+            $query = $query->having($param, '>=', $filter['min']);
         }
         if (!is_null($filter['max'])) {
-            $query = $query->where($param, '<=', $filter['max']);
+            $query = $query->having($param, '<=', $filter['max']);
         }
         return $query;
     }

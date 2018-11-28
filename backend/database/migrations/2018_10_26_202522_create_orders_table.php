@@ -20,12 +20,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('creator_id');
             $table->timestamp('join_before');
             $table->boolean('is_public');
-            \App\Facades\Address::migrate($table);
+            \App\Facades\Address::oldMigrate($table);
 
-            if (!App::environment('testing')) {
-                // SQLite doesn't support dropping foreign keys
-                $table->foreign('restaurant_id')->references('id')->on('restaurants');
-            }
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
             $table->foreign('creator_id')->references('id')->on('api_users');
         });
     }

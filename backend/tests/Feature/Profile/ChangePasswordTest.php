@@ -20,7 +20,7 @@ class ChangePasswordTest extends ApiTestCase
      */
     public function testChangePassword()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed([

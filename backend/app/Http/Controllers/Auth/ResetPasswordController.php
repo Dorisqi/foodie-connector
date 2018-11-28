@@ -89,7 +89,10 @@ class ResetPasswordController extends ApiController
             }
         );
 
-        return $this->response();
+        return $this->response([
+            'api_token' => $this->guard()->token(),
+            'user' => $this->user()->toArray(true),
+        ]);
     }
 
     /**

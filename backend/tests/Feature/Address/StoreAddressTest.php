@@ -16,12 +16,13 @@ class StoreAddressTest extends ApiTestCase
      */
     public function testStoreAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login(factory(ApiUser::class)->create());
         $address = factory(Address::class)->make();
         $response = $this->assertSucceed($address->toArray());
         $alteredAddress = $address->toArray();
         $alteredAddress['is_default'] = true;
+        unset($alteredAddress['geo_location']);
         $response->assertJson([$alteredAddress]);
         $alteredAddress['phone'] = 'invalid_phone';
         $this->assertFailed($alteredAddress, 422);

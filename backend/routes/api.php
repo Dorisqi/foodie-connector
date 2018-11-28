@@ -40,8 +40,15 @@ Route::prefix('v1')->group(function () {
         Route::resource('orders', 'OrderController')->only([
             'index', 'store', 'show', 'destroy',
         ]);
+        Route::post('orders/{id}/join', 'OrderController@join');
+        Route::post('orders/{id}/checkout', 'OrderController@checkout');
+        Route::post('orders/{id}/pay', 'OrderController@pay');
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
-        Route::post('orders/{id}/invitation-email', 'OrderController@sendInvitationEmail');
+        Route::post('orders/{id}/invitation', 'OrderController@invite');
+
+        Route::resource('friends', 'FriendController')->only([
+            'index', 'store', 'destroy',
+        ]);
 
         Route::put('cart', 'CartController@update');
         Route::get('cart', 'CartController@show');
@@ -52,5 +59,7 @@ Route::prefix('v1')->group(function () {
             Route::put('password', 'ProfileController@changePassword');
             Route::put('email', 'ProfileController@updateEmail');
         });
+
+        Route::post('pusher/auth', 'PusherController@auth');
     });
 });

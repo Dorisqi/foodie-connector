@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -56,7 +56,6 @@ const styles = theme => ({
 
 
 class NotificationBox extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -64,13 +63,12 @@ class NotificationBox extends React.Component {
       isOpen: false,
       notifications: props.notifications,
     };
-
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       notifications: nextProps.notifications,
-    })
+    });
   }
 
   onClose = () => {
@@ -97,27 +95,26 @@ class NotificationBox extends React.Component {
     const { notifications } = this.state;
     return (
       <DialogForm
-        title='Notification Box'
-        submitLabel='mark all as read'
+        title="Notification Box"
+        submitLabel="mark all as read"
         api={this.props.handleMarkAllRead}
         onRequestSucceed={this.handleRequestSuccess}
         onRequestFailed={this.handleRequestFail}
         onClose={this.props.onClose}
       >
         <List>
-          {notifications.map(notification => {
+          {notifications.map((notification) => {
             const { id, message, isRead } = notification;
             return (
               <ListItem button onClick={this.props.handleMarkRead(id)} disabled={isRead}>
-                <ListItemText primary={message} secondary={isRead? "read": "unread"}/>
+                <ListItemText primary={message} secondary={isRead ? 'read' : 'unread'} />
               </ListItem>
-            )
+            );
           })}
         </List>
       </DialogForm>
-    )
+    );
   }
-
 }
 
 NotificationBox.propTypes = {

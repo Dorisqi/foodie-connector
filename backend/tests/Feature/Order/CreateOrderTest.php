@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Restaurant;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Tests\ApiTestCase;
 
 class CreateOrderTest extends ApiTestCase
@@ -14,12 +15,10 @@ class CreateOrderTest extends ApiTestCase
      * Test creating orders
      *
      * @return void
-     *
-     * @throws \ReflectionException
      */
     public function testCreateOrder()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         $restaurant = factory(Restaurant::class)->create();
@@ -29,7 +28,12 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => true,
         ]);
-        Order::query()->delete();
+        $this->setDocumentResponse([
+            'id' => Order::TESTING_ID,
+            'share_link' => 'http://localhost/orders/' . Order::TESTING_ID,
+            'qr_code_link' => 'http://localhost/orders/qr-code/' . Order::TESTING_ID,
+        ]);
+        Order::first()->delete();
         $this->mockCurrentTime('2018-10-27 11:50:00');
         $this->assertSucceed([
             'restaurant_id' => $restaurant->id,
@@ -37,7 +41,14 @@ class CreateOrderTest extends ApiTestCase
             'address_id' => $address->id,
             'is_public' => false,
         ], false);
-        Order::query()->delete();
+        $response = $this->assertFailed([
+            'restaurant_id' => $restaurant->id,
+            'join_limit' => 7200,
+            'address_id' => $address->id,
+            'is_public' => false,
+        ], 422);
+        $this->assertArrayHasKey('form', $response->json('data'));
+        Order::first()->delete();
         $this->mockCurrentTime('2018-10-28 12:00:00');
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,
@@ -54,12 +65,10 @@ class CreateOrderTest extends ApiTestCase
         ], 422, false);
         $this->assertArrayHasKey('address_id', $response->json('data'));
         $address->fill([
-            'lat' => 0,
-            'lng' => 0,
+            'geo_location' => new Point(0, 0),
         ])->save();
         $restaurant->fill([
-            'lat' => 10,
-            'lng' => 10,
+            'geo_location' => new Point(10, 10),
         ])->save();
         $response = $this->assertFailed([
             'restaurant_id' => $restaurant->id,

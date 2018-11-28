@@ -33,25 +33,30 @@ class Cart extends Model
     protected $localSubtotal = null;
 
     /**
-     * Calculate the summary of cart
+     * Doing filtering and calculating
      *
      * @param bool $saveAfterCalculation [optional]
      * @param array $cartData [optional]
-     * @return void
+     * @return array
      */
-    public function calculateSummary(bool $saveAfterCalculation = false, array $cartData = null)
+    public function calculate(bool $saveAfterCalculation = false, array $cartData = null)
     {
-        $cart = [];
+        if (is_null($this->api_user_id)) {
+            $this->localSubtotal = 0;
+            return [];
+        }
         if (is_null($cartData)) {
             $cartData = json_decode($this->cart, true);
         }
         $restaurant = $this->restaurant()->with('restaurantMenu')->first();
         if (is_null($restaurant)) {
             $this->cart = '[]';
-            $this->localSubtotal = 0;
             $this->save();
-            return;
+            $this->localSubtotal = 0;
+            return [];
         }
+        $cart = [];
+        $cartWithName = [];
         $menu = $restaurant->restaurantMenu->withoutCategories();
         $products = $menu['products'];
         $productOptionGroups = $menu['product_option_groups'];
@@ -85,7 +90,10 @@ class Cart extends Model
                 $optionGroups[$optionGroupId] = $optionGroup;
             }
 
+            $optionGroupsWithName = [];
             foreach ($cartItem['product_option_groups'] as $optionSelection) {
+                $options = [];
+
                 $optionGroupId = $optionSelection['product_option_group_id'];
                 if (!isset($optionGroups[$optionGroupId])) {
                     $updated = true;
@@ -98,8 +106,10 @@ class Cart extends Model
                         $updated = true;
                         continue 3;
                     }
+                    $option = $optionGroup['options_map'][$optionId];
+                    array_push($options, $option['name']);
                     $optionCount++;
-                    $singlePrice += $optionGroup['options_map'][$optionId]['price'];
+                    $singlePrice += $option['price'];
                     unset($optionGroup['options_map'][$optionId]);
                 }
                 if ($optionCount < $optionGroup['min_choice']
@@ -107,12 +117,24 @@ class Cart extends Model
                     $updated = true;
                     continue 2;
                 }
+
+                array_push($optionGroupsWithName, [
+                    'name' => $optionGroups[$optionGroupId]['name'],
+                    'options' => $options,
+                ]);
+
                 unset($optionGroups[$optionGroupId]);
             }
 
             $cartItem['product_price'] = round($singlePrice, 2);
             $subtotal += $singlePrice * $productAmount;
             array_push($cart, $cartItem);
+            array_push($cartWithName, [
+                'name' => $products[$productId]['name'],
+                'description' => $products[$productId]['description'],
+                'price' => $singlePrice,
+                'product_option_groups' => $optionGroupsWithName,
+            ]);
         }
         $this->cart = json_encode($cart);
         if (empty($cart)) {
@@ -122,21 +144,33 @@ class Cart extends Model
             $this->save();
         }
         $this->localSubtotal = round($subtotal, 2);
+
+        return $cartWithName;
     }
 
     public function getSubtotalAttribute()
     {
         if (is_null($this->localSubtotal)) {
-            $this->calculateSummary();
+            $this->calculate();
         }
         return $this->localSubtotal;
+    }
+
+    public function getTaxAttribute()
+    {
+        if (is_null($this->restaurant)) {
+            return 0;
+        }
+        return round($this->localSubtotal * $this->restaurant->tax_percentage / 100, 2);
     }
 
     public function toArray()
     {
         $data = parent::toArray();
         $data['subtotal'] = $this->subtotal;
+        $data['tax'] = $this->tax;
         $data['cart'] = json_decode($this->cart, true);
+        $data['restaurant'] = $this->restaurant;
         return $data;
     }
 }

@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use App\Models\ApiUser;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 abstract class ApiTestCase extends TestCase
@@ -112,6 +110,9 @@ abstract class ApiTestCase extends TestCase
     protected function assertSucceed($data, bool $documented = true, $documentedRequest = null)
     {
         $response = $this->request($data);
+        if ($response->status() !== 200) {
+            echo $response->content();
+        }
         $response->assertStatus(200);
         if ($documented && $this->documented) {
             $this->insertRequest($data, $response, $documentedRequest);
@@ -130,6 +131,9 @@ abstract class ApiTestCase extends TestCase
     protected function assertFailed($data, int $code, bool $documented = true)
     {
         $response = $this->request($data);
+        if ($response->status() !== $code) {
+            echo $response->content();
+        }
         $response->assertStatus($code);
         if ($documented && $this->documented) {
             $this->insertRequest($data, $response);
@@ -171,7 +175,13 @@ abstract class ApiTestCase extends TestCase
      */
     protected function setDocumentResponse($response)
     {
-        $this->requests[count($this->requests) - 1]['response'] = $response;
+        if (is_null(env('GENERATE_API_DOC'))) {
+            return;
+        }
+        $this->requests[count($this->requests) - 1]['response'] = array_merge(
+            $this->requests[count($this->requests) - 1]['response'],
+            $response
+        );
     }
 
     /**
@@ -228,58 +238,6 @@ abstract class ApiTestCase extends TestCase
             }
         }
         return $this::PREFIX . $uri;
-    }
-
-    /**
-     * Login for authorization
-     *
-     * @param \App\Models\ApiUser $user [optional]
-     * @return void
-     */
-    protected function login(ApiUser $user = null)
-    {
-        $this->guard()->login($user ?? $this->userFactory()->create());
-        $this->token = $this->guard()->token();
-    }
-
-    /**
-     * Get the guard
-     *
-     * @return \App\Services\Auth\ApiGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard('api');
-    }
-
-    /**
-     * Get user factory
-     *
-     * @return \Illuminate\Database\Eloquent\FactoryBuilder
-     */
-    protected function userFactory()
-    {
-        return factory(ApiUser::class);
-    }
-
-    /**
-     * Get the current user
-     *
-     * @return \App\Models\ApiUser
-     */
-    protected function user()
-    {
-        return $this->guard()->user();
-    }
-
-    /**
-     * Get the guard config
-     *
-     * @return array
-     */
-    protected function guardConfig()
-    {
-        return config('auth.guards.api');
     }
 
     /**
@@ -361,7 +319,7 @@ abstract class ApiTestCase extends TestCase
     {
         $params = [];
         foreach ($this->rules() as $key => $rule) {
-            $restrictions = explode('|', $rule);
+            $restrictions = is_string($rule) ? explode('|', $rule) : $rule;
             $param = [
                 'key' => $key,
             ];
@@ -385,7 +343,9 @@ abstract class ApiTestCase extends TestCase
                         $param['email'] = true;
                         break;
                     default:
-                        array_push($extra, $restriction);
+                        if (is_string($restriction)) {
+                            array_push($extra, $restriction);
+                        }
                 }
             }
             $param['extra'] = implode(', ', $extra);

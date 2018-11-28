@@ -19,7 +19,7 @@ class UpdateAddressTest extends ApiTestCase
      */
     public function testUpdateAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login(factory(ApiUser::class)->create());
         $address = factory(Address::class)->create();
         $this->id = $address->id;
@@ -35,13 +35,13 @@ class UpdateAddressTest extends ApiTestCase
         $addressArray['line_1'] = '';
         $addressArray['zip_code'] = '47907';
         $addressArray['is_default'] = true;
-        $addressArray['lat'] = '40.4248';
-        $addressArray['lng'] = '-86.911';
+        unset($addressArray['geo_location']);
         $response->assertJson([$addressArray]);
         $newAddress = factory(Address::class)->create();
         $this->id = $newAddress->id;
         $newAddressArray = $newAddress->toArray();
         $newAddressArray['is_default'] = true;
+        unset($newAddressArray['geo_location']);
         $addressArray['is_default'] = false;
         $this->assertSucceed([
             'is_default' => true,

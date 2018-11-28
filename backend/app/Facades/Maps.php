@@ -4,9 +4,9 @@ namespace App\Facades;
 
 use App\Exceptions\ApiException;
 use App\Exceptions\MapsException;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Monolog\Logger;
 
 class Maps
 {
@@ -19,7 +19,6 @@ class Maps
      * @return array
      *
      * @throws \App\Exceptions\MapsException
-     * @throws \Exception
      */
     protected static function request(string $method, string $uri, array $query = [])
     {
@@ -100,8 +99,10 @@ class Maps
         }
         $components[$addressPrefix ? 'address_line_1' : 'line_1'] =
             $streetNumber === null ? $route : "${streetNumber} ${route}";
-        $components['lat'] = $geoCoding['geometry']['location']['lat'];
-        $components['lng'] = $geoCoding['geometry']['location']['lng'];
+        $components['geo_location'] = new Point(
+            $geoCoding['geometry']['location']['lat'],
+            $geoCoding['geometry']['location']['lng']
+        );
         return $components;
     }
 
@@ -109,7 +110,7 @@ class Maps
      * Get latitude and longitude from place ID
      *
      * @param string $placeId
-     * @return array
+     * @return \Grimzy\LaravelMysqlSpatial\Types\Point
      *
      * @throws \App\Exceptions\ApiException
      * @throws \App\Exceptions\MapsException
@@ -118,10 +119,7 @@ class Maps
     public static function latLngByPlaceID(string $placeId)
     {
         $geoCoding = self::reverseGeoCodingByPlaceID($placeId);
-        return [
-            'lat' => $geoCoding[0]['geometry']['location']['lat'],
-            'lng' => $geoCoding[0]['geometry']['location']['lng'],
-        ];
+        return new Point($geoCoding[0]['geometry']['location']['lat'], $geoCoding[0]['geometry']['location']['lng']);
     }
 
     /**
@@ -132,8 +130,7 @@ class Maps
      * @return array
      *
      * @throws \App\Exceptions\ApiException
-     * @throws \App\Exceptions\MpasException
-     * @throws \Exception
+     * @throws \App\Exceptions\MapsException
      */
     public static function reverseGeoCodingByCoords($lat, $lng)
     {

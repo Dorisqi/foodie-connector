@@ -150,18 +150,67 @@ class ApiException extends Exception
     {
         return new ApiException('This operation can only be done by an order member.', 403);
     }
+    public static function orderNotCancellable()
+    {
+        return new ApiException('This order cannot be canceled.', 422);
+    }
     public static function orderNotJoinable()
     {
-        return self::validationFailedErrors([
-            'id' => [
-                'This order is no longer joinable.',
-            ],
-        ]);
+        return new ApiException('This order is no longer joinable.', 422);
     }
-    
+    public static function orderAlreadyJoined()
+    {
+        return new ApiException('You have already joined this order.', 422);
+    }
+    public static function orderNotConfirmable()
+    {
+        return new ApiException('This order cannot be confirmed.', 422);
+    }
+    public static function orderNotUpdatable()
+    {
+        return new ApiException('This order cannot be updated.', 422);
+    }
+    public static function emptyCart()
+    {
+        return new ApiException('The cart is empty.', 422);
+    }
+    public static function orderAlreadyPaid()
+    {
+        return new ApiException('This order is already paid.', 422);
+    }
+    public static function orderNeedCheckout()
+    {
+        return new ApiException('This order requires checkout.', 422);
+    }
+    public static function orderMemberNotReady()
+    {
+        return new ApiException('Some or all of the order members are not ready.', 422);
+    }
+    public static function orderMinimumFailed()
+    {
+        return new ApiException('Failed to meet the order minimum.', 422);
+    }
+
+    /* Friend */
+    public static function notFriend()
+    {
+        return new ApiException('This user is not your friend.', 422);
+    }
+    public static function alreadyFriend()
+    {
+        return new ApiException('This user is already your friend.', 422);
+    }
+
+    /* Map */
     public static function zeroResult()
     {
         return new ApiException('No result found.', 404);
+    }
+
+    /* Pusher */
+    public static function pusherAccessDenied()
+    {
+        return new ApiException('You do not have access to this channel.', 403);
     }
 
     /**

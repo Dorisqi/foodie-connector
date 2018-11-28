@@ -12,24 +12,23 @@ use Illuminate\Support\Facades\Notification;
 use Tests\ApiTestCase;
 use Tests\UriWithId;
 
-class SendInvitationEmailTest extends ApiTestCase
+class InviteTest extends ApiTestCase
 {
     use UriWithId;
 
     /**
-     * Test sending invitation email
+     * Test inviting friend
      *
      * @return void
      *
      * @throws \ReflectionException
      */
-    public function testSendInvitationEmail()
+    public function testInvite()
     {
         Notification::fake();
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $this->id = 'A00000';
-        $this->assertFailed(null, 422);
         $receiver = new AnonymousNotifiable();
         $receiverEmail = 'receiver@foodie-connector.delivery';
         $receiver->route('mail', $receiverEmail);
@@ -49,15 +48,27 @@ class SendInvitationEmailTest extends ApiTestCase
                     && $notification->orderLink === $order->share_link;
             }
         );
+        $friend = $this->userFactory()->states('new', 'friend')->create();
+        $this->assertSucceed([
+            'friend_id' => $friend->friend_id,
+        ]);
+        Notification::assertSentTo(
+            $receiver,
+            OrderInvitation::class,
+            function ($notification) use ($order) {
+                return $notification->initiator === $this->user()->name
+                    && $notification->orderLink === $order->share_link;
+            }
+        );
+        $this->assertFailed([
+            'friend_id' => 'NOTEXI',
+        ], 422);
+        $this->assertFailed(null, 422);
         $this->mockCurrentTime(Time::currentTime()->addHours(3)->toDateTimeString());
         $this->assertFailed([
             'email' => $receiverEmail,
         ], 422);
-        $this->login(
-            factory(ApiUser::class)->create([
-                'email' => 'another@foodie-connector.delivery',
-            ])
-        );
+        $this->login($friend);
         $this->assertFailed([
             'email' => $receiverEmail,
         ], 404, false);
@@ -70,12 +81,12 @@ class SendInvitationEmailTest extends ApiTestCase
 
     protected function uri()
     {
-        return '/orders/{id}/invitation-email';
+        return '/orders/{id}/invitation';
     }
 
     protected function summary()
     {
-        return 'Send invitation email';
+        return 'Send invitations';
     }
 
     protected function tag()
@@ -85,6 +96,6 @@ class SendInvitationEmailTest extends ApiTestCase
 
     protected function rules()
     {
-        return OrderController::sendInvitationEmailRules();
+        return OrderController::inviteRules();
     }
 }
