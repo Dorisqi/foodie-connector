@@ -14,6 +14,8 @@ import Api from 'facades/Api';
 import Button from '@material-ui/core/Button';
 import CartCheckout from 'components/cart/CartCheckout';
 import CardSelector from 'components/card/CardSelector';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Menu from 'facades/Menu';
 import compose from 'recompose/compose'
 import { Link } from 'react-router-dom';
@@ -33,12 +35,21 @@ const styles = theme => ({
     minWidth: 350,
     width: 350,
   },
-
+  rightBar: {
+    marginLeft: 40,
+    minWidth: 350,
+    width: 350,
+  },
   subComponent: {
     marginTop: 2 * theme.spacing.unit,
   },
   subComponentTitle: {
     marginBottom: theme.spacing.unit,
+  },
+  itemLine: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
   },
 });
 
@@ -88,20 +99,50 @@ class CheckOutPage extends React.Component {
               >
                 ORDER SUMMARY
               </Typography>
-              {cart !== null
-              && <ClearAlert />
-              }
               <CartCheckout restaurant={restaurant} cart={cart} productMap={productMap} order={this.props.location.state.order} />
             </div>
           </div>
           <div className={classes.middleBar}>
             <div className={classes.subComponent}>
+
               <Typography
                 className={classes.subComponentTitle}
                 variant="h5"
                 component="h2"
               >
-                Payment Method
+                INFO
+              </Typography>
+              <Paper>
+                <ListItem>
+                  <div className={classes.itemLine}>
+                    <ListItemText
+                      primary="Billing & Address"
+                      secondary={
+                        <span>
+                           {this.props.location.state.order.creator.name}
+                           <br />
+                           {this.props.location.state.order.address_line_2}
+                           <br />
+                           {this.props.location.state.order.address_line_1}
+                           <br />
+                           {this.props.location.state.order.city}
+                        </span>
+                      }
+                    />
+                  </div>
+                </ListItem>
+              </Paper>
+            </div>
+          </div>
+          <div className={classes.rightBar}>
+            <div className={classes.subComponent}>
+
+              <Typography
+                className={classes.subComponentTitle}
+                variant="h5"
+                component="h2"
+              >
+                PAYMENT METHOD
               </Typography>
               <CardSelector />
             </div>
