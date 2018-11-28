@@ -143,12 +143,16 @@ class Api {
   }
 
   /* --- Order --- */
-  static orderList(restaurantId, orderStatus) {
+  static orderList(restaurantId = null, orderStatus = null) {
+    const params = {};
+    if (restaurantId) {
+      params.restaurant_id = restaurantId;
+    }
+    if (orderStatus) {
+      params.order_status = orderStatus;
+    }
     return Api.instance().get('/orders', {
-      params: {
-        restaurant_id: restaurantId,
-        order_status: orderStatus,
-      },
+      params,
     });
   }
 

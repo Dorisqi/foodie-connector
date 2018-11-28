@@ -128,6 +128,16 @@ class Header extends React.Component {
         >
           Profile
         </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/order-history',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Order History
+        </MenuItem>
         {location.pathname !== '/logout'
         && (
           <MenuItem
