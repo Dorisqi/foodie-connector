@@ -1881,6 +1881,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "distance": 0,
             "estimated_delivery_time": 20,
             "is_deliverable": 1,
@@ -1961,6 +1963,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "distance": 0,
             "estimated_delivery_time": 20,
             "is_deliverable": 1,
@@ -2071,6 +2075,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
     "restaurant_categories": [
         {
             "id": 1,
@@ -2178,6 +2184,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
     "distance": 0,
     "estimated_delivery_time": 20,
     "is_deliverable": 1,
@@ -2336,6 +2344,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "subtotal": 9.98,
@@ -2430,6 +2440,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "subtotal": 9.98,
@@ -2613,6 +2625,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2629,6 +2643,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -2706,6 +2721,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2722,6 +2739,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -2800,6 +2818,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2816,6 +2836,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -2894,6 +2915,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2910,6 +2933,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -3053,6 +3077,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3069,6 +3095,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3253,6 +3280,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3269,6 +3298,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3374,6 +3404,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3390,6 +3422,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3495,6 +3528,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "tip": null,
     "delivery_fee": "2.99",
     "total": null,
+    "rate_is_positive": null,
     "user": {
         "name": "Test User",
         "friend_id": "FRIEND"
@@ -3638,6 +3672,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3654,6 +3690,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": "2.99",
             "total": "2.99",
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3965,6 +4002,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3982,6 +4021,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "email": null,
@@ -3997,6 +4037,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "NEWFRD"
@@ -4147,6 +4188,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "tip": "2",
     "delivery_fee": "2.99",
     "total": "15.67",
+    "rate_is_positive": null,
     "user": {
         "name": "Test User",
         "friend_id": "FRIEND"

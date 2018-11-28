@@ -372,6 +372,67 @@ class OrderController extends ApiController
     }
 
     /**
+     * Rate an order
+     *
+     * @param string $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
+     */
+    public function rate($id, Request $request)
+    {
+        $this->validateInput($request, $this::rateRules());
+
+        $order = Order::query()->find($id);
+        if (is_null($order)) {
+            throw ApiException::resourceNotFound();
+        }
+
+        if ($order->order_status !== OrderStatus::DELIVERED) {
+            throw ApiException::orderNotRatable();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $orderMember = OrderMember::lockForUpdate()
+                ->where('order_id', $order->id)
+                ->where('api_user_id', $this->user()->id)
+                ->first();
+            $restaurant = Restaurant::lockForUpdate()->find($order->restaurant_id);
+
+            $isPositive = $request->input('is_positive');
+            if (is_null($orderMember->rate_is_positive)) {
+                $restaurant->rate_count += 1;
+            }
+            if ($isPositive) {
+                if (!$orderMember->rate_is_positive) {
+                    $restaurant->rate_positive_count += 1;
+                }
+            } else {
+                if ($orderMember->rate_is_positive) {
+                    $restaurant->rate_positive_count -= 1;
+                }
+            }
+            if ($restaurant->rate_count >= 5) {
+                $restaurant->rating = 5 * $restaurant->rate_positive_count / $restaurant->rate_count;
+            }
+            $restaurant->save();
+            $orderMember->rate_is_positive = $isPositive ? 1 : 0;
+            $orderMember->save();
+
+            DB::commit();
+
+            return $this->response($orderMember);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+    }
+
+    /**
      * Show QRCode
      *
      * @param string $id
@@ -480,6 +541,13 @@ class OrderController extends ApiController
                     $query->where('api_user_id', Auth::guard('api')->user()->id);
                 }),
             ],
+        ];
+    }
+
+    public static function rateRules()
+    {
+        return [
+            'is_positive' => 'required|boolean',
         ];
     }
 }

@@ -40,11 +40,12 @@ Route::prefix('v1')->group(function () {
         Route::resource('orders', 'OrderController')->only([
             'index', 'store', 'show', 'destroy',
         ]);
+        Route::post('orders/{id}/invitation', 'OrderController@invite');
         Route::post('orders/{id}/join', 'OrderController@join');
         Route::post('orders/{id}/checkout', 'OrderController@checkout');
         Route::post('orders/{id}/pay', 'OrderController@pay');
         Route::post('orders/{id}/confirm', 'OrderController@confirm');
-        Route::post('orders/{id}/invitation', 'OrderController@invite');
+        Route::post('orders/{id}/rate', 'OrderController@rate');
 
         Route::resource('friends', 'FriendController')->only([
             'index', 'store', 'destroy',
