@@ -1258,21 +1258,8 @@
             }
         ]
     },
-    "/api/v1/orders/A00000": {
+    "/api/v1/orders/NOTFOUND83FD83IRUDO2": {
         "DELETE": [
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
-                "request": null,
-                "status_code": 404,
-                "response": {
-                    "message": "Resource not found."
-                },
-                "response_header": null
-            }
-        ],
-        "GET": [
             {
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
@@ -1564,7 +1551,7 @@
             }
         ]
     },
-    "/api/v1/orders/A00000/confirm": {
+    "/api/v1/orders/NOTFOUND83FD83IRUDO2/confirm": {
         "POST": [
             {
                 "header": {
@@ -2606,6 +2593,21 @@
                 "status_code": 422,
                 "response": {
                     "message": "This order is already paid."
+                },
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/orders/A00000": {
+        "GET": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": null,
+                "status_code": 404,
+                "response": {
+                    "message": "Resource not found."
                 },
                 "response_header": null
             }

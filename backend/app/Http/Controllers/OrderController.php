@@ -36,17 +36,15 @@ class OrderController extends ApiController
         $query = Order::query(
             true,
             $request->input('restaurant_id'),
-            $request->input('order_status'),
-            false
+            $request->input('order_status')
         );
         $coords = Address::parseCoords($request);
         if (!is_null($coords)) { // nearby orders
             $lat = (float)$coords->getLat();
             $lng = (float)$coords->getLng();
             $query = $query
-                ->where('is_public', true)
                 ->having('is_joinable', true)
-                ->distanceSphere('geo_location', $coords, 500)// within 500 meters
+                ->distanceSphere('geo_location', $coords, 500) // within 500 meters
                 ->addSelect([
                     DB::raw("ROUND(ST_Distance_Sphere(`geo_location`, POINT(${lng}, ${lat}))) AS `distance`"),
                 ]);

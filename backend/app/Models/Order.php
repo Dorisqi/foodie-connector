@@ -85,7 +85,7 @@ class Order extends Model
         ])->addSelect([
             '*',
             DB::raw("(SELECT `time` FROM `order_statuses` WHERE `order_id`=`orders`.`id` "
-                . "AND `status`=${createdStatusId}) as `created_at`"),
+                . "AND `status`=${createdStatusId} LIMIT 1) as `created_at`"),
             DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
                 . "DESC LIMIT 1) as `order_status`"),
             DB::raw("(`creator_id`=${userId}) as `is_creator`"),
@@ -140,7 +140,9 @@ class Order extends Model
             'status' => $status,
             'time' => Time::currentTime(),
         ]);
-        event(new OrderStatusUpdated($this->id, $this->orderMembers, $status));
+        if ($status !== OrderStatus::CREATED) {
+            event(new OrderStatusUpdated($this->id, $this->orderMembers, $status));
+        }
     }
 
     public function toArray()

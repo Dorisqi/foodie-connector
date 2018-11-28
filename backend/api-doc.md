@@ -3415,7 +3415,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2
 
 **Request Header:**
 ```
@@ -3679,7 +3679,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000/confirm
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/confirm
 
 **Request Header:**
 ```

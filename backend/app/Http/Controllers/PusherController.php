@@ -14,7 +14,7 @@ class PusherController extends ApiController
      * Authenticate pusher private channel
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      *
      * @throws \App\Exceptions\ApiException
      * @throws \Pusher\PusherException
@@ -35,7 +35,7 @@ class PusherController extends ApiController
         } catch (PusherException $exception) {
             throw ApiException::pusherAccessDenied();
         }
-        return $this->response($response);
+        return response($response);
     }
 
     public static function rules()
