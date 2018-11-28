@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Console\Commands;
 
 use App\Events\DriverLocationUpdated;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Command;
 
-class MockDriverLocation implements ShouldQueue
+class MockDriverLocation extends Command
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'mock:driver-location';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Mock the real time location of the driver';
 
     public static $geoLocations = [
         [
@@ -265,18 +272,20 @@ class MockDriverLocation implements ShouldQueue
 
     public static $updatingInterval = 10;
 
+    public static $stopAt = -1;
+
     /**
-     * Create a new job instance.
+     * Create a new command instance.
      *
      * @return void
      */
     public function __construct()
     {
-        //
+        parent::__construct();
     }
 
     /**
-     * Execute the job.
+     * Execute the console command.
      *
      * @return void
      */
@@ -296,6 +305,9 @@ class MockDriverLocation implements ShouldQueue
 
             $index += 1;
             if ($index >= $length) {
+                $index /= $length;
+            }
+            if ($index === $this::$stopAt) {
                 break;
             }
 

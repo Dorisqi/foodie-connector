@@ -13,3 +13,5 @@ php artisan storage:link
 
 service php7.2-fpm start
 nginx -g 'daemon off;'
+
+nohup php artisan mock:driver-location &

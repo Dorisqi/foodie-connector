@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Order;
 
+use App\Console\Commands\MockDriverLocation;
 use App\Events\DriverLocationUpdated;
 use App\Facades\Time;
-use App\Jobs\MockDriverLocation;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use Illuminate\Support\Facades\Event;
@@ -29,14 +29,16 @@ class DriverLocationTest extends TestCase
         ]);
 
         $job = new MockDriverLocation();
-        $job::$geoLocations = [[1, 1]];
-        $job::$updatingInterval = 0;
+        MockDriverLocation::$updatingInterval = 0;
+        MockDriverLocation::$stopAt = 1;
         $job->handle();
         Event::assertDispatched(DriverLocationUpdated::class, function ($e) use ($order) {
-            return $e->id === $order->id && $e->lat === 1 && $e->lng === 1;
+            return $e->id === $order->id
+                && $e->lat === MockDriverLocation::$geoLocations[0][1]
+                && $e->lng === MockDriverLocation::$geoLocations[0][0];
         });
 
-        $job::$geoLocations = [[2, 2], [3, 3]];
+        $job::$stopAt = 2;
         $job->handle();
         Event::assertDispatched(DriverLocationUpdated::class, 3);
     }
