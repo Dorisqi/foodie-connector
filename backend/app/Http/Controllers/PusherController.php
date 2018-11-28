@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use Illuminate\Broadcasting\PrivateChannel;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Pusher\Pusher;
 use Pusher\PusherException;
@@ -23,8 +23,16 @@ class PusherController extends ApiController
     {
         $this->validateInput($request);
 
-        $userId = $this->user()->id;
-        if (new PrivateChannel("user.${userId}") != $request->input('channel_name')) {
+        $channelName = $request->input('channel_name');
+        if (preg_match('/^private-user.(\d+)$/', $channelName, $matches)) {
+            if ((int)$matches[1] !== $this->user()->id) {
+                throw ApiException::pusherAccessDenied();
+            }
+        } elseif (preg_match('/^private-order.([A-Z0-9]+)$/', $channelName, $matches)) {
+            if (Order::query(true, null, 'delivering')->doesntExist()) {
+                throw ApiException::pusherAccessDenied();
+            }
+        } else {
             throw ApiException::pusherAccessDenied();
         }
 
