@@ -20,7 +20,8 @@ import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
-import {handleGroupCheckout} from 'components/order/RestaurantOrder';
+import compose from 'recompose/compose'
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   loading: {
@@ -70,6 +71,7 @@ class Cart extends React.Component {
   state = {
     loading: null,
     updatingItemIndex: null,
+    orderId: null,
   };
 
   componentDidMount() {
@@ -89,6 +91,7 @@ class Cart extends React.Component {
         }),
       });
     }
+    this.handleDirectCheckout();
   }
 
   componentWillUnmount() {
@@ -118,11 +121,25 @@ class Cart extends React.Component {
     store.dispatch(cartUpdateItem(index, item));
   };
 
+  handleDirectCheckout = () => {
+    const {cart} = this.props;
+    this.setState({
+      loading: Api.orderShow(cart.restaurantId).then((res) =>{
+        this.setState({
+          loading: null,
+          orderId: res.data[0].id,
+        });
+      }).catch((err) => {
+        this.setState({
+          loading: null,
+        });
+        throw err;
+      }),
+    });
+  };
   render() {
-    const {
-      classes, restaurant, cart, productMap,
-    } = this.props;
-    const { updatingItemIndex, } = this.state;
+    const {classes, restaurant, cart, productMap,} = this.props;
+    const { updatingItemIndex, orderId,} = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -226,8 +243,13 @@ class Cart extends React.Component {
               <Button
                 variant="outlined"
                 disabled={cart.cart.length === 0}
+                component={Link}
                 color="primary"
                 fullWidth
+                onClick={this.handleDirectCheckout}
+                to={{
+                  pathname: `/orders/${orderId}/checkout`
+                }}
               >
                 Direct Checkout
               </Button>
@@ -240,6 +262,7 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => ({
   cart: state.cart,
+  orderId: state.orderId,
 });
 
 Cart.propTypes = {
@@ -255,6 +278,7 @@ Cart.defaultProps = {
   cart: null,
 };
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(Cart),
-);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(withRouter(Cart))

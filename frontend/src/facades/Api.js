@@ -143,6 +143,14 @@ class Api {
   }
 
   /* --- Order --- */
+  static orderShow(restaurantId) {
+    return Api.instance().get('/orders/',{
+      params: {
+        restaurant_id: restaurantId,
+      },
+    });
+  }
+
   static orderList(restaurantId, orderStatus) {
     return Api.instance().get('/orders', {
       params: {
