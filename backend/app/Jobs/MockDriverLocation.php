@@ -288,8 +288,7 @@ class MockDriverLocation implements ShouldQueue
             $geoLocation = $this::$geoLocations[$index];
             $orders = Order::select([
                 'id',
-                DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
-                    . "DESC LIMIT 1) as `order_status`"),
+                Order::orderStatusQuery(),
             ])->having('order_status', OrderStatus::DELIVERING)->get();
             foreach ($orders as $order) {
                 event(new DriverLocationUpdated($order->id, $geoLocation[1], $geoLocation[0]));

@@ -86,8 +86,7 @@ class Order extends Model
             '*',
             DB::raw("(SELECT `time` FROM `order_statuses` WHERE `order_id`=`orders`.`id` "
                 . "AND `status`=${createdStatusId} LIMIT 1) as `created_at`"),
-            DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
-                . "DESC LIMIT 1) as `order_status`"),
+            self::orderStatusQuery(),
             DB::raw("(`creator_id`=${userId}) as `is_creator`"),
             DB::raw("EXISTS(SELECT * FROM `order_members` WHERE `order_id`=`orders`.`id` AND "
                 . "`api_user_id`=${userId}) as `is_member`"),
@@ -114,12 +113,19 @@ class Order extends Model
         return $query;
     }
 
+    public static function orderStatusQuery()
+    {
+        return DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
+            . "DESC LIMIT 1) as `order_status`");
+    }
+
     public function getShareLinkAttribute()
     {
         return url('orders/' . $this->id);
     }
 
     protected $localPrices = null;
+
     public function getPricesAttribute()
     {
         if (is_null($this->restaurant) || $this->order_status !== OrderStatus::CREATED) {
