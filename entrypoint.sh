@@ -11,7 +11,7 @@ php artisan config:cache
 php artisan route:cache
 php artisan storage:link
 
+nohup php artisan mock:driver-location &
+
 service php7.2-fpm start
 nginx -g 'daemon off;'
-
-nohup php artisan mock:driver-location &
