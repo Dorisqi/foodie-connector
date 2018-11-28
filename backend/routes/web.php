@@ -30,5 +30,5 @@ Route::get('/orders/qr-code/{id}', 'OrderController@qrCode')
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-    Route::post('/orders/{id}/edit', 'Admin\\OrderManageController@updateStatus');
+    Route::post('orders/{id}/edit', 'Admin\\OrderManageController@updateStatus');
 });

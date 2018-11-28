@@ -50,7 +50,7 @@ class OrderManageController extends VoyagerBaseController
             abort(404);
         }
         if (!isset(OrderStatus::STATUS_NAMES[$request->input('status')])) {
-            abort(422);
+            abort(404);
         }
         $order->updateStatus($request->input('status'));
         $orderId = $order->id;
