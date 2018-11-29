@@ -53,6 +53,8 @@ class Header extends React.Component {
   }
 
   handleFriendsListsOpen=()=> {
+    console.log("sdfs");
+
     this.setState({friendlistOpen: true});
   }
 
@@ -73,15 +75,14 @@ class Header extends React.Component {
   };
 
   handleFriendsListsClose= () => {
-    this.setState({friendlistOpen: false});
-
-  };
+    this.setState({friendlistOpen:false});
+  }
 
   render() {
     const { anchorEl ,friendlistOpen} = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-
+    console.log(friendlistOpen + "render");
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -162,7 +163,8 @@ class Header extends React.Component {
         {friendlistOpen ?
           <FollowfriendDialog
             onClose={this.handleFriendsListsClose}
-            on
+
+
           />
           : null}
       </header>

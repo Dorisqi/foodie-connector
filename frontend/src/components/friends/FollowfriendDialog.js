@@ -16,6 +16,9 @@ import Divider from '@material-ui/core/Divider';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 
@@ -30,7 +33,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   textarea: {
-    //maxWidth:'420px',
+    minWidth:'420px',
   },
   setstatus: {
     flexGrow: 0,
@@ -62,14 +65,19 @@ class FollowfriendDialog extends React.Component {
 
   //email autocomplete if time allowed
 
-  handleonChange = e => {
-    const value = e.target.value;
+  /*handleonChange(e){
+   const value = e.target.value;
+    //console.log("onChange:" + value);
     this.setState({
       friendEmail: value, // eslint-disable-line react/no-unused-state
 
     });
-  }
+  }*/
+  handleChange = prop => event => {
+    console.log("friends:"+event.target.value);
 
+      this.setState({ [prop]: event.target.value });
+    };
 
 
 
@@ -80,7 +88,9 @@ class FollowfriendDialog extends React.Component {
     const {
       friendEmail
     } = this.state;
-    const { item: address } = this.props;
+    console.log("adding" + friendEmail);
+    //const { item: address } = this.props;
+
     //// TODO: Axios.addingFriend
     //alert for the corresponding error, after Successfully adding,clear the input
     /*return address === null
@@ -113,6 +123,7 @@ class FollowfriendDialog extends React.Component {
   };
 
   handleAddingfriend = (e) =>{
+    console.log("friends:"+this.state.friendEmail);
     this.setState({
       loadingfriends: Api.followNewFriend(this.state.friendEmail).then((res) => {
         const result = res.data;
@@ -185,13 +196,15 @@ class FollowfriendDialog extends React.Component {
         onRequestFailed={this.handleRequestFail}
         onClose={this.onClose}
       >
-
-        <InputTextField
+      <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
+        <Input
+          id="email"
           parent={this}
           name="email"
           label="Follow new friend by Email "
           className={classes.textarea}
-          onChange={this.handleonChange}
+          onChange={this.handleChange('friendEmail')}
+          value={this.state.friendEmail}
           endAdornment={
                 <InputAdornment position="end">
                 <IconButton

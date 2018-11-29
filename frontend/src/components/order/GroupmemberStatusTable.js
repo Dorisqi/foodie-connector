@@ -43,16 +43,26 @@ const styles = () => ({
 
 class GroupmemberStatusTable extends React.Component {
   state = {
-    restaurantId:null,
+    restaurantId:this.props.restaurantId,
     loadingGroupmbr: null,
     members: [],
     is_creator: null,
-    all_ready:false
+    all_ready:false,
+    is_joinable:false
   };
 
   componentDidMount() {
+
     this.loadGroupmbr();
   }
+
+/*  componentDidUpdate(prevProps, prevState) {
+    if(this.state.is_creator !==null){
+      this.loadGroupmbr();
+    }
+
+
+  }*/
 
   componentWillUnmount() {
     //Axios.cancelRequest(this.state.loadingAddress);
@@ -74,13 +84,15 @@ class GroupmemberStatusTable extends React.Component {
     this.setState({
       loadingGroupmbr: Api.findOrder(this.props.restaurantId).then((res) => {
         const result = res.data;
+        console.log("data:" + res.data[0].is_joinable+res.data[0].restaurant.id +this.props.restaurantId );
         this.setState({
           loadingGroupmbr: null,
-          members: res.data.length > 0 ? res.data[0].order_members : null,
+          members: res.data[0].order_members.length > 0 ? res.data[0].order_members : null,
           is_creator:res.data[0].is_creator,
+          is_joinable: (res.data[0].restaurant.id===this.props.restaurantId && res.data[0].is_joinable) ? true:false,
         });
 
-        console.log("loadGroupmbr:" +this.state.members[0].user.name);
+        console.log("loadGroupmbr: joined" +this.state.is_joinable);
 
 
       }).catch((err) => {
@@ -96,43 +108,56 @@ class GroupmemberStatusTable extends React.Component {
     const {
       classes,restaurantId
     } = this.props;
-    const { members,all_ready,is_creator } = this.state;
+    const { members,all_ready,is_creator,is_joinable } = this.state;
 
     return (
   <Card>
       <div>
 
 
-          {members === null
+          {is_joinable === false
             ? (
               <div>
-                No member join yet!
+                No Group order created yet!
               </div>
-            ) : [
+            ) : <div>
+            {members === null
+              ? (
+                <div>
+                  No memeber join yet!
+                </div>
+              ) :[
 
-              members.map(member => (
+                members.map(member => (
 
-                <ListItem
-                  key={member.user.name} // eslint-disable-line react/no-array-index-key
-                  className={classes.item}
-                >
-                  <div className={classes.itemLine}>
-                    <ListItemText
-                    primary={member.user.name}
-                    secondary={is_creator ? "Creator" : ""}
+                  <ListItem
+                    key={member.user.name} // eslint-disable-line react/no-array-index-key
+                    className={classes.item}
+                  >
+                    <div className={classes.itemLine}>
+                      <ListItemText
+                      primary={member.user.name}
+                      secondary={is_creator ? "Creator" : ""}
 
-                    />
-                    <ListItemText
-                      className={classes.setstatus}
-                      primary={member.is_ready ? "confirmed" : "selecting"}
+                      />
+                      <ListItemText
+                        className={classes.setstatus}
+                        primary={member.is_ready ? "confirmed" : "selecting"}
 
-                    />
-                  </div>
-                  </ListItem>
+                      />
+                    </div>
+                    </ListItem>
 
-              ))
+                ))
 
-            ]
+              ]
+
+            }
+
+
+            </div>
+
+
           }
 
       </div>
@@ -142,7 +167,7 @@ class GroupmemberStatusTable extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  addresses: state.address.addresses,
+  members: state.members,
   //currentLocation: state.address.currentLocation,
 });
 

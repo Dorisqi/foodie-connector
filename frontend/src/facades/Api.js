@@ -186,8 +186,14 @@ class Api {
     return Api.instance().get('/friends');
   }
 
-  static followNewFriend(friendId){
-    return Api.instance().post('/friends',friendId);
+  static followNewFriend(email){
+    console.log(email+ "in follow friend");
+    return Api.instance().post('/friends', {
+      params: {
+        email: email,
+
+      },
+    });
   }
 
 
