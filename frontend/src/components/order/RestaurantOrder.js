@@ -205,13 +205,13 @@ class RestaurantOrder extends React.Component {
   handleOrderDetail = () => {
     this.setState({
       detailAlert: true,
-    })
+    });
   }
 
   handleOrderDetailClose = () => {
     this.setState({
       detailAlert: false,
-    })
+    });
   }
 
   render() {
@@ -225,7 +225,7 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
-      detailAlert
+      detailAlert,
     } = this.state;
     if (loading !== null) {
       return (
@@ -362,10 +362,10 @@ class RestaurantOrder extends React.Component {
               Order Detail
             </Button>
             <OrderDetailDialog
-                open={detailAlert}
-                order={order}
-                onClose={this.handleOrderDetailClose}
-              />
+              open={detailAlert}
+              order={order}
+              onClose={this.handleOrderDetailClose}
+            />
             {order.is_creator && [(
               <Button
                 key="checkout"
@@ -386,7 +386,7 @@ class RestaurantOrder extends React.Component {
                 api={this.cancelApi}
                 onUpdate={this.handleCancelOrderSuccess}
                 onClose={this.handleCancelAlertClose}
-                disabled={order.order_status !== "created"}
+                disabled={order.order_status !== 'created'}
               />
             ), (
               <Button

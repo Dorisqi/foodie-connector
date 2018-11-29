@@ -12,9 +12,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotificationBox from './NotificationDialog';
 import { withStyles } from '@material-ui/core/styles';
 import Pusher from 'facades/Pusher';
+import NotificationBox from './NotificationDialog';
 
 const styles = () => ({
   root: {
@@ -47,25 +47,28 @@ class Header extends React.Component {
       notificationsOpen: false,
       notifications: [],
       unreadCount: 0,
-      idCount: 0,
+      idCount: 0, // eslint-disable-line react/no-unused-state
     };
-  }
-
-  receiveNotifications = data => {
-    this.setState(state => {
-      const notification = Object.assign({}, data.data);
-      notification.isRead = false;
-      notification.id = state.idCount;
-      return {
-        unreadCount: state.unreadCount+1,
-        notifications: [notification, ...state.notifications],
-        idCount: state.idCount+1
-      }
-    })
   }
 
   componentDidMount() {
     Pusher.loadNotification(this.receiveNotifications);
+  }
+
+  receiveNotifications = (data) => {
+    this.setState((state) => {
+      const {
+        idCount, unreadCount, notifications,
+      } = state;
+      const notification = Object.assign({}, data.data);
+      notification.isRead = false;
+      notification.id = idCount;
+      return {
+        unreadCount: unreadCount + 1,
+        notifications: [notification, ...notifications],
+        idCount: idCount + 1,
+      };
+    });
   }
 
   handleDialogClose = () => {
@@ -79,26 +82,31 @@ class Header extends React.Component {
   handleClear = () => {
     this.setState({
       notifications: [],
-    })
+      unreadCount: 0,
+    });
   }
 
-  handleMarkRead = (id) => () => {
-    this.setState(state => {
-      state.notifications.forEach(n => {if (n.id === id) n.isRead = true;});
+  handleMarkRead = id => () => {
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        if (n.id === id) n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
       return {
-        unreadCount: state.unreadCount-1,
+        unreadCount: state.unreadCount - 1,
         notifications: state.notifications,
-      }
-    })
+      };
+    });
   }
 
   handleMarkAllRead = () => {
-    this.setState(state => {
-      state.notifications.forEach(n => {n.isRead = true;});
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
       return {
         unreadCount: 0,
         notifications: state.notifications,
-      }
+      };
     });
   }
 
@@ -181,14 +189,16 @@ class Header extends React.Component {
                 onClick={this.handleNotificationOpen}
                 color="inherit"
               >
-              {unreadCount === 0
-                ? <NotificationsIcon/>
-                : <Badge
-                    badgeContent={unreadCount}
-                    color="primary"
-                  >
-                    <NotificationsIcon/>
-                  </Badge>
+                {unreadCount === 0
+                  ? <NotificationsIcon />
+                  : (
+                    <Badge
+                      badgeContent={unreadCount}
+                      color="primary"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  )
               }
 
               </IconButton>
@@ -206,7 +216,8 @@ class Header extends React.Component {
         </AppBar>
         {renderMenu}
         {notificationsOpen
-          ? <NotificationBox
+          ? (
+            <NotificationBox
               open={notificationsOpen}
               notifications={notifications}
               handleMarkRead={this.handleMarkRead}

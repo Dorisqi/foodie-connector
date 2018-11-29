@@ -1,19 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogForm from 'components/form/DialogForm';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ProgressButton from 'components/form/ProgressButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from 'facades/Snackbar';
-import Form from 'facades/Form';
 
 const styles = () => ({
   dialogPaper: {
@@ -26,7 +22,6 @@ const styles = () => ({
 });
 
 class NotificationDialog extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -38,7 +33,7 @@ class NotificationDialog extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       notifications: nextProps.notifications,
-    })
+    });
   }
 
   handleClose = () => {
@@ -75,15 +70,18 @@ class NotificationDialog extends React.Component {
         <form onSubmit={this.submit}>
           <DialogContent className={classes.dialogContent}>
             <List>
-              {notifications.map(notification => {
-                const { id, order_id, status, isRead } = notification;
+              {notifications.map((notification) => {
+                const {
+                  id, order_id: orderId, status, isRead,
+                } = notification;
                 return (
                   <ListItem button onClick={this.props.handleMarkRead(id)} disabled={isRead}>
                     <ListItemText
-                      primary={`order(${order_id}) has updated status: ${status}`}
-                      secondary={isRead? "read": "unread"}/>
+                      primary={`order(${orderId}) has updated status: ${status}`}
+                      secondary={isRead ? 'read' : 'unread'}
+                    />
                   </ListItem>
-                )
+                );
               })}
             </List>
           </DialogContent>
@@ -100,9 +98,8 @@ class NotificationDialog extends React.Component {
           </DialogActions>
         </form>
       </Dialog>
-    )
+    );
   }
-
 }
 
 NotificationDialog.propTypes = {

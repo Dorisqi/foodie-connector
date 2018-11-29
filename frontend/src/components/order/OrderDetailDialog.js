@@ -23,24 +23,24 @@ const styles = () => ({
 class OrderDetailDialog extends React.Component {
   render() {
     const {
-      classes, open, order, onClose
+      classes, open, order, onClose,
     } = this.props;
     const {
-      creator,
-      order_members,
-      order_statuses,
+      order_members: orderMembers,
+      order_statuses: orderStatuses,
     } = order;
-    const maxLen = Math.max(order_members.length, order_statuses.length);
+    const maxLen = Math.max(orderMembers.length, orderStatuses.length);
     const rows = [];
-    for (var i = 0; i < maxLen; i++) {
+    for (let i = 0; i < maxLen; i += 1) {
+      const ready = orderMembers[i].is_ready ? 'Ready' : 'Not Ready';
       rows.push(
         <TableRow>
-          <TableCell>{i < order_statuses.length? order_statuses[i].status: null}</TableCell>
-          <TableCell>{i < order_statuses.length? order_statuses[i].time: null}</TableCell>
-          <TableCell>{i < order_members.length? order_members[i].user.name: null}</TableCell>
-          <TableCell>{i < order_members.length? order_members[i].phone: null}</TableCell>
-          <TableCell>{i < order_members.length? (order_members[i].is_ready?'Ready':'Not Ready'): null}</TableCell>
-        </TableRow>
+          <TableCell>{i < orderStatuses.length ? orderStatuses[i].status : null}</TableCell>
+          <TableCell>{i < orderStatuses.length ? orderStatuses[i].time : null}</TableCell>
+          <TableCell>{i < orderMembers.length ? orderMembers[i].user.name : null}</TableCell>
+          <TableCell>{i < orderMembers.length ? orderMembers[i].phone : null}</TableCell>
+          <TableCell>{i < orderMembers.length ? ready : null}</TableCell>
+        </TableRow>,
       );
     }
 

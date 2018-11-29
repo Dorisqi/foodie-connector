@@ -60,7 +60,6 @@ class ProfilePage extends React.Component {
   state = {
     profile: null,
     cards: null,
-    orders: null,
     changingPassword: false,
     loadingProfile: null,
     loadingAddress: null,
@@ -179,10 +178,8 @@ class ProfilePage extends React.Component {
       loadingProfile,
       loadingAddress,
       loadingCard,
-      loadingOrders,
       profile,
       cards,
-      orders,
       changingPassword,
       addingAddress,
       addingCard,

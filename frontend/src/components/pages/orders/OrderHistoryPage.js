@@ -2,16 +2,12 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -41,10 +37,10 @@ const styles = theme => ({
   image: {
     height: '226px',
     width: '226px',
-    float: 'left'
+    float: 'left',
   },
   card: {
-    width: window.screen.width*0.6,
+    width: window.screen.width * 0.6,
     height: 'auto',
     margin: 'auto',
     marginBottom: 2 * theme.spacing.unit,
@@ -81,7 +77,7 @@ const styles = theme => ({
   },
   buttonList: {
     float: 'right',
-  }
+  },
 });
 
 class OrderHistoryPage extends React.Component {
@@ -109,7 +105,7 @@ class OrderHistoryPage extends React.Component {
   handleShareClick = order => () => {
     this.setState({
       sharing: true,
-      currentOrder: order
+      currentOrder: order,
     });
   };
 
@@ -135,7 +131,7 @@ class OrderHistoryPage extends React.Component {
   handleCancelOrderSuccess = () => {
     this.setState({
       cancelOrder: null,
-    })
+    });
     this.loadOrderList();
   }
 
@@ -143,13 +139,13 @@ class OrderHistoryPage extends React.Component {
     this.setState({
       detailAlert: true,
       currentOrder: order,
-    })
+    });
   }
 
   handleOrderDetailClose = () => {
     this.setState({
       detailAlert: false,
-    })
+    });
   }
 
   loadOrderList = () => {
@@ -159,8 +155,8 @@ class OrderHistoryPage extends React.Component {
         const orders = res.data;
         this.setState({
           loadingOrders: null,
-          orders: orders,
-        })
+          orders,
+        });
       }).catch((err) => {
         this.setState({
           loadingOrders: null,
@@ -189,20 +185,20 @@ class OrderHistoryPage extends React.Component {
     return (
       <MainContent title="Order History">
         <div className={classes.root}>
-          {loadingOrders && <LinearProgress/>}
+          {loadingOrders && <LinearProgress />}
           {orders !== null
             && (
             <List>
-              {orders.map(order => {
+              {orders.map((order) => {
                 const { image, name } = order.restaurant;
                 const {
                   id,
-                  is_public,
-                  join_before,
-                  order_status,
-                  total_cost,
+                  is_public: isPublic,
+                  join_before: joinBefore,
+                  order_status: orderStatus,
+                  total_cost: totalCost,
                   restaurant,
-                  is_joinable,
+                  is_joinable: isJoinable,
                   creator,
                 } = order;
                 return (
@@ -222,18 +218,18 @@ class OrderHistoryPage extends React.Component {
                         <TableBody>
                           <TableRow>
                             <TableCell>{id}</TableCell>
-                            <TableCell>{is_public? "Public": "Private"}</TableCell>
+                            <TableCell>{isPublic ? 'Public' : 'Private'}</TableCell>
                             <TableCell>{creator.name}</TableCell>
-                            <TableCell>{join_before}</TableCell>
+                            <TableCell>{joinBefore}</TableCell>
                             <TableCell>{Format.formatAddress(order, true)}</TableCell>
-                            <TableCell>{total_cost}</TableCell>
+                            <TableCell>{totalCost}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
                     </Paper>
                     <Paper>
                       <CardActionArea className={classes.image}>
-                        <Link to={'/restaurants/'+restaurant.id}>
+                        <Link to={`/restaurants/${restaurant.id}`}>
                           <CardMedia
                             className={classes.image}
                             image={image}
@@ -248,7 +244,7 @@ class OrderHistoryPage extends React.Component {
                             variant="outlined"
                             fullWidth
                             onClick={this.handleShareClick(order)}
-                            disabled={!is_joinable}
+                            disabled={!isJoinable}
                           >
                             Share
                           </Button>
@@ -267,7 +263,7 @@ class OrderHistoryPage extends React.Component {
                               variant="outlined"
                               color="primary"
                               fullWidth
-                              disabled={order_status !== "created"}
+                              disabled={orderStatus !== 'created'}
                               // TODO: checkout action
                             >
                               Checkout
@@ -282,7 +278,7 @@ class OrderHistoryPage extends React.Component {
                               variant="outlined"
                               fullWidth
                               onClick={this.handleCancelOrderClick(order)}
-                              disabled={order_status !== "created"}
+                              disabled={orderStatus !== 'created'}
                             >
                               Cancel Order
                             </Button>
@@ -292,20 +288,24 @@ class OrderHistoryPage extends React.Component {
                       </List>
                     </Paper>
                   </Card>
-              )})}
+                );
+              })}
             </List>
-          )}
+            )}
         </div>
         {currentOrder
-          ? <ShareOrderDialog
+          ? (
+            <ShareOrderDialog
               order={currentOrder}
               open={sharing}
               onClose={this.handleShareClose}
             />
+          )
           : null
         }
         {cancelOrder
-          ? <DialogDeleteAlert
+          ? (
+            <DialogDeleteAlert
               key="cancel-dialog"
               open={cancelAlert}
               title="Cancel order?"
@@ -315,18 +315,21 @@ class OrderHistoryPage extends React.Component {
               onUpdate={this.handleCancelOrderSuccess}
               onClose={this.handleCancelAlertClose}
             />
+          )
           : null
         }
         {currentOrder
-          ? <OrderDetailDialog
+          ? (
+            <OrderDetailDialog
               open={detailAlert}
               order={currentOrder}
               onClose={this.handleOrderDetailClose}
             />
+          )
           : null
         }
       </MainContent>
-    )
+    );
   }
 }
 
