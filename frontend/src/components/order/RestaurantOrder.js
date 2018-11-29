@@ -26,6 +26,7 @@ import Snackbar from 'facades/Snackbar';
 import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
+import OrderDetailDialog from 'components/order/OrderDetailDialog';
 import classnames from 'classnames';
 
 const styles = theme => ({
@@ -65,6 +66,7 @@ class RestaurantOrder extends React.Component {
     errors: {},
     cancelAlert: false,
     sharing: false,
+    detailAlert: false,
   };
 
   componentDidMount() {
@@ -200,6 +202,18 @@ class RestaurantOrder extends React.Component {
     });
   };
 
+  handleOrderDetail = () => {
+    this.setState({
+      detailAlert: true,
+    })
+  }
+
+  handleOrderDetailClose = () => {
+    this.setState({
+      detailAlert: false,
+    })
+  }
+
   render() {
     const { classes, restaurant } = this.props;
     const {
@@ -211,6 +225,7 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
+      detailAlert
     } = this.state;
     if (loading !== null) {
       return (
@@ -342,9 +357,15 @@ class RestaurantOrder extends React.Component {
               className={classes.action}
               variant="outlined"
               fullWidth
+              onClick={this.handleOrderDetail}
             >
               Order Detail
             </Button>
+            <OrderDetailDialog
+                open={detailAlert}
+                order={order}
+                onClose={this.handleOrderDetailClose}
+              />
             {order.is_creator && [(
               <Button
                 key="checkout"
@@ -365,6 +386,7 @@ class RestaurantOrder extends React.Component {
                 api={this.cancelApi}
                 onUpdate={this.handleCancelOrderSuccess}
                 onClose={this.handleCancelAlertClose}
+                disabled={order.order_status !== "created"}
               />
             ), (
               <Button

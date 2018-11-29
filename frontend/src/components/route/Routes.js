@@ -9,6 +9,7 @@ import ProfilePage from 'components/pages/profile/ProfilePage';
 
 import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
 import RestaurantDetailPage from 'components/pages/restaurant/RestaurantDetailPage';
+import OrderHistoryPage from 'components/pages/orders/OrderHistoryPage';
 
 import NotFoundPage from 'components/pages/error/NotFoundPage';
 
@@ -25,7 +26,7 @@ const Routes = () => (
 
     <PrivateRoute path="/" exact component={RestaurantListPage} />
     <PrivateRoute path="/restaurants/:id" component={RestaurantDetailPage} />
-
+    <PrivateRoute path="/order-history" component={OrderHistoryPage} />
     <Route component={NotFoundPage} />
   </Switch>
 );

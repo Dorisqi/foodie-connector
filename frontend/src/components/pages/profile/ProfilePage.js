@@ -231,33 +231,6 @@ class ProfilePage extends React.Component {
                 )}
               </CardContent>
             </Card>
-            <Card className={classes.card}>
-              <CardContent className={classes.sectionTitleWrap}>
-                <Typography className={classes.sectionTitle} variant="h5" component="h2">
-                  Past Orders
-                </Typography>
-                {loadingOrders
-                && <LinearProgress />
-                }
-              </CardContent>
-              {orders !== null
-              && (
-                <List>
-                  {orders.map(order => (
-                    <ListItem
-                      button
-                      key={order.id}
-                    >
-                      <ListItemText
-                        primary={order.time}
-                        secondary={`Total cost ${order.cost}`}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              )
-              }
-            </Card>
           </div>
           <div className={classes.section}>
             <Card className={classes.card}>
