@@ -83,7 +83,7 @@ class RestaurantDetailPage extends React.Component {
     notFound: false,
     loading: null,
     selectingProductOption: null,
-    order:null,
+    // order: null,
   };
 
   componentDidMount() {
@@ -187,7 +187,7 @@ class RestaurantDetailPage extends React.Component {
       loading,
       selectingProductOption,
       notFound,
-      order
+
     } = this.state;
     const cartNeedClear = cart !== null && restaurant !== null
       && cart.restaurantId !== null
@@ -387,7 +387,7 @@ class RestaurantDetailPage extends React.Component {
 const mapStateToProps = state => ({
   cart: state.cart,
   address: state.address,
-  order:state.order,
+  order: state.order,
 });
 
 RestaurantDetailPage.propTypes = {

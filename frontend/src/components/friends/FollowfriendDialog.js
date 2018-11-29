@@ -1,39 +1,36 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import DialogForm from 'components/form/DialogForm';
-import InputTextField from 'components/form/InputTextField';
-import Maps from 'facades/Maps';
+
 import Api from 'facades/Api';
 import Snackbar from 'facades/Snackbar';
 import Form from 'facades/Form';
-import List from '@material-ui/core/List';
+
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
 
-
 const styles = theme => ({
   margin: {
-    marginTop: theme.spacing.unit*3,
+    marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit,
   },
   root: {
-    //width: '100%',
+    // width: '100%',
     maxWidth: '100px',
     backgroundColor: theme.palette.background.paper,
   },
   textarea: {
-    minWidth:'420px',
+    minWidth: '420px',
   },
   setstatus: {
     flexGrow: 0,
@@ -44,10 +41,10 @@ const styles = theme => ({
 
 class FollowfriendDialog extends React.Component {
   state = {
-    friendEmail:'',
+    friendEmail: '',
     errors: {},
-    friends:[],
-    loadingfriends:null,
+    friends: [],
+    loadingfriends: null,
   };
 
   constructor(props) {
@@ -56,27 +53,30 @@ class FollowfriendDialog extends React.Component {
     const { item: email } = props;
     if (email !== null) {
       this.state = {
-        friendEmail:email,
+        friendEmail: email,
         errors: {},
 
       };
     }
   }
 
-  handleChange = prop => event => {
-      this.setState({ [prop]: event.target.value });
-    };
+  componentDidMount() {
+    this.loadFriends();
+  }
 
-  handleRequestSuccess = (res) => {
+  handleChange = prop => (event) => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleRequestSuccess = () => {
     if (this.props.item === null) {
       Snackbar.success('Successfully follow new friend!');
     }
-    this.props.onUpdate(res);
   };
 
   handleRequestFail = (err) => {
     Form.handleErrors(this)(err);
-    //not sure about the error using
+    // not sure about the error using
     if (this.state.errors.email !== undefined) {
       const { errors } = this.state;
       const newErrors = { ...errors };
@@ -91,71 +91,55 @@ class FollowfriendDialog extends React.Component {
     }
   };
 
-  handleAddingfriend = (e) =>{
-    console.log("friends:"+this.state.friendEmail);
-    this.setState({
-      loadingfriends: Api.followNewFriend(this.state.friendEmail).then((res) => {
-        const result = res.data;
-        console.log("res: " +result);
-        this.setState({
-          loadingfriends: null,
-          friends: res.data.length > 0 ? res.data : null,
-        });
-        if(this.state.friends !== null){
-          console.log("loadfriends:" +this.state.friends[0].email);
-
-        }
-      }).catch((err) => {
-        this.setState({
-          loadingfriends: null,
-        });
-        throw (err);
-      }),
+  handleAddingfriend = () => {
+    // console.log(`friends:${this.state.friendEmail}`);
+    Api.followNewFriend(this.state.friendEmail).then((res) => {
+      Snackbar.success('Successfully follow a new friends');
+      this.setState({
+        loadingfriends: null,
+        friends: res.data.length > 0 ? res.data : null,
+      });
+    }).catch((err) => {
+      this.setState({
+        loadingfriends: null,
+      });
+      throw (err);
     });
-
   }
 
   loadFriends() {
-    this.setState({
-      loadingfriends: Api.friendList().then((res) => {
-        const result = res.data;
-        this.setState({
-          loadingfriends: null,
-          friends: res.data.length > 0 ? res.data : null,
+    Api.friendList().then((res) => {
+      this.setState({
+        loadingfriends: null,
+        friends: res.data.length > 0 ? res.data : null,
 
-        });
-        if(this.state.friends !== null){
-          console.log("loadFriends:" +this.state.friends[0].name);
-
-        }
-      }).catch((err) => {
-        this.setState({
-          loadingfriends: null,
-        });
-        throw (err);
-      }),
+      });
+      if (this.state.friends !== null) {
+        //  console.log(`loadFriends:${this.state.friends[0].name}`);
+      }
+    }).catch((err) => {
+      this.setState({
+        loadingfriends: null,
+      });
+      throw (err);
     });
-  }
-
-  componentDidMount() {
-    this.loadFriends();
   }
 
 
   render() {
     const { classes } = this.props;
-    const { errors,friends } = this.state;
+    const { errors, friends, loadingfriends } = this.state;
 
     return (
       <DialogForm
-        title='Friends'
+        title="Friends"
         formErrors={errors.form}
         className={classes.root}
         onRequestSucceed={this.handleRequestSuccess}
         onRequestFailed={this.handleRequestFail}
         onClose={this.props.onClose}
       >
-      <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
+        <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
         <Input
           id="email"
           parent={this}
@@ -165,48 +149,45 @@ class FollowfriendDialog extends React.Component {
           className={classes.textarea}
           onChange={this.handleChange('friendEmail')}
           value={this.state.friendEmail}
-          endAdornment={
-                <InputAdornment position="end">
-                <IconButton
+          endAdornment={(
+            <InputAdornment position="end">
+              <IconButton
 
-                  aria-haspopup="true"
-                  className={classes.accountButton}
-                  color="inherit"
-                  onClick={this.handleAddingfriend}
-                >
-                  <PersonAdd />
-                </IconButton>
-                </InputAdornment>
-              }
+                aria-haspopup="true"
+                className={classes.accountButton}
+                color="inherit"
+                onClick={this.handleAddingfriend}
+              >
+                <PersonAdd />
+              </IconButton>
+            </InputAdornment>
+)}
         />
-
+        {loadingfriends && <LinearProgress />}
         {friends === null
-          ?
-          (
+          ? (
             <div>
               No following friends yet!  Follow friends now!
             </div>
           ) : [
-                friends.map(friend => (
+            friends.map(friend => (
 
-                  <ListItem
-                    key={friend.name} // eslint-disable-line react/no-array-index-key
-                    className={classes.item}
-                  >
-                    <div className={classes.itemLine}>
-                      <ListItemText
-                      primary={friend.name}
-
-                      />
-                      <ListItemText
-                        className={classes.setstatus}
-                        secondary={friend.email}
-
-                      />
-                    </div>
-                    </ListItem>
-                ))
-              ]
+              <ListItem
+                key={friend.name} // eslint-disable-line react/no-array-index-key
+                className={classes.item}
+              >
+                <div className={classes.itemLine}>
+                  <ListItemText
+                    primary={friend.name}
+                  />
+                  <ListItemText
+                    className={classes.setstatus}
+                    secondary={friend.email}
+                  />
+                </div>
+              </ListItem>
+            )),
+          ]
           }
       </DialogForm>
     );

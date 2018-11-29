@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Support\Facades\App;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,11 +48,18 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Exception
      */
     public function render($request, Exception $exception)
     {
         if ($exception instanceof ApiException) {
             return $exception->response();
+        }
+
+        if (!($exception instanceof NotFoundHttpException || $exception instanceof ThrottleRequestsException)
+            && App::environment('testing')) {
+            throw $exception;
         }
 
         return parent::render($request, $exception);

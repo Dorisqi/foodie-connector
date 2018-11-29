@@ -13,7 +13,7 @@ class ShowProfileTest extends ApiTestCase
      */
     public function testShowProfile()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed(null)->assertJson($user->toArray());

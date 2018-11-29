@@ -18,12 +18,13 @@ class ShowAddressTest extends ApiTestCase
      */
     public function testShowAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         $this->id = $address->id;
         $addressArray = $address->toArray();
         $addressArray['is_default'] = false;
+        unset($addressArray['geo_location']);
         $this->assertSucceed(null)->assertJson($addressArray);
         $this->id = 0;
         $this->assertFailed(null, 404);

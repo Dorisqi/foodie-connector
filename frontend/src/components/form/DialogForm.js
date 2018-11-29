@@ -100,10 +100,12 @@ class DialogForm extends React.Component {
             <Button onClick={this.handleClose}>
               Cancel
             </Button>
-            {submitLabel !== null &&
+            {submitLabel !== null
+              && (
               <ProgressButton loading={requesting !== null} type="submit" color="primary">
                 {submitLabel}
               </ProgressButton>
+              )
             }
           </DialogActions>
         </form>

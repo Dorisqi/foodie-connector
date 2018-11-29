@@ -73,7 +73,7 @@ class LoginController extends ApiController
         if ($this->attemptLogin($request)) {
             return $this->response([
                 'api_token' => $this->guard()->token(),
-                'user' => $this->guard()->user(),
+                'user' => $this->user()->toArray(true),
             ]);
         }
 

@@ -38,7 +38,7 @@ class ShareOrderDialog extends React.Component {
           <Link to={order.share_link}>
             {order.share_link}
           </Link>
-        <InviteFriends orderId={order.id}/>
+          <InviteFriends orderId={order.id} />
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={onClose}>

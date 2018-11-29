@@ -15,7 +15,6 @@ $factory->define(\App\Models\Address::class, function () {
         'api_user_id' => function () {
             return Auth::guard('api')->user()->id;
         },
-        'lat' => '40.4227584',
-        'lng' => '-86.9090892',
+        'geo_location' => new \Grimzy\LaravelMysqlSpatial\Types\Point(40.4227584, -86.9090892),
     ];
 });

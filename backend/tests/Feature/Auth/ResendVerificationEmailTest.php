@@ -18,7 +18,7 @@ class ResendVerificationEmailTest extends ApiTestCase
     public function testResendVerificationEmail()
     {
         Notification::fake();
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $decayMinutes = $this->guardConfig()['email']['decay_minutes'];

@@ -5,17 +5,20 @@ import queryString from 'query-string';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import GroupAdd from '@material-ui/icons/GroupAdd';
-import FollowfriendDialog from '../friends/FollowfriendDialog'
-import { withStyles } from '@material-ui/core/styles';
-import { loadAddress, selectAddress } from 'actions/addressActions';
 
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { withStyles } from '@material-ui/core/styles';
+import Pusher from 'facades/Pusher';
+import FollowfriendDialog from '../friends/FollowfriendDialog';
+import NotificationBox from './NotificationDialog';
 
 const styles = () => ({
   root: {
@@ -39,7 +42,7 @@ const styles = () => ({
     marginRight: -12,
   },
   card: {
-    minWidth:'30',
+    minWidth: '30',
   },
 });
 
@@ -48,14 +51,71 @@ class Header extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
-      friendlistOpen:false,
+      notificationsOpen: false,
+      notifications: [],
+      unreadCount: 0,
+      idCount: 0, // eslint-disable-line react/no-unused-state
+      friendlistOpen: false,
     };
   }
 
-  handleFriendsListsOpen=()=> {
-    console.log("sdfs");
+  componentDidMount() {
+    Pusher.loadNotification(this.receiveNotifications);
+  }
 
-    this.setState({friendlistOpen: true});
+  handleFriendsListsOpen=() => {
+    this.setState({ friendlistOpen: true });
+  }
+
+  receiveNotifications = (data) => {
+    this.setState((state) => {
+      const {
+        idCount, unreadCount, notifications,
+      } = state;
+      const notification = Object.assign({}, data.data);
+      notification.isRead = false;
+      notification.id = idCount;
+      return {
+        unreadCount: unreadCount + 1,
+        notifications: [notification, ...notifications],
+        idCount: idCount + 1,
+      };
+    });
+  }
+
+  handleNotificationOpen = () => {
+    this.setState({ notificationsOpen: true });
+  }
+
+  handleClear = () => {
+    this.setState({
+      notifications: [],
+      unreadCount: 0,
+    });
+  }
+
+  handleMarkRead = id => () => {
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        if (n.id === id) n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
+      return {
+        unreadCount: state.unreadCount - 1,
+        notifications: state.notifications,
+      };
+    });
+  }
+
+  handleMarkAllRead = () => {
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
+      return {
+        unreadCount: 0,
+        notifications: state.notifications,
+      };
+    });
   }
 
   handleProfileMenuOpen = (event) => {
@@ -68,21 +128,21 @@ class Header extends React.Component {
 
   handleDialogClose = () => {
     this.setState({
-      changingPassword: false,
-      addingAddress: false,
-      addingCard: false,
+
+      notificationsOpen: false,
     });
   };
 
   handleFriendsListsClose= () => {
-    this.setState({friendlistOpen:false});
+    this.setState({ friendlistOpen: false });
   }
 
   render() {
-    const { anchorEl ,friendlistOpen} = this.state;
+    const {
+      anchorEl, notificationsOpen, friendlistOpen, notifications, unreadCount,
+    } = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    console.log(friendlistOpen + "render");
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -100,6 +160,16 @@ class Header extends React.Component {
           onClick={this.handleProfileMenuClose}
         >
           Profile
+        </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/order-history',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Order History
         </MenuItem>
         {location.pathname !== '/logout'
         && (
@@ -119,9 +189,9 @@ class Header extends React.Component {
       </Menu>
     );
 
-    /*const friendslist = (
+    /* const friendslist = (
         <FollowfriendDialog/>
-    );*/
+    ); */
 
 
     return (
@@ -150,6 +220,26 @@ class Header extends React.Component {
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
                 aria-haspopup="true"
                 className={classes.accountButton}
+                onClick={this.handleNotificationOpen}
+                color="inherit"
+              >
+                {unreadCount === 0
+                  ? <NotificationsIcon />
+                  : (
+                    <Badge
+                      badgeContent={unreadCount}
+                      color="primary"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  )
+              }
+
+              </IconButton>
+              <IconButton
+                aria-owns={isMenuOpen ? 'material-appbar' : null}
+                aria-haspopup="true"
+                className={classes.accountButton}
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
@@ -160,12 +250,25 @@ class Header extends React.Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
-        {friendlistOpen ?
-          <FollowfriendDialog
-            onClose={this.handleFriendsListsClose}
-
-
-          />
+        {notificationsOpen
+          ? (
+            <NotificationBox
+              open={notificationsOpen}
+              notifications={notifications}
+              handleMarkRead={this.handleMarkRead}
+              handleMarkAllRead={this.handleMarkAllRead}
+              handleClear={this.handleClear}
+              onClose={this.handleDialogClose}
+            />
+          )
+          : null
+        }
+        {friendlistOpen
+          ? (
+            <FollowfriendDialog
+              onClose={this.handleFriendsListsClose}
+            />
+          )
           : null}
       </header>
     );

@@ -50,7 +50,7 @@ class ResetPasswordTest extends ApiTestCase
             'password' => $this::NEW_PASSWORD,
             'token' => '87654321',
         ], 422);
-        $user = $this->userFactory()->create([
+        $user = $this->userFactory()->state('new')->create([
             'email' => 'throttle@foodie-connector.delivery',
         ]);
         foreach (range(1, $rateLimit + 1) as $i) {

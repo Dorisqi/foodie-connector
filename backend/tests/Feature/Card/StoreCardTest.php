@@ -16,7 +16,7 @@ class StoreCardTest extends ApiTestCase
      */
     public function testStoreCard()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $card = factory(Card::class)->make();

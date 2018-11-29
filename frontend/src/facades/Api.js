@@ -175,14 +175,12 @@ class Api {
     return instance;
   }
 
-  static findOrder(id){
-    return Api.instance().get(`/orders/`,id);
-
+  static findOrder(id) {
+    return Api.instance().get('/orders/', id);
   }
 
-  static inviteFriend(orderId,email){
-    console.log("api: " +orderId+email);
-    return Api.instance().post(`orders/${orderId}/invitation`,{email});
+  static inviteFriend(orderId, email) {
+    return Api.instance().post(`orders/${orderId}/invitation`, { email });
   }
 
 
@@ -191,15 +189,12 @@ class Api {
     return Api.instance().get('/friends');
   }
 
-  static followNewFriend(email){
-    //console.log(email+ "in follow friend");
-    return Api.instance().post('/friends',{
+  static followNewFriend(email) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().post('/friends', {
       email,
     });
   }
-
-
-
 }
 
 export default Api;

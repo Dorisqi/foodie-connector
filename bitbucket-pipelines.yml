@@ -2,7 +2,7 @@ pipelines:
   branches:
     dev/backend*:
     - step:
-        name: "PHP CodeSniffer and PHPUnit"
+        name: "Backend lint and tests"
         image:
             name: foodieconnectorphp/foodie-connector-php:test-php
             username: $DOCKER_HUB_USERNAME
@@ -11,16 +11,18 @@ pipelines:
         caches:
         - backend-vendor
         script:
-        - /entrypoint.sh
         - cd backend
         - phpcs .
         - composer install
-        - cp .env.example .env
+        - cp .env.testing .env
         - php artisan key:generate
         - phpunit
+        services:
+        - mysql
+        - redis
     dev/frontend*:
     - step:
-        name: "ESLint"
+        name: "Frontend lint and tests"
         image: node:8-alpine
         caches:
         - frontend-node-modules
@@ -46,3 +48,11 @@ definitions:
   caches:
     frontend-node-modules: frontend/node_modules
     backend-vendor: backend/vendor
+  services:
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: 'foodie_connector_testing'
+        MYSQL_ROOT_PASSWORD: 'root'
+    redis:
+      image: redis:alpine
