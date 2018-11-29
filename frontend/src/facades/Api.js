@@ -182,9 +182,7 @@ class Api {
 
   static inviteFriend(orderId,friendemail){
     return Api.instance().get(`orders/${orderId}/invitation`,{
-      params:{
         email:friendemail,
-      }
     });
   }
 
@@ -196,11 +194,8 @@ class Api {
 
   static followNewFriend(email){
     //console.log(email+ "in follow friend");
-    return Api.instance().post('/friends', {
-      params: {
-        email: email,
-
-      },
+    return Api.instance().post('/friends',{
+      email,
     });
   }
 

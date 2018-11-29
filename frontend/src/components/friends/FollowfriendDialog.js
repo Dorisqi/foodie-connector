@@ -127,12 +127,13 @@ class FollowfriendDialog extends React.Component {
     this.setState({
       loadingfriends: Api.followNewFriend(this.state.friendEmail).then((res) => {
         const result = res.data;
+        console.log("res: " +result);
         this.setState({
           loadingfriends: null,
-          friends: res.data.length > 0 ? res.data[0].order_members : null,
+          friends: res.data.length > 0 ? res.data : null,
         });
         if(this.state.friends !== null){
-          console.log("loadfriends:" +this.state.friends[0].user.name);
+          console.log("loadfriends:" +this.state.friends[0].email);
 
         }
 
@@ -177,9 +178,6 @@ class FollowfriendDialog extends React.Component {
     this.loadFriends();
   }
 
-  onClose = () => {
-
-  };
 
   render() {
     const { classes } = this.props;
@@ -188,13 +186,11 @@ class FollowfriendDialog extends React.Component {
     return (
       <DialogForm
         title='Friends'
-        submitLabel='Close'
         formErrors={errors.form}
-        api={this.adding}
         className={classes.root}
         onRequestSucceed={this.handleRequestSuccess}
         onRequestFailed={this.handleRequestFail}
-        onClose={this.onClose}
+        onClose={this.props.onClose}
       >
       <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
         <Input
@@ -233,7 +229,7 @@ class FollowfriendDialog extends React.Component {
             friends.map(friend => (
 
               <ListItem
-                key={friend.user.name} // eslint-disable-line react/no-array-index-key
+                key={friend.name} // eslint-disable-line react/no-array-index-key
                 className={classes.item}
               >
                 <div className={classes.itemLine}>
@@ -243,7 +239,7 @@ class FollowfriendDialog extends React.Component {
                   />
                   <ListItemText
                     className={classes.setstatus}
-                    primary={friend.friend_id}
+                    primary={friend.email}
 
                   />
                 </div>

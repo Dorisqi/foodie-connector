@@ -42,6 +42,9 @@ class DialogForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    if (this.props.api === null) {
+      return;
+    }
     const {
       api,
       onRequestSucceed,
@@ -97,9 +100,11 @@ class DialogForm extends React.Component {
             <Button onClick={this.handleClose}>
               Cancel
             </Button>
-            <ProgressButton loading={requesting !== null} type="submit" color="primary">
-              {submitLabel}
-            </ProgressButton>
+            {submitLabel !== null &&
+              <ProgressButton loading={requesting !== null} type="submit" color="primary">
+                {submitLabel}
+              </ProgressButton>
+            }
           </DialogActions>
         </form>
       </Dialog>
@@ -115,15 +120,17 @@ DialogForm.propTypes = {
     PropTypes.element,
     PropTypes.array,
   ]).isRequired,
-  submitLabel: PropTypes.string.isRequired,
+  submitLabel: PropTypes.string,
   formErrors: PropTypes.array,
-  api: PropTypes.func.isRequired,
+  api: PropTypes.func,
   onRequestSucceed: PropTypes.func.isRequired,
   onRequestFailed: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 DialogForm.defaultProps = {
+  submitLabel: null,
+  api: null,
   formErrors: null,
 };
 
