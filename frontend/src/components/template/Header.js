@@ -12,9 +12,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotificationBox from './NotificationBox';
-import Api from 'facades/Api';
+import NotificationBox from './NotificationDialog';
 import { withStyles } from '@material-ui/core/styles';
+import Pusher from 'facades/Pusher';
 
 const styles = () => ({
   root: {
@@ -47,23 +47,25 @@ class Header extends React.Component {
       notificationsOpen: false,
       notifications: [],
       unreadCount: 0,
+      idCount: 0,
     };
-    this.handleNotificationsUpdate = this.handleNotificationsUpdate.bind(this);
+  }
+
+  receiveNotifications = data => {
+    this.setState(state => {
+      const notification = Object.assign({}, data.data);
+      notification.isRead = false;
+      notification.id = state.idCount;
+      return {
+        unreadCount: state.unreadCount+1,
+        notifications: [notification, ...state.notifications],
+        idCount: state.idCount+1
+      }
+    })
   }
 
   componentDidMount() {
-    this.getNotifications();
-  }
-
-  getNotifications() {
-    Api.notificationList().then(res => {
-      const { notifications } = res.data;
-      this.setState({
-        notifications: notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length
-      })
-    }).catch(err => {
-    });
+    Pusher.loadNotification(this.receiveNotifications);
   }
 
   handleDialogClose = () => {
@@ -74,27 +76,30 @@ class Header extends React.Component {
     this.setState({ notificationsOpen: true });
   }
 
+  handleClear = () => {
+    this.setState({
+      notifications: [],
+    })
+  }
+
   handleMarkRead = (id) => () => {
-    Api.notificationMarkRead(id).then(res => {
-      const { notifications } = res.data;
-      this.setState({
-        notifications: notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length
-      })
-    }).catch(err => {
+    this.setState(state => {
+      state.notifications.forEach(n => {if (n.id === id) n.isRead = true;});
+      return {
+        unreadCount: state.unreadCount-1,
+        notifications: state.notifications,
+      }
     })
   }
 
   handleMarkAllRead = () => {
-    return Api.notificationMarkAllRead();
-  }
-
-  handleNotificationsUpdate(res) {
-    const { notifications } = res.data;
-    this.setState({
-      notifications: notifications,
-      unreadCount: notifications.filter(n => !n.isRead).length
-    })
+    this.setState(state => {
+      state.notifications.forEach(n => {n.isRead = true;});
+      return {
+        unreadCount: 0,
+        notifications: state.notifications,
+      }
+    });
   }
 
   handleProfileMenuOpen = (event) => {
@@ -127,6 +132,16 @@ class Header extends React.Component {
           onClick={this.handleProfileMenuClose}
         >
           Profile
+        </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/order-history',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Order History
         </MenuItem>
         {location.pathname !== '/logout'
         && (
@@ -190,10 +205,11 @@ class Header extends React.Component {
         {renderMenu}
         {notificationsOpen
           ? <NotificationBox
+              open={notificationsOpen}
               notifications={notifications}
               handleMarkRead={this.handleMarkRead}
               handleMarkAllRead={this.handleMarkAllRead}
-              onUpdate={this.handleNotificationsUpdate}
+              handleClear={this.handleClear}
               onClose={this.handleDialogClose}
             />
           : null
