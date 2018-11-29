@@ -188,6 +188,7 @@ class RestaurantDetailPage extends React.Component {
       loading,
       selectingProductOption,
       notFound,
+      order
     } = this.state;
     const cartNeedClear = cart !== null && restaurant !== null
       && cart.restaurantId !== null
@@ -370,7 +371,7 @@ class RestaurantDetailPage extends React.Component {
                   >
                     Group Member
                   </Typography>
-                  <GroupmemberStatusTable restaurantId={restaurant.id} />
+                  <GroupmemberStatusTable restaurantId={restaurant.id} order={order}/>
                 </div>
                 <div className={classes.subComponent}>
                   <Typography
@@ -397,6 +398,7 @@ class RestaurantDetailPage extends React.Component {
 const mapStateToProps = state => ({
   cart: state.cart,
   address: state.address,
+  order:state.order,
 });
 
 RestaurantDetailPage.propTypes = {

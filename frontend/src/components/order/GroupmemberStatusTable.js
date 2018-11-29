@@ -48,7 +48,8 @@ class GroupmemberStatusTable extends React.Component {
     members: [],
     is_creator: null,
     all_ready:false,
-    is_joinable:false
+    is_joinable:false,
+    order:this.props.order
   };
 
   componentDidMount() {
@@ -56,9 +57,15 @@ class GroupmemberStatusTable extends React.Component {
     this.loadGroupmbr();
   }
 
-/*  componentDidUpdate(prevProps, prevState) {
-    if(this.state.is_creator !==null){
+/*  componentDidUpdate() {
+    if(this.state.order === undefined){
       this.loadGroupmbr();
+        this.setState({
+          members:[],
+          is_joinable:false,
+          is_creator:null
+        });
+
     }
 
 
