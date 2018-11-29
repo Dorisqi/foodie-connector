@@ -128,16 +128,6 @@ class Header extends React.Component {
         >
           Profile
         </MenuItem>
-        <MenuItem
-          button
-          component={Link}
-          to={{
-            pathname: '/order-history',
-          }}
-          onClick={this.handleProfileMenuClose}
-        >
-          Order History
-        </MenuItem>
         {location.pathname !== '/logout'
         && (
           <MenuItem
@@ -174,13 +164,16 @@ class Header extends React.Component {
                 onClick={this.handleNotificationOpen}
                 color="inherit"
               >
-                <Badge
-                  badgeContent={unreadCount}
-                  color="primary"
-                  invisible={unreadCount === 0} // TODO: can't make it invisible
-                >
-                  <NotificationsIcon />
-                </Badge>
+              {unreadCount === 0
+                ? <NotificationsIcon/>
+                : <Badge
+                    badgeContent={unreadCount}
+                    color="primary"
+                  >
+                    <NotificationsIcon/>
+                  </Badge>
+              }
+
               </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
