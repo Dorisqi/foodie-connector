@@ -40,7 +40,7 @@ const styles = theme => ({
     float: 'left',
   },
   card: {
-    width: window.screen.width * 0.6,
+    width: window.screen.width * 0.8,
     height: 'auto',
     margin: 'auto',
     marginBottom: 2 * theme.spacing.unit,

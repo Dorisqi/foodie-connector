@@ -18,6 +18,15 @@ const styles = () => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  title: {
+    textAlign: 'left',
+  },
+  // thumbUp: {
+  //   color: '#FF0000',
+  // },
+  // thumbDown: {
+  //   color: '#33FE0B',
+  // },
 });
 
 class OrderDetailDialog extends React.Component {
@@ -29,20 +38,50 @@ class OrderDetailDialog extends React.Component {
       order_members: orderMembers,
       order_statuses: orderStatuses,
     } = order;
-    const maxLen = Math.max(orderMembers.length, orderStatuses.length);
-    const rows = [];
-    for (let i = 0; i < maxLen; i += 1) {
-      const ready = orderMembers[i].is_ready ? 'Ready' : 'Not Ready';
-      rows.push(
+
+    const statusesRow = orderStatuses.map(status => (
+      <TableRow>
+        <TableCell>{status.status}</TableCell>
+        <TableCell>{status.time}</TableCell>
+      </TableRow>
+    ));
+
+    const membersRow = orderMembers.map((member) => {
+      const {
+        user,
+        phone,
+        is_ready: isReady,
+        subtotal,
+        tax,
+        tip,
+        delivery_fee: deliveryFee,
+        total,
+        rate_is_positive: rate,
+      } = member;
+      return (
         <TableRow>
-          <TableCell>{i < orderStatuses.length ? orderStatuses[i].status : null}</TableCell>
-          <TableCell>{i < orderStatuses.length ? orderStatuses[i].time : null}</TableCell>
-          <TableCell>{i < orderMembers.length ? orderMembers[i].user.name : null}</TableCell>
-          <TableCell>{i < orderMembers.length ? orderMembers[i].phone : null}</TableCell>
-          <TableCell>{i < orderMembers.length ? ready : null}</TableCell>
-        </TableRow>,
+          <TableCell>{user.name}</TableCell>
+          <TableCell>{phone}</TableCell>
+          <TableCell>{isReady ? 'Ready' : 'Not Ready'}</TableCell>
+          <TableCell>{subtotal}</TableCell>
+          <TableCell>{tax}</TableCell>
+          <TableCell>{tip}</TableCell>
+          <TableCell>{deliveryFee}</TableCell>
+          <TableCell>{total}</TableCell>
+          <TableCell>
+            {// eslint-disable-next-line no-nested-ternary
+            rate !== null && rate !== undefined
+              ? (
+                rate
+                  ? <i className="material-icons" style={{ color: '#FF0000' }}>thumb_up</i>
+                  : <i className="material-icons" style={{ color: '#33FE0B' }}>thumb_down</i>
+              )
+              : null
+          }
+          </TableCell>
+        </TableRow>
       );
-    }
+    });
 
     return (
       <Dialog
@@ -57,22 +96,35 @@ class OrderDetailDialog extends React.Component {
           {' '}
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
+          <h5 className={classes.title}>Order Statuses</h5>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell colSpan={2}>Order statuses</TableCell>
-                <TableCell colSpan={3}>Order members</TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell>status</TableCell>
                 <TableCell>time</TableCell>
-                <TableCell>user name</TableCell>
-                <TableCell>phone</TableCell>
-                <TableCell>is ready</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows}
+              {statusesRow}
+            </TableBody>
+          </Table>
+          <h5 className={classes.title}>Member Info</h5>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>user name</TableCell>
+                <TableCell>phone</TableCell>
+                <TableCell>is ready</TableCell>
+                <TableCell>subtotal</TableCell>
+                <TableCell>tax</TableCell>
+                <TableCell>tip</TableCell>
+                <TableCell>delivery fee</TableCell>
+                <TableCell>total</TableCell>
+                <TableCell>rate</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {membersRow}
             </TableBody>
           </Table>
         </DialogContent>
