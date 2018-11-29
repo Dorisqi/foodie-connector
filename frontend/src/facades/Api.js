@@ -180,10 +180,9 @@ class Api {
 
   }
 
-  static inviteFriend(orderId,friendemail){
-    return Api.instance().get(`orders/${orderId}/invitation`,{
-        email:friendemail,
-    });
+  static inviteFriend(orderId,email){
+    console.log("api: " +orderId+email);
+    return Api.instance().post(`orders/${orderId}/invitation`,{email});
   }
 
 

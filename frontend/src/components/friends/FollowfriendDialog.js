@@ -63,40 +63,9 @@ class FollowfriendDialog extends React.Component {
     }
   }
 
-  //email autocomplete if time allowed
-
-  /*handleonChange(e){
-   const value = e.target.value;
-    //console.log("onChange:" + value);
-    this.setState({
-      friendEmail: value, // eslint-disable-line react/no-unused-state
-
-    });
-  }*/
   handleChange = prop => event => {
-    console.log("friends:"+event.target.value);
-
       this.setState({ [prop]: event.target.value });
     };
-
-
-
-  adding = () => {
-    this.setState({
-      errors: {},
-    });
-    const {
-      friendEmail
-    } = this.state;
-    console.log("adding" + friendEmail);
-    //const { item: address } = this.props;
-
-    //// TODO: Axios.addingFriend
-    //alert for the corresponding error, after Successfully adding,clear the input
-    /*return address === null
-      ? Api.addressAdd(placeId, line2, name, phone, isDefault)
-      : Api.addressUpdate(address.id, placeId, line2, name, phone, isDefault);*/
-  };
 
   handleRequestSuccess = (res) => {
     if (this.props.item === null) {
@@ -136,8 +105,6 @@ class FollowfriendDialog extends React.Component {
           console.log("loadfriends:" +this.state.friends[0].email);
 
         }
-
-
       }).catch((err) => {
         this.setState({
           loadingfriends: null,
@@ -147,8 +114,6 @@ class FollowfriendDialog extends React.Component {
     });
 
   }
-
-
 
   loadFriends() {
     this.setState({
@@ -163,8 +128,6 @@ class FollowfriendDialog extends React.Component {
           console.log("loadFriends:" +this.state.friends[0].name);
 
         }
-
-
       }).catch((err) => {
         this.setState({
           loadingfriends: null,
@@ -197,6 +160,7 @@ class FollowfriendDialog extends React.Component {
           id="email"
           parent={this}
           name="email"
+          type="email"
           label="Follow new friend by Email "
           className={classes.textarea}
           onChange={this.handleChange('friendEmail')}
@@ -216,9 +180,6 @@ class FollowfriendDialog extends React.Component {
               }
         />
 
-
-
-
         {friends === null
           ?
           (
@@ -226,32 +187,27 @@ class FollowfriendDialog extends React.Component {
               No following friends yet!  Follow friends now!
             </div>
           ) : [
-            friends.map(friend => (
+                friends.map(friend => (
 
-              <ListItem
-                key={friend.name} // eslint-disable-line react/no-array-index-key
-                className={classes.item}
-              >
-                <div className={classes.itemLine}>
-                  <ListItemText
-                  primary={friend.name}
+                  <ListItem
+                    key={friend.name} // eslint-disable-line react/no-array-index-key
+                    className={classes.item}
+                  >
+                    <div className={classes.itemLine}>
+                      <ListItemText
+                      primary={friend.name}
 
-                  />
-                  <ListItemText
-                    className={classes.setstatus}
-                    primary={friend.email}
+                      />
+                      <ListItemText
+                        className={classes.setstatus}
+                        secondary={friend.email}
 
-                  />
-                </div>
-                </ListItem>
-
-            ))
-          ]
-
-
-
-        }
-
+                      />
+                    </div>
+                    </ListItem>
+                ))
+              ]
+          }
       </DialogForm>
     );
   }

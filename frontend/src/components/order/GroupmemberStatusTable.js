@@ -18,7 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
-const styles = () => ({
+const styles = theme => ({
   selector: {
     boxSizing: 'border-box',
   },
@@ -28,6 +28,8 @@ const styles = () => ({
   },
   item: {
     display: 'block',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   itemLine: {
     display: 'flex',
@@ -54,7 +56,7 @@ class GroupmemberStatusTable extends React.Component {
 
   componentDidMount() {
 
-    this.loadGroupmbr();
+
   }
 
 /*  componentDidUpdate() {
@@ -82,9 +84,10 @@ class GroupmemberStatusTable extends React.Component {
     const groupmbrs = res.data;
     //store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
   };*/
-
-
-  loadGroupmbr() {
+  findCreator(member){
+      return member.friend_id === this.props.order.creator.friend_id;
+  }
+  /*loadGroupmbr() {
 
     //Axios.'/api/v1/orders/'(this.state.loadingGroupmbr);
   //  console.log(this.props.restaurantId);
@@ -109,47 +112,53 @@ class GroupmemberStatusTable extends React.Component {
         throw (err);
       }),
     });
-  }
+  }*/
 
   render() {
     const {
-      classes,restaurantId
+      classes,order
     } = this.props;
-    const { members,all_ready,is_creator,is_joinable } = this.state;
+    const members = order.order_members;
 
     return (
   <Card>
       <div>
 
-
-          {is_joinable === false
-            ? (
-              <div>
-                No Group order created yet!
-              </div>
-            ) : <div>
-            {members === null
+            {members.length === 1
               ? (
-                <div>
-                  No memeber join yet!
-                </div>
+                <ListItem
+                  key={order.creator.name} // eslint-disable-line react/no-array-index-key
+                  className={classes.item}
+                >
+                  <div className={classes.itemLine}>
+                    <ListItemText
+                    primary={order.creator.name}
+                    secondary={"Creator"}
+
+                    />
+                    <ListItemText
+                      className={classes.setstatus}
+                      primary={members[0].is_ready ? "Paid" : "Not paid"}
+
+                    />
+                  </div>
+                  </ListItem>
               ) :[
 
-                members.map(member => (
-
+                members.map(member => (member.user.friend_id !== order.creator.friend_id &&
                   <ListItem
                     key={member.user.name} // eslint-disable-line react/no-array-index-key
                     className={classes.item}
                   >
                     <div className={classes.itemLine}>
                       <ListItemText
-                      primary={member.user.name}
-                      secondary={is_creator ? "Creator" : ""}
+                      primary={(member.user.friend_id !== order.creator.friend_id) ? member.user.friend_id : null}
+
 
                       />
                       <ListItemText
                         className={classes.setstatus}
-                        primary={member.is_ready ? "confirmed" : "selecting"}
+                        primary={member.is_ready ? "Paid" : "Not paid"}
 
                       />
                     </div>
@@ -160,13 +169,6 @@ class GroupmemberStatusTable extends React.Component {
               ]
 
             }
-
-
-            </div>
-
-
-          }
-
       </div>
     </Card>
     );
@@ -180,8 +182,7 @@ const mapStateToProps = state => ({
 
 GroupmemberStatusTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  restaurantId:PropTypes.object.isRequired,
-  members: PropTypes.array,
+  order: PropTypes.object.isRequired,
   //currentLocation: PropTypes.object,
 };
 

@@ -26,6 +26,8 @@ import Snackbar from 'facades/Snackbar';
 import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
+import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
+
 import classnames from 'classnames';
 
 const styles = theme => ({
@@ -382,12 +384,16 @@ class RestaurantOrder extends React.Component {
             )]
             }
           </ListItem>
-          <Card>
-              <div>
-
-                  jhkjhk
-              </div>
-          </Card>
+          <div className={classes.subComponent}>
+            <Typography
+              className={classes.subComponentTitle}
+              variant="h5"
+              component="h2"
+            >
+              Group Member
+            </Typography>
+            <GroupmemberStatusTable order={order}/>
+          </div>
         </List>
 
 

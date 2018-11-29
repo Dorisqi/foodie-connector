@@ -49,6 +49,7 @@ class FollowfriendDialog extends React.Component {
     errors: {},
     friends:[],
     loadingfriends:null,
+    inviting:null
   };
 
   constructor(props) {
@@ -76,7 +77,7 @@ class FollowfriendDialog extends React.Component {
     });
   }*/
   handleChange = prop => event => {
-    console.log("friends:"+event.target.value);
+    //console.log("friends:"+event.target.value);
 
       this.setState({ [prop]: event.target.value });
     };
@@ -89,23 +90,18 @@ class FollowfriendDialog extends React.Component {
   };
 
   handleInvitefriend = (e) =>{
-    console.log("friends:"+this.state.friendEmail);
+
     this.setState({
-      loadingfriends: Api.followNewFriend(this.state.friendEmail).then((res) => {
+      inviting: Api.inviteFriend(this.props.orderId,this.state.friendEmail).then((res) => {
         const result = res.data;
         this.setState({
-          loadingfriends: null,
-          friends: res.data.length > 0 ? res.data[0].order_members : null,
+          inviting: null,
+
         });
-        if(this.state.friends !== null){
-          console.log("loadfriends:" +this.state.friends[0].user.name);
-
-        }
-
 
       }).catch((err) => {
         this.setState({
-          loadingfriends: null,
+          inviting: null,
         });
         throw (err);
       }),
@@ -113,19 +109,19 @@ class FollowfriendDialog extends React.Component {
 
   }
 
-
-
   loadFriends() {
-    console.log(this.props.orderId);
     this.setState({
-      loadingfriends: Api.inviteFriend(this.props.orderId,this.state.friendEmail).then((res) => {
+      loadingfriends: Api.friendList().then((res) => {
         const result = res.data;
         this.setState({
           loadingfriends: null,
+          friends: res.data.length > 0 ? res.data : null,
 
         });
+        if(this.state.friends !== null){
+          console.log("loadFriends:" +this.state.friends[0].name);
 
-
+        }
       }).catch((err) => {
         this.setState({
           loadingfriends: null,
@@ -133,6 +129,26 @@ class FollowfriendDialog extends React.Component {
         throw (err);
       }),
     });
+  }
+
+  inviteClick(e,email){
+    //const key = e.target;
+    console.log("inviteClick: "+ email);
+    this.setState({
+      inviting: Api.inviteFriend(this.props.orderId,email).then((res) => {
+        const result = res.data;
+        this.setState({
+          inviting:null,
+        });
+
+      }).catch((err) => {
+        this.setState({
+          inviting: null,
+        });
+        throw (err);
+      }),
+    });
+
   }
 
   componentDidMount() {
@@ -146,7 +162,7 @@ class FollowfriendDialog extends React.Component {
 
     return (
       <Card>
-      <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
+      <InputLabel htmlFor="email">Inviting by email!</InputLabel>
         <Input
           id="email"
           name="email"
@@ -179,8 +195,10 @@ class FollowfriendDialog extends React.Component {
             friends.map(friend => (
 
               <ListItem
-                key={friend.user.name} // eslint-disable-line react/no-array-index-key
+                button
+                key={friend.email} // eslint-disable-line react/no-array-index-key
                 className={classes.item}
+                onClick={event => this.inviteClick(event, friend.email)}
               >
                 <div className={classes.itemLine}>
                   <ListItemText
@@ -189,7 +207,7 @@ class FollowfriendDialog extends React.Component {
                   />
                   <ListItemText
                     className={classes.setstatus}
-                    primary={friend.friend_id}
+                    primary={friend.email}
 
                   />
                 </div>
