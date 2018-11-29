@@ -11,6 +11,8 @@ import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
 import RestaurantDetailPage from 'components/pages/restaurant/RestaurantDetailPage';
 
 import CheckoutPage from 'components/pages/checkout/CheckOutPage';
+import PaymentPage from 'components/pages/payment/PaymentPage';
+
 import NotFoundPage from 'components/pages/error/NotFoundPage';
 
 
@@ -25,6 +27,7 @@ const Routes = () => (
 
     <PrivateRoute path="/profile" component={ProfilePage} />
     <PrivateRoute path="/orders/:id/checkout" component={CheckoutPage} />
+    <PrivateRoute path="/orders/:id/pay" component={PaymentPage} />
     <PrivateRoute path="/" exact component={RestaurantListPage} />
     <PrivateRoute path="/restaurants/:id" component={RestaurantDetailPage} />
     <Route component={NotFoundPage} />

@@ -20,6 +20,7 @@ import Menu from 'facades/Menu';
 import compose from 'recompose/compose'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import Divider from '@material-ui/core/Divider/Divider';
 
 const styles = theme => ({
   root: {
@@ -51,6 +52,9 @@ const styles = theme => ({
     alignItems: 'flex-start',
     width: '100%',
   },
+  actions: {
+    display: 'block',
+  },
 });
 
 
@@ -63,6 +67,7 @@ class CheckOutPage extends React.Component {
     subtotal: 0,
     productMap: null,
     loading: null,
+    selectedCard: 0,
   }
   componentDidMount() {
     this.handleShowCart();
@@ -84,6 +89,13 @@ class CheckOutPage extends React.Component {
       });
     })
   };
+  handlePayment = () => {
+    this.props.history.push({
+      pathname: `/orders/${this.props.location.state.order.id}/pay`,
+      state: {order: this.props.location.state.order}
+    });
+  };
+
   render() {
     const { classes , cart} = this.props;
     const {restaurant, productMap} = this.state;
@@ -114,29 +126,47 @@ class CheckOutPage extends React.Component {
               </Typography>
               <Paper>
                 <ListItem>
-                  <div className={classes.itemLine}>
-                    <ListItemText
-                      primary="Billing & Address"
-                      secondary={
-                        <span>
-                           {this.props.location.state.order.creator.name}
-                           <br />
-                           {this.props.location.state.order.address_line_2}
-                           <br />
-                           {this.props.location.state.order.address_line_1}
-                           <br />
-                           {this.props.location.state.order.city}
-                        </span>
-                      }
-                    />
-                  </div>
+                  <ListItemText
+                    primary="Delivery Address"
+                    secondary={
+                      <span>
+                         {this.props.location.state.order.creator.name}
+                         <br />
+                         {this.props.location.state.order.address_line_2}
+                         <br />
+                         {this.props.location.state.order.address_line_1}
+                         <br />
+                         {this.props.location.state.order.city}
+                         <br />
+                         {this.props.location.state.order.phone}
+                      </span>
+                    }
+                  />
                 </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Contact Restaurant"
+                    secondary={
+                      <span>
+                         {this.props.location.state.order.restaurant.name}
+                         <br />
+                         {this.props.location.state.order.restaurant.address_line_2}
+                         <br />
+                         {this.props.location.state.order.restaurant.address_line_1}
+                         <br />
+                         {this.props.location.state.order.city}
+                         <br />
+                         {this.props.location.state.order.restaurant.phone}
+                      </span>
+                    }
+                  />
+                </ListItem>
+
               </Paper>
             </div>
           </div>
           <div className={classes.rightBar}>
             <div className={classes.subComponent}>
-
               <Typography
                 className={classes.subComponentTitle}
                 variant="h5"
@@ -145,6 +175,17 @@ class CheckOutPage extends React.Component {
                 PAYMENT METHOD
               </Typography>
               <CardSelector />
+            </div>
+            <div className={classes.subComponent}>
+              <Button
+                className={classes.action}
+                variant="outlined"
+                color="primary"
+                onClick = {this.handlePayment}
+                fullWidth
+              >
+                Pay
+              </Button>
             </div>
           </div>
         </div>

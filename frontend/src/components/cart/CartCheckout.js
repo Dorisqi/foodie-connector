@@ -104,7 +104,6 @@ class CartCheckout extends React.Component {
       classes, restaurant, cart, productMap, order
     } = this.props;
     const { updatingItemIndex } = this.state;
-    console.log(order);
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -134,25 +133,6 @@ class CartCheckout extends React.Component {
             <ListItemText
               className={classes.summaryPrice}
               primary={`Subtotal: ${Format.displayPrice(cart.subtotal)}`}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              className={classes.summaryPrice}
-              primary={`Estimated Delivery Fee: ${Format.displayPrice(order.prices.estimated_delivery_fee)}`}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              className={classes.summaryPrice}
-              primary={`Tax: ${Format.displayPrice(order.order_members[0].tax)}`}
-            />
-          </ListItem>
-          <Divider className={classes.optionDivider} light />
-          <ListItem>
-            <ListItemText
-              className={classes.summaryPrice}
-              primary={`Total: ${parseFloat(cart.subtotal + order.prices.estimated_delivery_fee + order.order_members[0].tax).toFixed(2)}`}
               primaryTypographyProps={{
                 variant: 'h6',
               }}

@@ -76,7 +76,6 @@ class CardSelector extends React.Component {
   render() {
     const {classes} = this.props;
     const {cards, selectedCard, addingCard} = this.state;
-
     return(
         <div>
           {addingCard
