@@ -15,12 +15,15 @@ import Button from '@material-ui/core/Button';
 import CartCheckout from 'components/cart/CartCheckout';
 import CardSelector from 'components/card/CardSelector';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Menu from 'facades/Menu';
 import compose from 'recompose/compose'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import List from '@material-ui/core/List';
+import ListItemText from '@material-ui/core/ListItemText';
+import Format from 'facades/Format';
 import Divider from '@material-ui/core/Divider/Divider';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
@@ -47,13 +50,12 @@ const styles = theme => ({
   subComponentTitle: {
     marginBottom: theme.spacing.unit,
   },
-  itemLine: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    width: '100%',
-  },
   actions: {
     display: 'block',
+  },
+  tip: {
+    marginLeft: 40,
+    width: 250,
   },
 });
 
@@ -64,13 +66,17 @@ class CheckOutPage extends React.Component {
     restaurantId: 0,
     restaurant: null,
     cart: [],
+    tax: 0,
+    delivery_fee: 0,
     subtotal: 0,
     productMap: null,
     loading: null,
-    selectedCard: 0,
+    selectedCardId: 0,
+    tip: null,
   }
   componentDidMount() {
     this.handleShowCart();
+    this.handleCheckout();
   }
 
   handleShowCart = () =>{
@@ -90,15 +96,40 @@ class CheckOutPage extends React.Component {
     })
   };
   handlePayment = () => {
-    this.props.history.push({
-      pathname: `/orders/${this.props.location.state.order.id}/pay`,
-      state: {order: this.props.location.state.order}
+    const {tip, selectedCardId} = this.state;
+    Api.orderPay(this.props.location.state.order.id, tip, selectedCardId).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      throw err;
+    })
+  };
+  handleCardId = (e) => {
+    this.setState({
+      selectedCardId: e,
+    });
+  }
+
+  handleCheckout = () => {
+    Api.orderCheckout(this.props.location.state.order.id).then((res) => {
+      this.setState({
+          tax: res.data.tax,
+          delivery_fee: res.data.delivery_fee,
+      });
+    }).catch((err) => {
+      throw err;
+    })
+  }
+
+  handleSetTip = (event) =>{
+    this.setState({
+      tip: event.target.value,
     });
   };
-
   render() {
     const { classes , cart} = this.props;
-    const {restaurant, productMap} = this.state;
+    const {restaurant, productMap,
+          selectedCardId, tax, subtotal,
+          delivery_fee, tip} = this.state;
     return (
       <MainContent title="Review & Pay">
         <div className={classes.root}>
@@ -111,7 +142,13 @@ class CheckOutPage extends React.Component {
               >
                 ORDER SUMMARY
               </Typography>
-              <CartCheckout restaurant={restaurant} cart={cart} productMap={productMap} order={this.props.location.state.order} />
+              <CartCheckout restaurant={restaurant}
+                            cart={cart}
+                            productMap={productMap}
+                            order={this.props.location.state.order}
+                            tax={tax}
+                            delivery_fee={delivery_fee}
+              />
             </div>
           </div>
           <div className={classes.middleBar}>
@@ -172,15 +209,49 @@ class CheckOutPage extends React.Component {
                 variant="h5"
                 component="h2"
               >
-                PAYMENT METHOD
+                TOTAL
               </Typography>
-              <CardSelector />
+              <Paper>
+              <List>
+                <ListItem>
+                <ListItemText
+                  className={classes.summaryPrice}
+                  primary={`Subtotal: ${Format.displayPrice(subtotal)}`}
+                />
+                </ListItem>
+                <ListItem>
+                <ListItemText
+                  className={classes.summaryPrice}
+                  primary={`Delivery Fee: ${Format.displayPrice(delivery_fee)}`}
+                />
+                </ListItem>
+                <ListItem>
+                <ListItemText
+                  className={classes.summaryPrice}
+                  primary={`Tax: ${Format.displayPrice(tax)}`}
+                />
+                </ListItem>
+              </List>
+              <TextField
+                className = {classes.tip}
+                variant="standard"
+                label="tip"
+                margin="normal"
+                onChange={this.handleSetTip}
+              >
+              </TextField>
+              <CardSelector
+                  onSelect={this.handleCardId}
+              />
+              <br />
+              </Paper>
             </div>
             <div className={classes.subComponent}>
               <Button
                 className={classes.action}
                 variant="outlined"
                 color="primary"
+                disabled={selectedCardId === 0 || tip === null }
                 onClick = {this.handlePayment}
                 fullWidth
               >

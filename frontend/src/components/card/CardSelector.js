@@ -20,6 +20,10 @@ const styles = () => ({
     paddingTop: 8,
     paddingBottom: 8,
   },
+  card: {
+    marginLeft: 40,
+    width: 250,
+  },
 });
 
 class CardSelector extends React.Component {
@@ -35,7 +39,6 @@ class CardSelector extends React.Component {
   componentDidMount() {
     this.handleShowCard();
     this.handleAddingCard();
-
   }
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loadingCard);
@@ -53,6 +56,7 @@ class CardSelector extends React.Component {
 
   handleSelectCard = (e) => {
     const value = e.target.value;
+    this.props.onSelect(value);
     if (value < 0)
     {
       this.setState({
@@ -69,8 +73,7 @@ class CardSelector extends React.Component {
     });
   };
   handleAddingCard = () => {
-    //const cards = res.data;
-    //store.dispatch(loadCard(cards, cards[cards.length-1].id));
+
   };
 
   render() {
@@ -87,8 +90,9 @@ class CardSelector extends React.Component {
           )
           }
           <TextField
+            className={classes.card}
             select
-            variant="outlined"
+            label="Cards"
             value={selectedCard === null ? -1 : selectedCard}
             onChange={this.handleSelectCard}
             fullWidth
@@ -100,7 +104,7 @@ class CardSelector extends React.Component {
                 </MenuItem>
               ) : [
                 cards.map(card => (
-                  <MenuItem key={card.nickname} value={card.nickname}>
+                  <MenuItem key={card.nickname} value={card.id}>
                     {card.nickname}
                     {'-- card ends with '}
                     {card.last_four}
@@ -127,6 +131,7 @@ CardSelector.propTypes = {
   cards: PropTypes.array,
   selectedCard: PropTypes.number,
   classes: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
 
 }
 export default withStyles(styles)(

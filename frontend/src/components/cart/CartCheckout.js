@@ -101,7 +101,7 @@ class CartCheckout extends React.Component {
 
   render() {
     const {
-      classes, restaurant, cart, productMap, order
+      classes, restaurant, cart, productMap, order, tax, delivery_fee
     } = this.props;
     const { updatingItemIndex } = this.state;
     if (restaurant === null || cart === null) {
@@ -128,16 +128,6 @@ class CartCheckout extends React.Component {
               </ListItem>
             );
           })}
-          <Divider className={classes.optionDivider} light />
-          <ListItem>
-            <ListItemText
-              className={classes.summaryPrice}
-              primary={`Subtotal: ${Format.displayPrice(cart.subtotal)}`}
-              primaryTypographyProps={{
-                variant: 'h6',
-              }}
-            />
-          </ListItem>
         </List>
       </Paper>
 
@@ -155,6 +145,8 @@ CartCheckout.propTypes = {
   productMap: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
+  tax: PropTypes.object.isRequired,
+  delivery_fee: PropTypes.object.isRequired,
 };
 
 CartCheckout.defaultProps = {

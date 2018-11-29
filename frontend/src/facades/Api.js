@@ -179,11 +179,11 @@ class Api {
   }
 
   /* --- Pay --- */
-  static orderPay(orderId, tip, cardId) {
-    return Api.instance.post(`/orders/${orderId}/pay`, {
+  static orderPay(orderId, tip, selectedCardId ) {
+    return Api.instance().post(`/orders/${orderId}/pay`, {
       params: {
         tip: tip,
-        cardId: cardId,
+        card_id: selectedCardId,
       },
     });
   }
