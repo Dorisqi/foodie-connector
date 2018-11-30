@@ -10,6 +10,7 @@ import ProfilePage from 'components/pages/profile/ProfilePage';
 import RestaurantListPage from 'components/pages/restaurant/RestaurantListPage';
 import RestaurantDetailPage from 'components/pages/restaurant/RestaurantDetailPage';
 import OrderHistoryPage from 'components/pages/orders/OrderHistoryPage';
+import NearbyOrdersPage from 'components/pages/orders/NearbyOrdersPage';
 
 import NotFoundPage from 'components/pages/error/NotFoundPage';
 
@@ -27,6 +28,7 @@ const Routes = () => (
     <PrivateRoute path="/" exact component={RestaurantListPage} />
     <PrivateRoute path="/restaurants/:id" component={RestaurantDetailPage} />
     <PrivateRoute path="/order-history" component={OrderHistoryPage} />
+    <PrivateRoute path="/nearby-orders" component={NearbyOrdersPage} />
     <Route component={NotFoundPage} />
   </Switch>
 );

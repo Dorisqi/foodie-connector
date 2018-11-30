@@ -107,7 +107,7 @@ class RestaurantOrder extends React.Component {
     const { restaurant } = this.props;
     Axios.cancelRequest(this.state.loading);
     this.setState({
-      loading: Api.orderList(restaurant.id, 'created').then((res) => {
+      loading: Api.orderList({ restaurant_id: restaurant.id, order_status: 'created' }).then((res) => {
         this.setState({
           loading: null,
           order: res.data.length > 0 ? res.data[0] : null,

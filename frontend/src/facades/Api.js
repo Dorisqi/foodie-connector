@@ -1,6 +1,5 @@
 import Auth from './Auth';
 import axios from './Axios';
-import mockNotifications from '../mockData/mockNotifications';
 
 class Api {
   /* --- Auth --- */
@@ -143,14 +142,7 @@ class Api {
   }
 
   /* --- Order --- */
-  static orderList(restaurantId = null, orderStatus = null) {
-    const params = {};
-    if (restaurantId) {
-      params.restaurant_id = restaurantId;
-    }
-    if (orderStatus) {
-      params.order_status = orderStatus;
-    }
+  static orderList(params = null) {
     return Api.instance().get('/orders', {
       params,
     });
@@ -169,32 +161,13 @@ class Api {
     return Api.instance().delete(`/orders/${orderId}`);
   }
 
-  /* --- Notification --- */
-  // using mock data
-  static notificationList() {
-    return new Promise((resolve, _reject) => {
-      resolve({ data: { notifications: mockNotifications } });
-    });
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`, {});
   }
 
-  static notificationMarkRead(notificationId) {
-    return new Promise((resolve, reject) => {
-      const notification = mockNotifications.find(item => item.id === notificationId);
-      if (notification) {
-        notification.isRead = true;
-        resolve({ data: { notifications: mockNotifications } });
-      } else {
-        reject(new Error(`Id${notificationId} does not exist.`));
-      }
-    });
-  }
-
-  static notificationMarkAllRead() {
-    return new Promise((resolve, _reject) => {
-      mockNotifications.forEach((notification) => {
-        notification.isRead = true; // eslint-disable-line no-param-reassign
-      });
-      resolve({ data: { notifications: mockNotifications } });
+  static orderRate(orderId, isPostive) {
+    return Api.instance().post(`/orders/${orderId}/rate`, {
+      is_positive: isPostive,
     });
   }
 
