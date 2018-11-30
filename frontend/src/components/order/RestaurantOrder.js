@@ -28,6 +28,7 @@ import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
 import OrderDetailDialog from 'components/order/OrderDetailDialog';
 import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
+import AddressDialog from 'components/address/AddressDialog';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import compose from 'recompose/compose';
@@ -66,6 +67,7 @@ class RestaurantOrder extends React.Component {
     loading: null,
     loadingDeliverable: null,
     creatingOrder: false,
+    addingAddress: false,
     errors: {},
     cancelAlert: false,
     sharing: false,
@@ -164,10 +166,24 @@ class RestaurantOrder extends React.Component {
     });
   };
 
-  handleCreateOrderClick = () => {
+  handleAddingAddressClose = () => {
+    const { address } = this.props;
     this.setState({
-      creatingOrder: true,
+      addingAddress: false,
+      creatingOrder: address.selectedAddress !== 0,
     });
+  };
+
+  handleCreateOrderClick = () => {
+    if (this.props.address.selectedAddress === 0) {
+      this.setState({
+        addingAddress: true,
+      });
+    } else {
+      this.setState({
+        creatingOrder: true,
+      });
+    }
   };
 
   handleCancelOrderClick = () => {
@@ -228,7 +244,7 @@ class RestaurantOrder extends React.Component {
   };
 
   render() {
-    const { classes, restaurant } = this.props;
+    const { classes, restaurant, address } = this.props;
     const {
       order,
       visibility,
@@ -239,7 +255,7 @@ class RestaurantOrder extends React.Component {
       loadingDeliverable,
       sharing,
       detailAlert,
-
+      addingAddress,
     } = this.state;
     if (loading !== null) {
       return (
@@ -319,6 +335,12 @@ class RestaurantOrder extends React.Component {
           </DialogForm>
           )
           }
+          {addingAddress && (
+            <AddressDialog
+              onClose={this.handleAddingAddressClose}
+              currentLocation={address.currentLocation}
+            />
+          )}
         </CardContent>
         )
         }
