@@ -242,7 +242,7 @@ class NearbyOrdersPage extends React.Component {
                   is_public: isPublic,
                   join_before: joinBefore,
                   order_status: orderStatus,
-                  prices: { total: total },
+                  prices: { total },
                   restaurant,
                   is_joinable: isJoinable,
                   creator,

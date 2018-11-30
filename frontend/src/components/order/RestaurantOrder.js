@@ -180,6 +180,11 @@ class RestaurantOrder extends React.Component {
     }
   };
 
+  handleConfirmSuccess = () => {
+    const { order } = this.state;
+    this.props.history.push(`/orders/${order.id}`);
+  };
+
   render() {
     const { classes, restaurant, address } = this.props;
     const {
@@ -308,7 +313,12 @@ class RestaurantOrder extends React.Component {
               secondary={Format.formatAddress(order, true)}
             />
           </ListItem>
-          <OrderActions order={order} showOrderDetailButton />
+          <OrderActions
+            order={order}
+            showOrderDetailButton
+            onCancelSuccess={this.loadOrder}
+            onConfirmSuccess={this.handleConfirmSuccess}
+          />
           <div className={classes.subComponent}>
             <Typography
               className={classes.subComponentTitle}
@@ -337,6 +347,7 @@ RestaurantOrder.propTypes = {
   address: PropTypes.object.isRequired,
   restaurant: PropTypes.object.isRequired,
   onRestaurantUpdate: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default compose(

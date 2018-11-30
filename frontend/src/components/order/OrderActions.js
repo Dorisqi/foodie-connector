@@ -49,29 +49,26 @@ class OrderActions extends React.Component {
   };
 
   cancelApi = () => {
-    const { order } = this.state;
+    const { order } = this.props;
     return Api.orderCancel(order.id);
   };
 
   handleCancelOrderSuccess = () => {
-    this.setState({
-      order: undefined,
-    });
-    this.loadOrder();
+    this.props.onCancelSuccess();
   };
 
   handleConfirmOrderClick = () => {
     if (this.state.confirmingOrder) {
       return;
     }
-    const { order } = this.state;
+    const { order } = this.props;
     this.setState({
       confirmingOrder: Api.orderConfirm(order.id)
         .then((res) => {
           this.setState({
-            order: res.data,
             confirmingOrder: null,
           });
+          this.props.onConfirmSuccess(res.data);
         })
         .catch((err) => {
           this.setState({
@@ -101,9 +98,9 @@ class OrderActions extends React.Component {
   render() {
     const { classes, order, showOrderDetailButton } = this.props;
     const { confirmingOrder, cancelAlert, sharing } = this.state;
-    const isOrderConfirmable = order === null ? false : order.order_members.find(
+    const isOrderConfirmable = order === null ? false : (order.order_members.find(
       member => !member.is_ready,
-    ) === null;
+    ) === undefined);
     return (
       <ListItem className={classes.orderActions}>
         <Button
@@ -193,6 +190,8 @@ class OrderActions extends React.Component {
 OrderActions.propTypes = {
   classes: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired,
+  onConfirmSuccess: PropTypes.func.isRequired,
+  onCancelSuccess: PropTypes.func.isRequired,
   showOrderDetailButton: PropTypes.bool,
 };
 

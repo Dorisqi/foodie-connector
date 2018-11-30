@@ -223,7 +223,7 @@ class OrderHistoryPage extends React.Component {
                   is_public: isPublic,
                   join_before: joinBefore,
                   order_status: orderStatus,
-                  prices: { total : total },
+                  prices: { total },
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
@@ -396,6 +396,7 @@ class OrderHistoryPage extends React.Component {
 
 OrderHistoryPage.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(OrderHistoryPage);

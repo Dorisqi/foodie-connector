@@ -117,27 +117,7 @@ class OrderDetailPage extends React.Component {
     this.updateMap();
   };
 
-  subscribePusher() {
-    const { order } = this.state;
-    if (!order.is_member) {
-      return;
-    }
-    const channel = Pusher.pusher.subscribe(`private-order.${order.id}`);
-    channel.bind('driver-location', (data) => {
-      this.driverLocation = {
-        lat: data.lat,
-        lng: data.lng,
-      };
-      this.updateMap();
-    });
-  }
-
-  unsubscribePusher() {
-    const id = this.props.match.params.id;
-    Pusher.pusher.unsubscribe(`private-order.${id}`);
-  }
-
-  loadOrder() {
+  loadOrder = () => {
     Axios.cancelRequest(this.state.loading);
     Axios.cancelRequest(this.state.joiningOrder);
     this.unsubscribePusher();
@@ -165,6 +145,26 @@ class OrderDetailPage extends React.Component {
           throw err;
         }),
     });
+  };
+
+  subscribePusher() {
+    const { order } = this.state;
+    if (!order.is_member) {
+      return;
+    }
+    const channel = Pusher.pusher.subscribe(`private-order.${order.id}`);
+    channel.bind('driver-location', (data) => {
+      this.driverLocation = {
+        lat: data.lat,
+        lng: data.lng,
+      };
+      this.updateMap();
+    });
+  }
+
+  unsubscribePusher() {
+    const id = this.props.match.params.id;
+    Pusher.pusher.unsubscribe(`private-order.${id}`);
   }
 
   updateMap() {
@@ -339,7 +339,11 @@ class OrderDetailPage extends React.Component {
                       </Typography>
                       <Card>
                         <List>
-                          <OrderActions order={order} />
+                          <OrderActions
+                            order={order}
+                            onConfirmSuccess={this.loadOrder}
+                            onCancelSuccess={this.loadOrder}
+                          />
                         </List>
                       </Card>
                     </div>

@@ -168,6 +168,11 @@ class ProfilePage extends React.Component {
     });
   };
 
+  handleAddressUpdate = (res) => {
+    const addresses = res.data;
+    store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
+  };
+
   render() {
     const { classes, addresses } = this.props;
     const {
@@ -292,6 +297,7 @@ class ProfilePage extends React.Component {
                   && (
                   <CardDialog
                     onClose={this.handleDialogClose}
+                    onUpdate={this.handleCardUpdate}
                   />
                   )
                   }
