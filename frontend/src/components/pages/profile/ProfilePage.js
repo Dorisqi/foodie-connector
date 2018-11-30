@@ -162,10 +162,6 @@ class ProfilePage extends React.Component {
 
   cardSetDefaultApi = card => () => Api.cardSetDefault(card.id);
 
-  handleAddressUpdate = (res) => {
-    store.dispatch(loadAddress(res.data));
-  };
-
   handleCardUpdate = (res) => {
     this.setState({
       cards: res.data,
@@ -296,7 +292,6 @@ class ProfilePage extends React.Component {
                   && (
                   <CardDialog
                     onClose={this.handleDialogClose}
-                    onUpdate={this.handleCardUpdate}
                   />
                   )
                   }

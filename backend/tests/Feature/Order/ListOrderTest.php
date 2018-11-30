@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Restaurant;
+use Illuminate\Support\Facades\DB;
 use Tests\ApiTestCase;
 
 class ListOrderTest extends ApiTestCase
@@ -28,6 +29,13 @@ class ListOrderTest extends ApiTestCase
             'restaurant_id' => $order->restaurant_id,
             'order_status' => 'created',
         ])->assertJsonCount(1);
+        $restaurant = factory(Restaurant::class)->create();
+        $this->assertSucceed([
+            'restaurant_id' => $restaurant->id,
+        ], false)->assertJsonCount(0);
+
+        $user = $this->userFactory()->state('new')->create();
+        $this->login($user);
         $address = factory(Address::class)->create();
         $this->assertSucceed([
             'address_id' => $address->id,
@@ -46,7 +54,16 @@ class ListOrderTest extends ApiTestCase
         $this->assertSucceed([
             'place_id' => 'ChIJP5iLHkCuEmsRwMwyFmh9AQU',
         ], false)->assertJsonCount(0);
-        $this->mockCurrentTime(Time::currentTime()->addHours(3)->toDateTimeString());
+
+        $order->is_public = false;
+        $order->save();
+        $this->assertSucceed([
+            'place_id' => 'ChIJPbVda67iEogRTWzmvivderE',
+        ], false)->assertJsonCount(0);
+        $order->is_public = true;
+        $order->save();
+
+        $this->mockCurrentTime(Time::currentTime()->addHours(3));
         $this->assertSucceed([
             'place_id' => 'ChIJPbVda67iEogRTWzmvivderE',
         ], false)->assertJsonCount(0);
@@ -58,10 +75,6 @@ class ListOrderTest extends ApiTestCase
             'place_id' => 'INVALID'
         ], 422);
         $this->assertArrayHasKey('place_id', $response->json('data'));
-        $restaurant = factory(Restaurant::class)->create();
-        $this->assertSucceed([
-            'restaurant_id' => $restaurant->id,
-        ], false)->assertJsonCount(0);
     }
 
     protected function method()

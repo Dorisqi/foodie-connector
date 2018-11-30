@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import OrderDetailDialog from 'components/order/OrderDetailDialog';
+import Snackbar from 'facades/Snackbar';
 import classnames from 'classnames';
 
 const styles = theme => ({
@@ -40,7 +41,6 @@ const styles = theme => ({
     float: 'left',
   },
   card: {
-    width: window.screen.width * 0.8,
     height: 'auto',
     margin: 'auto',
     marginBottom: 2 * theme.spacing.unit,
@@ -79,6 +79,10 @@ const styles = theme => ({
     float: 'right',
   },
 });
+
+const RED = '#FF0000';
+const GREEN = '#33FE0B';
+const WHITE = '#FFFFFF';
 
 class OrderHistoryPage extends React.Component {
   constructor() {
@@ -128,10 +132,11 @@ class OrderHistoryPage extends React.Component {
     });
   };
 
-  handleCancelOrderSuccess = () => {
+  handleCancelOrderSuccess = id => () => {
     this.setState({
       cancelOrder: null,
     });
+    Snackbar.success(`Successfully cancel order ${id}.`);
     this.loadOrderList();
   }
 
@@ -145,6 +150,21 @@ class OrderHistoryPage extends React.Component {
   handleOrderDetailClose = () => {
     this.setState({
       detailAlert: false,
+    });
+  }
+
+  handleRate = (id, isPostive) => () => {
+    Api.orderRate(id, isPostive).then(() => {
+      this.setState((state) => {
+        const { orders } = state;
+        const order = orders.find(o => o.id === id);
+        order.current_order_member.rate_is_positive = isPostive;
+        return ({
+          orders,
+        });
+      });
+    }).catch((err) => {
+      throw err;
     });
   }
 
@@ -200,6 +220,7 @@ class OrderHistoryPage extends React.Component {
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
+                  current_order_member: { rate_is_positive: rate },
                 } = order;
                 return (
                   <Card className={classes.card}>
@@ -284,6 +305,39 @@ class OrderHistoryPage extends React.Component {
                             </Button>
                           )]
                           }
+                          {orderStatus === 'delivered'
+                            ? (
+                              <ListItem className={classes.action}>
+                                <Button
+                                  styles={{ marginRight: '100%' }}
+                                  variant="contained"
+                                  onClick={this.handleRate(id, true)}
+                                  disable={rate}
+                                >
+                                  <i
+                                    className="material-icons"
+                                    style={{ color: rate === true ? RED : WHITE }}
+                                  >
+                                    thumb_up
+                                  </i>
+                                </Button>
+                                <Button
+                                  styles={{ marginLeft: '100%' }}
+                                  variant="contained"
+                                  onClick={this.handleRate(id, false)}
+                                  disable={rate}
+                                >
+                                  <i
+                                    className="material-icons"
+                                    style={{ color: rate === false ? GREEN : WHITE }}
+                                  >
+                                    thumb_down
+                                  </i>
+                                </Button>
+                              </ListItem>
+                            )
+                            : null
+                          }
                         </ListItem>
                       </List>
                     </Paper>
@@ -312,7 +366,7 @@ class OrderHistoryPage extends React.Component {
               text={`Do you really want to cancel the order ${cancelOrder.id} ?`}
               buttonLabel="Cancel"
               api={this.cancelApi}
-              onUpdate={this.handleCancelOrderSuccess}
+              onUpdate={this.handleCancelOrderSuccess(cancelOrder.id)}
               onClose={this.handleCancelAlertClose}
             />
           )

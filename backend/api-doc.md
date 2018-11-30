@@ -1865,8 +1865,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "id": 2,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "2.00",
+            "order_minimum": 9.99,
+            "delivery_fee": 2,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -1881,6 +1881,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "distance": 0,
             "estimated_delivery_time": 20,
             "is_deliverable": 1,
@@ -1945,8 +1947,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "id": 1,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "1.00",
+            "order_minimum": 9.99,
+            "delivery_fee": 1,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -1961,6 +1963,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "distance": 0,
             "estimated_delivery_time": 20,
             "is_deliverable": 1,
@@ -2055,8 +2059,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "id": 1,
     "name": "Test Restaurant",
     "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-    "order_minimum": "9.99",
-    "delivery_fee": "2.99",
+    "order_minimum": 9.99,
+    "delivery_fee": 2.99,
     "rating": "3.5",
     "address_line_1": "100 Pierce Street",
     "address_line_2": "",
@@ -2071,6 +2075,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
     "restaurant_categories": [
         {
             "id": 1,
@@ -2162,8 +2168,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "id": 1,
     "name": "Test Restaurant",
     "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-    "order_minimum": "9.99",
-    "delivery_fee": "2.99",
+    "order_minimum": 9.99,
+    "delivery_fee": 2.99,
     "rating": "3.5",
     "address_line_1": "100 Pierce Street",
     "address_line_2": "",
@@ -2178,6 +2184,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         ]
     },
     "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
     "distance": 0,
     "estimated_delivery_time": 20,
     "is_deliverable": 1,
@@ -2320,8 +2328,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -2336,6 +2344,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "subtotal": 9.98,
@@ -2414,8 +2424,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -2430,6 +2440,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "subtotal": 9.98,
@@ -2573,7 +2585,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": 1,
+        "is_public": true,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
@@ -2589,16 +2601,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": 1,
-        "is_member": 1,
-        "is_joinable": 1,
-        "is_visible": 1,
+        "is_creator": true,
+        "is_member": true,
+        "is_joinable": true,
+        "is_visible": true,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "2.99",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -2613,6 +2625,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2621,14 +2635,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "order_members": [
             {
-                "is_ready": 0,
-                "phone": "7650000000",
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
                 "products": null,
                 "subtotal": null,
                 "tax": null,
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -2644,7 +2659,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
         "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
-            "estimated_delivery_fee": 2.99
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
         }
     }
 ]
@@ -2666,7 +2697,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": 1,
+        "is_public": true,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
@@ -2682,16 +2713,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": 1,
-        "is_member": 1,
-        "is_joinable": 1,
-        "is_visible": 1,
+        "is_creator": true,
+        "is_member": true,
+        "is_joinable": true,
+        "is_visible": true,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "2.99",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -2706,6 +2737,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
@@ -2714,14 +2747,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "order_members": [
             {
-                "is_ready": 0,
-                "phone": "7650000000",
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
                 "products": null,
                 "subtotal": null,
                 "tax": null,
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
                     "friend_id": "FRIEND"
@@ -2737,7 +2771,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
         "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
-            "estimated_delivery_fee": 2.99
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
         }
     }
 ]
@@ -2759,7 +2809,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": 1,
+        "is_public": true,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
@@ -2775,17 +2825,17 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": 1,
-        "is_member": 1,
-        "is_joinable": 1,
-        "is_visible": 1,
+        "is_creator": false,
+        "is_member": false,
+        "is_joinable": true,
+        "is_visible": true,
         "distance": 0,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "2.99",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -2800,24 +2850,29 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
             "name": "Test User",
+            "email": null,
             "friend_id": "FRIEND"
         },
         "order_members": [
             {
-                "is_ready": 0,
-                "phone": "7650000000",
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
                 "products": null,
                 "subtotal": null,
                 "tax": null,
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
+                    "email": null,
                     "friend_id": "FRIEND"
                 }
             }
@@ -2831,8 +2886,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
         "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
-            "estimated_delivery_fee": 2.99
-        }
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": null
     }
 ]
 ```
@@ -2853,7 +2910,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     {
         "id": "HFEJ32RAFW58ER29R8SW",
         "join_before": "2018-10-27 15:10:01",
-        "is_public": 1,
+        "is_public": true,
         "address_line_1": "134 Pierce Street",
         "address_line_2": "Apt XXX",
         "city": "West Lafayette",
@@ -2869,17 +2926,17 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": 1,
-        "is_member": 1,
-        "is_joinable": 1,
-        "is_visible": 1,
+        "is_creator": false,
+        "is_member": false,
+        "is_joinable": true,
+        "is_visible": true,
         "distance": 279,
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
             "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-            "order_minimum": "9.99",
-            "delivery_fee": "2.99",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
             "rating": "3.5",
             "address_line_1": "100 Pierce Street",
             "address_line_2": "",
@@ -2894,24 +2951,29 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 ]
             },
             "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
             "tax_percentage": 7
         },
         "creator": {
             "name": "Test User",
+            "email": null,
             "friend_id": "FRIEND"
         },
         "order_members": [
             {
-                "is_ready": 0,
-                "phone": "7650000000",
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
                 "products": null,
                 "subtotal": null,
                 "tax": null,
                 "tip": null,
                 "delivery_fee": null,
                 "total": null,
+                "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
+                    "email": null,
                     "friend_id": "FRIEND"
                 }
             }
@@ -2925,8 +2987,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
         "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
-            "estimated_delivery_fee": 2.99
-        }
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": null
     }
 ]
 ```
@@ -3013,7 +3077,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": 1,
+    "is_public": true,
     "address_line_1": "134 Pierce St",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
@@ -3029,16 +3093,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "phone": "7653500000",
     "created_at": "2018-10-27 15:00:01",
     "order_status": "created",
-    "is_creator": 1,
-    "is_member": 1,
-    "is_joinable": 1,
-    "is_visible": 1,
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -3053,6 +3117,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3061,14 +3127,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 0,
-            "phone": "7653500000",
+            "order_id": "5293B4D882CCD1C98FB5",
+            "is_ready": false,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3084,7 +3151,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
-        "estimated_delivery_fee": 2.99
+        "estimated_delivery_fee": 2.99,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "5293B4D882CCD1C98FB5",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
     }
 }
 ```
@@ -3185,6 +3268,99 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **POST - /api/v1/orders/direct-checkout**
+
+Direct checkout without a group order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | required | integer | exists:restaurants,id |
+| address_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 2,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "order_id": "288567896237F51CE9F6",
+    "is_ready": false,
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98,
+    "tax": 0.7,
+    "tip": null,
+    "delivery_fee": 2.99,
+    "total": null,
+    "rate_is_positive": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+
 ### **GET - /api/v1/orders/{id}**
 
 Show the detail of a specific order
@@ -3213,7 +3389,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": 1,
+    "is_public": true,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
@@ -3229,16 +3405,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "phone": "7650000000",
     "created_at": "2018-10-27 15:00:01",
     "order_status": "created",
-    "is_creator": 1,
-    "is_member": 1,
-    "is_joinable": 1,
-    "is_visible": 1,
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -3253,6 +3429,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3261,14 +3439,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 0,
-            "phone": "7650000000",
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3284,7 +3463,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
-        "estimated_delivery_fee": 2.99
+        "estimated_delivery_fee": 2.99,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
     }
 }
 ```
@@ -3292,7 +3487,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2
 
 **Request Header:**
 ```
@@ -3334,7 +3529,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": 1,
+    "is_public": true,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
@@ -3350,16 +3545,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "phone": "7650000000",
     "created_at": "2018-10-27 15:00:01",
     "order_status": "closed",
-    "is_creator": 1,
-    "is_member": 1,
-    "is_joinable": 0,
-    "is_visible": 1,
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": false,
+    "is_visible": true,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -3374,6 +3569,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3382,14 +3579,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 0,
-            "phone": "7650000000",
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3408,14 +3606,32 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ],
     "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
-    "prices": null
+    "prices": {
+        "estimated_delivery_fee": null,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
 }
 ```
 #### **Status Code: 404**
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2
 
 **Request Header:**
 ```
@@ -3472,8 +3688,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "is_ready": 0,
-    "phone": "7650000000",
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": false,
     "products": [
         {
             "name": "Test Product",
@@ -3490,11 +3706,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         }
     ],
-    "subtotal": "9.98",
-    "tax": "0.7",
+    "subtotal": 9.98,
+    "tax": 0.7,
     "tip": null,
-    "delivery_fee": "2.99",
+    "delivery_fee": 2.99,
     "total": null,
+    "rate_is_positive": null,
     "user": {
         "name": "Test User",
         "friend_id": "FRIEND"
@@ -3598,7 +3815,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": 1,
+    "is_public": true,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
@@ -3614,16 +3831,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "phone": "7650000000",
     "created_at": "2018-10-27 15:00:01",
     "order_status": "confirmed",
-    "is_creator": 1,
-    "is_member": 1,
-    "is_joinable": 0,
-    "is_visible": 1,
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": false,
+    "is_visible": true,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "0.00",
-        "delivery_fee": "2.99",
+        "order_minimum": 0,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -3638,6 +3855,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3646,14 +3865,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 1,
-            "phone": "7650000000",
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": true,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
-            "delivery_fee": "2.99",
-            "total": "2.99",
+            "delivery_fee": 2.99,
+            "total": 2.99,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "FRIEND"
@@ -3672,14 +3892,32 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     ],
     "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
-    "prices": null
+    "prices": {
+        "estimated_delivery_fee": null,
+        "total": 2.99
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": true,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": 2.99,
+        "total": 2.99,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
 }
 ```
 #### **Status Code: 404**
 
 Resource not found.
 
-**URI**: /api/v1/orders/A00000/confirm
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/confirm
 
 **Request Header:**
 ```
@@ -3898,9 +4136,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| phone | required | phone:US |  |
+No param
 
 #### **Status Code: 200**
 
@@ -3913,19 +4149,12 @@ Successful operation.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-{
-    "phone": "7653500000"
-}
-```
-
 **Response Body:**
 ```
 {
     "id": "HFEJ32RAFW58ER29R8SW",
     "join_before": "2018-10-27 15:10:01",
-    "is_public": 1,
+    "is_public": true,
     "address_line_1": "134 Pierce Street",
     "address_line_2": "Apt XXX",
     "city": "West Lafayette",
@@ -3941,16 +4170,16 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "phone": "7650000000",
     "created_at": "2018-10-27 15:00:01",
     "order_status": "created",
-    "is_creator": 0,
-    "is_member": 1,
-    "is_joinable": 1,
-    "is_visible": 1,
+    "is_creator": false,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
         "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
-        "order_minimum": "9.99",
-        "delivery_fee": "2.99",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
         "rating": "3.5",
         "address_line_1": "100 Pierce Street",
         "address_line_2": "",
@@ -3965,6 +4194,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         },
         "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
         "tax_percentage": 7
     },
     "creator": {
@@ -3974,14 +4205,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "is_ready": 0,
-            "phone": "7650000000",
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "email": null,
@@ -3989,14 +4221,15 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             }
         },
         {
-            "is_ready": 0,
-            "phone": "7653500000",
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
             "products": null,
             "subtotal": null,
             "tax": null,
             "tip": null,
             "delivery_fee": null,
             "total": null,
+            "rate_is_positive": null,
             "user": {
                 "name": "Test User",
                 "friend_id": "NEWFRD"
@@ -4012,7 +4245,23 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
     "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
-        "estimated_delivery_fee": 1.5
+        "estimated_delivery_fee": 1.5,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "NEWFRD"
+        }
     }
 }
 ```
@@ -4025,13 +4274,6 @@ You have already joined this order.
 **Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "phone": "7653500001"
-}
 ```
 
 **Response Body:**
@@ -4051,39 +4293,10 @@ This order is no longer joinable.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-{
-    "phone": "7653500002"
-}
-```
-
 **Response Body:**
 ```
 {
     "message": "This order is no longer joinable."
-}
-```
-#### **Status Code: 422**
-
-Validation failed.
-
-**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/join
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "phone": [
-            "The phone field is required."
-        ]
-    }
 }
 ```
 
@@ -4124,8 +4337,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "is_ready": 1,
-    "phone": "7650000000",
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": true,
     "products": [
         {
             "name": "Test Product",
@@ -4143,10 +4356,11 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         }
     ],
     "subtotal": "9.98",
-    "tax": "0.70",
-    "tip": "2",
-    "delivery_fee": "2.99",
-    "total": "15.67",
+    "tax": 0.7,
+    "tip": 2,
+    "delivery_fee": 2.99,
+    "total": 15.67,
+    "rate_is_positive": null,
     "user": {
         "name": "Test User",
         "friend_id": "FRIEND"
@@ -4251,6 +4465,101 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "This order is already paid."
+}
+```
+
+### **POST - /api/v1/orders/{id}/rate**
+
+Rate the restaurant corresponding to the delivered order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| is_positive | required | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": false,
+    "products": null,
+    "subtotal": null,
+    "tax": null,
+    "tip": null,
+    "delivery_fee": null,
+    "total": null,
+    "rate_is_positive": true
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Only delivered orders can be rated.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Only delivered orders can be rated."
 }
 ```
 

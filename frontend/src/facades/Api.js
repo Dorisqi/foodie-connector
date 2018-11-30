@@ -142,13 +142,14 @@ class Api {
   }
 
   /* --- Order --- */
-  static orderList(restaurantId, orderStatus) {
+  static orderList(params = null) {
     return Api.instance().get('/orders', {
-      params: {
-        restaurant_id: restaurantId,
-        order_status: orderStatus,
-      },
+      params,
     });
+  }
+
+  static orderShow(restaurantId) {
+    return Api.instance().get(`/orders/${restaurantId}`);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
@@ -160,8 +161,39 @@ class Api {
     });
   }
 
+  static singleOrderCreate(restaurantId) {
+    return Api.instance().post('/orders', restaurantId);
+  }
+
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
+  }
+
+  static orderRate(orderId, isPostive) {
+    return Api.instance().post(`/orders/${orderId}/rate`, {
+      is_positive: isPostive,
+    });
+  }
+
+  static orderDetail(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
+  }
+
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`, {});
+  }
+
+  /* --- Checkout --- */
+  static orderCheckout(orderId) {
+    return Api.instance().post(`/orders/${orderId}/checkout`);
+  }
+
+  /* --- Pay --- */
+  static orderPay(orderId, tip, selectedCardId) {
+    return Api.instance().post(`/orders/${orderId}/pay`, {
+      tip,
+      card_id: selectedCardId,
+    });
   }
 
   static instance(requireAuth = true) {

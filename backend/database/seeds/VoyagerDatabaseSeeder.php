@@ -16,10 +16,17 @@ class VoyagerDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->seed('DataTypesTableSeeder');
-        $this->seed('DataRowsTableSeeder');
+        $data = json_decode(file_get_contents(database_path('seeds/data/voyager.json')), true);
+        foreach ($data as $table => $tableData) {
+            $this->command->info("Seeding ${table}.");
+            \Illuminate\Support\Facades\DB::table($table)->delete();
+            \Illuminate\Support\Facades\DB::table($table)->insert($tableData);
+        }
+
+//        $this->seed('DataTypesTableSeeder');
+//        $this->seed('DataRowsTableSeeder');
         $this->seed('MenusTableSeeder');
-        $this->seed('MenuItemsTableSeeder');
+//        $this->seed('MenuItemsTableSeeder');
         $this->seed('RolesTableSeeder');
         $this->seed('PermissionsTableSeeder');
         $this->seed('PermissionRoleTableSeeder');

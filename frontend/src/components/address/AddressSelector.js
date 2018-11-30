@@ -54,11 +54,6 @@ class AddressSelector extends React.Component {
     });
   };
 
-  handleAddressUpdate = (res) => {
-    const addresses = res.data;
-    store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
-  };
-
   loadCurrentLocation() {
     store.dispatch(selectAddress(0));
     if (this.props.currentLocation === null) {
@@ -131,7 +126,6 @@ class AddressSelector extends React.Component {
         && (
         <AddressDialog
           onClose={this.handleAddingAddressClose}
-          onUpdate={this.handleAddressUpdate}
         />
         )
         }

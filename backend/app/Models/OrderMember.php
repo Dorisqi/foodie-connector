@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class OrderMember extends Model
 {
@@ -15,11 +16,20 @@ class OrderMember extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'is_ready', 'phone', 'products', 'subtotal', 'tax', 'tip', 'delivery_fee', 'total',
+        'is_ready', 'products', 'subtotal', 'tax', 'tip', 'delivery_fee', 'total',
     ];
 
     protected $hidden = [
-        'order_id', 'api_user_id',
+        'api_user_id',
+    ];
+
+    protected $casts = [
+        'is_ready' => 'bool',
+        'rate_is_positive' => 'bool',
+        'tax' => 'float',
+        'tip' => 'float',
+        'delivery_fee' => 'float',
+        'total' => 'float',
     ];
 
     public function user()

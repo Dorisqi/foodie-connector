@@ -105,7 +105,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $time
      * @return void
      */
-    protected function mockCurrentTime(string $time)
+    protected function mockCurrentTime($time)
     {
         $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
         $property->setAccessible(true);

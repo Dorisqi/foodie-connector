@@ -24,26 +24,18 @@ class JoinOrderTest extends ApiTestCase
         $order = factory(Order::class)->create();
         $this->id = $order->id;
         $this->login($this->userFactory()->state('new')->create());
-        $this->assertSucceed([
-            'phone' => '7653500000',
-        ])->assertJson([
+        $this->assertSucceed(null)->assertJson([
             'prices' => [
                 'estimated_delivery_fee' => 1.50,
             ],
         ]);
-        $this->assertFailed([
-            'phone' => '7653500001',
-        ], 422)->assertJson([
+        $this->assertFailed(null, 422)->assertJson([
             'message' => 'You have already joined this order.',
         ]);
         $this->mockCurrentTime(Time::currentTime()->addHours(3)->toDateTimeString());
-        $this->assertFailed([
-            'phone' => '7653500002',
-        ], 422)->assertJson([
+        $this->assertFailed(null, 422)->assertJson([
             'message' => 'This order is no longer joinable.',
         ]);
-        $response = $this->assertFailed(null, 422);
-        $this->assertArrayHasKey('phone', $response->json('data'));
     }
 
     protected function method()
@@ -68,6 +60,6 @@ class JoinOrderTest extends ApiTestCase
 
     protected function rules()
     {
-        return OrderController::joinRules();
+        return [];
     }
 }

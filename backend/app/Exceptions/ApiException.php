@@ -190,6 +190,10 @@ class ApiException extends Exception
     {
         return new ApiException('Failed to meet the order minimum.', 422);
     }
+    public static function orderNotRatable()
+    {
+        return new ApiException('Only delivered orders can be rated.', 422);
+    }
 
     /* Friend */
     public static function notFriend()

@@ -18,7 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { withStyles } from '@material-ui/core/styles';
 import Pusher from 'facades/Pusher';
 import FollowfriendDialog from '../friends/FollowfriendDialog';
-import NotificationBox from './NotificationDialog';
+import NotificationDialog from './NotificationDialog';
 
 const styles = () => ({
   root: {
@@ -171,6 +171,16 @@ class Header extends React.Component {
         >
           Order History
         </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/nearby-orders',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Nearby Orders
+        </MenuItem>
         {location.pathname !== '/logout'
         && (
           <MenuItem
@@ -252,7 +262,7 @@ class Header extends React.Component {
         {renderMenu}
         {notificationsOpen
           ? (
-            <NotificationBox
+            <NotificationDialog
               open={notificationsOpen}
               notifications={notifications}
               handleMarkRead={this.handleMarkRead}
