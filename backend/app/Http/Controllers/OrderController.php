@@ -138,9 +138,7 @@ class OrderController extends ApiController
 
             $order->save();
 
-            $orderMember = new OrderMember([
-                'phone' => $order->phone,
-            ]);
+            $orderMember = new OrderMember();
             $orderMember->user()->associate($this->user());
             $orderMember->order()->associate($order);
             $orderMember->save();
@@ -214,7 +212,6 @@ class OrderController extends ApiController
      */
     public function join($id, Request $request)
     {
-        $this->validateInput($request, $this::joinRules());
         $order = Order::query(false)->find($id);
         if (is_null($order)) {
             throw ApiException::resourceNotFound();
@@ -225,9 +222,7 @@ class OrderController extends ApiController
         if ($order->is_member) {
             throw ApiException::orderAlreadyJoined();
         }
-        $orderMember = new OrderMember([
-            'phone' => $request->input('phone'),
-        ]);
+        $orderMember = new OrderMember();
         $orderMember->user()->associate($this->user());
         $orderMember->order()->associate($order);
         $orderMember->save();
@@ -520,13 +515,6 @@ class OrderController extends ApiController
         return [
             'email' => 'email',
             'friend_id' => 'required_without:email|string',
-        ];
-    }
-
-    public static function joinRules()
-    {
-        return [
-            'phone' => 'required|phone:US',
         ];
     }
 

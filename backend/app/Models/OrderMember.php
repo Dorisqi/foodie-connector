@@ -16,7 +16,7 @@ class OrderMember extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'is_ready', 'phone', 'products', 'subtotal', 'tax', 'tip', 'delivery_fee', 'total',
+        'is_ready', 'products', 'subtotal', 'tax', 'tip', 'delivery_fee', 'total',
     ];
 
     protected $hidden = [

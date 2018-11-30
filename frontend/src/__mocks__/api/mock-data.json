@@ -1352,7 +1352,6 @@
                     "order_members": [
                         {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -1384,7 +1383,6 @@
                     },
                     "current_order_member": {
                         "is_ready": false,
-                        "phone": "7650000000",
                         "products": null,
                         "subtotal": null,
                         "tax": null,
@@ -1473,7 +1471,6 @@
                     "order_members": [
                         {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -1501,7 +1498,6 @@
                     },
                     "current_order_member": {
                         "is_ready": false,
-                        "phone": "7650000000",
                         "products": null,
                         "subtotal": null,
                         "tax": null,
@@ -1555,7 +1551,6 @@
                 "status_code": 200,
                 "response": {
                     "is_ready": false,
-                    "phone": "7650000000",
                     "products": [
                         {
                             "name": "Test Product",
@@ -1708,7 +1703,6 @@
                     "order_members": [
                         {
                             "is_ready": true,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -1740,7 +1734,6 @@
                     },
                     "current_order_member": {
                         "is_ready": true,
-                        "phone": "7650000000",
                         "products": null,
                         "subtotal": null,
                         "tax": null,
@@ -1836,7 +1829,6 @@
                     "order_members": [
                         {
                             "is_ready": false,
-                            "phone": "7653500000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -1864,7 +1856,6 @@
                     },
                     "current_order_member": {
                         "is_ready": false,
-                        "phone": "7653500000",
                         "products": null,
                         "subtotal": null,
                         "tax": null,
@@ -2006,7 +1997,6 @@
                         "order_members": [
                             {
                                 "is_ready": false,
-                                "phone": "7650000000",
                                 "products": null,
                                 "subtotal": null,
                                 "tax": null,
@@ -2034,7 +2024,6 @@
                         },
                         "current_order_member": {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2144,9 +2133,7 @@
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
-                "request": {
-                    "phone": "7653500000"
-                },
+                "request": null,
                 "status_code": 200,
                 "response": {
                     "id": "HFEJ32RAFW58ER29R8SW",
@@ -2203,7 +2190,6 @@
                     "order_members": [
                         {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2219,7 +2205,6 @@
                         },
                         {
                             "is_ready": false,
-                            "phone": "7653500000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2247,7 +2232,6 @@
                     },
                     "current_order_member": {
                         "is_ready": false,
-                        "phone": "7653500000",
                         "products": null,
                         "subtotal": null,
                         "tax": null,
@@ -2267,9 +2251,7 @@
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
-                "request": {
-                    "phone": "7653500001"
-                },
+                "request": null,
                 "status_code": 422,
                 "response": {
                     "message": "You have already joined this order."
@@ -2280,28 +2262,10 @@
                 "header": {
                     "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
                 },
-                "request": {
-                    "phone": "7653500002"
-                },
-                "status_code": 422,
-                "response": {
-                    "message": "This order is no longer joinable."
-                },
-                "response_header": null
-            },
-            {
-                "header": {
-                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
-                },
                 "request": null,
                 "status_code": 422,
                 "response": {
-                    "message": "Validation failed.",
-                    "data": {
-                        "phone": [
-                            "The phone field is required."
-                        ]
-                    }
+                    "message": "This order is no longer joinable."
                 },
                 "response_header": null
             }
@@ -2370,7 +2334,6 @@
                         "order_members": [
                             {
                                 "is_ready": false,
-                                "phone": "7650000000",
                                 "products": null,
                                 "subtotal": null,
                                 "tax": null,
@@ -2398,7 +2361,6 @@
                         },
                         "current_order_member": {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2481,7 +2443,6 @@
                         "order_members": [
                             {
                                 "is_ready": false,
-                                "phone": "7650000000",
                                 "products": null,
                                 "subtotal": null,
                                 "tax": null,
@@ -2509,7 +2470,6 @@
                         },
                         "current_order_member": {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2592,7 +2552,6 @@
                         "order_members": [
                             {
                                 "is_ready": false,
-                                "phone": "7650000000",
                                 "products": null,
                                 "subtotal": null,
                                 "tax": null,
@@ -2620,7 +2579,6 @@
                         },
                         "current_order_member": {
                             "is_ready": false,
-                            "phone": "7650000000",
                             "products": null,
                             "subtotal": null,
                             "tax": null,
@@ -2747,7 +2705,6 @@
                 "status_code": 200,
                 "response": {
                     "is_ready": true,
-                    "phone": "7650000000",
                     "products": [
                         {
                             "name": "Test Product",
@@ -2835,7 +2792,6 @@
                 "status_code": 200,
                 "response": {
                     "is_ready": false,
-                    "phone": "7650000000",
                     "products": null,
                     "subtotal": null,
                     "tax": null,

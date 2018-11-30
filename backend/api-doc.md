@@ -2636,7 +2636,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "order_members": [
             {
                 "is_ready": false,
-                "phone": "7650000000",
                 "products": null,
                 "subtotal": null,
                 "tax": null,
@@ -2664,7 +2663,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "current_order_member": {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -2748,7 +2746,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "order_members": [
             {
                 "is_ready": false,
-                "phone": "7650000000",
                 "products": null,
                 "subtotal": null,
                 "tax": null,
@@ -2776,7 +2773,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "current_order_member": {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -2861,7 +2857,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "order_members": [
             {
                 "is_ready": false,
-                "phone": "7650000000",
                 "products": null,
                 "subtotal": null,
                 "tax": null,
@@ -2889,7 +2884,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "current_order_member": {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -2974,7 +2968,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "order_members": [
             {
                 "is_ready": false,
-                "phone": "7650000000",
                 "products": null,
                 "subtotal": null,
                 "tax": null,
@@ -3002,7 +2995,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "current_order_member": {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -3152,7 +3144,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "order_members": [
         {
             "is_ready": false,
-            "phone": "7653500000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -3180,7 +3171,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "current_order_member": {
         "is_ready": false,
-        "phone": "7653500000",
         "products": null,
         "subtotal": null,
         "tax": null,
@@ -3371,7 +3361,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "order_members": [
         {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -3399,7 +3388,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "current_order_member": {
         "is_ready": false,
-        "phone": "7650000000",
         "products": null,
         "subtotal": null,
         "tax": null,
@@ -3511,7 +3499,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "order_members": [
         {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -3543,7 +3530,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "current_order_member": {
         "is_ready": false,
-        "phone": "7650000000",
         "products": null,
         "subtotal": null,
         "tax": null,
@@ -3620,7 +3606,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "is_ready": false,
-    "phone": "7650000000",
     "products": [
         {
             "name": "Test Product",
@@ -3797,7 +3782,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "order_members": [
         {
             "is_ready": true,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -3829,7 +3813,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "current_order_member": {
         "is_ready": true,
-        "phone": "7650000000",
         "products": null,
         "subtotal": null,
         "tax": null,
@@ -4067,9 +4050,7 @@ Required
 
 #### **Params**
 
-| Key | Required | Type | Extra |
-| :--- | :--- | :--- | :--- |
-| phone | required | phone:US |  |
+No param
 
 #### **Status Code: 200**
 
@@ -4080,13 +4061,6 @@ Successful operation.
 **Request Header:**
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "phone": "7653500000"
-}
 ```
 
 **Response Body:**
@@ -4146,7 +4120,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "order_members": [
         {
             "is_ready": false,
-            "phone": "7650000000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -4162,7 +4135,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         {
             "is_ready": false,
-            "phone": "7653500000",
             "products": null,
             "subtotal": null,
             "tax": null,
@@ -4190,7 +4162,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "current_order_member": {
         "is_ready": false,
-        "phone": "7653500000",
         "products": null,
         "subtotal": null,
         "tax": null,
@@ -4216,13 +4187,6 @@ You have already joined this order.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-{
-    "phone": "7653500001"
-}
-```
-
 **Response Body:**
 ```
 {
@@ -4240,39 +4204,10 @@ This order is no longer joinable.
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
 
-**Request Body:**
-```
-{
-    "phone": "7653500002"
-}
-```
-
 **Response Body:**
 ```
 {
     "message": "This order is no longer joinable."
-}
-```
-#### **Status Code: 422**
-
-Validation failed.
-
-**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/join
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "message": "Validation failed.",
-    "data": {
-        "phone": [
-            "The phone field is required."
-        ]
-    }
 }
 ```
 
@@ -4314,7 +4249,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "is_ready": true,
-    "phone": "7650000000",
     "products": [
         {
             "name": "Test Product",
@@ -4480,7 +4414,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "is_ready": false,
-    "phone": "7650000000",
     "products": null,
     "subtotal": null,
     "tax": null,
