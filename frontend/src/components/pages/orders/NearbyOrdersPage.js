@@ -209,6 +209,13 @@ class NearbyOrdersPage extends React.Component {
     });
   }
 
+  handleGroupCheckout = order => () => {
+    this.props.history.push({
+      pathname: `/orders/${order.id}/checkout`,
+      state: { order },
+    });
+  }
+
   cancelApi = () => {
     const { cancelOrder } = this.state;
     return Api.orderCancel(cancelOrder.id);
@@ -247,6 +254,7 @@ class NearbyOrdersPage extends React.Component {
                   is_joinable: isJoinable,
                   creator,
                   distance,
+                  current_order_member: { is_ready: isReady }
                 } = order;
                 return (
                   <Card className={classes.card}>
@@ -326,8 +334,8 @@ class NearbyOrdersPage extends React.Component {
                               variant="outlined"
                               color="primary"
                               fullWidth
-                              disabled={orderStatus !== 'created'}
-                              // TODO: checkout action
+                              disabled={!isReady}
+                              onClick={this.handleCancelOrderClick(order)}
                             >
                               Checkout
                             </Button>
@@ -341,7 +349,7 @@ class NearbyOrdersPage extends React.Component {
                               variant="outlined"
                               fullWidth
                               onClick={this.handleCancelOrderClick(order)}
-                              disabled={orderStatus !== 'created'}
+                              disabled={!isJoinable}
                             >
                               Cancel Order
                             </Button>

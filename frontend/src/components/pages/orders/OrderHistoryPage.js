@@ -227,7 +227,7 @@ class OrderHistoryPage extends React.Component {
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
-                  current_order_member: { rate_is_positive: rate },
+                  current_order_member: { rate_is_positive: rate, is_ready: isReady },
                 } = order;
                 return (
                   <Card className={classes.card}>
@@ -292,7 +292,7 @@ class OrderHistoryPage extends React.Component {
                               variant="outlined"
                               color="primary"
                               fullWidth
-                              disabled={orderStatus !== 'created'}
+                              disabled={isReady}
                               onClick={this.handleGroupCheckout(order)}
                             >
                               Checkout
@@ -307,7 +307,7 @@ class OrderHistoryPage extends React.Component {
                               variant="outlined"
                               fullWidth
                               onClick={this.handleCancelOrderClick(order)}
-                              disabled={orderStatus !== 'created'}
+                              disabled={!isJoinable}
                             >
                               Cancel Order
                             </Button>

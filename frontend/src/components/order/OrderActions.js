@@ -49,7 +49,7 @@ class OrderActions extends React.Component {
   };
 
   cancelApi = () => {
-    const { order } = this.state;
+    const { order } = this.props;
     return Api.orderCancel(order.id);
   };
 
