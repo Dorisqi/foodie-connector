@@ -12,16 +12,15 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { cartUpdate, cartClear, cartUpdateItem } from 'actions/cartActions';
 import store from 'store';
 import Format from 'facades/Format';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
+import compose from 'recompose/compose';
+import { Link, withRouter } from 'react-router-dom';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
-import compose from 'recompose/compose'
-import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   loading: {
@@ -121,9 +120,8 @@ class Cart extends React.Component {
   };
 
   handleDirectCheckout = () => {
-
     this.setState({
-      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) =>{
+      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) => {
         this.setState({
           loading: null,
           orderId: res.data.id,
@@ -138,8 +136,10 @@ class Cart extends React.Component {
   };
 
   render() {
-    const {classes, restaurant, cart, productMap,} = this.props;
-    const { updatingItemIndex, orderId,} = this.state;
+    const {
+      classes, restaurant, cart, productMap,
+    } = this.props;
+    const { updatingItemIndex, orderId } = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -248,7 +248,7 @@ class Cart extends React.Component {
                 fullWidth
                 onClick={this.handleDirectCheckout}
                 to={{
-                  pathname: `/orders/${orderId}/checkout`
+                  pathname: `/orders/${orderId}/checkout`,
                 }}
               >
                 Direct Checkout
@@ -272,7 +272,6 @@ Cart.propTypes = {
   restaurant: PropTypes.object,
   productMap: PropTypes.object,
   cart: PropTypes.object,
-  address: PropTypes.object.isRequired,
 
 };
 
@@ -284,5 +283,5 @@ Cart.defaultProps = {
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
-)(withRouter(Cart))
+  connect(mapStateToProps),
+)(withRouter(Cart));

@@ -1,6 +1,7 @@
 import Auth from './Auth';
 import axios from './Axios';
 import mockNotifications from '../mockData/mockNotifications';
+
 class Api {
   /* --- Auth --- */
   static login(email, password) {
@@ -143,7 +144,7 @@ class Api {
 
   /* --- Order --- */
   static orderShow(restaurantId) {
-    return Api.instance().get('/orders/',restaurantId);
+    return Api.instance().get('/orders/', restaurantId);
   }
 
   static orderList(restaurantId, orderStatus) {
@@ -164,29 +165,31 @@ class Api {
     });
   }
 
-  static singleOrderCreate(restaurantId){
+  static singleOrderCreate(restaurantId) {
     return Api.instance().post('/orders', restaurantId);
   }
 
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
   }
+
   static orderDetail(orderId) {
     return Api.instance().get(`/orders/${orderId}`);
   }
 
   /* --- Checkout --- */
-  static orderCheckout (orderId) {
+  static orderCheckout(orderId) {
     return Api.instance().post(`/orders/${orderId}/checkout`);
   }
 
   /* --- Pay --- */
-  static orderPay(orderId, tip, selectedCardId ) {
+  static orderPay(orderId, tip, selectedCardId) {
     return Api.instance().post(`/orders/${orderId}/pay`, {
-        tip: tip,
-        card_id: selectedCardId,
+      tip,
+      card_id: selectedCardId,
     });
   }
+
   /* --- Notification --- */
   // using mock data
   static notificationList() {

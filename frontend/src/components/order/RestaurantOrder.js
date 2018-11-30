@@ -30,8 +30,8 @@ import OrderDetailDialog from 'components/order/OrderDetailDialog';
 import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
-import compose from 'recompose/compose'
-import CheckOutPage from 'components/pages/checkout/CheckOutPage'
+import compose from 'recompose/compose';
+
 const styles = theme => ({
   margin: {
     marginTop: theme.spacing.unit,
@@ -69,7 +69,6 @@ class RestaurantOrder extends React.Component {
     errors: {},
     cancelAlert: false,
     sharing: false,
-    checkout: false,
     order: null,
     detailAlert: false,
   };
@@ -220,16 +219,16 @@ class RestaurantOrder extends React.Component {
   }
 
   handleGroupCheckout = () => {
-    const {order} = this.state;
-    //let path = `/orders/${order.id}/checkout`;
+    const { order } = this.state;
+    // let path = `/orders/${order.id}/checkout`;
     this.props.history.push({
       pathname: `/orders/${order.id}/checkout`,
-      state: {order: order}
+      state: { order },
     });
   };
 
   render() {
-    const { classes, restaurant} = this.props;
+    const { classes, restaurant } = this.props;
     const {
       order,
       visibility,
@@ -240,7 +239,6 @@ class RestaurantOrder extends React.Component {
       loadingDeliverable,
       sharing,
       detailAlert,
-      isClick,
 
     } = this.state;
     if (loading !== null) {
@@ -388,7 +386,7 @@ class RestaurantOrder extends React.Component {
                 className={classes.action}
                 variant="outlined"
                 color="primary"
-                onClick = {this.handleGroupCheckout}
+                onClick={this.handleGroupCheckout}
                 fullWidth
               >
                 Checkout
@@ -445,14 +443,16 @@ const mapStateToProps = state => ({
   address: state.address,
 });
 
+
 RestaurantOrder.propTypes = {
   classes: PropTypes.object.isRequired,
   address: PropTypes.object.isRequired,
   restaurant: PropTypes.object.isRequired,
   onRestaurantUpdate: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
-)(withRouter(RestaurantOrder))
+  connect(mapStateToProps),
+)(withRouter(RestaurantOrder));
