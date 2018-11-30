@@ -1,7 +1,6 @@
 import Auth from './Auth';
 import axios from './Axios';
 import mockNotifications from '../mockData/mockNotifications';
-
 class Api {
   /* --- Auth --- */
   static login(email, password) {
@@ -226,6 +225,27 @@ class Api {
       instance.defaults.headers.common.Authorization = Auth.getToken();
     }
     return instance;
+  }
+
+  static findOrder(id) {
+    return Api.instance().get('/orders/', id);
+  }
+
+  static inviteFriend(orderId, email) {
+    return Api.instance().post(`orders/${orderId}/invitation`, { email });
+  }
+
+
+  /* --- Friends --- */
+  static friendList() {
+    return Api.instance().get('/friends');
+  }
+
+  static followNewFriend(email) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().post('/friends', {
+      email,
+    });
   }
 }
 

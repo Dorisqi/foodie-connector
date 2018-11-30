@@ -11,8 +11,10 @@ import registerServiceWorker from 'registerServiceWorker';
 import Root from 'components/template/Root';
 import store from 'store';
 import Stripe from 'facades/Stripe';
+import Pusher from 'facades/Pusher';
 
 Stripe.load();
+Pusher.init();
 
 const theme = createMuiTheme({
   typography: {

@@ -11,8 +11,9 @@ class Auth {
   }
 
   static authenticateFromResponse = component => (res) => {
-    const { api_token: apiToken } = res.data;
+    const { api_token: apiToken, user: { id } } = res.data;
     Auth.authenticateUser(apiToken);
+    LocalStorage.setItem('userId', id);
     const { history, location } = component.props;
     Auth.redirect(history, location);
   };
@@ -24,6 +25,7 @@ class Auth {
   static deauthenticateUser() {
     store.dispatch(clearAddress());
     LocalStorage.removeItem('authentication');
+    LocalStorage.removeItem('userId');
   }
 
   static getToken() {

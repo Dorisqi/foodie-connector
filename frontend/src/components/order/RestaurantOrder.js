@@ -26,6 +26,8 @@ import Snackbar from 'facades/Snackbar';
 import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
+import OrderDetailDialog from 'components/order/OrderDetailDialog';
+import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
 import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import compose from 'recompose/compose'
@@ -69,6 +71,7 @@ class RestaurantOrder extends React.Component {
     sharing: false,
     checkout: false,
     order: null,
+    detailAlert: false,
   };
 
   componentDidMount() {
@@ -204,6 +207,18 @@ class RestaurantOrder extends React.Component {
     });
   };
 
+  handleOrderDetail = () => {
+    this.setState({
+      detailAlert: true,
+    });
+  }
+
+  handleOrderDetailClose = () => {
+    this.setState({
+      detailAlert: false,
+    });
+  }
+
   handleGroupCheckout = () => {
     const {order} = this.state;
     //let path = `/orders/${order.id}/checkout`;
@@ -212,6 +227,7 @@ class RestaurantOrder extends React.Component {
       state: {order: order}
     });
   };
+
   render() {
     const { classes, restaurant} = this.props;
     const {
@@ -223,7 +239,9 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
+      detailAlert,
       isClick,
+
     } = this.state;
     if (loading !== null) {
       return (
@@ -355,21 +373,26 @@ class RestaurantOrder extends React.Component {
               className={classes.action}
               variant="outlined"
               fullWidth
+              onClick={this.handleOrderDetail}
             >
               Order Detail
             </Button>
-            {order.is_creator && [
-            (
-                <Button
-                  key="checkout"
-                  className={classes.action}
-                  variant="outlined"
-                  color="primary"
-                  onClick = {this.handleGroupCheckout}
-                  fullWidth
-                >
-                  Checkout
-                </Button>
+            <OrderDetailDialog
+              open={detailAlert}
+              order={order}
+              onClose={this.handleOrderDetailClose}
+            />
+            {order.is_creator && [(
+              <Button
+                key="checkout"
+                className={classes.action}
+                variant="outlined"
+                color="primary"
+                onClick = {this.handleGroupCheckout}
+                fullWidth
+              >
+                Checkout
+              </Button>
             ), (
               <DialogDeleteAlert
                 key="cancel-dialog"
@@ -380,6 +403,7 @@ class RestaurantOrder extends React.Component {
                 api={this.cancelApi}
                 onUpdate={this.handleCancelOrderSuccess}
                 onClose={this.handleCancelAlertClose}
+                disabled={order.order_status !== 'created'}
               />
             ), (
               <Button
@@ -397,7 +421,19 @@ class RestaurantOrder extends React.Component {
             )]
             }
           </ListItem>
+          <div className={classes.subComponent}>
+            <Typography
+              className={classes.subComponentTitle}
+              variant="h5"
+              component="h2"
+            >
+              Group Member
+            </Typography>
+            <GroupmemberStatusTable order={order} />
+          </div>
         </List>
+
+
         )
         }
       </Card>
