@@ -177,14 +177,13 @@ class Api {
   static orderCheckout(orderId) {
     return Api.instance().post(`/orders/${orderId}/checkout`);
   }
-
-  static orderDirectCheckout(restaurant_id, address_id) {
+  static orderDirectCheckout(restaurantId, addressId)
+  {
     return Api.instance().post(`/orders/direct-checkout`, {
-      restaurant_id: restaurant_id,
-      address_id: address_id,
+      restaurant_id: restaurantId,
+      address_id: addressId,
     });
   }
-
   /* --- Pay --- */
   static orderPay(orderId, tip, selectedCardId) {
     return Api.instance().post(`/orders/${orderId}/pay`, {

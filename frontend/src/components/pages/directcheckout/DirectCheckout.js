@@ -57,11 +57,26 @@ class DirectCheckout extends React.Component {
     selectedCardId: null,
     tip: null,
     total: null,
+    creatorName: null,
+    userAddressLine1: null,
+    userAddressLine2: null,
+    userCity:null,
+    userPhone: null,
+
+    restaurantName: null,
+    resAddressLine1: null,
+    resAddressLine2: null,
+    resCity: null,
+    resPhone: null,
+
+  }
+  componentDidMount() {
+    this.handleInfo();
   }
   handlePayment = () => {
     const { history } = this.props;
     history.push({
-      pathname: `/orders/pay`,
+      pathname: `/orders/${this.props.location.state.orderId}/pay`,
       state: {
         card_id: this.state.selectedCardId,
       },
@@ -74,9 +89,10 @@ class DirectCheckout extends React.Component {
 
     });
     if (this.state.tip !== null) {
-      Api.orderDirectPay(this.state.tip, e).then((res) => {
+      Api.orderPay(this.props.location.state.orderId,this.state.tip, e).then((res) => {
         this.setState({
           total: res.data.total,
+
         });
       }).catch((err) => {
         throw err;
@@ -89,7 +105,7 @@ class DirectCheckout extends React.Component {
       tip: event.target.value,
     });
     if (this.state.selectedCardId !== null) {
-      Api.orderDirectPay(event.target.value, this.state.selectedCardId).then((res) => {
+      Api.orderPay(this.props.location.state.orderId, event.target.value, this.state.selectedCardId).then((res) => {
         this.setState({
           total: res.data.total,
         });
@@ -99,8 +115,42 @@ class DirectCheckout extends React.Component {
     }
   };
 
+  handleInfo = () => {
+    Api.orderDetail(this.props.location.state.orderId).then((res) => {
+      this.setState({
+        creatorName: res.data.creator.name,
+        userAddressLine1: res.data.address_line_1,
+        userAddressLine2: res.data.address_line_2,
+        userCity: res.data.city,
+        userPhone: res.data.phone,
+
+        restaurantName: res.data.restaurant.name,
+        resAddressLine1: res.data.restaurant.address_line_1,
+        resAddressLine2:res.data.restaurant.address_line_2,
+        resCity:res.data.restaurant.city,
+        resPhone:res.data.restaurant.phone,
+      });
+    }).catch((err) => {
+      throw err;
+    });
+  };
+
   render() {
-    const {tip, selectedCardId, total} = this.state;
+    const {tip,
+          selectedCardId,
+          total,
+          creatorName,
+          userAddressLine1,
+          userAddressLine2,
+          userCity,
+          userPhone,
+
+          restaurantName,
+          resAddressLine1,
+          resAddressLine2,
+          resCity,
+          resPhone,
+        } = this.state;
     const { classes, location } = this.props;
 
     return (
@@ -138,12 +188,17 @@ class DirectCheckout extends React.Component {
                     primary="Delivery Address"
                     secondary={(
                       <span>
+                        {creatorName}
                         <br />
+                        {userAddressLine2}
                         <br />
+                        {userAddressLine1}
                         <br />
+                        {userCity}
                         <br />
+                        {userPhone}
                       </span>
-)}
+                    )}
                   />
                 </ListItem>
                 <ListItem>
@@ -151,12 +206,17 @@ class DirectCheckout extends React.Component {
                     primary="Contact Restaurant"
                     secondary={(
                       <span>
+                        {restaurantName}
                         <br />
+                        {resAddressLine2}
                         <br />
+                        {resAddressLine1}
                         <br />
+                        {resCity}
                         <br />
+                        {resPhone}
                       </span>
-)}
+                    )}
                   />
                 </ListItem>
 

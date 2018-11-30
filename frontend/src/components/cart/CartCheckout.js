@@ -7,10 +7,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { connect } from 'react-redux';
-import { cartClear } from 'actions/cartActions';
+import { cartUpdate, cartClear } from 'actions/cartActions';
 import store from 'store';
 import Format from 'facades/Format';
 import Axios from 'facades/Axios';
+import Api from 'facades/Api';
 
 
 const styles = theme => ({
@@ -63,6 +64,24 @@ class CartCheckout extends React.Component {
     loading: null,
   };
 
+  componentDidMount () {
+    const { cart } = this.props;
+    if (cart === null) {
+      this.setState({
+        loading: Api.cartShow().then((res) => {
+          store.dispatch(cartUpdate(res.data));
+          this.setState({
+            loading: null,
+          });
+        }).catch((err) => {
+          this.setState({
+            loading: null,
+          });
+          throw err;
+        }),
+      });
+    }
+  };
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loading);
   }

@@ -132,6 +132,7 @@ class Cart extends React.Component {
             restaurant: restaurant,
             cart: cart,
             productMap: productMap,
+            orderId: res.data.order_id,
             sutotal: res.data.subtotal,
             tax: res.data.tax,
             delivery_fee: res.data.delivery_fee,

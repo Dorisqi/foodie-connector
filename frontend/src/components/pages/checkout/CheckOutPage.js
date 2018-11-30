@@ -197,7 +197,7 @@ class CheckOutPage extends React.Component {
                         <br />
                         {this.props.location.state.order.phone}
                       </span>
-)}
+                    )}
                   />
                 </ListItem>
                 <ListItem>
@@ -215,7 +215,7 @@ class CheckOutPage extends React.Component {
                         <br />
                         {this.props.location.state.order.restaurant.phone}
                       </span>
-)}
+                    )}
                   />
                 </ListItem>
 
