@@ -171,9 +171,6 @@ class Api {
     });
   }
 
-  static orderJoin(orderId) {
-    return Api.instance().post(`/orders/${orderId}/join`);
-  }
 
   static orderConfirm(orderId) {
     return Api.instance().post(`/orders/${orderId}/confirm`);
@@ -235,11 +232,11 @@ class Api {
       email,
     });
   }
-  static unfollowFriend(friend_id) {
-    // console.log(email+ "in follow friend");
-    return Api.instance().delete(`/friends/${friend_id}`);
-  }
 
+  static unfollowFriend(friendId) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().delete(`/friends/${friendId}`);
+  }
 }
 
 export default Api;
