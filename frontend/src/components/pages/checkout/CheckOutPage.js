@@ -61,7 +61,7 @@ class CheckOutPage extends React.Component {
     subtotal: 0,
     productMap: null,
     selectedCardId: null,
-    tip: null,
+    tip: 0,
     total: null,
   }
 
@@ -102,7 +102,7 @@ class CheckOutPage extends React.Component {
       selectedCardId: e,
 
     });
-    if (this.state.tip !== null) {
+    if (this.state.tip !== 0) {
       Api.orderPay(this.props.location.state.order.id, this.state.tip, e).then((res) => {
         this.setState({
           total: res.data.total,
@@ -283,7 +283,7 @@ class CheckOutPage extends React.Component {
                 className={classes.action}
                 variant="outlined"
                 color="primary"
-                disabled={selectedCardId === 0 || tip === null}
+                disabled={selectedCardId === 0 || tip === 0}
                 onClick={this.handlePayment}
                 fullWidth
               >

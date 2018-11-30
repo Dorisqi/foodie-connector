@@ -79,6 +79,7 @@ class DirectCheckout extends React.Component {
       pathname: `/orders/${this.props.location.state.orderId}/pay`,
       state: {
         card_id: this.state.selectedCardId,
+        orderId: this.props.location.state.orderId,
       },
     });
   };

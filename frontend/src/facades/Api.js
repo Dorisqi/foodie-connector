@@ -173,6 +173,10 @@ class Api {
     return Api.instance().get(`/orders/${orderId}`);
   }
 
+  static orderConfirm(orderId) {
+    return Api.instance().post(`/orders/${orderId}/confirm`);
+  }
+
   /* --- Checkout --- */
   static orderCheckout(orderId) {
     return Api.instance().post(`/orders/${orderId}/checkout`);
