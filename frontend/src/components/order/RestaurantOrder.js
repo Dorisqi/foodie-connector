@@ -26,11 +26,10 @@ import Snackbar from 'facades/Snackbar';
 import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
-import OrderDetailDialog from 'components/order/OrderDetailDialog';
 import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
 import AddressDialog from 'components/address/AddressDialog';
 import classnames from 'classnames';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import compose from 'recompose/compose';
 
 const styles = theme => ({
@@ -222,18 +221,6 @@ class RestaurantOrder extends React.Component {
     });
   };
 
-  handleOrderDetail = () => {
-    this.setState({
-      detailAlert: true,
-    });
-  }
-
-  handleOrderDetailClose = () => {
-    this.setState({
-      detailAlert: false,
-    });
-  }
-
   handleGroupCheckout = () => {
     const { order } = this.state;
     // let path = `/orders/${order.id}/checkout`;
@@ -393,15 +380,11 @@ class RestaurantOrder extends React.Component {
               className={classes.action}
               variant="outlined"
               fullWidth
-              onClick={this.handleOrderDetail}
+              component={Link}
+              to={`/orders/${order.id}`}
             >
               Order Detail
             </Button>
-            <OrderDetailDialog
-              open={detailAlert}
-              order={order}
-              onClose={this.handleOrderDetailClose}
-            />
             {order.is_creator && [(
               <Button
                 key="checkout"

@@ -149,7 +149,7 @@ class Api {
   }
 
   static orderShow(restaurantId) {
-    return Api.instance().get('/orders/', restaurantId);
+    return Api.instance().get(`/orders/${restaurantId}`);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {

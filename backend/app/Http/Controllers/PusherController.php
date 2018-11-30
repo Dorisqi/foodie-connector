@@ -29,7 +29,7 @@ class PusherController extends ApiController
                 throw ApiException::pusherAccessDenied();
             }
         } elseif (preg_match('/^private-order.([A-Z0-9]+)$/', $channelName, $matches)) {
-            if (Order::query(true, null, 'delivering')->doesntExist()) {
+            if (Order::query()->doesntExist()) {
                 throw ApiException::pusherAccessDenied();
             }
         } else {
