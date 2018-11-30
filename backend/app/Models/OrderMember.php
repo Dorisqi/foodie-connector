@@ -20,7 +20,7 @@ class OrderMember extends Model
     ];
 
     protected $hidden = [
-        'order_id', 'api_user_id',
+        'api_user_id',
     ];
 
     protected $casts = [
