@@ -12,12 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { cartUpdate, cartClear, cartUpdateItem } from 'actions/cartActions';
 import store from 'store';
 import Format from 'facades/Format';
 import Api from 'facades/Api';
 import Axios from 'facades/Axios';
+import compose from 'recompose/compose';
+import { Link, withRouter } from 'react-router-dom';
 import ProductOptionSelector from './ProductOptionSelector';
 import AmountSelector from './AmountSelector';
 
@@ -69,6 +70,7 @@ class Cart extends React.Component {
   state = {
     loading: null,
     updatingItemIndex: null,
+    orderId: null,
   };
 
   componentDidMount() {
@@ -117,11 +119,27 @@ class Cart extends React.Component {
     store.dispatch(cartUpdateItem(index, item));
   };
 
+  handleDirectCheckout = () => {
+    this.setState({
+      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) => {
+        this.setState({
+          loading: null,
+          orderId: res.data.id,
+        });
+      }).catch((err) => {
+        this.setState({
+          loading: null,
+        });
+        throw err;
+      }),
+    });
+  };
+
   render() {
     const {
       classes, restaurant, cart, productMap,
     } = this.props;
-    const { updatingItemIndex } = this.state;
+    const { updatingItemIndex, orderId } = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -135,7 +153,7 @@ class Cart extends React.Component {
               You have items from another restaurant
               (
               <Link to={`/restaurants/${cart.restaurantId}`}>{cart.restaurantName}</Link>
-).
+              ).
               Please clear the cart before adding items.
             </Typography>
           </CardContent>
@@ -225,8 +243,13 @@ class Cart extends React.Component {
               <Button
                 variant="outlined"
                 disabled={cart.cart.length === 0}
+                component={Link}
                 color="primary"
                 fullWidth
+                onClick={this.handleDirectCheckout}
+                to={{
+                  pathname: `/orders/${orderId}/checkout`,
+                }}
               >
                 Direct Checkout
               </Button>
@@ -239,6 +262,9 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => ({
   cart: state.cart,
+  orderId: state.orderId,
+  address: state.address,
+
 });
 
 Cart.propTypes = {
@@ -246,6 +272,7 @@ Cart.propTypes = {
   restaurant: PropTypes.object,
   productMap: PropTypes.object,
   cart: PropTypes.object,
+
 };
 
 Cart.defaultProps = {
@@ -254,6 +281,7 @@ Cart.defaultProps = {
   cart: null,
 };
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(Cart),
-);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps),
+)(withRouter(Cart));

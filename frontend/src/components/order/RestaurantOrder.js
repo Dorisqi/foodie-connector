@@ -26,7 +26,12 @@ import Snackbar from 'facades/Snackbar';
 import Format from 'facades/Format';
 import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
+import OrderDetailDialog from 'components/order/OrderDetailDialog';
+import GroupmemberStatusTable from 'components/order/GroupmemberStatusTable';
+import AddressDialog from 'components/address/AddressDialog';
 import classnames from 'classnames';
+import { withRouter } from 'react-router-dom';
+import compose from 'recompose/compose';
 
 const styles = theme => ({
   margin: {
@@ -54,17 +59,20 @@ const styles = theme => ({
   },
 });
 
+
 class RestaurantOrder extends React.Component {
   state = {
     visibility: 'private',
     joinLimit: 10,
     loading: null,
     loadingDeliverable: null,
-    order: undefined,
     creatingOrder: false,
+    addingAddress: false,
     errors: {},
     cancelAlert: false,
     sharing: false,
+    order: null,
+    detailAlert: false,
   };
 
   componentDidMount() {
@@ -105,7 +113,7 @@ class RestaurantOrder extends React.Component {
     const { restaurant } = this.props;
     Axios.cancelRequest(this.state.loading);
     this.setState({
-      loading: Api.orderList(restaurant.id, 'created').then((res) => {
+      loading: Api.orderList({ restaurant_id: restaurant.id, order_status: 'created' }).then((res) => {
         this.setState({
           loading: null,
           order: res.data.length > 0 ? res.data[0] : null,
@@ -158,10 +166,24 @@ class RestaurantOrder extends React.Component {
     });
   };
 
-  handleCreateOrderClick = () => {
+  handleAddingAddressClose = () => {
+    const { address } = this.props;
     this.setState({
-      creatingOrder: true,
+      addingAddress: false,
+      creatingOrder: address.selectedAddress !== 0,
     });
+  };
+
+  handleCreateOrderClick = () => {
+    if (this.props.address.selectedAddress === 0) {
+      this.setState({
+        addingAddress: true,
+      });
+    } else {
+      this.setState({
+        creatingOrder: true,
+      });
+    }
   };
 
   handleCancelOrderClick = () => {
@@ -200,8 +222,29 @@ class RestaurantOrder extends React.Component {
     });
   };
 
+  handleOrderDetail = () => {
+    this.setState({
+      detailAlert: true,
+    });
+  }
+
+  handleOrderDetailClose = () => {
+    this.setState({
+      detailAlert: false,
+    });
+  }
+
+  handleGroupCheckout = () => {
+    const { order } = this.state;
+    // let path = `/orders/${order.id}/checkout`;
+    this.props.history.push({
+      pathname: `/orders/${order.id}/checkout`,
+      state: { order },
+    });
+  };
+
   render() {
-    const { classes, restaurant } = this.props;
+    const { classes, restaurant, address } = this.props;
     const {
       order,
       visibility,
@@ -211,6 +254,8 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
+      detailAlert,
+      addingAddress,
     } = this.state;
     if (loading !== null) {
       return (
@@ -290,6 +335,12 @@ class RestaurantOrder extends React.Component {
           </DialogForm>
           )
           }
+          {addingAddress && (
+            <AddressDialog
+              onClose={this.handleAddingAddressClose}
+              currentLocation={address.currentLocation}
+            />
+          )}
         </CardContent>
         )
         }
@@ -342,15 +393,22 @@ class RestaurantOrder extends React.Component {
               className={classes.action}
               variant="outlined"
               fullWidth
+              onClick={this.handleOrderDetail}
             >
               Order Detail
             </Button>
+            <OrderDetailDialog
+              open={detailAlert}
+              order={order}
+              onClose={this.handleOrderDetailClose}
+            />
             {order.is_creator && [(
               <Button
                 key="checkout"
                 className={classes.action}
                 variant="outlined"
                 color="primary"
+                onClick={this.handleGroupCheckout}
                 fullWidth
               >
                 Checkout
@@ -365,6 +423,7 @@ class RestaurantOrder extends React.Component {
                 api={this.cancelApi}
                 onUpdate={this.handleCancelOrderSuccess}
                 onClose={this.handleCancelAlertClose}
+                disabled={order.order_status !== 'created'}
               />
             ), (
               <Button
@@ -382,7 +441,19 @@ class RestaurantOrder extends React.Component {
             )]
             }
           </ListItem>
+          <div className={classes.subComponent}>
+            <Typography
+              className={classes.subComponentTitle}
+              variant="h5"
+              component="h2"
+            >
+              Group Member
+            </Typography>
+            <GroupmemberStatusTable order={order} />
+          </div>
         </List>
+
+
         )
         }
       </Card>
@@ -394,13 +465,16 @@ const mapStateToProps = state => ({
   address: state.address,
 });
 
+
 RestaurantOrder.propTypes = {
   classes: PropTypes.object.isRequired,
   address: PropTypes.object.isRequired,
   restaurant: PropTypes.object.isRequired,
   onRestaurantUpdate: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(
-  connect(mapStateToProps)(RestaurantOrder),
-);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps),
+)(withRouter(RestaurantOrder));

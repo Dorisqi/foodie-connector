@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import InviteFriends from './InviteFriends';
 
 const styles = () => ({
   dialogContent: {
@@ -37,6 +38,7 @@ class ShareOrderDialog extends React.Component {
           <Link to={order.share_link}>
             {order.share_link}
           </Link>
+          <InviteFriends orderId={order.id} />
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={onClose}>

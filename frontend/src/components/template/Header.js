@@ -4,17 +4,21 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+
+import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
+import GroupAdd from '@material-ui/icons/GroupAdd';
+
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Api from 'facades/Api';
 import { withStyles } from '@material-ui/core/styles';
-import NotificationBox from './NotificationBox';
+import Pusher from 'facades/Pusher';
+import FollowfriendDialog from '../friends/FollowfriendDialog';
+import NotificationDialog from './NotificationDialog';
 
 const styles = () => ({
   root: {
@@ -37,6 +41,9 @@ const styles = () => ({
   accountButton: {
     marginRight: -12,
   },
+  card: {
+    minWidth: '30',
+  },
 });
 
 class Header extends React.Component {
@@ -47,51 +54,67 @@ class Header extends React.Component {
       notificationsOpen: false,
       notifications: [],
       unreadCount: 0,
+      idCount: 0, // eslint-disable-line react/no-unused-state
+      friendlistOpen: false,
     };
-    this.handleNotificationsUpdate = this.handleNotificationsUpdate.bind(this);
   }
 
   componentDidMount() {
-    this.getNotifications();
+    Pusher.loadNotification(this.receiveNotifications);
   }
 
-  getNotifications() {
-    Api.notificationList().then((res) => {
-      const { notifications } = res.data;
-      this.setState({
-        notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length,
-      });
-    }).catch((err) => {
+  handleFriendsListsOpen=() => {
+    this.setState({ friendlistOpen: true });
+  }
+
+  receiveNotifications = (data) => {
+    this.setState((state) => {
+      const {
+        idCount, unreadCount, notifications,
+      } = state;
+      const notification = Object.assign({}, data.data);
+      notification.isRead = false;
+      notification.id = idCount;
+      return {
+        unreadCount: unreadCount + 1,
+        notifications: [notification, ...notifications],
+        idCount: idCount + 1,
+      };
     });
   }
-
-  handleDialogClose = () => {
-    this.setState({ notificationsOpen: false });
-  };
 
   handleNotificationOpen = () => {
     this.setState({ notificationsOpen: true });
   }
 
-  handleMarkRead = id => () => {
-    Api.notificationMarkRead(id).then((res) => {
-      const { notifications } = res.data;
-      this.setState({
-        notifications,
-        unreadCount: notifications.filter(n => !n.isRead).length,
-      });
-    }).catch((err) => {
+  handleClear = () => {
+    this.setState({
+      notifications: [],
+      unreadCount: 0,
     });
   }
 
-  handleMarkAllRead = () => Api.notificationMarkAllRead()
+  handleMarkRead = id => () => {
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        if (n.id === id) n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
+      return {
+        unreadCount: state.unreadCount - 1,
+        notifications: state.notifications,
+      };
+    });
+  }
 
-  handleNotificationsUpdate(res) {
-    const { notifications } = res.data;
-    this.setState({
-      notifications,
-      unreadCount: notifications.filter(n => !n.isRead).length,
+  handleMarkAllRead = () => {
+    this.setState((state) => {
+      state.notifications.forEach((n) => {
+        n.isRead = true; /* eslint-disable-line no-param-reassign */
+      });
+      return {
+        unreadCount: 0,
+        notifications: state.notifications,
+      };
     });
   }
 
@@ -103,13 +126,23 @@ class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleDialogClose = () => {
+    this.setState({
+
+      notificationsOpen: false,
+    });
+  };
+
+  handleFriendsListsClose= () => {
+    this.setState({ friendlistOpen: false });
+  }
+
   render() {
     const {
-      anchorEl, notificationsOpen, notifications, unreadCount,
+      anchorEl, notificationsOpen, friendlistOpen, notifications, unreadCount,
     } = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -127,6 +160,26 @@ class Header extends React.Component {
           onClick={this.handleProfileMenuClose}
         >
           Profile
+        </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/order-history',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Order History
+        </MenuItem>
+        <MenuItem
+          button
+          component={Link}
+          to={{
+            pathname: '/nearby-orders',
+          }}
+          onClick={this.handleProfileMenuClose}
+        >
+          Nearby Orders
         </MenuItem>
         {location.pathname !== '/logout'
         && (
@@ -146,6 +199,11 @@ class Header extends React.Component {
       </Menu>
     );
 
+    /* const friendslist = (
+        <FollowfriendDialog/>
+    ); */
+
+
     return (
       <header className={classes.root}>
         <AppBar position="fixed">
@@ -158,19 +216,35 @@ class Header extends React.Component {
             <div className={classes.grow} />
             <div className={classes.rightSection}>
               <IconButton
+
+                aria-haspopup="true"
+                className={classes.accountButton}
+                color="inherit"
+                onClick={this.handleFriendsListsOpen}
+              >
+                <GroupAdd />
+              </IconButton>
+            </div>
+            <div className={classes.rightSection}>
+              <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
                 aria-haspopup="true"
                 className={classes.accountButton}
                 onClick={this.handleNotificationOpen}
                 color="inherit"
               >
-                <Badge
-                  badgeContent={unreadCount}
-                  color="primary"
-                  invisible={unreadCount === 0} // TODO: can't make it invisible
-                >
-                  <NotificationsIcon />
-                </Badge>
+                {unreadCount === 0
+                  ? <NotificationsIcon />
+                  : (
+                    <Badge
+                      badgeContent={unreadCount}
+                      color="primary"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  )
+              }
+
               </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
@@ -182,21 +256,30 @@ class Header extends React.Component {
                 <AccountCircle />
               </IconButton>
             </div>
+
           </Toolbar>
         </AppBar>
         {renderMenu}
         {notificationsOpen
           ? (
-            <NotificationBox
+            <NotificationDialog
+              open={notificationsOpen}
               notifications={notifications}
               handleMarkRead={this.handleMarkRead}
               handleMarkAllRead={this.handleMarkAllRead}
-              onUpdate={this.handleNotificationsUpdate}
+              handleClear={this.handleClear}
               onClose={this.handleDialogClose}
             />
           )
           : null
         }
+        {friendlistOpen
+          ? (
+            <FollowfriendDialog
+              onClose={this.handleFriendsListsClose}
+            />
+          )
+          : null}
       </header>
     );
   }

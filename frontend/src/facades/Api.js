@@ -1,6 +1,5 @@
 import Auth from './Auth';
 import axios from './Axios';
-import mockNotifications from '../mockData/mockNotifications';
 
 class Api {
   /* --- Auth --- */
@@ -143,13 +142,14 @@ class Api {
   }
 
   /* --- Order --- */
-  static orderList(restaurantId, orderStatus) {
+  static orderList(params = null) {
     return Api.instance().get('/orders', {
-      params: {
-        restaurant_id: restaurantId,
-        order_status: orderStatus,
-      },
+      params,
     });
+  }
+
+  static orderShow(restaurantId) {
+    return Api.instance().get('/orders/', restaurantId);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
@@ -161,36 +161,38 @@ class Api {
     });
   }
 
+  static singleOrderCreate(restaurantId) {
+    return Api.instance().post('/orders', restaurantId);
+  }
+
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
   }
 
-  /* --- Notification --- */
-  // using mock data
-  static notificationList() {
-    return new Promise((resolve, _reject) => {
-      resolve({ data: { notifications: mockNotifications } });
+  static orderRate(orderId, isPostive) {
+    return Api.instance().post(`/orders/${orderId}/rate`, {
+      is_positive: isPostive,
     });
   }
 
-  static notificationMarkRead(notificationId) {
-    return new Promise((resolve, reject) => {
-      const notification = mockNotifications.find(item => item.id === notificationId);
-      if (notification) {
-        notification.isRead = true;
-        resolve({ data: { notifications: mockNotifications } });
-      } else {
-        reject(new Error(`Id${notificationId} does not exist.`));
-      }
-    });
+  static orderDetail(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
   }
 
-  static notificationMarkAllRead() {
-    return new Promise((resolve, _reject) => {
-      mockNotifications.forEach((notification) => {
-        notification.isRead = true; // eslint-disable-line no-param-reassign
-      });
-      resolve({ data: { notifications: mockNotifications } });
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`, {});
+  }
+
+  /* --- Checkout --- */
+  static orderCheckout(orderId) {
+    return Api.instance().post(`/orders/${orderId}/checkout`);
+  }
+
+  /* --- Pay --- */
+  static orderPay(orderId, tip, selectedCardId) {
+    return Api.instance().post(`/orders/${orderId}/pay`, {
+      tip,
+      card_id: selectedCardId,
     });
   }
 
@@ -203,6 +205,27 @@ class Api {
       instance.defaults.headers.common.Authorization = Auth.getToken();
     }
     return instance;
+  }
+
+  static findOrder(id) {
+    return Api.instance().get('/orders/', id);
+  }
+
+  static inviteFriend(orderId, email) {
+    return Api.instance().post(`orders/${orderId}/invitation`, { email });
+  }
+
+
+  /* --- Friends --- */
+  static friendList() {
+    return Api.instance().get('/friends');
+  }
+
+  static followNewFriend(email) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().post('/friends', {
+      email,
+    });
   }
 }
 
