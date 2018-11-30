@@ -2821,8 +2821,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": true,
-        "is_member": true,
+        "is_creator": false,
+        "is_member": false,
         "is_joinable": true,
         "is_visible": true,
         "distance": 0,
@@ -2852,6 +2852,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "creator": {
             "name": "Test User",
+            "email": null,
             "friend_id": "FRIEND"
         },
         "order_members": [
@@ -2866,6 +2867,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
+                    "email": null,
                     "friend_id": "FRIEND"
                 }
             }
@@ -2882,20 +2884,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "estimated_delivery_fee": 2.99,
             "total": null
         },
-        "current_order_member": {
-            "is_ready": false,
-            "products": null,
-            "subtotal": null,
-            "tax": null,
-            "tip": null,
-            "delivery_fee": null,
-            "total": null,
-            "rate_is_positive": null,
-            "user": {
-                "name": "Test User",
-                "friend_id": "FRIEND"
-            }
-        }
+        "current_order_member": null
     }
 ]
 ```
@@ -2932,8 +2921,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "phone": "7650000000",
         "created_at": "2018-10-27 15:00:01",
         "order_status": "created",
-        "is_creator": true,
-        "is_member": true,
+        "is_creator": false,
+        "is_member": false,
         "is_joinable": true,
         "is_visible": true,
         "distance": 279,
@@ -2963,6 +2952,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         },
         "creator": {
             "name": "Test User",
+            "email": null,
             "friend_id": "FRIEND"
         },
         "order_members": [
@@ -2977,6 +2967,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "rate_is_positive": null,
                 "user": {
                     "name": "Test User",
+                    "email": null,
                     "friend_id": "FRIEND"
                 }
             }
@@ -2993,20 +2984,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "estimated_delivery_fee": 2.99,
             "total": null
         },
-        "current_order_member": {
-            "is_ready": false,
-            "products": null,
-            "subtotal": null,
-            "tax": null,
-            "tip": null,
-            "delivery_fee": null,
-            "total": null,
-            "rate_is_positive": null,
-            "user": {
-                "name": "Test User",
-                "friend_id": "FRIEND"
-            }
-        }
+        "current_order_member": null
     }
 ]
 ```

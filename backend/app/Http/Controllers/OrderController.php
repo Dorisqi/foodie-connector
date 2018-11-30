@@ -34,7 +34,7 @@ class OrderController extends ApiController
         $this->validateInput($request, $this::listRules());
 
         $query = Order::query(
-            true,
+            !$request->has('address_id') && !$request->has('place_id'),
             $request->input('restaurant_id'),
             $request->input('order_status')
         );
@@ -43,6 +43,7 @@ class OrderController extends ApiController
             $lat = (float)$coords->getLat();
             $lng = (float)$coords->getLng();
             $query = $query
+                ->where('is_public', true)
                 ->having('is_joinable', true)
                 ->distanceSphere('geo_location', $coords, 500)// within 500 meters
                 ->addSelect([
