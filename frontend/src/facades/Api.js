@@ -195,6 +195,11 @@ class Api {
       email,
     });
   }
+  static unfollowFriend(friend_id) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().delete(`/friends/${friend_id}`);
+  }
+
 }
 
 export default Api;
