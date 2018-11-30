@@ -35,7 +35,7 @@ class PaymentPage extends React.Component {
 
   handleMemberStatus = () => {
     const { orderMembers, memberStatus } = this.state;
-    Api.orderDetail(this.props.location.state.orderId).then((res) => {
+    Api.orderShow(this.props.location.state.orderId).then((res) => {
       this.setState({
         orderMembers: res.data.order_members,
       });

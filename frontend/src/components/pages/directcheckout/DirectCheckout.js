@@ -119,7 +119,7 @@ class DirectCheckout extends React.Component {
   };
 
   handleInfo = () => {
-    Api.orderDetail(this.props.location.state.orderId).then((res) => {
+    Api.orderShow(this.props.location.state.orderId).then((res) => {
       this.setState({
         creatorName: res.data.creator.name,
         userAddressLine1: res.data.address_line_1,
