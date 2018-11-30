@@ -240,7 +240,7 @@ class OrderHistoryPage extends React.Component {
                             <TableCell>Order Creator</TableCell>
                             <TableCell>Join Before</TableCell>
                             <TableCell>Order Address</TableCell>
-                            <TableCell>Total Cost</TableCell>
+                            <TableCell>Total Cost($)</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>

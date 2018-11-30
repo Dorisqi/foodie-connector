@@ -49,7 +49,6 @@ class OrderDetailDialog extends React.Component {
     const membersRow = orderMembers.map((member) => {
       const {
         user,
-        phone,
         is_ready: isReady,
         subtotal,
         tax,
@@ -61,7 +60,6 @@ class OrderDetailDialog extends React.Component {
       return (
         <TableRow>
           <TableCell>{user.name}</TableCell>
-          <TableCell>{phone}</TableCell>
           <TableCell>{isReady ? 'Ready' : 'Not Ready'}</TableCell>
           <TableCell>{subtotal}</TableCell>
           <TableCell>{tax}</TableCell>
@@ -113,13 +111,12 @@ class OrderDetailDialog extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell>user name</TableCell>
-                <TableCell>phone</TableCell>
                 <TableCell>is ready</TableCell>
-                <TableCell>subtotal</TableCell>
-                <TableCell>tax</TableCell>
-                <TableCell>tip</TableCell>
-                <TableCell>delivery fee</TableCell>
-                <TableCell>total</TableCell>
+                <TableCell>subtotal($)</TableCell>
+                <TableCell>tax($)</TableCell>
+                <TableCell>tip($)</TableCell>
+                <TableCell>delivery fee($)</TableCell>
+                <TableCell>total($)</TableCell>
                 <TableCell>rate</TableCell>
               </TableRow>
             </TableHead>

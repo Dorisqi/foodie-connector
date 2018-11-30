@@ -260,7 +260,7 @@ class NearbyOrdersPage extends React.Component {
                             <TableCell>Join Before</TableCell>
                             <TableCell>Order Address</TableCell>
                             <TableCell>Order Distance</TableCell>
-                            <TableCell>Total Cost</TableCell>
+                            <TableCell>Total Cost($)</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
