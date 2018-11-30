@@ -20,7 +20,7 @@ class ShowOrderTest extends ApiTestCase
     {
         $this->assertFailed(null, 401, false);
         $this->login();
-        $this->id = 'A00000';
+        $this->id = Order::TESTING_NOT_FOUND_ID;
         $this->assertFailed(null, 404);
         $order = factory(Order::class)->create();
         $this->id = $order->id;
