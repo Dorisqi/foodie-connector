@@ -172,6 +172,9 @@ class Api {
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
   }
+  static orderDetail(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
+  }
 
   /* --- Checkout --- */
   static orderCheckout (orderId) {
@@ -181,10 +184,8 @@ class Api {
   /* --- Pay --- */
   static orderPay(orderId, tip, selectedCardId ) {
     return Api.instance().post(`/orders/${orderId}/pay`, {
-      params: {
         tip: tip,
         card_id: selectedCardId,
-      },
     });
   }
   /* --- Notification --- */

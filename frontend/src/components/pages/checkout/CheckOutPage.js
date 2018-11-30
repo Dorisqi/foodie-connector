@@ -73,6 +73,7 @@ class CheckOutPage extends React.Component {
     loading: null,
     selectedCardId: 0,
     tip: null,
+    total: null,
   }
   componentDidMount() {
     this.handleShowCart();
@@ -97,7 +98,19 @@ class CheckOutPage extends React.Component {
   };
   handlePayment = () => {
     const {tip, selectedCardId} = this.state;
+    console.log(tip);
+    console.log(selectedCardId);
     Api.orderPay(this.props.location.state.order.id, tip, selectedCardId).then((res) => {
+      this.setState({
+        total: res.data.total,
+      });
+      this.props.history.push({
+        pathname: `/orders/${this.props.location.state.order.id}/pay`,
+        state: {
+          orderId: this.props.location.state.order.id,
+          card_id: this.state.selectedCardId,
+        }
+      });
       console.log(res.data);
     }).catch((err) => {
       throw err;
@@ -129,7 +142,7 @@ class CheckOutPage extends React.Component {
     const { classes , cart} = this.props;
     const {restaurant, productMap,
           selectedCardId, tax, subtotal,
-          delivery_fee, tip} = this.state;
+          delivery_fee, tip, total} = this.state;
     return (
       <MainContent title="Review & Pay">
         <div className={classes.root}>

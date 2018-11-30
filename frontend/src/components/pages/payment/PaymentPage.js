@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import Api from 'facades/Api';
 import MainContent from 'components/template/MainContent';
 import CardSelector from 'components/card/CardSelector';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   actions: {
@@ -17,16 +19,37 @@ const styles = theme => ({
 });
 class PaymentPage extends React.Component {
   state = {
-    tip: 0,
     card_id: 0,
+    orderstatus: null,
+    ordertime: null,
   }
+  componentDidMount() {
+    this.loadingOrderStatus();
+  };
+  loadingOrderStatus =() => {
+    Api.orderDetail(this.props.location.state.orderId).then((res) =>{
+        this.setState({
+          orderstatus: res.data.order_statuses[0].status,
+          ordertime: res.data.order_statuses[0].time,
+        });
+    }).catch((err) =>{
+      throw err;
+    })
+  };
   render(){
     const {classes} = this.props;
-    const {tip, card_id} = this.state;
+    const {orderstatus, ordertime, card_id} = this.state;
     console.log(this.props.location.state.orderId);
     console.log(this.props.location.state.card_id);
     return(
         <MainContent title="Thank you, your order has been placed">
+              <Typography
+                className={classes.subComponentTitle}
+                variant="h6"
+                component="h2"
+              >
+                Please check your notification box to track the order status
+              </Typography>
         </MainContent>
     );
   }
