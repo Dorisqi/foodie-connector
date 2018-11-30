@@ -20,6 +20,14 @@ class Order extends Model
 
     public $incrementing = false;
 
+    protected $casts = [
+        'is_public' => 'bool',
+        'is_creator' => 'bool',
+        'is_member' => 'bool',
+        'is_joinable' => 'bool',
+        'is_visible' => 'bool',
+    ];
+
     protected $fillable = [
         'join_before',
         'is_public',
@@ -128,16 +136,37 @@ class Order extends Model
 
     public function getPricesAttribute()
     {
-        if (is_null($this->restaurant) || $this->order_status !== OrderStatus::CREATED) {
+        if (is_null($this->restaurant)) {
             return null;
+        }
+        $total = 0;
+        foreach ($this->orderMembers as $orderMember) {
+            if (is_null($orderMember->total)) {
+                $total = null;
+                break;
+            }
+            $total += $orderMember->total;
         }
         if (is_null($this->localPrices)) {
             $this->localPrices = [
-                'estimated_delivery_fee' =>
-                    round($this->restaurant->delivery_fee / count($this->orderMembers), 2),
+                'estimated_delivery_fee' => $this->order_status === OrderStatus::CREATED
+                    ? round($this->restaurant->delivery_fee / count($this->orderMembers), 2)
+                    : null,
+                'total' => $total,
             ];
         }
         return $this->localPrices;
+    }
+
+    public function getCurrentOrderMemberAttribute()
+    {
+        if (is_null($this->orderMembers)) {
+            return null;
+        }
+        $userId = Auth::guard('api')->user()->id;
+        return array_first($this->orderMembers, function ($orderMember) use ($userId) {
+            return $orderMember->api_user_id === $userId;
+        });
     }
 
     public function updateStatus($status)
@@ -158,6 +187,7 @@ class Order extends Model
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         $data['prices'] = $this->prices;
+        $data['current_order_member'] = $this->current_order_member;
         return $data;
     }
 }
