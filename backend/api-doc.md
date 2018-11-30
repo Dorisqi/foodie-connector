@@ -1864,7 +1864,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 2,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 2,
             "rating": "3.5",
@@ -1946,7 +1946,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 1,
             "rating": "3.5",
@@ -2058,7 +2058,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
     "order_minimum": 9.99,
     "delivery_fee": 2.99,
     "rating": "3.5",
@@ -2167,7 +2167,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "id": 1,
     "name": "Test Restaurant",
-    "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+    "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
     "order_minimum": 9.99,
     "delivery_fee": 2.99,
     "rating": "3.5",
@@ -2327,7 +2327,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -2423,7 +2423,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -2608,7 +2608,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 2.99,
             "rating": "3.5",
@@ -2655,8 +2655,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
             "estimated_delivery_fee": 2.99,
             "total": null
@@ -2718,7 +2718,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 2.99,
             "rating": "3.5",
@@ -2765,8 +2765,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
             "estimated_delivery_fee": 2.99,
             "total": null
@@ -2829,7 +2829,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 2.99,
             "rating": "3.5",
@@ -2878,8 +2878,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
             "estimated_delivery_fee": 2.99,
             "total": null
@@ -2929,7 +2929,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "restaurant": {
             "id": 1,
             "name": "Test Restaurant",
-            "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
             "order_minimum": 9.99,
             "delivery_fee": 2.99,
             "rating": "3.5",
@@ -2978,8 +2978,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
                 "time": "2018-10-27 15:00:01"
             }
         ],
-        "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-        "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
         "prices": {
             "estimated_delivery_fee": 2.99,
             "total": null
@@ -3094,7 +3094,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -3403,7 +3403,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -3450,8 +3450,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
         "estimated_delivery_fee": 2.99,
         "total": null
@@ -3541,7 +3541,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -3592,8 +3592,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
         "estimated_delivery_fee": null,
         "total": null
@@ -3824,7 +3824,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 0,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -3875,8 +3875,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
         "estimated_delivery_fee": null,
         "total": 2.99
@@ -4161,7 +4161,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "restaurant": {
         "id": 1,
         "name": "Test Restaurant",
-        "image": "https://storage.googleapis.com/foodie-connector-local/restaurants/test.jpg",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
         "order_minimum": 9.99,
         "delivery_fee": 2.99,
         "rating": "3.5",
@@ -4224,8 +4224,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "time": "2018-10-27 15:00:01"
         }
     ],
-    "share_link": "http://localhost:8000/orders/HFEJ32RAFW58ER29R8SW",
-    "qr_code_link": "http://localhost:8000/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
     "prices": {
         "estimated_delivery_fee": 1.5,
         "total": null
