@@ -35,6 +35,16 @@ class OrderDetailPage extends React.Component {
     notFound: false,
   };
 
+  mapRefElement = null;
+
+  map = null;
+
+  orderLocationMarker = null;
+
+  driverLocationMarker = null;
+
+  driverLocation = null;
+
   componentDidMount() {
     this.loadOrder();
   }
@@ -48,6 +58,34 @@ class OrderDetailPage extends React.Component {
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loading);
     this.unsubscribePusher();
+  }
+
+  mapRef = (ref) => {
+    if (ref === null) {
+      return;
+    }
+    this.mapRefElement = ref;
+    this.updateMap();
+  };
+
+  subscribePusher() {
+    const { order } = this.state;
+    if (!order.is_member) {
+      return;
+    }
+    const channel = Pusher.pusher.subscribe(`private-order.${order.id}`);
+    channel.bind('driver-location', (data) => {
+      this.driverLocation = {
+        lat: data.lat,
+        lng: data.lng,
+      };
+      this.updateMap();
+    });
+  }
+
+  unsubscribePusher() {
+    const id = this.props.match.params.id;
+    Pusher.pusher.unsubscribe(`private-order.${id}`);
   }
 
   loadOrder() {
@@ -79,40 +117,6 @@ class OrderDetailPage extends React.Component {
     });
   }
 
-  subscribePusher() {
-    const { order } = this.state;
-    if (!order.is_member) {
-      return;
-    }
-    const channel = Pusher.pusher.subscribe(`private-order.${order.id}`);
-    channel.bind('driver-location', (data) => {
-      this.driverLocation = {
-        lat: data.lat,
-        lng: data.lng,
-      };
-      this.updateMap();
-    });
-  }
-
-  unsubscribePusher() {
-    const id = this.props.match.params.id;
-    Pusher.pusher.unsubscribe(`private-order.${id}`);
-  }
-
-  mapRefElement = null;
-  map = null;
-  orderLocationMarker = null;
-  driverLocationMarker = null;
-  driverLocation = null;
-
-  mapRef = (ref) => {
-    if (ref === null) {
-      return;
-    }
-    this.mapRefElement = ref;
-    this.updateMap();
-  };
-
   updateMap() {
     if (this.mapRefElement === null) {
       return;
@@ -131,7 +135,7 @@ class OrderDetailPage extends React.Component {
           this.mapRefElement,
           {
             zoom: 13,
-            center: orderLocation
+            center: orderLocation,
           },
         );
         this.updateLocation();
@@ -179,7 +183,7 @@ class OrderDetailPage extends React.Component {
     const { match, classes } = this.props;
     const { order, notFound, loading } = this.state;
     return notFound
-      ? <NotFoundPage/>
+      ? <NotFoundPage />
       : (
         <MainContent title={`Order ${match.params.id}`} loading={loading !== null}>
           {order !== null && (
@@ -230,7 +234,7 @@ class OrderDetailPage extends React.Component {
                   <Typography className={classes.subComponentTitle} variant="h5" component="h2">
                     Tracking
                   </Typography>
-                  <div className={classes.map} ref={this.mapRef}/>
+                  <div className={classes.map} ref={this.mapRef} />
                 </div>
               )}
             </div>

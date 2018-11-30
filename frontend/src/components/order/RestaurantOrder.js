@@ -71,7 +71,6 @@ class RestaurantOrder extends React.Component {
     cancelAlert: false,
     sharing: false,
     order: null,
-    detailAlert: false,
   };
 
   componentDidMount() {
@@ -241,7 +240,6 @@ class RestaurantOrder extends React.Component {
       cancelAlert,
       loadingDeliverable,
       sharing,
-      detailAlert,
       addingAddress,
     } = this.state;
     if (loading !== null) {
