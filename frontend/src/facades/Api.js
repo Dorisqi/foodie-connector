@@ -1,6 +1,5 @@
 import Auth from './Auth';
 import axios from './Axios';
-import mockNotifications from '../mockData/mockNotifications';
 
 class Api {
   /* --- Auth --- */
@@ -143,17 +142,14 @@ class Api {
   }
 
   /* --- Order --- */
-  static orderShow(restaurantId) {
-    return Api.instance().get('/orders/', restaurantId);
+  static orderList(params = null) {
+    return Api.instance().get('/orders', {
+      params,
+    });
   }
 
-  static orderList(restaurantId, orderStatus) {
-    return Api.instance().get('/orders', {
-      params: {
-        restaurant_id: restaurantId,
-        order_status: orderStatus,
-      },
-    });
+  static orderShow(restaurantId) {
+    return Api.instance().get(`/orders/${restaurantId}`);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
@@ -169,6 +165,12 @@ class Api {
     return Api.instance().delete(`/orders/${orderId}`);
   }
 
+  static orderRate(orderId, isPostive) {
+    return Api.instance().post(`/orders/${orderId}/rate`, {
+      is_positive: isPostive,
+    });
+  }
+
   static orderDetail(orderId) {
     return Api.instance().get(`/orders/${orderId}`);
   }
@@ -177,51 +179,28 @@ class Api {
     return Api.instance().post(`/orders/${orderId}/confirm`);
   }
 
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`, {});
+  }
+
+
   /* --- Checkout --- */
   static orderCheckout(orderId) {
     return Api.instance().post(`/orders/${orderId}/checkout`);
   }
-  static orderDirectCheckout(restaurantId, addressId)
-  {
-    return Api.instance().post(`/orders/direct-checkout`, {
+
+  static orderDirectCheckout(restaurantId, addressId) {
+    return Api.instance().post('/orders/direct-checkout', {
       restaurant_id: restaurantId,
       address_id: addressId,
     });
   }
+
   /* --- Pay --- */
   static orderPay(orderId, tip, selectedCardId) {
     return Api.instance().post(`/orders/${orderId}/pay`, {
-      tip: tip,
+      tip,
       card_id: selectedCardId,
-    });
-  }
-
-  /* --- Notification --- */
-  // using mock data
-  static notificationList() {
-    return new Promise((resolve, _reject) => {
-      resolve({ data: { notifications: mockNotifications } });
-    });
-  }
-
-  static notificationMarkRead(notificationId) {
-    return new Promise((resolve, reject) => {
-      const notification = mockNotifications.find(item => item.id === notificationId);
-      if (notification) {
-        notification.isRead = true;
-        resolve({ data: { notifications: mockNotifications } });
-      } else {
-        reject(new Error(`Id${notificationId} does not exist.`));
-      }
-    });
-  }
-
-  static notificationMarkAllRead() {
-    return new Promise((resolve, _reject) => {
-      mockNotifications.forEach((notification) => {
-        notification.isRead = true; // eslint-disable-line no-param-reassign
-      });
-      resolve({ data: { notifications: mockNotifications } });
     });
   }
 

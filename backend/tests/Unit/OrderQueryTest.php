@@ -22,19 +22,25 @@ class OrderQueryTest extends TestCase
         $order = factory(Order::class)->create();
         $this->assertArraySubset([
             'order_status' => 'created',
-            'is_creator' => 1,
-            'is_member' => 1,
-            'is_joinable' => 1,
-            'is_visible' => 1,
+            'is_creator' => true,
+            'is_member' => true,
+            'is_joinable' => true,
+            'is_visible' => true,
         ], Order::query(false)->find($order->id)->toArray());
         $this->login($this->userFactory()->state('new')->create());
         $this->assertArraySubset([
             'order_status' => 'created',
-            'is_creator' => 0,
-            'is_member' => 0,
-            'is_joinable' => 1,
-            'is_visible' => 1,
+            'is_creator' => false,
+            'is_member' => false,
+            'is_joinable' => true,
+            'is_visible' => true,
         ], Order::query(false)->find($order->id)->toArray());
+
+        $currentTime = Time::currentTime();
+        $this->mockCurrentTime($currentTime->copy()->addHours(3));
+        $this->assertNull(Order::query(false)->find($order->id));
+        $this->mockCurrentTime($currentTime);
+
         $orderStatus = new OrderStatus([
             'status' => OrderStatus::CLOSED,
             'time' => Time::currentTime()->addMinutes(1),

@@ -70,7 +70,6 @@ class Cart extends React.Component {
   state = {
     loading: null,
     updatingItemIndex: null,
-    orderId: null,
   };
 
   componentDidMount() {
@@ -120,18 +119,18 @@ class Cart extends React.Component {
   };
 
   handleDirectCheckout = () => {
-    const {cart, productMap,restaurant, address} = this.props;
+    const {
+      cart, productMap, restaurant, address,
+    } = this.props;
     this.setState({
       loading: Api.orderDirectCheckout(restaurant.id, address.selectedAddress).then((res) => {
-        console.log(res.data.delivery_fee);
-        console.log(res.data.tax)
         const { history } = this.props;
         history.push({
-          pathname: `/orders/direct-checkout`,
+          pathname: '/orders/direct-checkout',
           state: {
-            restaurant: restaurant,
-            cart: cart,
-            productMap: productMap,
+            restaurant,
+            cart,
+            productMap,
             orderId: res.data.order_id,
             sutotal: res.data.subtotal,
             tax: res.data.tax,
@@ -146,9 +145,9 @@ class Cart extends React.Component {
 
   render() {
     const {
-      classes, restaurant, cart, productMap, address
+      classes, restaurant, cart, productMap,
     } = this.props;
-    const { updatingItemIndex, orderId } = this.state;
+    const { updatingItemIndex } = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -277,13 +276,15 @@ Cart.propTypes = {
   restaurant: PropTypes.object,
   productMap: PropTypes.object,
   cart: PropTypes.object,
-
+  address: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
 Cart.defaultProps = {
   restaurant: null,
   productMap: null,
   cart: null,
+  address: null,
 };
 
 export default compose(

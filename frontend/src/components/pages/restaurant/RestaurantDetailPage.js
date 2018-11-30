@@ -180,7 +180,7 @@ class RestaurantDetailPage extends React.Component {
   }
 
   render() {
-    const { classes, cart, address} = this.props;
+    const { classes, cart, address } = this.props;
     const {
       restaurant,
       productMap,

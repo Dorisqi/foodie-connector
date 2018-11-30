@@ -24,9 +24,7 @@ $factory->define(\App\Models\Order::class, function () {
 $factory->afterCreating(
     \App\Models\Order::class,
     function (\App\Models\Order $order) {
-        $orderMember = new \App\Models\OrderMember([
-            'phone' => $order->phone,
-        ]);
+        $orderMember = new \App\Models\OrderMember();
         $orderMember->user()->associate(\Illuminate\Support\Facades\Auth::guard('api')->user());
         $orderMember->order()->associate($order);
         $orderMember->save();

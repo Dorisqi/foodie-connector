@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -20,9 +21,11 @@ import Api from 'facades/Api';
 import Axios from 'facades/Axios';
 import { Link } from 'react-router-dom';
 import ShareOrderDialog from 'components/order/ShareOrderDialog';
-import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import OrderDetailDialog from 'components/order/OrderDetailDialog';
+import FormControl from '@material-ui/core/FormControl';
+import AddressSelector from 'components/address/AddressSelector';
 import Snackbar from 'facades/Snackbar';
+import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 import classnames from 'classnames';
 
 const styles = theme => ({
@@ -80,11 +83,12 @@ const styles = theme => ({
   },
 });
 
-const RED = '#FF0000';
-const GREEN = '#33FE0B';
-const WHITE = '#FFFFFF';
+class NearbyOrdersPage extends React.Component {
+  static defaultProps = {
+    selectedAddress: null,
+    currentLocation: null,
+  };
 
-class OrderHistoryPage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -100,6 +104,14 @@ class OrderHistoryPage extends React.Component {
 
   componentDidMount() {
     this.loadOrderList();
+  }
+
+  componentDidUpdate(prevProps, _prevState, _prevContext) {
+    const { selectedAddress, currentLocation } = this.props;
+    if (prevProps.selectedAddress !== selectedAddress
+      || (selectedAddress === 0 && prevProps.currentLocation !== currentLocation)) {
+      this.loadOrderList();
+    }
   }
 
   componentWillUnmount() {
@@ -153,29 +165,40 @@ class OrderHistoryPage extends React.Component {
     });
   }
 
-  handleRate = (id, isPostive) => () => {
-    Api.orderRate(id, isPostive).then(() => {
-      this.setState((state) => {
-        const { orders } = state;
-        const order = orders.find(o => o.id === id);
-        order.current_order_member.rate_is_positive = isPostive;
-        return ({
-          orders,
-        });
-      });
+  handleJoinOrder = id => () => {
+    Api.orderJoin(id).then(() => {
+      Snackbar.success(`Successfully join order ${id}.`);
+      this.loadOrderList();
     }).catch((err) => {
       throw err;
     });
   }
 
   loadOrderList = () => {
+    const { selectedAddress, currentLocation } = this.props;
+    let params = null;
+    if (selectedAddress === null) {
+      return;
+    }
+    if (selectedAddress === 0) {
+      if (currentLocation === null) {
+        return;
+      }
+      params = {
+        place_id: currentLocation.place_id,
+      };
+    } else {
+      params = {
+        address_id: selectedAddress,
+      };
+    }
     Axios.cancelRequest(this.state.loadingOrders);
     this.setState({
-      loadingOrders: Api.orderList().then((res) => {
+      loadingOrders: Api.orderList(params).then((res) => {
         const orders = res.data;
         this.setState({
           loadingOrders: null,
-          orders,
+          orders: orders.filter(o => o.is_joinable && o.is_visible),
         });
       }).catch((err) => {
         this.setState({
@@ -203,7 +226,10 @@ class OrderHistoryPage extends React.Component {
       sharing,
     } = this.state;
     return (
-      <MainContent title="Order History">
+      <MainContent title="Nearby Orders">
+        <FormControl className={classes.margin} fullWidth>
+          <AddressSelector />
+        </FormControl>
         <div className={classes.root}>
           {loadingOrders && <LinearProgress />}
           {orders !== null
@@ -220,7 +246,7 @@ class OrderHistoryPage extends React.Component {
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
-                  current_order_member: { rate_is_positive: rate },
+                  distance,
                 } = order;
                 return (
                   <Card className={classes.card}>
@@ -233,6 +259,7 @@ class OrderHistoryPage extends React.Component {
                             <TableCell>Order Creator</TableCell>
                             <TableCell>Join Before</TableCell>
                             <TableCell>Order Address</TableCell>
+                            <TableCell>Order Distance</TableCell>
                             <TableCell>Total Cost</TableCell>
                           </TableRow>
                         </TableHead>
@@ -243,6 +270,7 @@ class OrderHistoryPage extends React.Component {
                             <TableCell>{creator.name}</TableCell>
                             <TableCell>{joinBefore}</TableCell>
                             <TableCell>{Format.formatAddress(order, true)}</TableCell>
+                            <TableCell>{`${distance} m`}</TableCell>
                             <TableCell>{totalCost}</TableCell>
                           </TableRow>
                         </TableBody>
@@ -277,6 +305,19 @@ class OrderHistoryPage extends React.Component {
                           >
                             Order Detail
                           </Button>
+                          {!order.is_creator && !order.is_member && (
+                            <Button
+                              key="join"
+                              className={classes.action}
+                              variant="outlined"
+                              color="secondary"
+                              fullWidth
+                              onClick={this.handleJoinOrder(id)}
+                            >
+                              Join Order
+                            </Button>
+                          )
+                          }
                           {order.is_creator && [(
                             <Button
                               key="checkout"
@@ -304,39 +345,6 @@ class OrderHistoryPage extends React.Component {
                               Cancel Order
                             </Button>
                           )]
-                          }
-                          {orderStatus === 'delivered'
-                            ? (
-                              <ListItem className={classes.action}>
-                                <Button
-                                  styles={{ marginRight: '100%' }}
-                                  variant="contained"
-                                  onClick={this.handleRate(id, true)}
-                                  disable={rate}
-                                >
-                                  <i
-                                    className="material-icons"
-                                    style={{ color: rate === true ? RED : WHITE }}
-                                  >
-                                    thumb_up
-                                  </i>
-                                </Button>
-                                <Button
-                                  styles={{ marginLeft: '100%' }}
-                                  variant="contained"
-                                  onClick={this.handleRate(id, false)}
-                                  disable={rate}
-                                >
-                                  <i
-                                    className="material-icons"
-                                    style={{ color: rate === false ? GREEN : WHITE }}
-                                  >
-                                    thumb_down
-                                  </i>
-                                </Button>
-                              </ListItem>
-                            )
-                            : null
                           }
                         </ListItem>
                       </List>
@@ -387,9 +395,17 @@ class OrderHistoryPage extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  selectedAddress: state.address.selectedAddress,
+  currentLocation: state.address.currentLocation,
+});
 
-OrderHistoryPage.propTypes = {
+NearbyOrdersPage.propTypes = {
   classes: PropTypes.object.isRequired,
+  selectedAddress: PropTypes.number,
+  currentLocation: PropTypes.object,
 };
 
-export default withStyles(styles)(OrderHistoryPage);
+export default withStyles(styles)(
+  connect(mapStateToProps)(NearbyOrdersPage),
+);

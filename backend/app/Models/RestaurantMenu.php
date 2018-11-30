@@ -10,6 +10,8 @@ class RestaurantMenu extends Model
 
     public $incrementing = false;
 
+    protected $primaryKey = 'restaurant_id';
+
     protected $guarded = [];
 
     public function restaurant()

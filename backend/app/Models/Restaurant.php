@@ -34,6 +34,11 @@ class Restaurant extends Model
         'geo_location',
     ];
 
+    protected $casts = [
+        'order_minimum' => 'float',
+        'delivery_fee' => 'float',
+    ];
+
     public function restaurantCategories()
     {
         return $this->belongsToMany(RestaurantCategory::class, 'restaurant_restaurant_category');

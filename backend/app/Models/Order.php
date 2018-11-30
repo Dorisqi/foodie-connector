@@ -20,6 +20,14 @@ class Order extends Model
 
     public $incrementing = false;
 
+    protected $casts = [
+        'is_public' => 'bool',
+        'is_creator' => 'bool',
+        'is_member' => 'bool',
+        'is_joinable' => 'bool',
+        'is_visible' => 'bool',
+    ];
+
     protected $fillable = [
         'join_before',
         'is_public',
@@ -85,9 +93,8 @@ class Order extends Model
         ])->addSelect([
             '*',
             DB::raw("(SELECT `time` FROM `order_statuses` WHERE `order_id`=`orders`.`id` "
-                . "AND `status`=${createdStatusId}) as `created_at`"),
-            DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
-                . "DESC LIMIT 1) as `order_status`"),
+                . "AND `status`=${createdStatusId} LIMIT 1) as `created_at`"),
+            self::orderStatusQuery(),
             DB::raw("(`creator_id`=${userId}) as `is_creator`"),
             DB::raw("EXISTS(SELECT * FROM `order_members` WHERE `order_id`=`orders`.`id` AND "
                 . "`api_user_id`=${userId}) as `is_member`"),
@@ -114,24 +121,52 @@ class Order extends Model
         return $query;
     }
 
+    public static function orderStatusQuery()
+    {
+        return DB::raw("(SELECT `status` FROM `order_statuses` WHERE `order_id`=`orders`.`id` ORDER BY `time` "
+            . "DESC LIMIT 1) as `order_status`");
+    }
+
     public function getShareLinkAttribute()
     {
         return url('orders/' . $this->id);
     }
 
     protected $localPrices = null;
+
     public function getPricesAttribute()
     {
-        if (is_null($this->restaurant) || $this->order_status !== OrderStatus::CREATED) {
+        if (is_null($this->restaurant)) {
             return null;
+        }
+        $total = 0;
+        foreach ($this->orderMembers as $orderMember) {
+            if (is_null($orderMember->total)) {
+                $total = null;
+                break;
+            }
+            $total += $orderMember->total;
         }
         if (is_null($this->localPrices)) {
             $this->localPrices = [
-                'estimated_delivery_fee' =>
-                    round($this->restaurant->delivery_fee / count($this->orderMembers), 2),
+                'estimated_delivery_fee' => $this->order_status === OrderStatus::CREATED
+                    ? round($this->restaurant->delivery_fee / count($this->orderMembers), 2)
+                    : null,
+                'total' => $total,
             ];
         }
         return $this->localPrices;
+    }
+
+    public function getCurrentOrderMemberAttribute()
+    {
+        if (is_null($this->orderMembers)) {
+            return null;
+        }
+        $userId = Auth::guard('api')->user()->id;
+        return array_first($this->orderMembers, function ($orderMember) use ($userId) {
+            return $orderMember->api_user_id === $userId;
+        });
     }
 
     public function updateStatus($status)
@@ -140,7 +175,9 @@ class Order extends Model
             'status' => $status,
             'time' => Time::currentTime(),
         ]);
-        event(new OrderStatusUpdated($this->id, $this->orderMembers, $status));
+        if ($status !== OrderStatus::CREATED) {
+            event(new OrderStatusUpdated($this->id, $this->orderMembers, $status));
+        }
     }
 
     public function toArray()
@@ -150,6 +187,7 @@ class Order extends Model
         $data['share_link'] = $this->share_link;
         $data['qr_code_link'] = route('order.qr_code', ['id' => $this->id]);
         $data['prices'] = $this->prices;
+        $data['current_order_member'] = $this->current_order_member;
         return $data;
     }
 }

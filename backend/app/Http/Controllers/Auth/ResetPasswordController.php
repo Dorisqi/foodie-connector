@@ -84,7 +84,6 @@ class ResetPasswordController extends ApiController
             function (ApiUser $user) use ($request) {
                 $user->password = Hash::make($request->input('password'));
                 $user->save();
-                event(new PasswordReset($user));
                 $this->guard()->login($user);
             }
         );

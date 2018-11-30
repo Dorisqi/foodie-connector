@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
+
 const styles = () => ({
   subComponentTitle: {
     display: 'block',
@@ -33,24 +34,22 @@ class PaymentPage extends React.Component {
   }
 
   handleMemberStatus = () => {
-    const {orderMembers, isReady, memberStatus} = this.state;
-    Api.orderDetail(this.props.location.state.orderId).then((res) =>{
+    const { orderMembers, memberStatus } = this.state;
+    Api.orderDetail(this.props.location.state.orderId).then((res) => {
       this.setState({
         orderMembers: res.data.order_members,
       });
     }).catch((err) => {
       throw err;
     });
-    for (var i = 0; i < orderMembers.length; i++) {
-      if (orderMembers[i].is_ready !== true)
-      {
+    for (let i = 0; i < orderMembers.length; i += 1) {
+      if (orderMembers[i].is_ready !== true) {
         this.setState({
           memberStatus: false,
         });
       }
     }
-    if (memberStatus === true)
-    {
+    if (memberStatus === true) {
       this.setState({
         isReady: memberStatus,
       });
@@ -58,8 +57,7 @@ class PaymentPage extends React.Component {
   };
 
   handleOrderConfirm = () => {
-    Api.orderConfirm(this.props.location.state.orderId).then((res) =>{
-      console.log(res.data);
+    Api.orderConfirm(this.props.location.state.orderId).then((res) => {
       this.setState({
         orderStatus: res.data.order_statuses[0].status,
         time: res.data.order_statuses[0].time,
@@ -68,25 +66,27 @@ class PaymentPage extends React.Component {
       throw err;
     });
   };
+
   render() {
-    const {isReady, orderStatus, time, orderMembers} = this.state;
+    const {
+      isReady, orderStatus, time, orderMembers,
+    } = this.state;
     const { classes } = this.props;
-    console.log(orderMembers);
     return (
       <MainContent title="Payment Successful">
-      {orderMembers.length > 1
-        ? (
-          <div>
-          <Button
-            className={classes.action}
-            variant="outlined"
-            color="primary"
-            disable={isReady === false}
-            onClick={this.handleOrderConfirm}
-          >
+        {orderMembers.length > 1
+          ? (
+            <div>
+              <Button
+                className={classes.action}
+                variant="outlined"
+                color="primary"
+                disable={isReady === false}
+                onClick={this.handleOrderConfirm}
+              >
             Confirm Order
-          </Button>
-          {orderStatus !== null && time !== null
+              </Button>
+              {orderStatus !== null && time !== null
               && (
                 <Paper>
                   <List>
@@ -108,21 +108,21 @@ class PaymentPage extends React.Component {
                         }}
                       />
                     </ListItem>
-                </List>
-              </Paper>
+                  </List>
+                </Paper>
               )
             }
-          </div>
-        )
-         : [
-          <Typography
-            className={classes.subComponentTitle}
-            variant="subtitle1"
-            component="h2"
-          >
+            </div>
+          )
+          : [
+            <Typography
+              className={classes.subComponentTitle}
+              variant="subtitle1"
+              component="h2"
+            >
                   Please check your notification box to track the order status...
-          </Typography>
-        ]
+            </Typography>,
+          ]
       }
       </MainContent>
     );

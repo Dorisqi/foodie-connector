@@ -8,6 +8,7 @@ class Auth {
   static authenticateUser(authentication) {
     store.dispatch(clearAddress());
     LocalStorage.setItem('authentication', authentication);
+    // TODO: Pusher
   }
 
   static authenticateFromResponse = component => (res) => {

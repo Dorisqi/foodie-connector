@@ -64,7 +64,7 @@ class CartCheckout extends React.Component {
     loading: null,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { cart } = this.props;
     if (cart === null) {
       this.setState({
@@ -81,7 +81,8 @@ class CartCheckout extends React.Component {
         }),
       });
     }
-  };
+  }
+
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loading);
   }
