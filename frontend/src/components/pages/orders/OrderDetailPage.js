@@ -6,14 +6,30 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import green from '@material-ui/core/colors/green';
+import { Link } from 'react-router-dom';
 import MainContent from 'components/template/MainContent';
 import NotFoundPage from 'components/pages/error/NotFoundPage';
+import ProgressButton from 'components/form/ProgressButton';
+import OrderActions from 'components/order/OrderActions';
 import Axios from 'facades/Axios';
 import Api from 'facades/Api';
 import Pusher from 'facades/Pusher';
 import Maps from 'facades/Maps';
+import Format from 'facades/Format';
 
 const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginLeft: -theme.spacing.unit,
+    marginRight: -theme.spacing.unit,
+  },
+  column: {
+    boxSizing: 'border-box',
+    width: `${100 / 3}%`,
+    padding: theme.spacing.unit,
+  },
   subComponent: {
     marginTop: 2 * theme.spacing.unit,
   },
@@ -26,6 +42,15 @@ const styles = theme => ({
   map: {
     height: 400,
   },
+  ready: {
+    color: green['500'],
+  },
+  notReady: {
+    color: theme.palette.error.main,
+  },
+  memberPrice: {
+    flex: 'none',
+  },
 });
 
 class OrderDetailPage extends React.Component {
@@ -33,6 +58,7 @@ class OrderDetailPage extends React.Component {
     loading: null,
     order: null,
     notFound: false,
+    joiningOrder: null,
   };
 
   mapRefElement = null;
@@ -57,8 +83,31 @@ class OrderDetailPage extends React.Component {
 
   componentWillUnmount() {
     Axios.cancelRequest(this.state.loading);
+    Axios.cancelRequest(this.state.joiningOrder);
     this.unsubscribePusher();
   }
+
+  handleJoinOrderClick = () => {
+    if (this.state.joiningOrder !== null) {
+      return;
+    }
+    const { order } = this.state;
+    this.setState({
+      joiningOrder: Api.orderJoin(order.id)
+        .then((res) => {
+          this.setState({
+            order: res.data,
+            joiningOrder: null,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            joiningOrder: null,
+          });
+          throw err;
+        }),
+    });
+  };
 
   mapRef = (ref) => {
     if (ref === null) {
@@ -90,6 +139,7 @@ class OrderDetailPage extends React.Component {
 
   loadOrder() {
     Axios.cancelRequest(this.state.loading);
+    Axios.cancelRequest(this.state.joiningOrder);
     this.unsubscribePusher();
     const id = this.props.match.params.id;
     this.driverLocation = null;
@@ -181,60 +231,172 @@ class OrderDetailPage extends React.Component {
 
   render() {
     const { match, classes } = this.props;
-    const { order, notFound, loading } = this.state;
+    const {
+      order, notFound, loading, joiningOrder,
+    } = this.state;
     return notFound
       ? <NotFoundPage />
       : (
         <MainContent title={`Order ${match.params.id}`} loading={loading !== null}>
           {order !== null && (
-            <div>
-              <div className={classes.subComponent}>
-                <Typography className={classes.subComponentTitle} variant="h5" component="h2">
-                  Order Information
-                </Typography>
-                <Card>
-                  <List>
-                    <ListItem>
-                      <ListItemText
-                        primary="Status"
-                        secondary={
-                          order.order_status[0].toUpperCase()
-                          + order.order_status.slice(1)
-                        }
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary="Created at"
-                        secondary={order.created_at}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        primary="Visibility"
-                        secondary={order.is_public ? 'Public' : 'Private'}
-                      />
-                    </ListItem>
-                    {order.order_status === 'created' && (
-                      <ListItem>
-                        <ListItemText
-                          primary="Join before"
-                          secondary={order.join_before}
-                          secondaryTypographyProps={{
-                            className: order.is_joinable ? null : classes.errorText,
-                          }}
-                        />
-                      </ListItem>
-                    )}
-                  </List>
-                </Card>
-              </div>
-              {order.order_status === 'delivering' && (
+            <div className={classes.root}>
+              <div className={classes.column}>
                 <div className={classes.subComponent}>
                   <Typography className={classes.subComponentTitle} variant="h5" component="h2">
-                    Tracking
+                    Order Information
                   </Typography>
-                  <div className={classes.map} ref={this.mapRef} />
+                  <Card>
+                    <List>
+                      <ListItem
+                        button
+                        component={Link}
+                        to={`/restaurants/${order.restaurant.id}`}
+                      >
+                        <ListItemText
+                          primary="Restaurant"
+                          secondary={order.restaurant.name}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Status"
+                          secondary={Format.capitalize(order.order_status)}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Created at"
+                          secondary={order.created_at}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Visibility"
+                          secondary={order.is_public ? 'Public' : 'Private'}
+                        />
+                      </ListItem>
+                      {order.order_status === 'created' && (
+                        <ListItem>
+                          <ListItemText
+                            primary="Join before"
+                            secondary={order.join_before}
+                            secondaryTypographyProps={{
+                              className: order.is_joinable ? null : classes.errorText,
+                            }}
+                          />
+                        </ListItem>
+                      )}
+                    </List>
+                  </Card>
+                </div>
+                {order.order_status === 'delivering' && (
+                  <div className={classes.subComponent}>
+                    <Typography className={classes.subComponentTitle} variant="h5" component="h2">
+                      Tracking
+                    </Typography>
+                    <Card>
+                      <div className={classes.map} ref={this.mapRef} />
+                    </Card>
+                  </div>
+                )}
+              </div>
+              <div className={classes.column}>
+                <div className={classes.subComponent}>
+                  <Typography className={classes.subComponentTitle} variant="h5" component="h2">
+                    Order Members
+                  </Typography>
+                  <Card>
+                    <List>
+                      {order.order_members.map(orderMember => (
+                        <ListItem key={orderMember.user.friend_id}>
+                          <ListItemText
+                            primary={orderMember.user.name}
+                            secondary={orderMember.is_ready ? 'Ready' : 'Not ready'}
+                            secondaryTypographyProps={{
+                              className: orderMember.is_ready
+                                ? classes.ready
+                                : classes.notReady,
+                            }}
+                          />
+                          {order.total !== null && (
+                            <ListItemText
+                              className={classes.memberPrice}
+                              secondary={Format.displayPrice(orderMember.total)}
+                            />
+                          )}
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Card>
+                </div>
+              </div>
+              {order.is_member ? (
+                <div className={classes.column}>
+                  {order.order_status === 'created' && (
+                    <div className={classes.subComponent}>
+                      <Typography className={classes.subComponentTitle} variant="h5" component="h2">
+                        Actions
+                      </Typography>
+                      <Card>
+                        <List>
+                          <OrderActions order={order} />
+                        </List>
+                      </Card>
+                    </div>
+                  )}
+                  <div className={classes.subComponent}>
+                    <Typography className={classes.subComponentTitle} variant="h5" component="h2">
+                      Order Status
+                    </Typography>
+                    <Card>
+                      <List>
+                        {order.order_statuses.map((orderStatus, index) => (
+                          <ListItem
+                            key={
+                              index // eslint-disable-line react/no-array-index-key
+                            }
+                          >
+                            <ListItemText
+                              primary={Format.capitalize(orderStatus.status)}
+                              secondary={orderStatus.time}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Card>
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.column}>
+                  <div className={classes.subComponent}>
+                    <Typography className={classes.subComponentTitle} variant="h5" component="h2">
+                      Join Order
+                    </Typography>
+                    <Card>
+                      <List>
+                        <ListItem>
+                          <ListItemText
+                            primary="Join before"
+                            secondary={order.join_before}
+                            secondaryTypographyProps={{
+                              className: order.is_joinable ? null : classes.errorText,
+                            }}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <ProgressButton
+                            variant="outlined"
+                            color="primary"
+                            fullWidth
+                            loading={joiningOrder !== null}
+                            onClick={this.handleJoinOrderClick}
+                          >
+                            Join Order
+                          </ProgressButton>
+                        </ListItem>
+                      </List>
+                    </Card>
+                  </div>
                 </div>
               )}
             </div>

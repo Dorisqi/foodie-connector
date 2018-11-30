@@ -1,14 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-
 import DialogForm from 'components/form/DialogForm';
-
 import Api from 'facades/Api';
 import Snackbar from 'facades/Snackbar';
 import Form from 'facades/Form';
-
-
+import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonAdd from '@material-ui/icons/PersonAdd';
@@ -17,6 +14,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 
 
 const styles = theme => ({
@@ -37,6 +35,9 @@ const styles = theme => ({
     paddingRight: 0,
     minWidth: 'fit-content',
   },
+  itemDelete: {
+    color: theme.palette.error.main,
+  },
 });
 
 class FollowfriendDialog extends React.Component {
@@ -45,6 +46,7 @@ class FollowfriendDialog extends React.Component {
     errors: {},
     friends: [],
     loadingfriends: null,
+    deletingAlert:false
   };
 
   constructor(props) {
@@ -77,7 +79,7 @@ class FollowfriendDialog extends React.Component {
   handleRequestFail = (err) => {
     Form.handleErrors(this)(err);
     // not sure about the error using
-    if (this.state.errors.email !== undefined) {
+    if (this.state.friendEmail !== undefined) {
       const { errors } = this.state;
       const newErrors = { ...errors };
       newErrors.address = 'The email is invalid.';
@@ -103,9 +105,32 @@ class FollowfriendDialog extends React.Component {
       this.setState({
         loadingfriends: null,
       });
+      Snackbar.error(' Following friend failed');
+
       throw (err);
     });
   }
+
+
+  handledeleteClick=(e,friendid)=>{
+
+    Api.unfollowFriend(friendid).then(() => {
+      Snackbar.success('Successfully delete the friend');
+      this.loadFriends();
+    }).catch((err) => {
+      throw (err);
+    });
+
+
+  }
+
+
+  handleDeletingAlertClose = () => {
+    this.setState({
+      deletingAlert: false,
+    });
+  };
+
 
   loadFriends() {
     Api.friendList().then((res) => {
@@ -139,7 +164,7 @@ class FollowfriendDialog extends React.Component {
         onRequestFailed={this.handleRequestFail}
         onClose={this.props.onClose}
       >
-        <InputLabel htmlFor="email">Follow new friend by Email</InputLabel>
+        <InputLabel htmlFor="email">Follow new friend by Email! (click to unfollow Friend)</InputLabel>
         <Input
           id="email"
           parent={this}
@@ -161,7 +186,7 @@ class FollowfriendDialog extends React.Component {
                 <PersonAdd />
               </IconButton>
             </InputAdornment>
-)}
+          )}
         />
         {loadingfriends && <LinearProgress />}
         {friends === null
@@ -173,19 +198,27 @@ class FollowfriendDialog extends React.Component {
             friends.map(friend => (
 
               <ListItem
+                button
                 key={friend.name} // eslint-disable-line react/no-array-index-key
                 className={classes.item}
+                onClick={event => this.handledeleteClick(event, friend.friend_id)}
+
               >
-                <div className={classes.itemLine}>
+              <div className={classes.itemLine}>
                   <ListItemText
                     primary={friend.name}
                   />
+
                   <ListItemText
                     className={classes.setstatus}
                     secondary={friend.email}
                   />
+
                 </div>
               </ListItem>
+
+
+
             )),
           ]
           }

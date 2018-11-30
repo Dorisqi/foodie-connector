@@ -14,6 +14,7 @@ import NearbyOrdersPage from 'components/pages/orders/NearbyOrdersPage';
 import OrderDetailPage from 'components/pages/orders/OrderDetailPage';
 
 import CheckoutPage from 'components/pages/checkout/CheckOutPage';
+import DirectCheckout from 'components/pages/directcheckout/DirectCheckout';
 import PaymentPage from 'components/pages/payment/PaymentPage';
 
 import NotFoundPage from 'components/pages/error/NotFoundPage';
@@ -36,6 +37,7 @@ const Routes = () => (
     <PrivateRoute path="/order-history" component={OrderHistoryPage} />
     <PrivateRoute path="/nearby-orders" component={NearbyOrdersPage} />
     <PrivateRoute path="/orders/:id" component={OrderDetailPage} />
+    <PrivateRoute path="/orders/direct-checkout" component={DirectCheckout} />
     <Route component={NotFoundPage} />
   </Switch>
 );

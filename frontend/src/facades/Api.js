@@ -148,8 +148,8 @@ class Api {
     });
   }
 
-  static orderShow(restaurantId) {
-    return Api.instance().get(`/orders/${restaurantId}`);
+  static orderShow(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
@@ -159,10 +159,6 @@ class Api {
       is_public: isPublic,
       join_limit: joinLimit,
     });
-  }
-
-  static singleOrderCreate(restaurantId) {
-    return Api.instance().post('/orders', restaurantId);
   }
 
   static orderCancel(orderId) {
@@ -175,17 +171,29 @@ class Api {
     });
   }
 
-  static orderDetail(orderId) {
-    return Api.instance().get(`/orders/${orderId}`);
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`);
+  }
+
+  static orderConfirm(orderId) {
+    return Api.instance().post(`/orders/${orderId}/confirm`);
   }
 
   static orderJoin(orderId) {
     return Api.instance().post(`/orders/${orderId}/join`, {});
   }
 
+
   /* --- Checkout --- */
   static orderCheckout(orderId) {
     return Api.instance().post(`/orders/${orderId}/checkout`);
+  }
+
+  static orderDirectCheckout(restaurantId, addressId) {
+    return Api.instance().post('/orders/direct-checkout', {
+      restaurant_id: restaurantId,
+      address_id: addressId,
+    });
   }
 
   /* --- Pay --- */
@@ -227,6 +235,11 @@ class Api {
       email,
     });
   }
+  static unfollowFriend(friend_id) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().delete(`/friends/${friend_id}`);
+  }
+
 }
 
 export default Api;

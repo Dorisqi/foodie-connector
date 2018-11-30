@@ -70,7 +70,6 @@ class Cart extends React.Component {
   state = {
     loading: null,
     updatingItemIndex: null,
-    orderId: null,
   };
 
   componentDidMount() {
@@ -120,16 +119,25 @@ class Cart extends React.Component {
   };
 
   handleDirectCheckout = () => {
+    const {
+      cart, productMap, restaurant, address,
+    } = this.props;
     this.setState({
-      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) => {
-        this.setState({
-          loading: null,
-          orderId: res.data.id,
+      loading: Api.orderDirectCheckout(restaurant.id, address.selectedAddress).then((res) => {
+        const { history } = this.props;
+        history.push({
+          pathname: '/orders/direct-checkout',
+          state: {
+            restaurant,
+            cart,
+            productMap,
+            orderId: res.data.order_id,
+            sutotal: res.data.subtotal,
+            tax: res.data.tax,
+            delivery_fee: res.data.delivery_fee,
+          },
         });
       }).catch((err) => {
-        this.setState({
-          loading: null,
-        });
         throw err;
       }),
     });
@@ -139,7 +147,7 @@ class Cart extends React.Component {
     const {
       classes, restaurant, cart, productMap,
     } = this.props;
-    const { updatingItemIndex, orderId } = this.state;
+    const { updatingItemIndex } = this.state;
     if (restaurant === null || cart === null) {
       return (
         <LinearProgress />
@@ -243,13 +251,9 @@ class Cart extends React.Component {
               <Button
                 variant="outlined"
                 disabled={cart.cart.length === 0}
-                component={Link}
                 color="primary"
                 fullWidth
                 onClick={this.handleDirectCheckout}
-                to={{
-                  pathname: `/orders/${orderId}/checkout`,
-                }}
               >
                 Direct Checkout
               </Button>
@@ -272,13 +276,15 @@ Cart.propTypes = {
   restaurant: PropTypes.object,
   productMap: PropTypes.object,
   cart: PropTypes.object,
-
+  address: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
 Cart.defaultProps = {
   restaurant: null,
   productMap: null,
   cart: null,
+  address: null,
 };
 
 export default compose(

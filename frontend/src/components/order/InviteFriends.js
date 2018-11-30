@@ -134,7 +134,15 @@ class InviteFriends extends React.Component {
         {friends === null
           ? (
             <div>
-              No friends in your Friends lists!
+
+              <ListItem
+                className={classes.item}
+              >
+              <ListItemText
+                primary={"No friends in your Friends lists!"}
+
+              />
+              </ListItem>
             </div>
           ) : [
             friends.map(friend => (
