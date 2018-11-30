@@ -242,7 +242,7 @@ class NearbyOrdersPage extends React.Component {
                   is_public: isPublic,
                   join_before: joinBefore,
                   order_status: orderStatus,
-                  total_cost: totalCost,
+                  prices: { total: total },
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
@@ -260,7 +260,7 @@ class NearbyOrdersPage extends React.Component {
                             <TableCell>Join Before</TableCell>
                             <TableCell>Order Address</TableCell>
                             <TableCell>Order Distance</TableCell>
-                            <TableCell>Total Cost</TableCell>
+                            <TableCell>Total Cost($)</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -271,7 +271,7 @@ class NearbyOrdersPage extends React.Component {
                             <TableCell>{joinBefore}</TableCell>
                             <TableCell>{Format.formatAddress(order, true)}</TableCell>
                             <TableCell>{`${distance} m`}</TableCell>
-                            <TableCell>{totalCost}</TableCell>
+                            <TableCell>{total}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>

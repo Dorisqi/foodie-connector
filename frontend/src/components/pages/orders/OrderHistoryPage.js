@@ -153,6 +153,13 @@ class OrderHistoryPage extends React.Component {
     });
   }
 
+  handleGroupCheckout = order => () => {
+    this.props.history.push({
+      pathname: `/orders/${order.id}/checkout`,
+      state: { order },
+    });
+  }
+
   handleRate = (id, isPostive) => () => {
     Api.orderRate(id, isPostive).then(() => {
       this.setState((state) => {
@@ -216,7 +223,7 @@ class OrderHistoryPage extends React.Component {
                   is_public: isPublic,
                   join_before: joinBefore,
                   order_status: orderStatus,
-                  total_cost: totalCost,
+                  prices: { total : total },
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
@@ -233,7 +240,7 @@ class OrderHistoryPage extends React.Component {
                             <TableCell>Order Creator</TableCell>
                             <TableCell>Join Before</TableCell>
                             <TableCell>Order Address</TableCell>
-                            <TableCell>Total Cost</TableCell>
+                            <TableCell>Total Cost($)</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -243,7 +250,7 @@ class OrderHistoryPage extends React.Component {
                             <TableCell>{creator.name}</TableCell>
                             <TableCell>{joinBefore}</TableCell>
                             <TableCell>{Format.formatAddress(order, true)}</TableCell>
-                            <TableCell>{totalCost}</TableCell>
+                            <TableCell>{total}</TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
@@ -286,7 +293,7 @@ class OrderHistoryPage extends React.Component {
                               color="primary"
                               fullWidth
                               disabled={orderStatus !== 'created'}
-                              // TODO: checkout action
+                              onClick={this.handleGroupCheckout(order)}
                             >
                               Checkout
                             </Button>
@@ -313,7 +320,6 @@ class OrderHistoryPage extends React.Component {
                                   styles={{ marginRight: '100%' }}
                                   variant="contained"
                                   onClick={this.handleRate(id, true)}
-                                  disable={rate}
                                 >
                                   <i
                                     className="material-icons"
@@ -326,7 +332,6 @@ class OrderHistoryPage extends React.Component {
                                   styles={{ marginLeft: '100%' }}
                                   variant="contained"
                                   onClick={this.handleRate(id, false)}
-                                  disable={rate}
                                 >
                                   <i
                                     className="material-icons"
