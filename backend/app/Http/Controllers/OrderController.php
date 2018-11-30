@@ -44,7 +44,7 @@ class OrderController extends ApiController
             $lng = (float)$coords->getLng();
             $query = $query
                 ->having('is_joinable', true)
-                ->distanceSphere('geo_location', $coords, 500) // within 500 meters
+                ->distanceSphere('geo_location', $coords, 500)// within 500 meters
                 ->addSelect([
                     DB::raw("ROUND(ST_Distance_Sphere(`geo_location`, POINT(${lng}, ${lat}))) AS `distance`"),
                 ]);
@@ -69,86 +69,12 @@ class OrderController extends ApiController
         try {
             DB::beginTransaction();
 
-            if (Order::query(
-                true,
+            $order = $this->create(
                 $request->input('restaurant_id'),
-                'created'
-            )->first() !== null) {
-                throw ApiException::validationFailedErrors([
-                    'form' => [
-                        'You have unconfirmed order. Please confirm that before creating new one.'
-                    ],
-                ]);
-            }
-
-            $address = $this->user()->addresses()->find($request->input('address_id'));
-            if (is_null($address)) {
-                throw ApiException::invalidAddressId();
-            }
-
-            $restaurant = Restaurant::query($address->geo_location)->find($request->input('restaurant_id'));
-
-            if (!$restaurant->is_deliverable) {
-                throw ApiException::validationFailedErrors([
-                    'address_id' => [
-                        'The address associated with the address_id must be deliverable by the restaurant.',
-                    ],
-                ]);
-            }
-
-            $createAt = Time::currentTime();
-            $joinBefore = $createAt->copy()->addSeconds((int)$request->input('join_limit'));
-
-            if (!DB::selectOne(
-                'SELECT ' . Restaurant::isOpenQuery($restaurant->id, $joinBefore->copy()->addMinutes(10))
-            )->{'is_open'}) {
-                throw ApiException::validationFailedErrors([
-                    'join_limit' => [
-                        'The restaurant must be open for at least 10 minutes after the join limit.',
-                    ],
-                ]);
-            }
-
-            $order = new Order([
-                'join_before' => $joinBefore->toDateTimeString(),
-                'is_public' => $request['is_public'],
-            ]);
-
-            $id = null;
-            while (true) {
-                $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
-                if (is_null(Order::find($id))) {
-                    break;
-                }
-            }
-
-            $order->id = $id;
-            $order->restaurant()->associate($restaurant);
-            $order->creator()->associate($this->user());
-
-            if (!is_null($request->input('address_id'))) {
-                $order->fill(
-                    Address::addAddressPrefix(
-                        \App\Models\Address::find($request->input('address_id'))->toArray()
-                    )
-                );
-            } else {
-                $order->fill($request->only(Address::addressFields()));
-            }
-
-            $order->save();
-
-            $orderMember = new OrderMember();
-            $orderMember->user()->associate($this->user());
-            $orderMember->order()->associate($order);
-            $orderMember->save();
-
-            $orderStatus = new OrderStatus([
-                'status' => OrderStatus::CREATED,
-                'time' => $createAt,
-            ]);
-            $orderStatus->order()->associate($order);
-            $orderStatus->save();
+                $request->input('address_id'),
+                $request->input('is_public'),
+                $request->input('join_limit')
+            );
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -157,6 +83,130 @@ class OrderController extends ApiController
         }
 
         return $this->response(Order::query()->find($order->id));
+    }
+
+    /**
+     * Direct checkout
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \Exception
+     */
+    public function directCheckout(Request $request)
+    {
+        $this->validateInput($request, $this::directCheckoutRules());
+
+        try {
+            DB::beginTransaction();
+
+            $order = $this->create(
+                $request->input('restaurant_id'),
+                $request->input('address_id')
+            );
+            $orderMember = $this->checkoutOrder(Order::query()->find($order->id));
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        return $this->response($orderMember);
+    }
+
+    /**
+     * Create an new order
+     *
+     * @param $restaurantId
+     * @param $addressId
+     * @param bool $isPublic
+     * @param int $joinLimit
+     * @return \App\Models\Order
+     *
+     * @throws \App\Exceptions\ApiException
+     */
+    public function create($restaurantId, $addressId, $isPublic = false, $joinLimit = -1)
+    {
+        if (Order::query(
+            true,
+            $restaurantId,
+            'created'
+        )->first() !== null) {
+            throw ApiException::validationFailedErrors([
+                'form' => [
+                    'You have unconfirmed order. Please confirm that before creating new one.'
+                ],
+            ]);
+        }
+
+        $address = $this->user()->addresses()->find($addressId);
+        if (is_null($address)) {
+            throw ApiException::invalidAddressId();
+        }
+
+        $restaurant = Restaurant::query($address->geo_location)->find($restaurantId);
+
+        if (!$restaurant->is_deliverable) {
+            throw ApiException::validationFailedErrors([
+                'address_id' => [
+                    'The address associated with the address_id must be deliverable by the restaurant.',
+                ],
+            ]);
+        }
+
+        $createAt = Time::currentTime();
+        $joinBefore = $createAt->copy()->addSeconds((int)$joinLimit);
+
+        if (!DB::selectOne(
+            'SELECT ' . Restaurant::isOpenQuery($restaurant->id, $joinBefore->copy()->addMinutes(10))
+        )->{'is_open'}) {
+            throw ApiException::validationFailedErrors([
+                'join_limit' => [
+                    'The restaurant must be open for at least 10 minutes after the join limit.',
+                ],
+            ]);
+        }
+
+        $order = new Order([
+            'join_before' => $joinBefore->toDateTimeString(),
+            'is_public' => $isPublic,
+        ]);
+
+        $id = null;
+        while (true) {
+            $id = strtoupper(bin2hex(openssl_random_pseudo_bytes(10)));
+            if (is_null(Order::find($id))) {
+                break;
+            }
+        }
+
+        $order->id = $id;
+        $order->restaurant()->associate($restaurant);
+        $order->creator()->associate($this->user());
+
+        $order->fill(
+            Address::addAddressPrefix(
+                \App\Models\Address::find($addressId)->toArray()
+            )
+        );
+
+        $order->save();
+
+        $orderMember = new OrderMember();
+        $orderMember->user()->associate($this->user());
+        $orderMember->order()->associate($order);
+        $orderMember->save();
+
+        $orderStatus = new OrderStatus([
+            'status' => OrderStatus::CREATED,
+            'time' => $createAt,
+        ]);
+        $orderStatus->order()->associate($order);
+        $orderStatus->save();
+
+        return $order;
     }
 
     /**
@@ -205,12 +255,11 @@ class OrderController extends ApiController
      * Join an order
      *
      * @param string $id
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \App\Exceptions\ApiException
      */
-    public function join($id, Request $request)
+    public function join($id)
     {
         $order = Order::query(false)->find($id);
         if (is_null($order)) {
@@ -247,6 +296,19 @@ class OrderController extends ApiController
         if ($order->order_status !== OrderStatus::CREATED) {
             throw ApiException::orderNotUpdatable();
         }
+        $orderMember = $this->checkoutOrder($order);
+        return $this->response($orderMember);
+    }
+
+    /**
+     * Checkout an order
+     *
+     * @param $order
+     * @return \App\Models\OrderMember
+     * @throws \App\Exceptions\ApiException
+     */
+    public function checkoutOrder($order)
+    {
         $cart = $this->user()->cart()->first();
         if ($cart->restaurant_id !== $order->restaurant_id) {
             throw ApiException::emptyCart();
@@ -263,11 +325,11 @@ class OrderController extends ApiController
         }
         $orderMember->fill([
             'products' => json_encode($cartItems),
-            'subtotal' => (string)$cart->subtotal,
-            'tax' => (string)$cart->tax,
-            'delivery_fee' => (string)$order->prices['estimated_delivery_fee'],
+            'subtotal' => $cart->subtotal,
+            'tax' => $cart->tax,
+            'delivery_fee' => $order->prices['estimated_delivery_fee'],
         ])->save();
-        return $this->response($orderMember);
+        return $orderMember;
     }
 
     /**
@@ -495,6 +557,14 @@ class OrderController extends ApiController
             'restaurant_id' => 'required|integer|exists:restaurants,id',
             'join_limit' => 'required|integer|between:600,7200', // 10minutes - 2hours
             'is_public' => 'required|boolean',
+            'address_id' => 'required|integer',
+        ];
+    }
+
+    public static function directCheckoutRules()
+    {
+        return [
+            'restaurant_id' => 'required|integer|exists:restaurants,id',
             'address_id' => 'required|integer',
         ];
     }

@@ -1567,7 +1567,7 @@
                             ]
                         }
                     ],
-                    "subtotal": "9.98",
+                    "subtotal": 9.98,
                     "tax": 0.7,
                     "tip": null,
                     "delivery_fee": 2.99,
@@ -2038,6 +2038,64 @@
                         }
                     }
                 ],
+                "response_header": null
+            }
+        ]
+    },
+    "/api/v1/orders/direct-checkout": {
+        "POST": [
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "restaurant_id": 1,
+                    "address_id": 1
+                },
+                "status_code": 422,
+                "response": {
+                    "message": "The cart is empty."
+                },
+                "response_header": null
+            },
+            {
+                "header": {
+                    "Authorization": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE="
+                },
+                "request": {
+                    "restaurant_id": 2,
+                    "address_id": 1
+                },
+                "status_code": 200,
+                "response": {
+                    "is_ready": false,
+                    "products": [
+                        {
+                            "name": "Test Product",
+                            "description": "This is a test product",
+                            "price": 4.99,
+                            "product_option_groups": [
+                                {
+                                    "name": "Test Option Group",
+                                    "options": [
+                                        "Test Option 1",
+                                        "Test Option 3"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "subtotal": 9.98,
+                    "tax": 0.7,
+                    "tip": null,
+                    "delivery_fee": 2.99,
+                    "total": null,
+                    "rate_is_positive": null,
+                    "user": {
+                        "name": "Test User",
+                        "friend_id": "FRIEND"
+                    }
+                },
                 "response_header": null
             }
         ]

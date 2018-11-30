@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::resource('orders', 'OrderController')->only([
             'index', 'store', 'show', 'destroy',
         ]);
+        Route::post('orders/direct-checkout', 'OrderController@directCheckout');
         Route::post('orders/{id}/invitation', 'OrderController@invite');
         Route::post('orders/{id}/join', 'OrderController@join');
         Route::post('orders/{id}/checkout', 'OrderController@checkout');

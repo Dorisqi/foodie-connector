@@ -3282,6 +3282,98 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 }
 ```
 
+### **POST - /api/v1/orders/direct-checkout**
+
+Direct checkout without a group order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | required | integer | exists:restaurants,id |
+| address_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 2,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "is_ready": false,
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98,
+    "tax": 0.7,
+    "tip": null,
+    "delivery_fee": 2.99,
+    "total": null,
+    "rate_is_positive": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+
 ### **GET - /api/v1/orders/{id}**
 
 Show the detail of a specific order
@@ -3622,7 +3714,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             ]
         }
     ],
-    "subtotal": "9.98",
+    "subtotal": 9.98,
     "tax": 0.7,
     "tip": null,
     "delivery_fee": 2.99,
