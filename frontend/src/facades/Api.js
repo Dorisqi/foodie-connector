@@ -165,10 +165,6 @@ class Api {
     });
   }
 
-  static singleOrderCreate(restaurantId) {
-    return Api.instance().post('/orders', restaurantId);
-  }
-
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
   }
@@ -182,10 +178,17 @@ class Api {
     return Api.instance().post(`/orders/${orderId}/checkout`);
   }
 
+  static orderDirectCheckout(restaurant_id, address_id) {
+    return Api.instance().post(`/orders/direct-checkout`, {
+      restaurant_id: restaurant_id,
+      address_id: address_id,
+    });
+  }
+
   /* --- Pay --- */
   static orderPay(orderId, tip, selectedCardId) {
     return Api.instance().post(`/orders/${orderId}/pay`, {
-      tip,
+      tip: tip,
       card_id: selectedCardId,
     });
   }

@@ -120,16 +120,24 @@ class Cart extends React.Component {
   };
 
   handleDirectCheckout = () => {
+    const {cart, productMap,restaurant, address} = this.props;
     this.setState({
-      loading: Api.singleOrderCreate(this.props.restaurant.id).then((res) => {
-        this.setState({
-          loading: null,
-          orderId: res.data.id,
+      loading: Api.orderDirectCheckout(restaurant.id, address.selectedAddress).then((res) => {
+        console.log(res.data.delivery_fee);
+        console.log(res.data.tax)
+        const { history } = this.props;
+        history.push({
+          pathname: `/orders/direct-checkout`,
+          state: {
+            restaurant: restaurant,
+            cart: cart,
+            productMap: productMap,
+            sutotal: res.data.subtotal,
+            tax: res.data.tax,
+            delivery_fee: res.data.delivery_fee,
+          },
         });
       }).catch((err) => {
-        this.setState({
-          loading: null,
-        });
         throw err;
       }),
     });
@@ -137,7 +145,7 @@ class Cart extends React.Component {
 
   render() {
     const {
-      classes, restaurant, cart, productMap,
+      classes, restaurant, cart, productMap, address
     } = this.props;
     const { updatingItemIndex, orderId } = this.state;
     if (restaurant === null || cart === null) {
@@ -243,13 +251,9 @@ class Cart extends React.Component {
               <Button
                 variant="outlined"
                 disabled={cart.cart.length === 0}
-                component={Link}
                 color="primary"
                 fullWidth
                 onClick={this.handleDirectCheckout}
-                to={{
-                  pathname: `/orders/${orderId}/checkout`,
-                }}
               >
                 Direct Checkout
               </Button>
