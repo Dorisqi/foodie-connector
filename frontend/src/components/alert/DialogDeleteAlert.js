@@ -92,7 +92,7 @@ DialogDeleteAlert.propTypes = {
   text: PropTypes.string.isRequired,
   buttonLabel: PropTypes.string,
   api: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func,
+  onUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

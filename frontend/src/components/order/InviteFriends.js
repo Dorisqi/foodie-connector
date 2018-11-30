@@ -138,10 +138,9 @@ class InviteFriends extends React.Component {
               <ListItem
                 className={classes.item}
               >
-              <ListItemText
-                primary={"No friends in your Friends lists!"}
-
-              />
+                <ListItemText
+                  primary="No friends in your Friends lists!"
+                />
               </ListItem>
             </div>
           ) : [

@@ -5,7 +5,6 @@ import DialogForm from 'components/form/DialogForm';
 import Api from 'facades/Api';
 import Snackbar from 'facades/Snackbar';
 import Form from 'facades/Form';
-import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonAdd from '@material-ui/icons/PersonAdd';
@@ -14,7 +13,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import DialogDeleteAlert from 'components/alert/DialogDeleteAlert';
 
 
 const styles = theme => ({
@@ -46,7 +44,7 @@ class FollowfriendDialog extends React.Component {
     errors: {},
     friends: [],
     loadingfriends: null,
-    deletingAlert:false
+
   };
 
   constructor(props) {
@@ -112,24 +110,14 @@ class FollowfriendDialog extends React.Component {
   }
 
 
-  handledeleteClick=(e,friendid)=>{
-
+  handledeleteClick=(e, friendid) => {
     Api.unfollowFriend(friendid).then(() => {
       Snackbar.success('Successfully delete the friend');
       this.loadFriends();
     }).catch((err) => {
       throw (err);
     });
-
-
   }
-
-
-  handleDeletingAlertClose = () => {
-    this.setState({
-      deletingAlert: false,
-    });
-  };
 
 
   loadFriends() {
@@ -204,7 +192,7 @@ class FollowfriendDialog extends React.Component {
                 onClick={event => this.handledeleteClick(event, friend.friend_id)}
 
               >
-              <div className={classes.itemLine}>
+                <div className={classes.itemLine}>
                   <ListItemText
                     primary={friend.name}
                   />
@@ -216,7 +204,6 @@ class FollowfriendDialog extends React.Component {
 
                 </div>
               </ListItem>
-
 
 
             )),
