@@ -301,7 +301,8 @@ class NearbyOrdersPage extends React.Component {
                             className={classes.action}
                             variant="outlined"
                             fullWidth
-                            onClick={this.handleOrderDetail(order)}
+                            component={Link}
+                            to={`/orders/${order.id}`}
                           >
                             Order Detail
                           </Button>

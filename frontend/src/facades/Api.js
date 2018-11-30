@@ -148,8 +148,8 @@ class Api {
     });
   }
 
-  static orderShow(restaurantId) {
-    return Api.instance().get(`/orders/${restaurantId}`);
+  static orderShow(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
   }
 
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
@@ -171,8 +171,8 @@ class Api {
     });
   }
 
-  static orderDetail(orderId) {
-    return Api.instance().get(`/orders/${orderId}`);
+  static orderJoin(orderId) {
+    return Api.instance().post(`/orders/${orderId}/join`);
   }
 
   static orderConfirm(orderId) {
