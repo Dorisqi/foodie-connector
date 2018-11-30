@@ -109,7 +109,7 @@ class CartCheckout extends React.Component {
               <ListItem>
                 <div className={classes.itemLine}>
                   <ListItemText
-                    primary={product.name}
+                    primary={product.name} secondary={`X ${cartItem.product_amount}`}
                   />
                   <ListItemText
                     className={classes.productPrice}
