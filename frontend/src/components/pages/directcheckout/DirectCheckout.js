@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import CartCheckout from 'components/cart/CartCheckout';
 import CardSelector from 'components/card/CardSelector';
 import ListItem from '@material-ui/core/ListItem';
-import Menu from 'facades/Menu';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router-dom';
 import List from '@material-ui/core/List';
@@ -52,47 +51,36 @@ const styles = theme => ({
   },
 });
 
-
-class CheckOutPage extends React.Component {
+class DirectCheckout extends React.Component {
   state = {
-    restaurant: null,
-    tax: 0,
-    deliveryFee: 0,
-    subtotal: 0,
-    productMap: null,
     selectedCardId: null,
-    tip: 0,
+    tip: null,
     total: null,
+    creatorName: null,
+    userAddressLine1: null,
+    userAddressLine2: null,
+    userCity: null,
+    userPhone: null,
+
+    restaurantName: null,
+    resAddressLine1: null,
+    resAddressLine2: null,
+    resCity: null,
+    resPhone: null,
+
   }
 
   componentDidMount() {
-    this.handleShowCart();
-    this.handleCheckout();
+    this.handleInfo();
   }
-
-  handleShowCart = () => {
-    Api.cartShow().then((res) => {
-      let promise = null;
-      promise = Api.restaurantShow(res.data.restaurant.id);
-      promise.then((res1) => {
-        this.setState({
-          productMap: Menu.generateMap(res1.data.restaurant_menu),
-          restaurant: res.data.restaurant,
-          subtotal: res.data.subtotal,
-        });
-      }).catch((err) => {
-        throw err;
-      });
-    });
-  };
 
   handlePayment = () => {
     const { history } = this.props;
     history.push({
-      pathname: `/orders/${this.props.location.state.order.id}/pay`,
+      pathname: `/orders/${this.props.location.state.orderId}/pay`,
       state: {
-        orderId: this.props.location.state.order.id,
         card_id: this.state.selectedCardId,
+        orderId: this.props.location.state.orderId,
       },
     });
   };
@@ -102,36 +90,24 @@ class CheckOutPage extends React.Component {
       selectedCardId: e,
 
     });
-    if (this.state.tip !== 0) {
-      Api.orderPay(this.props.location.state.order.id, this.state.tip, e).then((res) => {
+    if (this.state.tip !== null) {
+      Api.orderPay(this.props.location.state.orderId, this.state.tip, e).then((res) => {
         this.setState({
           total: res.data.total,
+
         });
       }).catch((err) => {
         throw err;
       });
     }
-  }
-
-  handleCheckout = () => {
-    Api.orderCheckout(this.props.location.state.order.id).then((res) => {
-      this.setState({
-        tax: res.data.tax,
-        deliveryFee: res.data.delivery_fee,
-      });
-    }).catch((err) => {
-      throw err;
-    });
-  }
+  };
 
   handleSetTip = (event) => {
     this.setState({
       tip: event.target.value,
-
     });
-
     if (this.state.selectedCardId !== null) {
-      Api.orderPay(this.props.location.state.order.id,
+      Api.orderPay(this.props.location.state.orderId,
         event.target.value, this.state.selectedCardId).then((res) => {
         this.setState({
           total: res.data.total,
@@ -142,15 +118,45 @@ class CheckOutPage extends React.Component {
     }
   };
 
+  handleInfo = () => {
+    Api.orderDetail(this.props.location.state.orderId).then((res) => {
+      this.setState({
+        creatorName: res.data.creator.name,
+        userAddressLine1: res.data.address_line_1,
+        userAddressLine2: res.data.address_line_2,
+        userCity: res.data.city,
+        userPhone: res.data.phone,
+
+        restaurantName: res.data.restaurant.name,
+        resAddressLine1: res.data.restaurant.address_line_1,
+        resAddressLine2: res.data.restaurant.address_line_2,
+        resCity: res.data.restaurant.city,
+        resPhone: res.data.restaurant.phone,
+      });
+    }).catch((err) => {
+      throw err;
+    });
+  };
 
   render() {
-    const { classes } = this.props;
-    const { cart } = this.state;
     const {
-      restaurant, productMap,
-      selectedCardId, tax, subtotal,
-      deliveryFee, tip, total,
+      tip,
+      selectedCardId,
+      total,
+      creatorName,
+      userAddressLine1,
+      userAddressLine2,
+      userCity,
+      userPhone,
+
+      restaurantName,
+      resAddressLine1,
+      resAddressLine2,
+      resCity,
+      resPhone,
     } = this.state;
+    const { classes } = this.props;
+
     return (
       <MainContent title="Review & Pay">
         <div className={classes.root}>
@@ -164,10 +170,9 @@ class CheckOutPage extends React.Component {
                 ORDER SUMMARY
               </Typography>
               <CartCheckout
-                restaurant={restaurant}
-                cart={cart}
-                productMap={productMap}
-                order={this.props.location.state.order}
+                restaurant={this.props.location.state.restaurant}
+                cart={this.props.location.state.restaurant}
+                productMap={this.props.location.state.productMap}
               />
             </div>
           </div>
@@ -187,15 +192,15 @@ class CheckOutPage extends React.Component {
                     primary="Delivery Address"
                     secondary={(
                       <span>
-                        {this.props.location.state.order.creator.name}
+                        {creatorName}
                         <br />
-                        {this.props.location.state.order.address_line_2}
+                        {userAddressLine2}
                         <br />
-                        {this.props.location.state.order.address_line_1}
+                        {userAddressLine1}
                         <br />
-                        {this.props.location.state.order.city}
+                        {userCity}
                         <br />
-                        {this.props.location.state.order.phone}
+                        {userPhone}
                       </span>
                     )}
                   />
@@ -205,15 +210,15 @@ class CheckOutPage extends React.Component {
                     primary="Contact Restaurant"
                     secondary={(
                       <span>
-                        {this.props.location.state.order.restaurant.name}
+                        {restaurantName}
                         <br />
-                        {this.props.location.state.order.restaurant.address_line_2}
+                        {resAddressLine2}
                         <br />
-                        {this.props.location.state.order.restaurant.address_line_1}
+                        {resAddressLine1}
                         <br />
-                        {this.props.location.state.order.city}
+                        {resCity}
                         <br />
-                        {this.props.location.state.order.restaurant.phone}
+                        {resPhone}
                       </span>
                     )}
                   />
@@ -236,19 +241,19 @@ class CheckOutPage extends React.Component {
                   <ListItem>
                     <ListItemText
                       className={classes.summaryPrice}
-                      primary={`Subtotal: ${Format.displayPrice(subtotal)}`}
+                      primary={`Subtotal: ${Format.displayPrice(this.props.location.state.sutotal)}`}
                     />
                   </ListItem>
                   <ListItem>
                     <ListItemText
                       className={classes.summaryPrice}
-                      primary={`Delivery Fee: ${Format.displayPrice(deliveryFee)}`}
+                      primary={`Delivery Fee: ${Format.displayPrice(this.props.location.state.delivery_fee)}`}
                     />
                   </ListItem>
                   <ListItem>
                     <ListItemText
                       className={classes.summaryPrice}
-                      primary={`Tax: ${Format.displayPrice(tax)}`}
+                      primary={`Tax: ${Format.displayPrice(this.props.location.state.tax)}`}
                     />
                   </ListItem>
                 </List>
@@ -283,7 +288,7 @@ class CheckOutPage extends React.Component {
                 className={classes.action}
                 variant="outlined"
                 color="primary"
-                disabled={selectedCardId === 0 || tip === 0}
+                disabled={selectedCardId === 0 || tip === null}
                 onClick={this.handlePayment}
                 fullWidth
               >
@@ -303,13 +308,12 @@ const mapStateToProps = state => ({
   restaurant: state.restaurant,
 });
 
-CheckOutPage.propTypes = {
+DirectCheckout.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
-
 export default compose(
   withStyles(styles),
   connect(mapStateToProps),
-)(withRouter(CheckOutPage));
+)(withRouter(DirectCheckout));

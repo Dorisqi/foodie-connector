@@ -12,6 +12,10 @@ class Format {
   static displayPrice(price) {
     return `$${Number(price).toFixed(2)}`;
   }
+
+  static capitalize(str) {
+    return str[0].toUpperCase() + str.slice(1);
+  }
 }
 
 export default Format;
