@@ -148,6 +148,10 @@ class Api {
     });
   }
 
+  static orderShow(restaurantId) {
+    return Api.instance().get('/orders/', restaurantId);
+  }
+
   static orderCreate(restaurantId, addressId, isPublic, joinLimit) {
     return Api.instance().post('/orders', {
       restaurant_id: restaurantId,
@@ -157,17 +161,38 @@ class Api {
     });
   }
 
+  static singleOrderCreate(restaurantId) {
+    return Api.instance().post('/orders', restaurantId);
+  }
+
   static orderCancel(orderId) {
     return Api.instance().delete(`/orders/${orderId}`);
+  }
+
+  static orderRate(orderId, isPostive) {
+    return Api.instance().post(`/orders/${orderId}/rate`, {
+      is_positive: isPostive,
+    });
+  }
+
+  static orderDetail(orderId) {
+    return Api.instance().get(`/orders/${orderId}`);
   }
 
   static orderJoin(orderId) {
     return Api.instance().post(`/orders/${orderId}/join`, {});
   }
 
-  static orderRate(orderId, isPostive) {
-    return Api.instance().post(`/orders/${orderId}/rate`, {
-      is_positive: isPostive,
+  /* --- Checkout --- */
+  static orderCheckout(orderId) {
+    return Api.instance().post(`/orders/${orderId}/checkout`);
+  }
+
+  /* --- Pay --- */
+  static orderPay(orderId, tip, selectedCardId) {
+    return Api.instance().post(`/orders/${orderId}/pay`, {
+      tip,
+      card_id: selectedCardId,
     });
   }
 
@@ -180,6 +205,27 @@ class Api {
       instance.defaults.headers.common.Authorization = Auth.getToken();
     }
     return instance;
+  }
+
+  static findOrder(id) {
+    return Api.instance().get('/orders/', id);
+  }
+
+  static inviteFriend(orderId, email) {
+    return Api.instance().post(`orders/${orderId}/invitation`, { email });
+  }
+
+
+  /* --- Friends --- */
+  static friendList() {
+    return Api.instance().get('/friends');
+  }
+
+  static followNewFriend(email) {
+    // console.log(email+ "in follow friend");
+    return Api.instance().post('/friends', {
+      email,
+    });
   }
 }
 

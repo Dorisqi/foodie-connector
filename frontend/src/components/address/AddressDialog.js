@@ -10,6 +10,8 @@ import Maps from 'facades/Maps';
 import Api from 'facades/Api';
 import Snackbar from 'facades/Snackbar';
 import Form from 'facades/Form';
+import store from 'store';
+import { loadAddress } from 'actions/addressActions';
 
 const styles = theme => ({
   margin: {
@@ -33,7 +35,7 @@ class AddressDialog extends React.Component {
   constructor(props) {
     super(props);
 
-    const { item: address } = props;
+    const { item: address, currentLocation } = props;
     if (address !== null) {
       this.state = {
         name: address.name,
@@ -45,6 +47,12 @@ class AddressDialog extends React.Component {
         disableIsDefault: address.is_default,
         errors: {},
       };
+    } else if (currentLocation !== null) {
+      const state = this.state;
+      // eslint-disable-next-line react/no-unused-state
+      state.address = currentLocation.formatted_address;
+      state.placeId = currentLocation.place_id;
+      this.state = state;
     }
   }
 
@@ -76,6 +84,11 @@ class AddressDialog extends React.Component {
     });
   };
 
+  handleAddressUpdate = (res) => {
+    const addresses = res.data;
+    store.dispatch(loadAddress(addresses, addresses[addresses.length - 1].id));
+  };
+
   submit = () => {
     this.setState({
       errors: {},
@@ -95,7 +108,7 @@ class AddressDialog extends React.Component {
     } else {
       Snackbar.success('Successfully update address.');
     }
-    this.props.onUpdate(res);
+    this.handleAddressUpdate(res);
   };
 
   handleRequestFail = (err) => {
@@ -121,13 +134,23 @@ class AddressDialog extends React.Component {
   };
 
   render() {
-    const { classes, item: address } = this.props;
+    const { classes, item: address, currentLocation } = this.props;
     const { errors, isDefault, disableIsDefault } = this.state;
     const isCreate = address === null;
+    const isConfirm = currentLocation === null;
+    let title = 'Update Address';
+    let submitLabel = 'Update';
+    if (isConfirm) {
+      title = 'Confirm Address';
+      submitLabel = 'Confirm';
+    } else if (isCreate) {
+      title = 'Create Address';
+      submitLabel = 'Create';
+    }
     return (
       <DialogForm
-        title={isCreate ? 'Add New Address' : 'Update Address'}
-        submitLabel={isCreate ? 'Add' : 'Update'}
+        title={title}
+        submitLabel={submitLabel}
         formErrors={errors.form}
         api={this.submit}
         onRequestSucceed={this.handleRequestSuccess}
@@ -166,7 +189,7 @@ class AddressDialog extends React.Component {
               checked={isDefault}
               onChange={this.handleIsDefaultChange}
             />
-)}
+          )}
           disabled={disableIsDefault}
           label="Set as default"
         />
@@ -178,12 +201,13 @@ class AddressDialog extends React.Component {
 AddressDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
   item: PropTypes.object,
+  currentLocation: PropTypes.object,
 };
 
 AddressDialog.defaultProps = {
   item: null,
+  currentLocation: null,
 };
 
 export default withStyles(styles)(AddressDialog);

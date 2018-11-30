@@ -4,16 +4,20 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+
+import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
+import GroupAdd from '@material-ui/icons/GroupAdd';
+
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { withStyles } from '@material-ui/core/styles';
 import Pusher from 'facades/Pusher';
+import FollowfriendDialog from '../friends/FollowfriendDialog';
 import NotificationDialog from './NotificationDialog';
 
 const styles = () => ({
@@ -37,6 +41,9 @@ const styles = () => ({
   accountButton: {
     marginRight: -12,
   },
+  card: {
+    minWidth: '30',
+  },
 });
 
 class Header extends React.Component {
@@ -48,11 +55,16 @@ class Header extends React.Component {
       notifications: [],
       unreadCount: 0,
       idCount: 0, // eslint-disable-line react/no-unused-state
+      friendlistOpen: false,
     };
   }
 
   componentDidMount() {
     Pusher.loadNotification(this.receiveNotifications);
+  }
+
+  handleFriendsListsOpen=() => {
+    this.setState({ friendlistOpen: true });
   }
 
   receiveNotifications = (data) => {
@@ -70,10 +82,6 @@ class Header extends React.Component {
       };
     });
   }
-
-  handleDialogClose = () => {
-    this.setState({ notificationsOpen: false });
-  };
 
   handleNotificationOpen = () => {
     this.setState({ notificationsOpen: true });
@@ -118,13 +126,23 @@ class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleDialogClose = () => {
+    this.setState({
+
+      notificationsOpen: false,
+    });
+  };
+
+  handleFriendsListsClose= () => {
+    this.setState({ friendlistOpen: false });
+  }
+
   render() {
     const {
-      anchorEl, notificationsOpen, notifications, unreadCount,
+      anchorEl, notificationsOpen, friendlistOpen, notifications, unreadCount,
     } = this.state;
     const { wrapperClassName, classes, location } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -181,6 +199,11 @@ class Header extends React.Component {
       </Menu>
     );
 
+    /* const friendslist = (
+        <FollowfriendDialog/>
+    ); */
+
+
     return (
       <header className={classes.root}>
         <AppBar position="fixed">
@@ -191,6 +214,17 @@ class Header extends React.Component {
               </Typography>
             </Button>
             <div className={classes.grow} />
+            <div className={classes.rightSection}>
+              <IconButton
+
+                aria-haspopup="true"
+                className={classes.accountButton}
+                color="inherit"
+                onClick={this.handleFriendsListsOpen}
+              >
+                <GroupAdd />
+              </IconButton>
+            </div>
             <div className={classes.rightSection}>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : null}
@@ -222,6 +256,7 @@ class Header extends React.Component {
                 <AccountCircle />
               </IconButton>
             </div>
+
           </Toolbar>
         </AppBar>
         {renderMenu}
@@ -238,6 +273,13 @@ class Header extends React.Component {
           )
           : null
         }
+        {friendlistOpen
+          ? (
+            <FollowfriendDialog
+              onClose={this.handleFriendsListsClose}
+            />
+          )
+          : null}
       </header>
     );
   }
