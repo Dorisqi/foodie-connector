@@ -3127,7 +3127,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     },
     "order_members": [
         {
-            "order_id": "5293B4D882CCD1C98FB5",
+            "order_id": "3A01B40FA5EC97F2AE82",
             "is_ready": false,
             "products": null,
             "subtotal": null,
@@ -3155,7 +3155,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "total": null
     },
     "current_order_member": {
-        "order_id": "5293B4D882CCD1C98FB5",
+        "order_id": "3A01B40FA5EC97F2AE82",
         "is_ready": false,
         "products": null,
         "subtotal": null,
@@ -3305,7 +3305,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "order_id": "288567896237F51CE9F6",
+    "order_id": "B5D68F002D129030F853",
     "is_ready": false,
     "products": [
         {
