@@ -150,20 +150,13 @@ class NearbyOrdersPage extends React.Component {
     });
     Snackbar.success(`Successfully cancel order ${id}.`);
     this.loadOrderList();
-  }
-
-  handleOrderDetail = order => () => {
-    this.setState({
-      detailAlert: true,
-      currentOrder: order,
-    });
-  }
+  };
 
   handleOrderDetailClose = () => {
     this.setState({
       detailAlert: false,
     });
-  }
+  };
 
   handleJoinOrder = id => () => {
     Api.orderJoin(id).then(() => {
@@ -172,7 +165,7 @@ class NearbyOrdersPage extends React.Component {
     }).catch((err) => {
       throw err;
     });
-  }
+  };
 
   loadOrderList = () => {
     const { selectedAddress, currentLocation } = this.props;
@@ -207,14 +200,14 @@ class NearbyOrdersPage extends React.Component {
         throw err;
       }),
     });
-  }
+  };
 
   handleGroupCheckout = order => () => {
     this.props.history.push({
       pathname: `/orders/${order.id}/checkout`,
       state: { order },
     });
-  }
+  };
 
   cancelApi = () => {
     const { cancelOrder } = this.state;
@@ -248,13 +241,11 @@ class NearbyOrdersPage extends React.Component {
                   id,
                   is_public: isPublic,
                   join_before: joinBefore,
-                  order_status: orderStatus,
                   prices: { total },
                   restaurant,
                   is_joinable: isJoinable,
                   creator,
                   distance,
-                  current_order_member: { is_ready: isReady }
                 } = order;
                 return (
                   <Card className={classes.card}>
@@ -334,8 +325,7 @@ class NearbyOrdersPage extends React.Component {
                               variant="outlined"
                               color="primary"
                               fullWidth
-                              disabled={!isReady}
-                              onClick={this.handleCancelOrderClick(order)}
+                              onClick={this.handleGroupCheckout(order)}
                             >
                               Checkout
                             </Button>
@@ -413,6 +403,7 @@ NearbyOrdersPage.propTypes = {
   classes: PropTypes.object.isRequired,
   selectedAddress: PropTypes.number,
   currentLocation: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(
