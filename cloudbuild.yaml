@@ -3,7 +3,7 @@ steps:
   dir: 'frontend/'
 - name: 'gcr.io/cloud-builders/yarn'
   dir: 'frontend/'
-  args: ['build', '--env.ENVIRONMENT=test']
+  args: ['build:test']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['pull', 'gcr.io/${PROJECT_ID}/release:latest']
 - name: 'gcr.io/cloud-builders/docker'

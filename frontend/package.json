@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "env-cmd": "^8.0.2",
     "eslint-config-airbnb": "^17.1.0",
     "history": "^4.7.2",
     "i": "^0.3.6",
@@ -29,6 +30,7 @@
   "scripts": {
     "start": "cross-env NODE_PATH=src/ react-scripts start",
     "build": "cross-env NODE_PATH=src/ react-scripts build",
+    "build:test": "cross-env NODE_PATH=src/ env-cmd .env.test react-scripts build",
     "test": "cross-env NODE_PATH=src/ CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js src/"
