@@ -40,9 +40,13 @@ ENTRYPOINT [ "/app/entrypoint.sh" ]
 COPY backend/composer.json backend/composer.lock /app/backend/
 RUN cd /app/backend && composer install --no-dev --no-autoloader --no-scripts
 
+# Deploy backend
 COPY backend /app/backend
 RUN cp /app/backend/.env.release /app/backend/.env
 RUN cd /app/backend && ./predeploy.sh
 
 # Set version id
 RUN echo "commit: ${COMMIT_SHA}\nbuild: ${BUILD_ID}\nbuild time: $(env TZ=UTC date)" > /app/backend/public/version
+
+# Deploy frontend
+COPY frontend/build /app/frontend/build
