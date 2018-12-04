@@ -14,3 +14,4 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=${_COMPUTE_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CONTAINER_CLUSTER}'
 images: ['gcr.io/${PROJECT_ID}/release:latest']
+timeout: 1200s
