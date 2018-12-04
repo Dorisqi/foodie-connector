@@ -1,10 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
+RUN apt-get update
+
 # Install tools
-RUN apt-get install -y curl git gnupg2 
+RUN apt-get install -y curl git gnupg2
 
 # Install NGINX
 RUN apt-get install -y nginx
