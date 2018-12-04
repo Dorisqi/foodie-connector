@@ -7,7 +7,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import { Provider as ReactReduxProvider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
-import registerServiceWorker from 'registerServiceWorker';
+// import registerServiceWorker from 'registerServiceWorker';
 import Root from 'components/template/Root';
 import store from 'store';
 import Stripe from 'facades/Stripe';
@@ -38,4 +38,4 @@ ReactDOM.render(
   </MuiThemeProvider>,
   document.getElementById('root'),
 );
-registerServiceWorker();
+// registerServiceWorker();
