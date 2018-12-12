@@ -20,16 +20,12 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors($validator->errors());
     }
-    public static function validationFailedErrors($errors)
+    public static function validationFailedErrors($errors, $headers = null)
     {
-        return new ApiException('Validation failed.', 422, null, $errors);
+        return new ApiException('Validation failed.', 422, $headers, $errors);
     }
 
     /* User and Authentication */
-    public static function emailExists()
-    {
-        return new ApiException('The email has already been taken.', 409);
-    }
     public static function loginFailed(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
         return new ApiException(
@@ -48,11 +44,11 @@ class ApiException extends Exception
     }
     public static function invalidResetPasswordToken(int $rateLimit, int $retriesRemaining, int $retryAfter = null)
     {
-        return new ApiException(
-            'The password reset token is invalid or expired.',
-            401,
-            ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter)
-        );
+        return self::validationFailedErrors([
+            'token' => [
+                'The token is invalid or expired.'
+            ],
+        ], ApiThrottle::throttleHeaders($rateLimit, $retriesRemaining, $retryAfter));
     }
     public static function emailAlreadyVerified()
     {
@@ -71,7 +67,7 @@ class ApiException extends Exception
     public static function tooManyAttempts(int $rateLimit, int $retryAfter)
     {
         return new ApiException(
-            'Too many attempts',
+            'Too many attempts.',
             429,
             ApiThrottle::throttleHeaders($rateLimit, 0, $retryAfter)
         );
@@ -90,7 +86,7 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors([
             'expiration_year' => [
-                'The expiration_year must be a current or future year.',
+                'The expiration year must be a current or future year.',
             ],
         ]);
     }
@@ -98,7 +94,15 @@ class ApiException extends Exception
     {
         return self::validationFailedErrors([
             'expiration_month' => [
-                'The expiration_month must be a current or future month.',
+                'The expiration month must be a current or future month.',
+            ],
+        ]);
+    }
+    public static function stripeError($exception)
+    {
+        return self::validationFailedErrors([
+            'form' => [
+                $exception->getMessage(),
             ],
         ]);
     }
@@ -112,7 +116,11 @@ class ApiException extends Exception
     /* Profile */
     public static function invalidOldPassword()
     {
-        return new ApiException('The old password does not match our records.', 401);
+        return self::validationFailedErrors([
+            'old_password' => [
+                'The old password does not match our records.',
+            ],
+        ]);
     }
 
     /* Address */
@@ -131,6 +139,82 @@ class ApiException extends Exception
                 'The address_id is invalid',
             ],
         ]);
+    }
+
+    /* Order */
+    public static function notOrderCreator()
+    {
+        return new ApiException('This operation can only be done by the order creator.', 403);
+    }
+    public static function notOrderMember()
+    {
+        return new ApiException('This operation can only be done by an order member.', 403);
+    }
+    public static function orderNotCancellable()
+    {
+        return new ApiException('This order cannot be canceled.', 422);
+    }
+    public static function orderNotJoinable()
+    {
+        return new ApiException('This order is no longer joinable.', 422);
+    }
+    public static function orderAlreadyJoined()
+    {
+        return new ApiException('You have already joined this order.', 422);
+    }
+    public static function orderNotConfirmable()
+    {
+        return new ApiException('This order cannot be confirmed.', 422);
+    }
+    public static function orderNotUpdatable()
+    {
+        return new ApiException('This order cannot be updated.', 422);
+    }
+    public static function emptyCart()
+    {
+        return new ApiException('The cart is empty.', 422);
+    }
+    public static function orderAlreadyPaid()
+    {
+        return new ApiException('This order is already paid.', 422);
+    }
+    public static function orderNeedCheckout()
+    {
+        return new ApiException('This order requires checkout.', 422);
+    }
+    public static function orderMemberNotReady()
+    {
+        return new ApiException('Some or all of the order members are not ready.', 422);
+    }
+    public static function orderMinimumFailed()
+    {
+        return new ApiException('Failed to meet the order minimum.', 422);
+    }
+    public static function orderNotRatable()
+    {
+        return new ApiException('Only delivered orders can be rated.', 422);
+    }
+
+    /* Friend */
+    public static function notFriend()
+    {
+        return new ApiException('This user is not your friend.', 422);
+    }
+    public static function alreadyFriend()
+    {
+        return new ApiException('This user is already your friend.', 422);
+    }
+
+    /* Map */
+    public static function zeroResult()
+    {
+        return new ApiException('No result found.', 404);
+    }
+
+    /* Pusher */
+    public static function pusherAccessDenied()
+    {
+        return new ApiException('You do not have access to this channel.', 403);
     }
 
     /**

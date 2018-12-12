@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Brokers\VerifyEmailBroker;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ApiException;
 use App\Models\ApiUser;
@@ -49,21 +50,24 @@ class RegisterController extends ApiController
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), $this::rules());
-        if ($validator->fails()) {
-            if (isset($validator->failed()['email']['Unique'])) {
-                throw ApiException::emailExists();
-            }
-            throw ApiException::validationFailed($validator);
-        }
+        $this->validateInput($request);
 
         try {
             DB::beginTransaction();
+
+            $friendId = null;
+            while (true) {
+                $friendId = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+                if (ApiUser::where('friend_id', $friendId)->doesntExist()) {
+                    break;
+                }
+            }
 
             $user = ApiUser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
+                'friend_id' => $friendId,
             ]);
 
             $customer = Customer::create([
@@ -88,7 +92,7 @@ class RegisterController extends ApiController
 
         return $this->response([
             'api_token' => $this->guard()->token(),
-            'user' => $this->user(),
+            'user' => $this->user()->toArray(true),
         ]);
     }
 

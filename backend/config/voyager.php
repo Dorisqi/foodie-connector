@@ -71,7 +71,7 @@ return [
     */
 
     'storage' => [
-        'disk' => 'public',
+        'disk' => 'gcs',
     ],
 
     /*
@@ -187,7 +187,7 @@ return [
     */
 
     'bread' => [
-        // When a BREAD is added, create the Menu item using the BREAD properties.
+        // When a BREAD is added, create the RestaurantMenu item using the BREAD properties.
         'add_menu_item' => true,
 
         // which menu add item to
@@ -211,7 +211,7 @@ return [
 
     'primary_color' => '#22A7F0',
 
-    'show_dev_tips' => true, // Show development tip "How To Use:" in Menu and Settings
+    'show_dev_tips' => true, // Show development tip "How To Use:" in RestaurantMenu and Settings
 
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [

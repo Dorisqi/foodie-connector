@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ApiException;
 use App\Facades\Maps;
 use App\Models\Address;
+use App\Models\Admin\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +18,7 @@ class AddressController extends ApiController
      */
     public function index()
     {
-        $user = $this->user();
-        $addresses = $user->addresses;
-        return $this->response($addresses);
+        return $this->response($this->user()->addresses()->get());
     }
 
     /**
@@ -38,11 +37,14 @@ class AddressController extends ApiController
         try {
             DB::beginTransaction();
 
-            $addressFromGoogleMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
+            if ($request['line_2'] === null) {
+                $request['line_2'] = '';
+            }
             $addressArray = $request->only($this->modelParams());
-            $location = $addressFromGoogleMaps[0]->{'geometry'}->{'location'};
-            $addressArray['lat'] = (string)$location->{'lat'};
-            $addressArray['lng'] = (string)$location->{'lng'};
+            $addressArray = array_merge(
+                $addressArray,
+                Maps::decodeResult(Maps::reverseGeoCodingByPlaceID($request->input('place_id'))[0])
+            );
             $address = new Address($addressArray);
             $user = $this->user();
             $user->addresses()->save($address);
@@ -57,7 +59,7 @@ class AddressController extends ApiController
             throw $exception;
         }
 
-        return $this->response($address);
+        return $this->response($this->user()->addresses()->get());
     }
 
     /**
@@ -100,11 +102,14 @@ class AddressController extends ApiController
             DB::beginTransaction();
 
             $addressArray = $request->only($this->modelParams());
+            if ($request->has('line_2') && $request->input('line_2') === null) {
+                $addressArray['line_2'] = '';
+            }
             if ($request->has('place_id')) {
-                $addressFromMaps = Maps::reverseGeoCodingByPlaceID($request->input('place_id'));
-                $location = $addressFromMaps[0]->{'geometry'}->{'location'};
-                $addressArray['lat'] = (string)$location->{'lat'};
-                $addressArray['lng'] = (string)$location->{'lng'};
+                $addressArray = array_merge(
+                    $addressArray,
+                    Maps::decodeResult(Maps::reverseGeoCodingByPlaceID($request->input('place_id'))[0])
+                );
             }
             $address->fill($addressArray);
             $address->save();
@@ -118,7 +123,7 @@ class AddressController extends ApiController
             throw $exception;
         }
 
-        return $address;
+        return $this->response($this->user()->addresses()->get());
     }
 
     /**
@@ -140,10 +145,7 @@ class AddressController extends ApiController
             }
             if ($address->is_default) {
                 $newDefaultAddress = $user->addresses()->where('id', '<>', $id)->orderByDesc('id')->first();
-                if (is_null($newDefaultAddress)) {
-                    $user->default_address_id = null;
-                    $user->save();
-                } else {
+                if (!is_null($newDefaultAddress)) {
                     $newDefaultAddress->is_default = true;
                 }
             }
@@ -153,7 +155,27 @@ class AddressController extends ApiController
             DB::rollBack();
             throw $exception;
         }
-        return $this->response();
+        return $this->response($this->user()->addresses()->get());
+    }
+
+    /**
+     * Reverse GeoCoding
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \App\Exceptions\ApiException
+     * @throws \App\Exceptions\MapsException TODO
+     */
+    public function reverseGeoCodingByCoords(Request $request)
+    {
+        $this->validateInput($request, $this::reverseGeoCodingRules());
+        return $this->response(
+            Maps::reverseGeoCodingByCoords(
+                $request->input('lat'),
+                $request->input('lng')
+            )[0]
+        );
     }
 
     /**
@@ -164,21 +186,17 @@ class AddressController extends ApiController
     protected function modelParams()
     {
         return [
-            'name', 'phone', 'line_1', 'line_2', 'city', 'state', 'zip_code', 'place_id'
+            'name', 'phone', 'line_2', 'place_id'
         ];
     }
 
     public static function rules()
     {
         return [
+            'place_id' => 'string|max:255',
+            'line_2' => 'nullable|string|max:255',
             'name' => 'string|max:255',
             'phone' => 'phone:US',
-            'line_1' => 'string|max:255',
-            'line_2' => 'string|max:255',
-            'city' => 'string|max:255',
-            'state' => 'string|max:255',
-            'zip_code' => 'zip_code',
-            'place_id' => 'string|max:255',
             'is_default' => 'boolean'
         ];
     }
@@ -193,5 +211,13 @@ class AddressController extends ApiController
             $rules[$key] .= '|required';
         }
         return $rules;
+    }
+
+    public static function reverseGeoCodingRules()
+    {
+        return [
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric',
+        ];
     }
 }

@@ -184,7 +184,7 @@ class MenuItemsTableSeeder extends Seeder
             'target' => '_self',
             'icon_class' => 'voyager-shop',
             'order' => 15,
-        ]);
+        ])->save();
 
         $menuItem = MenuItem::firstOrNew([
             'menu_id' => $menu->id,
@@ -196,6 +196,6 @@ class MenuItemsTableSeeder extends Seeder
             'target' => '_self',
             'icon_class' => 'voyager-categories',
             'order' => 16,
-        ]);
+        ])->save();
     }
 }

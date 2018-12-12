@@ -3,7 +3,9 @@
 namespace Tests\Feature\Restaurant;
 
 use App\Models\Address;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Tests\ApiTestCase;
 
 class ListRestaurantTest extends ApiTestCase
@@ -15,33 +17,50 @@ class ListRestaurantTest extends ApiTestCase
      */
     public function testListRestaurant()
     {
-        Artisan::call('db:seed', ['--class' => 'RestaurantsSeeder']);
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
+        for ($i = 0; $i < 3; $i++) {
+            factory(Restaurant::class)->create([
+                'delivery_fee' => $i + 1,
+            ]);
+        }
         $response = $this->assertSucceed([
             'address_id' => $address->id,
-            'filter_categories' => '1_2',
+            'filter_delivery_fee' => '2_3',
             'order_by_desc' => 'rating',
         ]);
-        $this->assertCount(2, $response->json('restaurants'));
-        $this->assertLessThan(
-            $response->json('restaurants')[0]['rating'],
-            $response->json('restaurants')[1]['rating']
-        );
+        $this->setDocumentResponse([
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
+        ]);
+        $restaurants = $response->json('restaurants');
+        $this->assertCount(2, $restaurants);
+        for ($i = 0; $i < count($restaurants); $i++) {
+            $this->assertLessThanOrEqual(3, $restaurants[$i]['delivery_fee']);
+            $this->assertGreaterThanOrEqual(2, $restaurants[$i]['delivery_fee']);
+            if ($i > 0) {
+                $this->assertLessThanOrEqual($restaurants[$i - 1]['rating'], $restaurants[$i]['rating']);
+            }
+        }
         $response = $this->assertSucceed([
             'place_id' => $address->place_id,
             'filter_distance' => '_1',
         ]);
-        $this->assertCount(1, $response->json('restaurants'));
+        $this->setDocumentResponse([
+            'restaurants' => $this->limitArrayLength($response->json('restaurants'), 1),
+        ]);
+        $restaurants = $response->json('restaurants');
+        $this->assertCount(3, $restaurants);
+        for ($i = 0; $i < count($restaurants); $i++) {
+            $this->assertLessThanOrEqual(1, $restaurants[$i]['distance']);
+        }
         $response = $this->assertSucceed([
-            'place_id' => 'ChIJA2p5p_9Qa4gRfOq5QPadjtY',
+            'place_id' => 'ChIJP5iLHkCuEmsRwMwyFmh9AQU',
         ], false);
         $this->assertCount(0, $response->json('restaurants'));
         $response = $this->assertSucceed([
             'address_id' => $address->id,
-            'filter_order_minimum' => '15_',
-            'filter_delivery_fee' => '_3',
+            'filter_categories' => '0',
         ], false);
         $this->assertCount(0, $response->json('restaurants'));
         $this->assertFailed(null, 422);
@@ -78,6 +97,7 @@ class ListRestaurantTest extends ApiTestCase
             'filter_delivery_fee' => 'string|pattern:[min]_[max]',
             'filter_order_minimum' => 'string|pattern:[min]_[max]',
             'filter_rating' => 'string|pattern:[min]_[max]',
+            'filter_is_open' => 'boolean',
             'order_by' => 'string',
             'order_by_desc' => 'string',
         ];

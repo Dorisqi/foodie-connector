@@ -80,7 +80,7 @@
 
 	/**
 	 * This method builds the url utilizing a JSON
-	 * object as the request param names and values
+	 * object as the requesting param names and values
 	 */
 	function _buildURL(root, options){
 		var ret = "?", k, v, first=true;

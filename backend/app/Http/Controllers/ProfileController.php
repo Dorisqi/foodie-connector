@@ -77,13 +77,7 @@ class ProfileController extends ApiController
      */
     public function updateEmail(Request $request)
     {
-        $validator = Validator::make($request->all(), $this::updateEmailRules());
-        if ($validator->fails()) {
-            if (isset($validator->failed()['email']['Unique'])) {
-                throw ApiException::emailExists();
-            }
-            throw ApiException::validationFailed($validator);
-        }
+        $this->validateInput($request, $this::updateEmailRules());
 
         $user = $this->user();
         $user->email = $request->input('email');

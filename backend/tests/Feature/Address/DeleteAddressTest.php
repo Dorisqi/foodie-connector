@@ -5,15 +5,11 @@ namespace Tests\Feature\Address;
 use App\Models\Address;
 use App\Models\ApiUser;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class DeleteAddressTest extends ApiTestCase
 {
-    /**
-     * Address id
-     *
-     * @var int
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test deleting address
@@ -22,7 +18,7 @@ class DeleteAddressTest extends ApiTestCase
      */
     public function testDeleteAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $address = factory(Address::class)->create();
@@ -42,13 +38,6 @@ class DeleteAddressTest extends ApiTestCase
     protected function uri()
     {
         return '/addresses/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

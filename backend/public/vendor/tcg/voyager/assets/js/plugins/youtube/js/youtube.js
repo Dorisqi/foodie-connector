@@ -14,7 +14,7 @@
 	var youtput = 'iframe';
 	//Set to http or https
 	var secure = 'https';
-	//Max results per request
+	//Max results per requesting
 	var max = 30;
 	//Api key 3 version (https://console.developers.google.com/project)
     var key = 'AIzaSyBQ2COy7Wdn8gfx-vavH8tMHPCmjE3rfWA';

@@ -11,14 +11,14 @@ class RestaurantCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\RestaurantCategory::firstOrCreate([
-            'name' => 'Pizza',
-        ]);
-        \App\Models\RestaurantCategory::firstOrCreate([
-            'name' => 'Asian',
-        ]);
-        \App\Models\RestaurantCategory::firstOrCreate([
-            'name' => 'Japanese',
-        ]);
+        $categories = json_decode(
+            file_get_contents(base_path('database/seeds/data/restaurants/categories.json')),
+            true
+        );
+        foreach ($categories as $category) {
+            \App\Models\RestaurantCategory::firstOrCreate([
+                'name' => $category,
+            ]);
+        }
     }
 }

@@ -19,20 +19,22 @@ class RegisterTest extends ApiTestCase
      * Register test
      *
      * @return void
+     *
+     * @throws \Exception
      */
     public function testRegister()
     {
         Notification::fake();
         $user = $this->userFactory()->make();
-        $this->assertFailed([
-            'email' => $user->email,
-            'password' => 'short',
-            'name' => $user->name,
-        ], 422);
-        $this->assertSucceed([
+        $response = $this->assertSucceed([
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
+        ]);
+        $this->setDocumentResponse([
+            'user' => array_merge($response->json('user'), [
+                'friend_id' => ApiUser::TESTING_FRIEND_ID,
+            ]),
         ]);
         $this->assertAuthenticated('api');
         $user = $this->user();
@@ -52,11 +54,17 @@ class RegisterTest extends ApiTestCase
             'email' => $user->email,
             'password' => ApiUser::testingPassword(),
         ]));
-        $this->assertFailed([
-            'email' => $user->email,
+        $user->delete();
+        $this->assertSucceed([
+            'email' => 'exist@foodie-connector.delivery',
             'password' => ApiUser::testingPassword(),
             'name' => $user->name,
-        ], 409);
+        ], false);
+        $this->assertFailed([
+            'email' => 'exist@foodie-connector.delivery',
+            'password' => 'short',
+            'name' => $user->name,
+        ], 422);
     }
 
     protected function method()

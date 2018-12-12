@@ -2,87 +2,165 @@
 
 namespace Tests;
 
+use App\Facades\Time;
+use App\Models\ApiUser;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Stripe\ApiRequestor;
-use Stripe\HttpClient\CurlClient;
 use Stripe\Stripe;
+use Symfony\Component\Process\Process;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    /** @var string original API base URL */
-    protected $origApiBase;
+    protected static $initialized = false;
 
-    /** @var string original API key */
-    protected $origApiKey;
+    /** @var object stripe mock process */
+    protected static $stripeProcess;
 
-    /** @var string original client ID */
-    protected $origClientId;
+    /** @var object google maps mock process */
+    protected static $googleMapsProcess;
 
-    /** @var string original API version */
-    protected $origApiVersion;
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
 
-    /** @var string original account ID */
-    protected $origAccountId;
+        $stripePort = env('STRIPE_MOCK_PORT');
+        self::$stripeProcess =
+            new Process("php -S localhost:${stripePort} tests/Services/Stripe/server.php");
+        self::$stripeProcess->start();
+        $googleMapsPort = env('GOOGLE_MAPS_MOCK_PORT');
+        self::$googleMapsProcess =
+            new Process("php -S localhost:${googleMapsPort} tests/Services/GoogleMaps/server.php");
+        self::$googleMapsProcess->start();
+    }
 
-    /** @var object HTTP client mocker */
-    protected $clientMock;
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+
+        self::$stripeProcess->stop();
+        self::$googleMapsProcess->stop();
+    }
 
     /**
      * Setup the test environment.
      *
      * @return void
+     *
+     * @throws \ReflectionException
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->runDatabaseMigrations();
+        Redis::flushall();
+
+        // Initialize only once
+        if (!$this::$initialized) {
+            // Migrate database
+            Artisan::call('migrate');
+
+            $this::$initialized = true;
+        }
 
         // Stripe mocking
-        // Save original values so that we can restore them after running tests
-        $this->origApiBase = Stripe::$apiBase;
-        $this->origApiKey = Stripe::getApiKey();
-        $this->origClientId = Stripe::getClientId();
-        $this->origApiVersion = Stripe::getApiVersion();
-        $this->origAccountId = Stripe::getAccountId();
+        $STRIPE_MOCK_PORT = env('STRIPE_MOCK_PORT');
+        Stripe::$apiBase = "http://localhost:${STRIPE_MOCK_PORT}";
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Set up host and credentials for stripe-mock
-        Stripe::$apiBase = "http://localhost:" . env('STRIPE_MOCK_PORT');
-        Stripe::setApiKey("sk_test_123");
-        Stripe::setClientId("ca_123");
-        Stripe::setApiVersion(null);
-        Stripe::setAccountId(null);
+        // Set up google maps mocking
+        $GOOGLE_MAPS_MOCK_PORT = env('GOOGLE_MAPS_MOCK_PORT');
+        Config::set('services.google_maps.base_uri', "http://localhost:${GOOGLE_MAPS_MOCK_PORT}");
 
-        // Set up the HTTP client mocker
-        // $this->clientMock = $this->getMock('\Stripe\HttpClient\ClientInterface');
+        // Truncate all database tables
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        $tables = DB::select('SHOW TABLES');
+        foreach ($tables as $table) {
+            foreach ($table as $tableName) {
+                if ($tableName === 'migrations') {
+                    continue;
+                }
+                DB::table($tableName)->truncate();
+            }
+        }
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-        // By default, use the real HTTP client
-        ApiRequestor::setHttpClient(CurlClient::instance());
+        $this->mockCurrentTime('2018-10-27 15:00:01');
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
     }
 
     /**
-     * Define hooks to migrate the database before and after each test.
+     * Mock current time
      *
+     * @param string $time
      * @return void
      */
-    public function runDatabaseMigrations()
+    protected function mockCurrentTime($time)
     {
-        Redis::flushall();
+        $property = new \ReflectionProperty(Time::class, 'currentTimeStamp');
+        $property->setAccessible(true);
+        $property->setValue(Carbon::parse($time)->timestamp);
+    }
 
-        $this->artisan('migrate:fresh');
+    /**
+     * Login for authorization
+     *
+     * @param \App\Models\ApiUser $user [optional]
+     * @return void
+     */
+    protected function login(ApiUser $user = null)
+    {
+        $this->guard()->login($user ?? $this->userFactory()->create());
+        $this->token = $this->guard()->token();
+    }
 
-        $this->app[Kernel::class]->setArtisan(null);
+    /**
+     * Get the guard
+     *
+     * @return \App\Services\Auth\ApiGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
+    }
 
-        // Strip mocking
-        // Restore original values
-        Stripe::$apiBase = $this->origApiBase;
-        Stripe::setApiKey($this->origApiKey);
-        Stripe::setClientId($this->origClientId);
-        Stripe::setApiVersion($this->origApiVersion);
-        Stripe::setAccountId($this->origAccountId);
+    /**
+     * Get user factory
+     *
+     * @return \Illuminate\Database\Eloquent\FactoryBuilder
+     */
+    protected function userFactory()
+    {
+        return factory(ApiUser::class);
+    }
+
+    /**
+     * Get the current user
+     *
+     * @return \App\Models\ApiUser
+     */
+    protected function user()
+    {
+        return $this->guard()->user();
+    }
+
+    /**
+     * Get the guard config
+     *
+     * @return array
+     */
+    protected function guardConfig()
+    {
+        return config('auth.guards.api');
     }
 }

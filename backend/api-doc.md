@@ -40,9 +40,10 @@ Successful operation.
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
-        "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
+        "id": 1,
         "is_email_verified": false
     }
 }
@@ -101,7 +102,7 @@ Validation failed.
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/login
 
@@ -125,7 +126,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -165,32 +166,12 @@ Successful operation.
 {
     "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
     "user": {
-        "id": 1,
         "name": "Test User",
         "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
+        "id": 1,
         "is_email_verified": false
     }
-}
-```
-#### **Status Code: 409**
-
-The email has already been taken.
-
-**URI**: /api/v1/auth/register
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery",
-    "password": "test123456",
-    "name": "Test User"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The email has already been taken."
 }
 ```
 #### **Status Code: 422**
@@ -202,7 +183,7 @@ Validation failed.
 **Request Body:**
 ```
 {
-    "email": "user@foodie-connector.delivery",
+    "email": "exist@foodie-connector.delivery",
     "password": "short",
     "name": "Test User"
 }
@@ -213,8 +194,11 @@ Validation failed.
 {
     "message": "Validation failed.",
     "data": {
+        "email": [
+            "The email has already been taken."
+        ],
         "password": [
-            "The password must be a valid password."
+            "The password must have at least 6 characters and contains numbers and letters."
         ]
     }
 }
@@ -251,18 +235,6 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "Retry-After": 60
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/auth/resend-verification-email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
 #### **Status Code: 403**
 
 The email address is already verified.
@@ -282,7 +254,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/resend-verification-email
 
@@ -303,7 +275,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -321,7 +293,7 @@ Not required
 | :--- | :--- | :--- | :--- |
 | token | required | integer | digits:8 |
 | email | required | email |  |
-| password | required | string | min:6 |
+| password | required | password |  |
 
 #### **Status Code: 200**
 
@@ -333,37 +305,22 @@ Successful operation.
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
-}
-```
-#### **Status Code: 401**
-
-The password reset token is invalid or expired.
-
-**URI**: /api/v1/auth/reset-password
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery",
-    "password": "new_password",
-    "token": "12345678"
-}
-```
-
-**Response Header:**
-```
-{
-    "X-RateLimit-Limit": 5,
-    "X-RateLimit-Remaining": 4
 }
 ```
 
 **Response Body:**
 ```
 {
-    "message": "The password reset token is invalid or expired."
+    "api_token": "ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=",
+    "user": {
+        "name": "Test User",
+        "email": "user@foodie-connector.delivery",
+        "friend_id": "FRIEND",
+        "id": 1,
+        "is_email_verified": false
+    }
 }
 ```
 #### **Status Code: 404**
@@ -376,7 +333,7 @@ We can't find a user with that e-mail address.
 ```
 {
     "email": "wrong@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
     "token": "12345678"
 }
 ```
@@ -414,9 +371,9 @@ Validation failed.
     }
 }
 ```
-#### **Status Code: 429**
+#### **Status Code: 422**
 
-Too many attempts
+Validation failed.
 
 **URI**: /api/v1/auth/reset-password
 
@@ -424,7 +381,33 @@ Too many attempts
 ```
 {
     "email": "user@foodie-connector.delivery",
-    "password": "new_password",
+    "password": "new123456",
+    "token": "87654321"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "token": [
+            "The token is invalid or expired."
+        ]
+    }
+}
+```
+#### **Status Code: 429**
+
+Too many attempts.
+
+**URI**: /api/v1/auth/reset-password
+
+**Request Body:**
+```
+{
+    "email": "throttle@foodie-connector.delivery",
+    "password": "new123456",
     "token": "12345678"
 }
 ```
@@ -441,7 +424,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -478,25 +461,6 @@ Successful operation.
     "X-RateLimit-Limit": 1,
     "X-RateLimit-Remaining": 0,
     "Retry-After": 60
-}
-```
-#### **Status Code: 403**
-
-The email address has not been verified
-
-**URI**: /api/v1/auth/reset-password-email
-
-**Request Body:**
-```
-{
-    "email": "user@foodie-connector.delivery"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The email address has not been verified"
 }
 ```
 #### **Status Code: 404**
@@ -544,14 +508,14 @@ Validation failed.
 ```
 #### **Status Code: 429**
 
-Too many attempts
+Too many attempts.
 
 **URI**: /api/v1/auth/reset-password-email
 
 **Request Body:**
 ```
 {
-    "email": "user@foodie-connector.delivery"
+    "email": "throttle@foodie-connector.delivery"
 }
 ```
 
@@ -567,7 +531,7 @@ Too many attempts
 **Response Body:**
 ```
 {
-    "message": "Too many attempts"
+    "message": "Too many attempts."
 }
 ```
 
@@ -671,20 +635,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "user@foodie-connector.delivery",
-    "id": 1,
+    "friend_id": "FRIEND",
     "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 
@@ -725,20 +677,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "New Name",
     "email": "user@foodie-connector.delivery",
-    "id": 1,
+    "friend_id": "FRIEND",
     "is_email_verified": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -808,25 +748,13 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "email": "new@foodie-connector.delivery",
-    "id": 1,
+    "friend_id": "FRIEND",
     "is_email_verified": false
 }
 ```
-#### **Status Code: 401**
+#### **Status Code: 422**
 
-This page requires authentication.
-
-**URI**: /api/v1/profile/email
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 409**
-
-The email has already been taken.
+Validation failed.
 
 **URI**: /api/v1/profile/email
 
@@ -845,7 +773,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 **Response Body:**
 ```
 {
-    "message": "The email has already been taken."
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The email has already been taken."
+        ]
+    }
 }
 ```
 #### **Status Code: 422**
@@ -908,44 +841,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "old_password": "test123456",
-    "new_password": "new_password"
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/profile/password
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
-```
-#### **Status Code: 401**
-
-The old password does not match our records.
-
-**URI**: /api/v1/profile/password
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Request Body:**
-```
-{
-    "old_password": "wrong",
-    "new_password": "new_password"
-}
-```
-
-**Response Body:**
-```
-{
-    "message": "The old password does not match our records."
+    "new_password": "new123456"
 }
 ```
 #### **Status Code: 422**
@@ -973,7 +869,37 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "new_password": [
-            "The new password must be a valid password."
+            "The new password must have at least 6 characters and contains numbers and letters."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/profile/password
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "old_password": "wrong",
+    "new_password": "new123456"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "old_password": [
+            "The old password does not match our records."
         ]
     }
 }
@@ -1013,43 +939,41 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "id": 4,
         "name": "Test User",
         "phone": "7653500000",
-        "line_1": "134 Pierce Street",
+        "line_1": "134 Pierce St",
         "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
-        "zip_code": "47906-5123",
+        "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "is_default": false
     },
     {
         "id": 5,
         "name": "Test User",
         "phone": "7653500000",
-        "line_1": "134 Pierce Street",
+        "line_1": "134 Pierce St",
         "line_2": "Apt XXX",
         "city": "West Lafayette",
         "state": "IN",
-        "zip_code": "47906-5123",
+        "zip_code": "47906",
         "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-        "lat": "40.4227584",
-        "lng": "-86.9090892",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
         "is_default": false
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 
 ### **POST - /api/v1/addresses**
@@ -1064,14 +988,10 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
+| place_id | required | string | max:255 |
+| line_2 | optional | string | nullable, max:255 |
 | name | required | string | max:255 |
 | phone | required | phone:US |  |
-| line_1 | required | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | required | string | max:255 |
-| state | required | string | max:255 |
-| zip_code | required | zip_code |  |
-| place_id | required | string | max:255 |
 | is_default | required | boolean |  |
 
 #### **Status Code: 200**
@@ -1090,52 +1010,46 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "phone": "7653500000",
-    "line_1": "134 Pierce Street",
+    "line_1": "134 Pierce St",
     "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
-    "is_default": true
-}
-```
-
-**Response Body:**
-```
-{
-    "name": "Test User",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
-    "id": 1,
-    "user": {
-        "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
     },
     "is_default": true
 }
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses
 
 **Response Body:**
 ```
-{
-    "message": "This page requires authentication."
-}
+[
+    {
+        "id": 1,
+        "name": "Test User",
+        "phone": "7653500000",
+        "line_1": "134 Pierce St",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 422**
 
@@ -1153,20 +1067,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 {
     "name": "Test User",
     "phone": "invalid_phone",
-    "line_1": "134 Pierce Street",
+    "line_1": "134 Pierce St",
     "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
-    "user": {
-        "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
     "is_default": true
 }
 ```
@@ -1212,27 +1118,20 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "id": 1,
     "name": "Test User",
     "phone": "7653500000",
-    "line_1": "134 Pierce Street",
+    "line_1": "134 Pierce St",
     "line_2": "Apt XXX",
     "city": "West Lafayette",
     "state": "IN",
-    "zip_code": "47906-5123",
+    "zip_code": "47906",
     "place_id": "ChIJO_0IEK_iEogR4GrIyYopzz8",
-    "lat": "40.4227584",
-    "lng": "-86.9090892",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
     "is_default": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/1
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 404**
@@ -1265,14 +1164,10 @@ Required
 
 | Key | Required | Type | Extra |
 | :--- | :--- | :--- | :--- |
+| place_id | optional | string | max:255 |
+| line_2 | optional | string | nullable, max:255 |
 | name | optional | string | max:255 |
 | phone | optional | phone:US |  |
-| line_1 | optional | string | max:255 |
-| line_2 | optional | string | max:255 |
-| city | optional | string | max:255 |
-| state | optional | string | max:255 |
-| zip_code | optional | zip_code |  |
-| place_id | optional | string | max:255 |
 | is_default | optional | boolean |  |
 
 #### **Status Code: 200**
@@ -1297,38 +1192,27 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "id": 1,
-    "name": "Changed Name",
-    "phone": "7653500000",
-    "line_1": "134 Pierce Street",
-    "line_2": "Apt XXX",
-    "city": "West Lafayette",
-    "state": "IN",
-    "zip_code": "47906-5123",
-    "place_id": "ChIJPbVda67iEogRTWzmvivderE",
-    "lat": "40.4248",
-    "lng": "-86.911",
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/1
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
+        "name": "Changed Name",
+        "phone": "7653500000",
+        "line_1": "",
+        "line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47907",
+        "place_id": "ChIJPbVda67iEogRTWzmvivderE",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.911,
+                40.4248
+            ]
+        },
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 404**
 
@@ -1406,17 +1290,10 @@ Successful operation.
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/addresses/1
 
 **Response Body:**
 ```
-{
-    "message": "This page requires authentication."
-}
+[]
 ```
 #### **Status Code: 404**
 
@@ -1433,6 +1310,133 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "message": "Resource not found."
+}
+```
+
+### **GET - /api/v1/geo-coding/coords**
+
+Reverse GeoCoding by coordinates
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| lat | required | numeric |  |
+| lng | required | numeric |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/geo-coding/coords?lat=40.4225562&lng=-86.9088601
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "address_components": [
+        {
+            "long_name": "140",
+            "short_name": "140",
+            "types": [
+                "street_number"
+            ]
+        },
+        {
+            "long_name": "Pierce Street",
+            "short_name": "Pierce St",
+            "types": [
+                "route"
+            ]
+        },
+        {
+            "long_name": "West Lafayette",
+            "short_name": "West Lafayette",
+            "types": [
+                "locality",
+                "political"
+            ]
+        },
+        {
+            "long_name": "Wabash Township",
+            "short_name": "Wabash Township",
+            "types": [
+                "administrative_area_level_3",
+                "political"
+            ]
+        },
+        {
+            "long_name": "Tippecanoe County",
+            "short_name": "Tippecanoe County",
+            "types": [
+                "administrative_area_level_2",
+                "political"
+            ]
+        },
+        {
+            "long_name": "Indiana",
+            "short_name": "IN",
+            "types": [
+                "administrative_area_level_1",
+                "political"
+            ]
+        },
+        {
+            "long_name": "United States",
+            "short_name": "US",
+            "types": [
+                "country",
+                "political"
+            ]
+        },
+        {
+            "long_name": "47906",
+            "short_name": "47906",
+            "types": [
+                "postal_code"
+            ]
+        }
+    ],
+    "formatted_address": "140 Pierce St, West Lafayette, IN 47906, USA",
+    "geometry": {
+        "bounds": {
+            "northeast": {
+                "lat": 40.422703,
+                "lng": -86.9086468
+            },
+            "southwest": {
+                "lat": 40.4225183,
+                "lng": -86.9089932
+            }
+        },
+        "location": {
+            "lat": 40.4225824,
+            "lng": -86.9089154
+        },
+        "location_type": "ROOFTOP",
+        "viewport": {
+            "northeast": {
+                "lat": 40.4239596302915,
+                "lng": -86.9074710197085
+            },
+            "southwest": {
+                "lat": 40.4212616697085,
+                "lng": -86.91016898029152
+            }
+        }
+    },
+    "place_id": "ChIJq4jsGa_iEogRxhYxC_gwy58",
+    "types": [
+        "premise"
+    ]
 }
 ```
 
@@ -1471,8 +1475,8 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47906",
         "is_default": false
     },
@@ -1481,24 +1485,12 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
         "nickname": "Test Visa",
         "brand": "Visa",
         "last_four": "4242",
-        "expiration_month": "12",
-        "expiration_year": "2030",
+        "expiration_month": 12,
+        "expiration_year": 2030,
         "zip_code": "47906",
         "is_default": false
     }
 ]
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
 ```
 
 ### **POST - /api/v1/cards**
@@ -1532,41 +1524,25 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 ```
 {
     "nickname": "Test Visa",
-    "token": "tok_L0l2TZ715VLoMA",
+    "token": "tok_1DG9dQAv8osFAEU4RjLkEWvA",
     "is_default": false
 }
 ```
 
 **Response Body:**
 ```
-{
-    "nickname": "Test Visa",
-    "brand": "Visa",
-    "last_four": "4242",
-    "expiration_month": 12,
-    "expiration_year": 2030,
-    "zip_code": "47906",
-    "id": 1,
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": 12,
+        "expiration_year": 2030,
+        "zip_code": "47906",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 422**
 
@@ -1663,22 +1639,10 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "nickname": "Test Visa",
     "brand": "Visa",
     "last_four": "4242",
-    "expiration_month": "12",
-    "expiration_year": "2030",
+    "expiration_month": 12,
+    "expiration_year": 2030,
     "zip_code": "47906",
     "is_default": false
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/1
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 404**
@@ -1738,34 +1702,18 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
 
 **Response Body:**
 ```
-{
-    "id": 1,
-    "nickname": "Test Visa",
-    "brand": "Visa",
-    "last_four": "4242",
-    "expiration_month": "12",
-    "expiration_year": "2030",
-    "zip_code": "47907",
-    "user": {
+[
+    {
         "id": 1,
-        "name": "Test User",
-        "email": "user@foodie-connector.delivery",
-        "is_email_verified": false
-    },
-    "is_default": true
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/1
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
-}
+        "nickname": "Test Visa",
+        "brand": "Visa",
+        "last_four": "4242",
+        "expiration_month": 12,
+        "expiration_year": 2030,
+        "zip_code": "47907",
+        "is_default": true
+    }
+]
 ```
 #### **Status Code: 404**
 
@@ -1809,7 +1757,7 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "message": "Validation failed.",
     "data": {
         "expiration_month": [
-            "The expiration_month must be a current or future month."
+            "The expiration month must be a current or future month."
         ]
     }
 }
@@ -1837,17 +1785,10 @@ Successful operation.
 ```
 Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
 ```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/cards/1
 
 **Response Body:**
 ```
-{
-    "message": "This page requires authentication."
-}
+[]
 ```
 #### **Status Code: 404**
 
@@ -1891,9 +1832,92 @@ Required
 | filter_delivery_fee | optional | string | pattern:[min]_[max] |
 | filter_order_minimum | optional | string | pattern:[min]_[max] |
 | filter_rating | optional | string | pattern:[min]_[max] |
+| filter_is_open | optional | boolean |  |
 | order_by | optional | string |  |
 | order_by_desc | optional | string |  |
 
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants?address_id=1&filter_delivery_fee=2_3&order_by_desc=rating
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Category 1"
+        },
+        {
+            "id": 2,
+            "name": "Category 2"
+        }
+    ],
+    "restaurants": [
+        {
+            "id": 2,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 2,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "distance": 0,
+            "estimated_delivery_time": 20,
+            "is_deliverable": 1,
+            "is_open": 1,
+            "restaurant_categories": [
+                {
+                    "id": 1,
+                    "name": "Category 1",
+                    "pivot": {
+                        "restaurant_id": 2,
+                        "restaurant_category_id": 1
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Category 2",
+                    "pivot": {
+                        "restaurant_id": 2,
+                        "restaurant_category_id": 2
+                    }
+                }
+            ],
+            "operation_times": [
+                {
+                    "day_of_week": 6,
+                    "start_time": "12:00:00",
+                    "end_time": "02:00:00"
+                }
+            ],
+            "tax_percentage": 7
+        },
+        "..."
+    ]
+}
+```
 #### **Status Code: 200**
 
 Successful operation.
@@ -1911,130 +1935,69 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
     "categories": [
         {
             "id": 1,
-            "name": "Pizza"
+            "name": "Category 1"
         },
         {
             "id": 2,
-            "name": "Asian"
-        },
-        {
-            "id": 3,
-            "name": "Japanese"
+            "name": "Category 2"
         }
     ],
     "restaurants": [
         {
             "id": 1,
-            "name": "ColdBox Pizza",
-            "order_minimum": "10",
-            "delivery_fee": "2.99",
-            "rating": "4.8",
-            "phone": "765567765",
-            "address_line_1": "135 S Chauncey Ave",
-            "address_line_2": null,
-            "city": "West Lafayette",
-            "state": " IN",
-            "zip_code": "47906",
-            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-            "lat": "40.423593",
-            "lng": "-86.9080874",
-            "image": "\/storage\/mock\/photo-1534308983496-4fabb1a015ee.jpg",
-            "categories": [
-                "Pizza"
-            ],
-            "distance": 0.1,
-            "estimated_delivery_time": 20
-        }
-    ]
-}
-```
-#### **Status Code: 200**
-
-Successful operation.
-
-**URI**: /api/v1/restaurants?address_id=1&filter_categories=1_2&order_by_desc=rating
-
-**Request Header:**
-```
-Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
-```
-
-**Response Body:**
-```
-{
-    "categories": [
-        {
-            "id": 1,
-            "name": "Pizza"
-        },
-        {
-            "id": 2,
-            "name": "Asian"
-        },
-        {
-            "id": 3,
-            "name": "Japanese"
-        }
-    ],
-    "restaurants": [
-        {
-            "id": 2,
-            "name": "Seihei Japanese Restaurant",
-            "order_minimum": "25",
-            "delivery_fee": "3.99",
-            "rating": "4.9",
-            "phone": "765432234",
-            "address_line_1": "907 Sagamore Pkwy W",
-            "address_line_2": null,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 1,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
             "city": "West Lafayette",
             "state": "IN",
             "zip_code": "47906",
-            "place_id": "ChIJKyr9T2r9EogRMUn4njQf-H8",
-            "lat": "40.4519488",
-            "lng": "-86.9195979",
-            "image": "\/storage\/mock\/photo-1534422298391-e4f8c172dddb.jpg",
-            "categories": [
-                "Asian",
-                "Japanese"
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "distance": 0,
+            "estimated_delivery_time": 20,
+            "is_deliverable": 1,
+            "is_open": 1,
+            "restaurant_categories": [
+                {
+                    "id": 1,
+                    "name": "Category 1",
+                    "pivot": {
+                        "restaurant_id": 1,
+                        "restaurant_category_id": 1
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Category 2",
+                    "pivot": {
+                        "restaurant_id": 1,
+                        "restaurant_category_id": 2
+                    }
+                }
             ],
-            "distance": 2.1,
-            "estimated_delivery_time": 26
+            "operation_times": [
+                {
+                    "day_of_week": 6,
+                    "start_time": "12:00:00",
+                    "end_time": "02:00:00"
+                }
+            ],
+            "tax_percentage": 7
         },
-        {
-            "id": 1,
-            "name": "ColdBox Pizza",
-            "order_minimum": "10",
-            "delivery_fee": "2.99",
-            "rating": "4.8",
-            "phone": "765567765",
-            "address_line_1": "135 S Chauncey Ave",
-            "address_line_2": null,
-            "city": "West Lafayette",
-            "state": " IN",
-            "zip_code": "47906",
-            "place_id": "ChIJ6SGX2a7iEogRPb45KHbDAUI",
-            "lat": "40.423593",
-            "lng": "-86.9080874",
-            "image": "\/storage\/mock\/photo-1534308983496-4fabb1a015ee.jpg",
-            "categories": [
-                "Pizza"
-            ],
-            "distance": 0.1,
-            "estimated_delivery_time": 20
-        }
+        "..."
     ]
-}
-```
-#### **Status Code: 401**
-
-This page requires authentication.
-
-**URI**: /api/v1/restaurants
-
-**Response Body:**
-```
-{
-    "message": "This page requires authentication."
 }
 ```
 #### **Status Code: 422**
@@ -2060,6 +2023,2751 @@ Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5O
             "Must provide address_id or place_id."
         ]
     }
+}
+```
+
+### **GET - /api/v1/restaurants/{id}**
+
+Get the detail of a specific restaurant
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| with_menu | optional | boolean |  |
+| address_id | optional | integer |  |
+| place_id | optional | string |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants/1?with_menu=true
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "Test Restaurant",
+    "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+    "order_minimum": 9.99,
+    "delivery_fee": 2.99,
+    "rating": "3.5",
+    "address_line_1": "100 Pierce Street",
+    "address_line_2": "",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
+    "restaurant_categories": [
+        {
+            "id": 1,
+            "name": "Category 1",
+            "pivot": {
+                "restaurant_id": 1,
+                "restaurant_category_id": 1
+            }
+        },
+        {
+            "id": 2,
+            "name": "Category 2",
+            "pivot": {
+                "restaurant_id": 1,
+                "restaurant_category_id": 2
+            }
+        }
+    ],
+    "operation_times": [
+        {
+            "day_of_week": 6,
+            "start_time": "12:00:00",
+            "end_time": "02:00:00"
+        }
+    ],
+    "restaurant_menu": {
+        "product_categories": [
+            {
+                "id": 0,
+                "name": "Test Category",
+                "products": [
+                    {
+                        "id": 0,
+                        "name": "Test Product",
+                        "description": "This is a test product",
+                        "price": 2.99,
+                        "min_price": 3.99,
+                        "max_price": 4.99,
+                        "product_option_groups": [
+                            0
+                        ]
+                    }
+                ]
+            }
+        ],
+        "product_option_groups": [
+            {
+                "id": 0,
+                "name": "Test Option Group",
+                "min_choice": 1,
+                "max_choice": 2,
+                "product_options": [
+                    {
+                        "id": 0,
+                        "name": "Test Option 1",
+                        "price": 1
+                    },
+                    {
+                        "id": 1,
+                        "name": "Test Option 2",
+                        "price": 1
+                    },
+                    {
+                        "id": 2,
+                        "name": "Test Option 3",
+                        "price": 1
+                    }
+                ]
+            }
+        ]
+    },
+    "tax_percentage": 7
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/restaurants/1?address_id=1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": 1,
+    "name": "Test Restaurant",
+    "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+    "order_minimum": 9.99,
+    "delivery_fee": 2.99,
+    "rating": "3.5",
+    "address_line_1": "100 Pierce Street",
+    "address_line_2": "",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7651111111",
+    "rate_count": 0,
+    "rate_positive_count": 0,
+    "distance": 0,
+    "estimated_delivery_time": 20,
+    "is_deliverable": 1,
+    "is_open": 1,
+    "restaurant_categories": [
+        {
+            "id": 1,
+            "name": "Category 1",
+            "pivot": {
+                "restaurant_id": 1,
+                "restaurant_category_id": 1
+            }
+        },
+        {
+            "id": 2,
+            "name": "Category 2",
+            "pivot": {
+                "restaurant_id": 1,
+                "restaurant_category_id": 2
+            }
+        }
+    ],
+    "operation_times": [
+        {
+            "day_of_week": 6,
+            "start_time": "12:00:00",
+            "end_time": "02:00:00"
+        }
+    ],
+    "tax_percentage": 7
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/restaurants/0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/restaurants/1?address_id=0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "The address_id is invalid"
+        ]
+    }
+}
+```
+
+## **cart**
+
+Everything about cart
+
+### **GET - /api/v1/cart**
+
+Get the current cart
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "cart": [],
+    "subtotal": 0,
+    "tax": 0,
+    "restaurant": null
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ],
+            "product_price": 4.99
+        }
+    ],
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "subtotal": 9.98,
+    "tax": 0.7
+}
+```
+
+### **PUT - /api/v1/cart**
+
+Update the cart
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | optional | integer | nullable, exists:restaurants,id |
+| cart | optional | array | nullable |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+**Response Body:**
+```
+{
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": 2,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": [
+                        0,
+                        2
+                    ]
+                }
+            ],
+            "product_price": 4.99
+        }
+    ],
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "subtotal": 9.98,
+    "tax": 0.7
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": null,
+    "cart": []
+}
+```
+
+**Response Body:**
+```
+{
+    "cart": [],
+    "restaurant": null,
+    "subtotal": 0,
+    "tax": 0
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 0
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "restaurant_id": [
+            "The selected restaurant id is invalid."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/cart
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "cart": [
+        {
+            "product_id": 0,
+            "product_amount": -1,
+            "product_option_groups": [
+                {
+                    "product_option_group_id": 0,
+                    "product_options": []
+                }
+            ]
+        }
+    ]
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "cart": [
+            "Invalid cart"
+        ]
+    }
+}
+```
+
+## **order**
+
+Everything about order
+
+### **GET - /api/v1/orders**
+
+Get a list of orders
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| place_id | optional | string |  |
+| address_id | optional | integer | sometimes |
+| restaurant_id | optional | integer | exists:restaurants,id |
+| order_status | optional | string |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": true,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "created_at": "2018-10-27 15:00:01",
+        "order_status": "created",
+        "is_creator": true,
+        "is_member": true,
+        "is_joinable": true,
+        "is_visible": true,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "tax_percentage": 7
+        },
+        "creator": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
+                "products": null,
+                "subtotal": null,
+                "tax": null,
+                "tip": null,
+                "delivery_fee": null,
+                "total": null,
+                "rate_is_positive": null,
+                "user": {
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "prices": {
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?restaurant_id=1&order_status=created
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": true,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "created_at": "2018-10-27 15:00:01",
+        "order_status": "created",
+        "is_creator": true,
+        "is_member": true,
+        "is_joinable": true,
+        "is_visible": true,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "tax_percentage": 7
+        },
+        "creator": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
+                "products": null,
+                "subtotal": null,
+                "tax": null,
+                "tip": null,
+                "delivery_fee": null,
+                "total": null,
+                "rate_is_positive": null,
+                "user": {
+                    "name": "Test User",
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "prices": {
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?address_id=1
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": true,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "created_at": "2018-10-27 15:00:01",
+        "order_status": "created",
+        "is_creator": false,
+        "is_member": false,
+        "is_joinable": true,
+        "is_visible": true,
+        "distance": 0,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "tax_percentage": 7
+        },
+        "creator": {
+            "name": "Test User",
+            "email": null,
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
+                "products": null,
+                "subtotal": null,
+                "tax": null,
+                "tip": null,
+                "delivery_fee": null,
+                "total": null,
+                "rate_is_positive": null,
+                "user": {
+                    "name": "Test User",
+                    "email": null,
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "prices": {
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": null
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders?place_id=ChIJPbVda67iEogRTWzmvivderE
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "id": "HFEJ32RAFW58ER29R8SW",
+        "join_before": "2018-10-27 15:10:01",
+        "is_public": true,
+        "address_line_1": "134 Pierce Street",
+        "address_line_2": "Apt XXX",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7650000000",
+        "created_at": "2018-10-27 15:00:01",
+        "order_status": "created",
+        "is_creator": false,
+        "is_member": false,
+        "is_joinable": true,
+        "is_visible": true,
+        "distance": 279,
+        "restaurant": {
+            "id": 1,
+            "name": "Test Restaurant",
+            "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+            "order_minimum": 9.99,
+            "delivery_fee": 2.99,
+            "rating": "3.5",
+            "address_line_1": "100 Pierce Street",
+            "address_line_2": "",
+            "city": "West Lafayette",
+            "state": "IN",
+            "zip_code": "47906",
+            "geo_location": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9090892,
+                    40.4227584
+                ]
+            },
+            "phone": "7651111111",
+            "rate_count": 0,
+            "rate_positive_count": 0,
+            "tax_percentage": 7
+        },
+        "creator": {
+            "name": "Test User",
+            "email": null,
+            "friend_id": "FRIEND"
+        },
+        "order_members": [
+            {
+                "order_id": "HFEJ32RAFW58ER29R8SW",
+                "is_ready": false,
+                "products": null,
+                "subtotal": null,
+                "tax": null,
+                "tip": null,
+                "delivery_fee": null,
+                "total": null,
+                "rate_is_positive": null,
+                "user": {
+                    "name": "Test User",
+                    "email": null,
+                    "friend_id": "FRIEND"
+                }
+            }
+        ],
+        "order_statuses": [
+            {
+                "status": "created",
+                "time": "2018-10-27 15:00:01"
+            }
+        ],
+        "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+        "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+        "prices": {
+            "estimated_delivery_fee": 2.99,
+            "total": null
+        },
+        "current_order_member": null
+    }
+]
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders?address_id=0
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "The address_id is invalid"
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders?place_id=INVALID
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "place_id": [
+            "The place_id is invalid"
+        ]
+    }
+}
+```
+
+### **POST - /api/v1/orders**
+
+Create a new order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 600,
+    "address_id": 1,
+    "is_public": true
+}
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "address_line_1": "134 Pierce St",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7653500000",
+    "created_at": "2018-10-27 15:00:01",
+    "order_status": "created",
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "creator": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    },
+    "order_members": [
+        {
+            "order_id": "3A01B40FA5EC97F2AE82",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "prices": {
+        "estimated_delivery_fee": 2.99,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "3A01B40FA5EC97F2AE82",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 7200,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "form": [
+            "You have unconfirmed order. Please confirm that before creating new one."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 7200,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "join_limit": [
+            "The restaurant must be open for at least 10 minutes after the join limit."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "join_limit": 600,
+    "address_id": 1,
+    "is_public": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "address_id": [
+            "The address associated with the address_id must be deliverable by the restaurant."
+        ]
+    }
+}
+```
+
+### **POST - /api/v1/orders/direct-checkout**
+
+Direct checkout without a group order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| restaurant_id | required | integer | exists:restaurants,id |
+| address_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 2,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "order_id": "B5D68F002D129030F853",
+    "is_ready": false,
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98,
+    "tax": 0.7,
+    "tip": null,
+    "delivery_fee": 2.99,
+    "total": null,
+    "rate_is_positive": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/direct-checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "restaurant_id": 1,
+    "address_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+
+### **GET - /api/v1/orders/{id}**
+
+Show the detail of a specific order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7650000000",
+    "created_at": "2018-10-27 15:00:01",
+    "order_status": "created",
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "creator": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    },
+    "order_members": [
+        {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "prices": {
+        "estimated_delivery_fee": 2.99,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+
+### **DELETE - /api/v1/orders/{id}**
+
+Cancel and order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7650000000",
+    "created_at": "2018-10-27 15:00:01",
+    "order_status": "closed",
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": false,
+    "is_visible": true,
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "creator": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    },
+    "order_members": [
+        {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "closed",
+            "time": "2018-10-27 15:00:01"
+        },
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "prices": {
+        "estimated_delivery_fee": null,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+This order cannot be canceled.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "This order cannot be canceled."
+}
+```
+
+### **POST - /api/v1/orders/{id}/checkout**
+
+Checkout. Calculate prices based on the cart.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": false,
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": 9.98,
+    "tax": 0.7,
+    "tip": null,
+    "delivery_fee": 2.99,
+    "total": null,
+    "rate_is_positive": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+#### **Status Code: 422**
+
+This order cannot be updated.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "This order cannot be updated."
+}
+```
+#### **Status Code: 422**
+
+The cart is empty.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/checkout
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "The cart is empty."
+}
+```
+
+### **POST - /api/v1/orders/{id}/confirm**
+
+Confirm an order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7650000000",
+    "created_at": "2018-10-27 15:00:01",
+    "order_status": "confirmed",
+    "is_creator": true,
+    "is_member": true,
+    "is_joinable": false,
+    "is_visible": true,
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 0,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "creator": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    },
+    "order_members": [
+        {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": true,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": 2.99,
+            "total": 2.99,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "FRIEND"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "confirmed",
+            "time": "2018-10-27 15:00:01"
+        },
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "prices": {
+        "estimated_delivery_fee": null,
+        "total": 2.99
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": true,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": 2.99,
+        "total": 2.99,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "FRIEND"
+        }
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Some or all of the order members are not ready.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Some or all of the order members are not ready."
+}
+```
+#### **Status Code: 422**
+
+Failed to meet the order minimum.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Failed to meet the order minimum."
+}
+```
+#### **Status Code: 422**
+
+This order cannot be confirmed.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/confirm
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "This order cannot be confirmed."
+}
+```
+
+### **POST - /api/v1/orders/{id}/invitation**
+
+Send invitations
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| email | optional | email |  |
+| friend_id | optional | string | required_without:email |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NEWFRD"
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/A00000/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+This user is not your friend.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NOTEXI"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This user is not your friend."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "friend_id": [
+            "The friend id field is required when email is not present."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+This order is no longer joinable.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/invitation
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "receiver@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order is no longer joinable."
+}
+```
+
+### **POST - /api/v1/orders/{id}/join**
+
+Join a group order
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/join
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "id": "HFEJ32RAFW58ER29R8SW",
+    "join_before": "2018-10-27 15:10:01",
+    "is_public": true,
+    "address_line_1": "134 Pierce Street",
+    "address_line_2": "Apt XXX",
+    "city": "West Lafayette",
+    "state": "IN",
+    "zip_code": "47906",
+    "geo_location": {
+        "type": "Point",
+        "coordinates": [
+            -86.9090892,
+            40.4227584
+        ]
+    },
+    "phone": "7650000000",
+    "created_at": "2018-10-27 15:00:01",
+    "order_status": "created",
+    "is_creator": false,
+    "is_member": true,
+    "is_joinable": true,
+    "is_visible": true,
+    "restaurant": {
+        "id": 1,
+        "name": "Test Restaurant",
+        "image": "https://storage.googleapis.com/foodie-connector-testing/restaurants/test.jpg",
+        "order_minimum": 9.99,
+        "delivery_fee": 2.99,
+        "rating": "3.5",
+        "address_line_1": "100 Pierce Street",
+        "address_line_2": "",
+        "city": "West Lafayette",
+        "state": "IN",
+        "zip_code": "47906",
+        "geo_location": {
+            "type": "Point",
+            "coordinates": [
+                -86.9090892,
+                40.4227584
+            ]
+        },
+        "phone": "7651111111",
+        "rate_count": 0,
+        "rate_positive_count": 0,
+        "tax_percentage": 7
+    },
+    "creator": {
+        "name": "Test User",
+        "email": null,
+        "friend_id": "FRIEND"
+    },
+    "order_members": [
+        {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "email": null,
+                "friend_id": "FRIEND"
+            }
+        },
+        {
+            "order_id": "HFEJ32RAFW58ER29R8SW",
+            "is_ready": false,
+            "products": null,
+            "subtotal": null,
+            "tax": null,
+            "tip": null,
+            "delivery_fee": null,
+            "total": null,
+            "rate_is_positive": null,
+            "user": {
+                "name": "Test User",
+                "friend_id": "NEWFRD"
+            }
+        }
+    ],
+    "order_statuses": [
+        {
+            "status": "created",
+            "time": "2018-10-27 15:00:01"
+        }
+    ],
+    "share_link": "http://localhost/orders/HFEJ32RAFW58ER29R8SW",
+    "qr_code_link": "http://localhost/orders/qr-code/HFEJ32RAFW58ER29R8SW",
+    "prices": {
+        "estimated_delivery_fee": 1.5,
+        "total": null
+    },
+    "current_order_member": {
+        "order_id": "HFEJ32RAFW58ER29R8SW",
+        "is_ready": false,
+        "products": null,
+        "subtotal": null,
+        "tax": null,
+        "tip": null,
+        "delivery_fee": null,
+        "total": null,
+        "rate_is_positive": null,
+        "user": {
+            "name": "Test User",
+            "friend_id": "NEWFRD"
+        }
+    }
+}
+```
+#### **Status Code: 422**
+
+You have already joined this order.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/join
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "You have already joined this order."
+}
+```
+#### **Status Code: 422**
+
+This order is no longer joinable.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/join
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "This order is no longer joinable."
+}
+```
+
+### **POST - /api/v1/orders/{id}/pay**
+
+Pay for an order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| tip | required | numeric |  |
+| card_id | required | integer |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": true,
+    "products": [
+        {
+            "name": "Test Product",
+            "description": "This is a test product",
+            "price": 4.99,
+            "product_option_groups": [
+                {
+                    "name": "Test Option Group",
+                    "options": [
+                        "Test Option 1",
+                        "Test Option 3"
+                    ]
+                }
+            ]
+        }
+    ],
+    "subtotal": "9.98",
+    "tax": 0.7,
+    "tip": 2,
+    "delivery_fee": 2.99,
+    "total": 15.67,
+    "rate_is_positive": null,
+    "user": {
+        "name": "Test User",
+        "friend_id": "FRIEND"
+    }
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/orders/0/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "tip": [
+            "The tip field is required."
+        ],
+        "card_id": [
+            "The card id field is required."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+This order requires checkout.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order requires checkout."
+}
+```
+#### **Status Code: 422**
+
+This order is already paid.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/pay
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "tip": 2,
+    "card_id": 1
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This order is already paid."
+}
+```
+
+### **POST - /api/v1/orders/{id}/rate**
+
+Rate the restaurant corresponding to the delivered order.
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| is_positive | required | boolean |  |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "order_id": "HFEJ32RAFW58ER29R8SW",
+    "is_ready": false,
+    "products": null,
+    "subtotal": null,
+    "tax": null,
+    "tip": null,
+    "delivery_fee": null,
+    "total": null,
+    "rate_is_positive": true
+}
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/orders/NOTFOUND83FD83IRUDO2/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": true
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
+}
+```
+#### **Status Code: 422**
+
+Only delivered orders can be rated.
+
+**URI**: /api/v1/orders/HFEJ32RAFW58ER29R8SW/rate
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "is_positive": false
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Only delivered orders can be rated."
+}
+```
+
+## **friend**
+
+Everything about friend
+
+### **GET - /api/v1/friends**
+
+List all friends
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+
+### **POST - /api/v1/friends**
+
+Add a new friend
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+| Key | Required | Type | Extra |
+| :--- | :--- | :--- | :--- |
+| friend_id | optional | string | exists:api_users |
+| email | optional | email | required_without:friend_id, exists:api_users |
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "friend_id": "NEWFRD"
+}
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "another-user@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+[
+    {
+        "name": "Test User",
+        "email": "another-user@foodie-connector.delivery",
+        "friend_id": "NEWFRD"
+    }
+]
+```
+#### **Status Code: 422**
+
+Validation failed.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "invalid@foodie-conenctor.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "Validation failed.",
+    "data": {
+        "email": [
+            "The selected email is invalid."
+        ]
+    }
+}
+```
+#### **Status Code: 422**
+
+This user is already your friend.
+
+**URI**: /api/v1/friends
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Request Body:**
+```
+{
+    "email": "exist@foodie-connector.delivery"
+}
+```
+
+**Response Body:**
+```
+{
+    "message": "This user is already your friend."
+}
+```
+
+### **DELETE - /api/v1/friends/{id}**
+
+Delete a friend
+
+#### **Authorization**
+
+Required
+
+#### **Params**
+
+No param
+
+#### **Status Code: 200**
+
+Successful operation.
+
+**URI**: /api/v1/friends/NEWFRD
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+[]
+```
+#### **Status Code: 404**
+
+Resource not found.
+
+**URI**: /api/v1/friends/NOTEXI
+
+**Request Header:**
+```
+Authorization: ZGVlNDI2YTU5MWVkYTExNTRiMWFhNTdiN2U4NDE0NTVjZDdlYmM1Y2RhZjRhNGU5ODA0NDQxNDkxMWJhNzcxMTE=
+```
+
+**Response Body:**
+```
+{
+    "message": "Resource not found."
 }
 ```
 

@@ -5,13 +5,11 @@ namespace Tests\Feature\Address;
 use App\Models\Address;
 use App\Models\ApiUser;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class ShowAddressTest extends ApiTestCase
 {
-    /**
-     * Address id
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test showing address
@@ -20,12 +18,13 @@ class ShowAddressTest extends ApiTestCase
      */
     public function testShowAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $address = factory(Address::class)->create();
         $this->id = $address->id;
         $addressArray = $address->toArray();
         $addressArray['is_default'] = false;
+        unset($addressArray['geo_location']);
         $this->assertSucceed(null)->assertJson($addressArray);
         $this->id = 0;
         $this->assertFailed(null, 404);
@@ -39,13 +38,6 @@ class ShowAddressTest extends ApiTestCase
     protected function uri()
     {
         return '/addresses/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

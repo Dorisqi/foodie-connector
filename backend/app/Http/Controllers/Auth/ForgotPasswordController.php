@@ -52,9 +52,9 @@ class ForgotPasswordController extends ApiController
         if (is_null($user)) {
             throw ApiException::userNotFound();
         }
-        if (!$user->is_email_verified) {
-            throw ApiException::emailNotVerified();
-        }
+        // if (!$user->is_email_verified) {
+        //     throw ApiException::emailNotVerified();
+        // }
 
         $throttleKey = $user->emailThrottleKey();
         if ($this->limiter()->tooManyAttempts($throttleKey, 1)) {

@@ -104,7 +104,6 @@ class ApiGuard implements StatefulGuard
             if ($this->request->header($this::HEADER_KEY) === 'authorized') {
                 return ApiUser::first();
             }
-            return null;
         }
 
         $token = $this::decodeToken($this->request->header($this::HEADER_KEY));

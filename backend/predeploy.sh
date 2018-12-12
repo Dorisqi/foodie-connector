@@ -2,6 +2,4 @@
 
 set -e
 
-composer install --optimize-autoloader --no-dev
-php artisan storage:link
-php artisan optimize --env=deploy
+chown -R www-data storage

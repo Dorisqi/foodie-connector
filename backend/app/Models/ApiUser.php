@@ -6,10 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail as VerifyEmailNotification;
+use Illuminate\Support\Facades\Auth;
 
 class ApiUser extends Authenticatable
 {
     use Notifiable;
+
+    public const TESTING_FRIEND_ID = 'FRIEND';
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -26,7 +29,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'stripe_id'
+        'name', 'email', 'password', 'stripe_id', 'friend_id'
     ];
 
     /**
@@ -35,6 +38,7 @@ class ApiUser extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'id',
         'password',
         'email_verified_at',
         'created_at',
@@ -64,15 +68,49 @@ class ApiUser extends Authenticatable
         return $this->hasOne('App\Models\Card', 'id', 'default_card_id');
     }
 
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'creator_id');
+    }
+
+    public function friends()
+    {
+        return $this->belongsToMany(
+            ApiUser::class,
+            'friends',
+            'api_user_id',
+            'friend_id',
+            'id',
+            'friend_id'
+        );
+    }
+
     public function getIsEmailVerifiedAttribute()
     {
         return !is_null($this->email_verified_at);
     }
 
-    public function toArray()
+    public function toArray($showId = false)
     {
+        if ($this->id !== Auth::guard('api')->user()->id) {
+            return [
+                'name' => $this->name,
+                'email' => $this->email,
+                'friend_id' => $this->friend_id,
+            ];
+        }
         $data = parent::toArray();
-        $data['is_email_verified'] = $this->is_email_verified;
+        if ($showId) {
+            $data['id'] = $this->id;
+        }
+        if (!is_null($this->email)) {
+            $data['is_email_verified'] = $this->is_email_verified;
+        }
         return $data;
     }
 

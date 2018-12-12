@@ -36,5 +36,6 @@ return [
 
     'google_maps' => [
         'secret' => env('GOOGLE_MAPS_SECRET'),
+        'base_uri' => 'https://maps.googleapis.com/maps/api/',
     ],
 ];

@@ -5,15 +5,11 @@ namespace Tests\Feature\Card;
 use App\Http\Controllers\CardController;
 use App\Models\Card;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class UpdateCardTest extends ApiTestCase
 {
-    /**
-     * Card id
-     *
-     * @var int
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test updating card
@@ -22,7 +18,7 @@ class UpdateCardTest extends ApiTestCase
      */
     public function testUpdateCard()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login();
         $card = factory(Card::class)->create();
         $this->id = $card->id;
@@ -33,7 +29,7 @@ class UpdateCardTest extends ApiTestCase
             'zip_code' => '47907',
             'is_default' => true,
         ]);
-        $response->assertJson($cardArray);
+        $response->assertJson([$cardArray]);
         $this->assertFailed([
             'expiration_month' => 1,
             'expiration_year' => 2018,
@@ -50,13 +46,6 @@ class UpdateCardTest extends ApiTestCase
     protected function uri()
     {
         return '/cards/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

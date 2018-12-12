@@ -11,7 +11,7 @@ class ChangePasswordTest extends ApiTestCase
     /**
      * New password
      */
-    protected const NEW_PASSWORD = 'new_password';
+    protected const NEW_PASSWORD = 'new123456';
 
     /**
      * Test changing password
@@ -20,7 +20,7 @@ class ChangePasswordTest extends ApiTestCase
      */
     public function testChangePassword()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed([
@@ -37,7 +37,7 @@ class ChangePasswordTest extends ApiTestCase
         $this->assertFailed([
             'old_password' => 'wrong',
             'new_password' => $this::NEW_PASSWORD,
-        ], 401);
+        ], 422);
     }
 
     protected function method()

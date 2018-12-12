@@ -84,12 +84,14 @@ class ResetPasswordController extends ApiController
             function (ApiUser $user) use ($request) {
                 $user->password = Hash::make($request->input('password'));
                 $user->save();
-                event(new PasswordReset($user));
                 $this->guard()->login($user);
             }
         );
 
-        return $this->response();
+        return $this->response([
+            'api_token' => $this->guard()->token(),
+            'user' => $this->user()->toArray(true),
+        ]);
     }
 
     /**
@@ -112,7 +114,7 @@ class ResetPasswordController extends ApiController
         return [
             'token' => 'required|integer|digits:8',
             'email' => 'required|string|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|password',
         ];
     }
 }

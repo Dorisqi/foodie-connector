@@ -15,7 +15,7 @@ class UpdateProfileTest extends ApiTestCase
      */
     public function testUpdateProfile()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $user = $this->userFactory()->create();
         $this->login($user);
         $this->assertSucceed([

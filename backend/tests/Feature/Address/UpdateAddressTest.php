@@ -6,15 +6,11 @@ use App\Http\Controllers\AddressController;
 use App\Models\Address;
 use App\Models\ApiUser;
 use Tests\ApiTestCase;
+use Tests\UriWithId;
 
 class UpdateAddressTest extends ApiTestCase
 {
-    /**
-     * Current address id
-     *
-     * @param int
-     */
-    protected $id = 1;
+    use UriWithId;
 
     /**
      * Test updating address
@@ -23,7 +19,7 @@ class UpdateAddressTest extends ApiTestCase
      */
     public function testUpdateAddress()
     {
-        $this->assertFailed(null, 401);
+        $this->assertFailed(null, 401, false);
         $this->login(factory(ApiUser::class)->create());
         $address = factory(Address::class)->create();
         $this->id = $address->id;
@@ -36,18 +32,21 @@ class UpdateAddressTest extends ApiTestCase
             'place_id' => $addressArray['place_id'],
             'is_default' => true,
         ]);
+        $addressArray['line_1'] = '';
+        $addressArray['zip_code'] = '47907';
         $addressArray['is_default'] = true;
-        $addressArray['lat'] = '40.4248';
-        $addressArray['lng'] = '-86.911';
-        $response->assertJson($addressArray);
+        unset($addressArray['geo_location']);
+        $response->assertJson([$addressArray]);
         $newAddress = factory(Address::class)->create();
         $this->id = $newAddress->id;
         $newAddressArray = $newAddress->toArray();
         $newAddressArray['is_default'] = true;
+        unset($newAddressArray['geo_location']);
+        $addressArray['is_default'] = false;
         $this->assertSucceed([
             'is_default' => true,
         ], false)
-            ->assertJson($newAddressArray);
+            ->assertJson([$addressArray, $newAddressArray]);
         $this->assertFailed([
             'phone' => 'invalid_phone',
         ], 422);
@@ -65,13 +64,6 @@ class UpdateAddressTest extends ApiTestCase
     protected function uri()
     {
         return '/addresses/{id}';
-    }
-
-    protected function uriParams()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 
     protected function summary()

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Facades\Time;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Notifications\ResetPassword;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
 use Tests\ApiTestCase;
@@ -20,10 +20,10 @@ class ForgotPasswordTest extends ApiTestCase
     {
         Notification::fake();
         $user = $this->userFactory()->create();
-        $this->assertFailed([
-            'email' => $user->email,
-        ], 403);
-        $user->email_verified_at = Carbon::now()->getTimestamp();
+        // $this->assertFailed([
+        //     'email' => $user->email,
+        // ], 403);
+        $user->email_verified_at = Time::currentTime();
         $user->save();
         $decayMinutes = $this->guardConfig()['email']['decay_minutes'];
         $this->assertThrottle($this->assertSucceed([
@@ -39,6 +39,12 @@ class ForgotPasswordTest extends ApiTestCase
                 return $notification->token == $token;
             }
         );
+        $user = $this->userFactory()->state('new')->create([
+            'email' => 'throttle@foodie-connector.delivery',
+        ]);
+        $this->assertSucceed([
+            'email' => $user->email,
+        ], false);
         $this->assertThrottle($this->assertFailed([
             'email' => $user->email,
         ], 429), 1, 0, $decayMinutes * 60);
